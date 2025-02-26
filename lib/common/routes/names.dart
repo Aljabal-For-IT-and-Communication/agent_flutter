@@ -1,0 +1,40 @@
+
+
+class AppRoutes {
+  static const Splash = '/';
+  static const Sign_in = '/sign_in';
+  static const Register = '/register';
+  static const Forget = '/forget';
+  static const Application = '/application';
+  static const Home = '/home';
+  static const Message = '/message';
+  static const Profile = '/profile';
+  static const Account = '/account';
+  static const Setting = '/setting';
+  static const MessageDetail = '/message_detail';
+  static const ChangePassword = '/change_password';
+  static const ContactType = '/contact_type';
+  static const About = '/about';
+  static const Contact = '/contact';
+  static const Report = '/report';
+  static const Transformation = '/transformation';
+  static const InternationalCommunication = '/international_communication';
+  static const SentBalance = '/sent_balance';
+  static const AccountStatement = '/account_statement';
+  static const TransferBalance = '/transfer_balance';
+  static const SalePoint = '/sale_point';
+  static const Collection = '/collection';
+  static const CollectionItem = '/collection_item';
+  static const CollectionSalePoint = '/collection_sale_point';
+  static const CollectionWhat = '/collection_what';
+  static const Credit = '/credit';
+  static const ShippingOperation = '/shipping_operation';
+  static const Debit = '/debit';
+  static const Shipment = '/shipment';
+  static const Revenue = '/revenue';
+  static const MyReport = '/my_report';
+  static const Photoimgview = '/phone_img_view';
+  static const Chat = '/chat';
+  static const ChatUser = '/chat_user';
+
+}

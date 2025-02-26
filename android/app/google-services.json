@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "539554129699",
+    "project_id": "valiant-monitor-352501",
+    "storage_bucket": "valiant-monitor-352501.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539554129699:android:f00ea5348c19560eeace96",
+        "android_client_info": {
+          "package_name": "com.zonecard.agent.agent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539554129699-nu4m27t0t2l3utasqm9ulro3g0lbas40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoCpRJNvb5kQ-U3iZ0mHhqY2Cldx1g-8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539554129699-nu4m27t0t2l3utasqm9ulro3g0lbas40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539554129699:android:029cc57c74d9b753eace96",
+        "android_client_info": {
+          "package_name": "com.zonecard.zone_card"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539554129699-nu4m27t0t2l3utasqm9ulro3g0lbas40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoCpRJNvb5kQ-U3iZ0mHhqY2Cldx1g-8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539554129699-nu4m27t0t2l3utasqm9ulro3g0lbas40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

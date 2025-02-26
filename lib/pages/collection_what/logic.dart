@@ -1,0 +1,53 @@
+
+import 'package:app/common/apis/sale_point.dart';
+import 'package:app/common/entities/entities.dart';
+import 'package:app/common/utils/utils.dart';
+import 'package:app/pages/account_statement/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'bloc.dart';
+
+class Logic{
+  final BuildContext context;
+  Logic({
+    required this.context,
+  });
+
+  init(){
+
+  }
+
+
+
+  postTransferCollection(DateRequestEntity entity) async {
+    try {
+      EasyLoading.show(
+          indicator: CircularProgressIndicator(),
+          maskType: EasyLoadingMaskType.clear,
+          dismissOnTap: true);
+      var result1 = await SalePointAPI.transferCollectionTotalRecord(params: entity);
+      if (result1.code == 0) {
+        context.read<CollectionWhatBloc>().add(AmountChanged(result1.data!));
+      }
+
+      var result = await SalePointAPI.transferCollectionList(params: entity);
+      if (result.code == 0 && result.data!=null) {
+        if(result.data!.isNotEmpty) {
+          final state = context.read<CollectionWhatBloc>().state;
+          var agentCollectRecordList = state.agentCollectRecordList.toList();
+          agentCollectRecordList.addAll(result.data!);
+          context.read<CollectionWhatBloc>().add(AgentCollectRecordListChanged(agentCollectRecordList));
+        }
+      }
+      EasyLoading.dismiss();
+      context.read<CollectionWhatBloc>().add(IsMoreChanged(false));
+    } catch (e) {
+      EasyLoading.dismiss();
+      context.read<CollectionWhatBloc>().add(IsMoreChanged(false));
+      Logger.write("${e}");
+    }
+  }
+
+
+}
