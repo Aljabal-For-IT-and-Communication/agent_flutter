@@ -1,7 +1,7 @@
 
-const SERVER_API_URL = 'https://api.pos.dbestech.com/';
+const SERVER_API_URL = 'https://api.alafdal-pluse.ly/';
 //const SERVER_API_URL = 'http://192.168.10.210:8005/';
-const SERVER_API_WSS = 'wss://api.pos.dbestech.com/ws_agent';
+const SERVER_API_WSS = 'wss://api.alafdal-pluse.ly/ws_agent';
 const SERVER_IMG_URL = 'https://admin.pos.dbestech.com/uploads/';
 const SERVER_API_IMG_URL = 'https://admin.pos.dbestech.com/';
 
