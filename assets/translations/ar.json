@@ -112,5 +112,14 @@
   "message": "الرسائل",
   "chat": "محادثة",
   "No Chat User!": "لا يوجد رسائل!",
-  "choose": "اختر"
+  "choose": "اختر",
+  "Cart Empty": "عربة التسوق فارغة",
+  "video": "فيديو",
+  "data": "بيانات",
+  "Money Paid": "المبلغ المدفوع",
+  "recharge": "إعادة شحن",
+  "retrack": "سحب رصيد",
+  "Search First Name": "البحث بالاسم الأول",
+  "Agent": "مندوب",
+  "SalePoint": "نقطة بيع"
 }
