@@ -8,7 +8,6 @@ import 'package:app/common/values/colors.dart';
 import 'logic.dart';
 
 class BuildAppBar extends StatelessWidget {
-
   BuildAppBar({Key? key}) : super(key: key);
 
   @override
@@ -16,7 +15,8 @@ class BuildAppBar extends StatelessWidget {
     // TODO: implement build
     return Container(
       width: 375.w,
-      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w,bottom: 30.h),
+      padding:
+          EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 30.h),
       decoration: BoxDecoration(
         color: AppColors.primaryBackground,
         image: DecorationImage(
@@ -50,7 +50,6 @@ class BuildAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -65,21 +64,23 @@ class BuildAppBar extends StatelessWidget {
 
 class BuildListItem extends StatelessWidget {
   final SalePointData item;
-  const BuildListItem({Key? key,required this.item}) : super(key: key);
+  const BuildListItem({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var balance = double.parse(item.balance??"0");
+    var balance = double.parse(item.balance ?? "0");
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         // Navigator.of(context).pushNamed(AppRoutes.MessageDetail,arguments: item);
       },
       child: Container(
-        padding: EdgeInsets.only(top: 12.h,bottom: 12.h,left: 10.w,right: 10.w),
+        padding:
+            EdgeInsets.only(top: 12.h, bottom: 12.h, left: 10.w, right: 10.w),
         margin: EdgeInsets.only(bottom: 15.h),
         decoration: BoxDecoration(
           color: AppColors.primaryFourElementText,
-          border: Border.all(color: AppColors.primaryThreeElementText,width: 1.h),
+          border:
+              Border.all(color: AppColors.primaryThreeElementText, width: 1.h),
           borderRadius: BorderRadius.all(Radius.circular(15.w)),
         ),
         child: Row(
@@ -87,142 +88,171 @@ class BuildListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width:40.w,
+              width: 40.w,
               height: 40.w,
               padding: EdgeInsets.all(8.w),
-              clipBehavior:Clip.hardEdge,
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: AppColors.primaryBackground,
                 borderRadius: BorderRadius.all(Radius.circular(20.w)),
               ),
-              child:  Image.asset('assets/icons/store.png'),
+              child: Image.asset('assets/icons/store.png'),
             ),
-            SizedBox(width: 10.w,),
+            SizedBox(
+              width: 10.w,
+            ),
             Container(
               width: 270.w,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 180.w,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 180.w,
+                        child: Text(
+                          "${item.businessName}",
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: AppColors.primaryText,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 180.w,
+                        margin: EdgeInsets.only(top: 5.w),
+                        child: Text(
+                          "${item.firstName}",
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: AppColors.primarySecondaryElementText,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 180.w,
+                        margin: EdgeInsets.only(top: 5.w),
+                        child: Text(
+                          "${item.phone}",
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: AppColors.primarySecondaryElementText,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 180.w,
+                        margin: EdgeInsets.only(top: 5.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${"Balance".tr()} : ${item.indebtedness ?? 0} LYD",
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: balance <= 300
+                                    ? AppColors.primaryRed
+                                    : AppColors.primaryGreen,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.h,
+                            ),
+                            Text(
+                              "${"Indebtedness".tr()} : ${item.balance ?? 0} LYD",
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: balance >= 1000
+                                    ? AppColors.primaryRed
+                                    : AppColors.primaryGreen,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      ChatUserItem userItem = ChatUserItem();
+                      userItem.token = item.token;
+                      userItem.name = item.firstName;
+                      userItem.cid = item.cid ?? 0;
+                      userItem.avatar = item.avatar;
+                      userItem.msgNum = 0;
+                      userItem.lastMsg = "no msg!";
+                      userItem.lastTime = "";
+                      Logic(context: context).goChat(userItem);
+                    },
+                    child: Container(
+                      width: 60.w,
+                      height: 30.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryElement,
+                        borderRadius: BorderRadius.all(Radius.circular(10.w)),
+                      ),
+                      alignment: Alignment.center,
                       child: Text(
-                        "${item.businessName}",
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        "chat".tr(),
                         style: TextStyle(
-                          color: AppColors.primaryText,
-                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryBackground,
+                          fontWeight: FontWeight.normal,
                           fontSize: 14.sp,
                         ),
-                      ),
-                    ),
-                    Container(
-                      width: 180.w,
-                      margin: EdgeInsets.only(top: 5.w),
-                      child: Text(
-                        "${item.firstName}",
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: AppColors.primarySecondaryElementText,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 180.w,
-                      margin: EdgeInsets.only(top: 5.w),
-                      child: Text(
-                        "${item.phone}",
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: AppColors.primarySecondaryElementText,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 180.w,
-                      margin: EdgeInsets.only(top: 5.w),
-                      child: Text(
-                        "${item.balance??0} LYD",
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: balance <=300?AppColors.primaryRed:AppColors.primaryGreen,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                    ),
-
-                  ],),
-                GestureDetector(
-                  onTap: (){
-                    ChatUserItem userItem = ChatUserItem();
-                    userItem.token = item.token;
-                    userItem.name = item.firstName;
-                    userItem.cid = item.cid??0;
-                    userItem.avatar = item.avatar;
-                    userItem.msgNum = 0;
-                    userItem.lastMsg = "no msg!";
-                    userItem.lastTime = "";
-                    Logic(context: context).goChat(userItem);
-                  },
-                  child: Container(
-                    width: 60.w,
-                    height: 30.h,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryElement,
-                      borderRadius: BorderRadius.all(Radius.circular(10.w)),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "chat".tr(),
-                      style: TextStyle(
-                        color: AppColors.primaryBackground,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14.sp,
                       ),
                     ),
                   ),
-                ),
-              ],),
+                ],
+              ),
             )
           ],
-        ),),
+        ),
+      ),
     );
   }
 }
 
 class BuildAgentListItem extends StatelessWidget {
   final AgentData item;
-  const BuildAgentListItem({Key? key,required this.item}) : super(key: key);
+  const BuildAgentListItem({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var balance = double.parse(item.balance??"0");
+    var balance = double.parse(item.balance ?? "0");
     return GestureDetector(
-      onTap: (){
-      },
+      onTap: () {},
       child: Container(
-        padding: EdgeInsets.only(top: 12.h,bottom: 12.h,left: 10.w,right: 10.w),
+        padding:
+            EdgeInsets.only(top: 12.h, bottom: 12.h, left: 10.w, right: 10.w),
         margin: EdgeInsets.only(bottom: 15.h),
         decoration: BoxDecoration(
           color: AppColors.primaryFourElementText,
-          border: Border.all(color: AppColors.primaryThreeElementText,width: 1.h),
+          border:
+              Border.all(color: AppColors.primaryThreeElementText, width: 1.h),
           borderRadius: BorderRadius.all(Radius.circular(15.w)),
         ),
         child: Row(
@@ -230,17 +260,19 @@ class BuildAgentListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              width:40.w,
+              width: 40.w,
               height: 40.w,
               padding: EdgeInsets.all(8.w),
-              clipBehavior:Clip.hardEdge,
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: AppColors.primaryBackground,
                 borderRadius: BorderRadius.all(Radius.circular(20.w)),
               ),
-              child:  Image.asset('assets/icons/store.png'),
+              child: Image.asset('assets/icons/store.png'),
             ),
-            SizedBox(width: 10.w,),
+            SizedBox(
+              width: 10.w,
+            ),
             Container(
               width: 270.w,
               child: Row(
@@ -285,25 +317,27 @@ class BuildAgentListItem extends StatelessWidget {
                         width: 180.w,
                         margin: EdgeInsets.only(top: 5.w),
                         child: Text(
-                          "${item.balance??0} LYD",
+                          "${item.balance ?? 0} LYD",
                           textAlign: TextAlign.start,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: balance <=300?AppColors.primaryRed:AppColors.primaryGreen,
+                            color: balance <= 300
+                                ? AppColors.primaryRed
+                                : AppColors.primaryGreen,
                             fontWeight: FontWeight.bold,
                             fontSize: 14.sp,
                           ),
                         ),
                       ),
-
-                    ],),
+                    ],
+                  ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       ChatUserItem userItem = ChatUserItem();
                       userItem.token = item.token;
                       userItem.name = item.firstName;
-                      userItem.cid = item.cid??0;
+                      userItem.cid = item.cid ?? 0;
                       userItem.avatar = item.avatar;
                       userItem.msgNum = 0;
                       userItem.lastMsg = "no msg!";
@@ -328,12 +362,12 @@ class BuildAgentListItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                ],),
+                ],
+              ),
             )
           ],
-        ),),
+        ),
+      ),
     );
   }
 }
-
-
