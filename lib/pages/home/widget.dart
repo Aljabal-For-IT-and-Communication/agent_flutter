@@ -20,18 +20,18 @@ class BuildAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userProfile = context.read<HomeBloc>().state.userProfile;
-    double indebtedness =  double.parse(userProfile?.indebtedness??"0");
-    double maxIndebtedness =  double.parse(userProfile?.maxIndebtedness??"0");
-    double? maxBalance =  double.parse(userProfile?.maxBalance??"0");
-    double? indebtedness1 = indebtedness/maxIndebtedness;
-    if (indebtedness1.isNaN || indebtedness1.isInfinite){
+    double indebtedness = double.parse(userProfile?.indebtedness ?? "0");
+    double maxIndebtedness = double.parse(userProfile?.maxIndebtedness ?? "0");
+    double? maxBalance = double.parse(userProfile?.maxBalance ?? "0");
+    double? indebtedness1 = indebtedness / maxIndebtedness;
+    if (indebtedness1.isNaN || indebtedness1.isInfinite) {
       indebtedness1 = 0;
     }
     print("indebtedness1------------");
     print(indebtedness1);
-    double? balance =  double.parse(userProfile?.balance??"0");
-    double? balance1 = balance/maxBalance;
-    if (balance1.isNaN || balance1.isInfinite){
+    double? balance = double.parse(userProfile?.balance ?? "0");
+    double? balance1 = balance / maxBalance;
+    if (balance1.isNaN || balance1.isInfinite) {
       balance1 = 0;
     }
     return Container(
@@ -71,13 +71,16 @@ class BuildAppBar extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(5.h)),
                         ),
-                        child: userProfile==null?Image.asset('assets/icons/head.png'):CachedNetworkImage(
-                            imageUrl: "$SERVER_IMG_URL${userProfile.avatar}",
-                            fit: BoxFit.fitWidth,
-                            errorWidget: (context, url, error) => Image(
-                                  image: AssetImage('assets/icons/head.png'),
-                                )
-                        ),
+                        child: userProfile == null
+                            ? Image.asset('assets/icons/head.png')
+                            : CachedNetworkImage(
+                                imageUrl:
+                                    "$SERVER_IMG_URL${userProfile.avatar}",
+                                fit: BoxFit.fitWidth,
+                                errorWidget: (context, url, error) => Image(
+                                      image:
+                                          AssetImage('assets/icons/head.png'),
+                                    )),
                       ),
                       SizedBox(
                         width: 10.w,
@@ -171,7 +174,7 @@ class BuildAppBar extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        "${userProfile?.indebtedness??0} LYD",
+                        "${userProfile?.indebtedness ?? 0} LYD",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.primaryBackground,
@@ -185,7 +188,7 @@ class BuildAppBar extends StatelessWidget {
                     ),
                     Container(
                       height: 8.h,
-                      width: 120.w,
+                      width: 85.w,
                       child: LinearProgressIndicator(
                         backgroundColor: AppColors.primaryBackground,
                         color: AppColors.primaryGreen,
@@ -196,7 +199,7 @@ class BuildAppBar extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  width: 50.w,
+                  width: 20.w,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -218,7 +221,7 @@ class BuildAppBar extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        "${userProfile?.balance??0} LYD",
+                        "${(double.tryParse(userProfile?.balance?.toString() ?? "0") ?? 0) - (double.tryParse(userProfile?.indebtedness?.toString() ?? "0") ?? 0)} LYD",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.primaryBackground,
@@ -232,10 +235,57 @@ class BuildAppBar extends StatelessWidget {
                     ),
                     Container(
                       height: 8.h,
-                      width: 120.w,
+                      width: 85.w,
                       child: LinearProgressIndicator(
                         backgroundColor: AppColors.primaryBackground,
                         color: AppColors.primaryRed,
+                        value: indebtedness1,
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  width: 20.w,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Text(
+                        "ْCeiling".tr(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.primaryBackground,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 18.sp,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Container(
+                      child: Text(
+                        "${userProfile?.balance ?? 0} LYD",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.primaryBackground,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 18.sp,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Container(
+                      height: 8.h,
+                      width: 85.w,
+                      child: LinearProgressIndicator(
+                        backgroundColor: AppColors.primaryBackground,
+                        color: AppColors.primaryFirstElement,
                         value: balance1,
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       ),
@@ -256,21 +306,23 @@ class BuildAppBar extends StatelessWidget {
 
 class BuildListItem extends StatelessWidget {
   final ShippingOperationData item;
-  const BuildListItem({Key? key,required this.item}) : super(key: key);
+  const BuildListItem({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return GestureDetector(
-      onTap: (){
-       // Navigator.of(context).pushNamed(AppRoutes.MessageDetail,arguments: item);
+      onTap: () {
+        // Navigator.of(context).pushNamed(AppRoutes.MessageDetail,arguments: item);
       },
       child: Container(
-        padding: EdgeInsets.only(top: 6.h,bottom: 12.h,left: 10.w,right: 10.w),
+        padding:
+            EdgeInsets.only(top: 6.h, bottom: 12.h, left: 10.w, right: 10.w),
         margin: EdgeInsets.only(bottom: 15.h),
         decoration: BoxDecoration(
           color: AppColors.primaryFourElementText,
-          border: Border.all(color: AppColors.primaryThreeElementText,width: 1.h),
+          border:
+              Border.all(color: AppColors.primaryThreeElementText, width: 1.h),
           borderRadius: BorderRadius.all(Radius.circular(15.w)),
         ),
         child: Row(
@@ -278,17 +330,19 @@ class BuildListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              width:40.w,
+              width: 40.w,
               height: 40.w,
               padding: EdgeInsets.all(8.w),
-              clipBehavior:Clip.hardEdge,
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: AppColors.primaryBackground,
                 borderRadius: BorderRadius.all(Radius.circular(20.w)),
               ),
               child: Image.asset('assets/icons/money2.png'),
             ),
-            SizedBox(width: 10.w,),
+            SizedBox(
+              width: 10.w,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -351,7 +405,8 @@ class BuildListItem extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],),
+              ],
+            ),
             Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -370,7 +425,9 @@ class BuildListItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5.h,),
+                  SizedBox(
+                    height: 5.h,
+                  ),
                   Container(
                     width: 100.w,
                     child: Text(
@@ -387,7 +444,8 @@ class BuildListItem extends StatelessWidget {
                   )
                 ]),
           ],
-        ),),
+        ),
+      ),
     );
   }
 }
@@ -405,8 +463,8 @@ class MenuView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           GestureDetector(
-            onTap: (){
-               Navigator.of(context).pushNamed(AppRoutes.AccountStatement);
+            onTap: () {
+              Navigator.of(context).pushNamed(AppRoutes.AccountStatement);
             },
             child: Container(
               width: 100.w,
@@ -418,8 +476,8 @@ class MenuView extends StatelessWidget {
                   BoxShadow(
                     color: AppColors.primaryFourElementText, // 阴影颜色
                     spreadRadius: 1, // 阴影扩展半径
-                    blurRadius: 10,  // 模糊半径
-                    offset: Offset(5, 5),  // 右下方向的阴影偏移
+                    blurRadius: 10, // 模糊半径
+                    offset: Offset(5, 5), // 右下方向的阴影偏移
                   ),
                   BoxShadow(
                     color: AppColors.primaryFourElementText,
@@ -434,7 +492,7 @@ class MenuView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height:5.h,
+                    height: 5.h,
                   ),
                   Container(
                     height: 38.h,
@@ -462,8 +520,9 @@ class MenuView extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () async{
-              var result = await Navigator.of(context).pushNamed(AppRoutes.TransferBalance);
+            onTap: () async {
+              var result = await Navigator.of(context)
+                  .pushNamed(AppRoutes.TransferBalance);
               if (result == 'ok') {
                 Logic(context: context).init();
               }
@@ -478,8 +537,8 @@ class MenuView extends StatelessWidget {
                   BoxShadow(
                     color: AppColors.primaryFourElementText, // 阴影颜色
                     spreadRadius: 1, // 阴影扩展半径
-                    blurRadius: 10,  // 模糊半径
-                    offset: Offset(5, 5),  // 右下方向的阴影偏移
+                    blurRadius: 10, // 模糊半径
+                    offset: Offset(5, 5), // 右下方向的阴影偏移
                   ),
                   BoxShadow(
                     color: AppColors.primaryFourElementText,
@@ -494,7 +553,7 @@ class MenuView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height:5.h,
+                    height: 5.h,
                   ),
                   Container(
                     height: 38.h,
@@ -522,8 +581,8 @@ class MenuView extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: (){
-               Navigator.of(context).pushNamed(AppRoutes.Credit);
+            onTap: () {
+              Navigator.of(context).pushNamed(AppRoutes.Credit);
             },
             child: Container(
               width: 100.w,
@@ -535,8 +594,8 @@ class MenuView extends StatelessWidget {
                   BoxShadow(
                     color: AppColors.primaryFourElementText, // 阴影颜色
                     spreadRadius: 1, // 阴影扩展半径
-                    blurRadius: 10,  // 模糊半径
-                    offset: Offset(5, 5),  // 右下方向的阴影偏移
+                    blurRadius: 10, // 模糊半径
+                    offset: Offset(5, 5), // 右下方向的阴影偏移
                   ),
                   BoxShadow(
                     color: AppColors.primaryFourElementText,
@@ -551,7 +610,7 @@ class MenuView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height:5.h,
+                    height: 5.h,
                   ),
                   Container(
                     height: 38.h,
@@ -583,4 +642,3 @@ class MenuView extends StatelessWidget {
     );
   }
 }
-

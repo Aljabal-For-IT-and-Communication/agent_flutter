@@ -1,4 +1,3 @@
-
 const SERVER_API_URL = 'https://api.alafdal-pluse.ly/';
 const SERVER_API_WSS = 'wss://api.alafdal-pluse.ly/ws_agent';
 // const SERVER_API_URL = 'http://10.0.2.2:8005/';
@@ -22,5 +21,3 @@ const String STORAGE_DEVICE_FIRST_OPEN_KEY = 'device_first_open';
 const String STORAGE_LANGUAGE_CODE = 'language_code';
 
 const String APPID = "2b8731acd0d4481e851913553c702663";
-
-

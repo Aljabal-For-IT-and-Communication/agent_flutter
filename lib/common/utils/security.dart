@@ -19,26 +19,29 @@ String duSHA256(String input) {
   return digest.toString();
 }
 
-String getRandomString(int length){
-  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+String getRandomString(int length) {
+  const _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   Random _rnd = Random();
-  return String.fromCharCodes(Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+  return String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 }
 
-String getOrderNumber(){
-   return DateTime.now().millisecondsSinceEpoch.toString();
+String getOrderNumber() {
+  return DateTime.now().millisecondsSinceEpoch.toString();
 }
 
-
-Future<bool> request_permission(Permission permission) async{
+Future<bool> request_permission(Permission permission) async {
   var permission_status = await permission.status;
   print("permission_status------${permission_status}");
-  if(permission_status != PermissionStatus.granted) { //here
+  if (permission_status != PermissionStatus.granted) {
+    //here
     var status = await permission.request();
 
-    if(status != PermissionStatus.granted) {  //here
+    if (status != PermissionStatus.granted) {
+      //here
       print("denied");
-      toastInfo(msg:"Please open the setting page to set permissions");
+      toastInfo(msg: "Please open the setting page to set permissions");
       await openAppSettings();
       return false;
     }
@@ -47,39 +50,52 @@ Future<bool> request_permission(Permission permission) async{
   return true;
 }
 
-Future<bool> printPdf(TransferCollectionData item) async{
+Future<bool> printPdf(TransferCollectionData item) async {
   final pdf = pw.Document();
-  final font = await rootBundle.load("assets/fonts/Avenir-Book.ttf");
+  final font = await rootBundle.load("assets/fonts/Cairo-Regular.ttf");
+
+  final imageBytes = await rootBundle.load('assets/icons/logo1.png');
+  final image = pw.MemoryImage(imageBytes.buffer.asUint8List());
+
   pdf.addPage(pw.Page(
       pageFormat: PdfPageFormat.a4,
+      textDirection: pw.TextDirection.rtl,
       build: (pw.Context context) {
         return pw.Column(
             mainAxisAlignment: pw.MainAxisAlignment.center,
             crossAxisAlignment: pw.CrossAxisAlignment.center,
             children: [
               pw.Center(
-                child: pw.Text("Order ID:${item.id}", style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
+                child: pw.Image(image, width: 150, height: 150),
+              ),
+              pw.SizedBox(height: 20),
+              pw.Center(
+                child: pw.Text("Order ID:  ${item.id}",
+                    style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
               ),
               pw.SizedBox(height: 10),
               pw.Center(
-                child: pw.Text("Name:${item.name}", style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
+                child: pw.Text("Name:  ${item.name}",
+                    style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
               ),
               pw.SizedBox(height: 10),
               pw.Center(
-                child: pw.Text("Phone Number:${item.phone}", style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
+                child: pw.Text("Phone Number:  ${item.phone}",
+                    style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
               ),
               pw.SizedBox(height: 10),
               pw.Center(
-                child: pw.Text("Amount:${item.amount}", style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
+                child: pw.Text("Amount:  ${item.amount}",
+                    style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
               ),
               pw.SizedBox(height: 10),
               pw.Center(
-                child: pw.Text("Time:${timeFormated(item.createdAt)}", style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
+                child: pw.Text("Time:  ${timeFormated(item.createdAt)}",
+                    style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
               ),
             ]); // Center
       }));
 
- return await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdf.save());
+  return await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => pdf.save());
 }
-
-
