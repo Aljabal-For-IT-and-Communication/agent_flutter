@@ -15,7 +15,6 @@ import 'package:app/common/values/colors.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'logic.dart';
 
-
 class BuildDropdownAgentInput extends StatelessWidget {
   const BuildDropdownAgentInput({Key? key}) : super(key: key);
 
@@ -82,20 +81,19 @@ class BuildDropdownAgentInput extends StatelessWidget {
 }
 
 class BuildDropdownAgentNameInput extends StatelessWidget {
-
   const BuildDropdownAgentNameInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var state = context.read<CollectionItemBloc>().state;
     TextEditingController agentController = TextEditingController();
-    List<AgentData> items = state.agentList.isEmpty?[]:state.agentList;
+    List<AgentData> items = state.agentList.isEmpty ? [] : state.agentList;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "Transferred to".tr(),
             textAlign: TextAlign.left,
@@ -104,20 +102,24 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w,top: 0.h),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 0.h),
           decoration: BoxDecoration(
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryThreeElementText)
-          ),
-          child:  TypeAheadField<AgentData>(
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: TypeAheadField<AgentData>(
             suggestionsCallback: (search) {
-              return items.where((item) => item.firstName!.contains(search)).toList();
+              return items
+                  .where((item) => item.firstName!.contains(search))
+                  .toList();
             },
             builder: (context, controller, focusNode) {
               agentController = controller;
@@ -151,42 +153,45 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
                     hintStyle: TextStyle(
                       color: AppColors.primaryThreeElementText,
                     ),
-                  )
-              );
+                  ));
             },
             itemBuilder: (context, agent) {
               return ListTile(
-                title: Text(agent.firstName??""),
-                subtitle: Text(agent.phone??""),
+                title: Text(agent.firstName ?? ""),
+                subtitle: Text(agent.phone ?? ""),
               );
             },
             onSelected: (AgentData? newValue) {
-              agentController.text = newValue?.firstName??"";
-              context.read<CollectionItemBloc>().add(AgentItemChanged(newValue));
+              agentController.text = newValue?.firstName ?? "";
+              context
+                  .read<CollectionItemBloc>()
+                  .add(AgentItemChanged(newValue));
             },
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
 }
 
 class BuildDropdownSalePointNameInput extends StatelessWidget {
-
   const BuildDropdownSalePointNameInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var state = context.read<CollectionItemBloc>().state;
     TextEditingController salePointController = TextEditingController();
-    List<SalePointData> items = state.salePointList.isEmpty?[]:state.salePointList;
+    List<SalePointData> items =
+        state.salePointList.isEmpty ? [] : state.salePointList;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "Transferred to".tr(),
             textAlign: TextAlign.left,
@@ -195,20 +200,24 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w,top: 0.h),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 0.h),
           decoration: BoxDecoration(
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryThreeElementText)
-          ),
-          child:  TypeAheadField<SalePointData>(
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: TypeAheadField<SalePointData>(
             suggestionsCallback: (search) {
-              return items.where((item) => item.firstName!.contains(search)).toList();
+              return items
+                  .where((item) => item.firstName!.contains(search))
+                  .toList();
             },
             builder: (context, controller, focusNode) {
               salePointController = controller;
@@ -217,7 +226,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
                   focusNode: focusNode,
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: "Search First Name",
+                    hintText: "Search Business Name",
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -242,22 +251,25 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
                     hintStyle: TextStyle(
                       color: AppColors.primaryThreeElementText,
                     ),
-                  )
-              );
+                  ));
             },
             itemBuilder: (context, sale_point) {
               return ListTile(
-                title: Text(sale_point.firstName??""),
-                subtitle: Text(sale_point.phone??""),
+                title: Text(sale_point.businessName ?? ""),
+                subtitle: Text(sale_point.phone ?? ""),
               );
             },
             onSelected: (SalePointData? newValue) {
-              salePointController.text = newValue?.firstName??"";
-              context.read<CollectionItemBloc>().add(SalePointItemChanged(newValue));
+              salePointController.text = newValue?.businessName ?? "";
+              context
+                  .read<CollectionItemBloc>()
+                  .add(SalePointItemChanged(newValue));
             },
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
@@ -412,7 +424,9 @@ class BuildPhoneInput extends StatelessWidget {
       child: TextField(
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
-          hintText: "Enter First Name".tr(),
+          hintText:
+              "Enter ${context.read<CollectionItemBloc>().state.agent == "Agent" ? "First Name" : "Business Name"}"
+                  .tr(),
           contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -562,7 +576,7 @@ class BuildCollectBtn extends StatelessWidget {
               ),
             ))),
         onTap: () async {
-        //  FocusManager.instance.primaryFocus?.unfocus();
+          //  FocusManager.instance.primaryFocus?.unfocus();
           // var state = context.read<CollectionItemBloc>().state;
           // String Amount = state.Amount;
           // String phone = state.phone;
@@ -574,8 +588,7 @@ class BuildCollectBtn extends StatelessWidget {
           //   toastInfo(msg: "Amount not empty!".tr());
           //   return;
           // }
-        //  Logic(context: context).postTransformation();
-
+          //  Logic(context: context).postTransformation();
         });
   }
 }
@@ -606,7 +619,7 @@ class BuildBtn extends StatelessWidget {
               ),
             ))),
         onTap: () {
-         // final state = context.read<CollectionItemBloc>().state;
+          // final state = context.read<CollectionItemBloc>().state;
           // if (state.phone == "") {
           //   toastInfo(msg: "First Name is not empty");
           //   return;

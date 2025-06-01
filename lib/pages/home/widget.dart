@@ -364,7 +364,7 @@ class BuildListItem extends StatelessWidget {
                 Container(
                   width: 170.w,
                   child: Text(
-                    "${item.firstName}",
+                    "${item.businessName}",
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

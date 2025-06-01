@@ -47,7 +47,7 @@ class BuildListItem extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        "Name".tr()+": ${item.firstName}",
+                        "Name".tr()+": ${item.businessName ?? item.firstName}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.primaryText,
@@ -198,7 +198,7 @@ class BuildListItem extends StatelessWidget {
                   width: 170.w,
                   margin: EdgeInsets.only(top: 5.w),
                   child: Text(
-                    "${item.firstName}",
+                    "${item.businessName ?? item.firstName}",
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

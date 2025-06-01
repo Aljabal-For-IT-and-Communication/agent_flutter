@@ -200,7 +200,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
           ),
           child:  TypeAheadField<SalePointData>(
             suggestionsCallback: (search) {
-              return items.where((item) => item.firstName!.contains(search)).toList();
+              return items.where((item) => item.businessName!.contains(search)).toList();
             },
             builder: (context, controller, focusNode) {
               salePointController = controller;
@@ -209,7 +209,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
                   focusNode: focusNode,
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: "Search First Name",
+                    hintText: "Search Business Name",
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -239,12 +239,12 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
             },
             itemBuilder: (context, sale_point) {
               return ListTile(
-                title: Text(sale_point.firstName??""),
+                title: Text(sale_point.businessName??""),
                 subtitle: Text(sale_point.phone??""),
               );
             },
             onSelected: (SalePointData? newValue) {
-              salePointController.text = newValue?.firstName??"";
+              salePointController.text = newValue?.businessName??"";
               context.read<DebitBloc>().add(IsShowChanged(false));
               context.read<DebitBloc>().add(SalePointItemChanged(newValue));
             },

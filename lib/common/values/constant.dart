@@ -3,12 +3,12 @@ const SERVER_API_WSS = 'wss://api.alafdal-pluse.ly/ws_agent';
 // const SERVER_API_URL = 'http://10.0.2.2:8005/';
 // const SERVER_API_WSS = 'wss://10.0.2.2:8005/ws_agent';
 
-const SERVER_IMG_URL = 'https://admin.pos.dbestech.com/uploads/';
-const SERVER_API_IMG_URL = 'https://admin.pos.dbestech.com/';
+const SERVER_IMG_URL = 'https://admin.alafdal-pluse.ly/uploads/';
+const SERVER_API_IMG_URL = 'https://admin.alafdal-pluse.ly/';
 
-const String VersionNumber = '1.0.0';
+const String VersionNumber = '1.0.1';
 
-const String ReleaseDate = '2024-10-30';
+const String ReleaseDate = '2025-6-1';
 
 const String STORAGE_USER_PROFILE_KEY = 'user_profile';
 

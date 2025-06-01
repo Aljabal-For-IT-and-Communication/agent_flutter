@@ -99,7 +99,7 @@ class _DebitPageState extends State<DebitPage> {
                       SizedBox(height: 10.h,),
                       Container(
                         child: Text(
-                          "Name".tr()+": ${state.agent=="Agent"?state.agentItem?.firstName:state.salePointItem?.firstName}",
+                          "Name".tr()+": ${state.agent=="Agent"?state.agentItem?.firstName:state.salePointItem?.businessName}",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: AppColors.primaryText,

@@ -64,6 +64,7 @@ class Logic{
       if (result.code == 0 && result.data!=null) {
         if (result.data!.isNotEmpty) {
           var agentRechargeRecordList = state.agentRechargeRecordList.toList();
+          agentRechargeRecordList.clear();
           agentRechargeRecordList.addAll(result.data!);
           context.read<ShipmentBloc>().add(AgentRechargeRecordChanged(agentRechargeRecordList));
         }

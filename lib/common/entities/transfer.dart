@@ -177,6 +177,7 @@ class AgentRechargeRecordData {
   int? salesPointId;
   int? toAgentId;
   String? updatedAt;
+  String? businessName;
 
   AgentRechargeRecordData(
       {this.amount,
@@ -190,6 +191,7 @@ class AgentRechargeRecordData {
         this.profit,
         this.salesPointId,
         this.toAgentId,
+        this.businessName,
         this.updatedAt});
 
   AgentRechargeRecordData.fromJson(Map<String, dynamic> json) {
@@ -202,6 +204,7 @@ class AgentRechargeRecordData {
     id = json['id'];
     phone = json['phone'];
     profit = json['profit'];
+    businessName = json['business_name'];
     salesPointId = json['sales_point_id'];
     toAgentId = json['to_agent_id'];
     updatedAt = json['updated_at'];
@@ -215,6 +218,7 @@ class AgentRechargeRecordData {
     data['deleted_at'] = this.deletedAt;
     data['first_name'] = this.firstName;
     data['from_agent_id'] = this.fromAgentId;
+    data['business_name'] = this.businessName;
     data['id'] = this.id;
     data['phone'] = this.phone;
     data['profit'] = this.profit;
@@ -427,6 +431,7 @@ class AgentCollectRecordData {
   String? deletedAt;
   String? firstName;
   int? fromAgentId;
+  String? businessName;
   int? id;
   String? phone;
   int? salesPointId;
@@ -445,6 +450,7 @@ class AgentCollectRecordData {
         this.phone,
         this.salesPointId,
         this.toAgentId,
+        this.businessName,
         this.updatedAt});
 
   AgentCollectRecordData.fromJson(Map<String, dynamic> json) {
@@ -456,6 +462,7 @@ class AgentCollectRecordData {
     firstName = json['first_name'];
     fromAgentId = json['from_agent_id'];
     id = json['id'];
+    businessName = json['business_name'];
     phone = json['phone'];
     salesPointId = json['sales_point_id'];
     toAgentId = json['to_agent_id'];
@@ -471,6 +478,7 @@ class AgentCollectRecordData {
     data['deleted_at'] = this.deletedAt;
     data['first_name'] = this.firstName;
     data['from_agent_id'] = this.fromAgentId;
+    data['business_name'] = this.businessName;
     data['id'] = this.id;
     data['phone'] = this.phone;
     data['sales_point_id'] = this.salesPointId;
