@@ -216,7 +216,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
           child: TypeAheadField<SalePointData>(
             suggestionsCallback: (search) {
               return items
-                  .where((item) => item.firstName!.contains(search))
+                  .where((item) => item.businessName!.contains(search))
                   .toList();
             },
             builder: (context, controller, focusNode) {

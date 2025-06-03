@@ -19,14 +19,14 @@ class BuildAppBar extends StatelessWidget {
     return Container(
       width: 375.w,
       decoration: BoxDecoration(
-          color: AppColors.primaryBackground,
-          image: DecorationImage(
-            alignment: Alignment.topCenter,
-            image: AssetImage('assets/icons/headbg.png'),
-            fit: BoxFit.fitWidth, // 完全填充
-          ),
+        color: AppColors.primaryBackground,
+        image: DecorationImage(
+          alignment: Alignment.topCenter,
+          image: AssetImage('assets/icons/headbg.png'),
+          fit: BoxFit.fitWidth, // 完全填充
         ),
-      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w,bottom: 0.h),
+      ),
+      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 0.h),
       child: Column(
         children: [
           SizedBox(
@@ -39,11 +39,16 @@ class BuildAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap:(){Navigator.pop(context);},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     width: 24.w,
                     height: 24.w,
-                    child: Icon(Icons.arrow_back,color: AppColors.primaryBackground,),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: AppColors.primaryBackground,
+                    ),
                   ),
                 ),
                 Container(
@@ -60,8 +65,10 @@ class BuildAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container( width: 24.w,
-                  height: 24.w,)
+                Container(
+                  width: 24.w,
+                  height: 24.w,
+                )
               ],
             ),
           ),
@@ -84,7 +91,7 @@ class BuildAppBar extends StatelessWidget {
           ),
           Container(
             child: Text(
-              "${userProfile?.indebtedness??0}LYD",
+              "${userProfile?.indebtedness ?? 0}LYD",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.primaryBackground,
@@ -103,19 +110,18 @@ class BuildAppBar extends StatelessWidget {
 }
 
 class BuildDropdownTypeInput extends StatelessWidget {
-
   const BuildDropdownTypeInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<String> items = ['recharge','retrack'];
+    List<String> items = ['recharge', 'retrack'];
     var type = context.read<TransferBalanceBloc>().state.type;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "Type of converter".tr(),
             textAlign: TextAlign.left,
@@ -124,18 +130,20 @@ class BuildDropdownTypeInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w,top: 10.h),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
           decoration: BoxDecoration(
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryThreeElementText)
-          ),
-          child:  DropdownButton<String>(
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: DropdownButton<String>(
             elevation: 0,
             value: type,
             underline: Container(),
@@ -150,31 +158,34 @@ class BuildDropdownTypeInput extends StatelessWidget {
               );
             }).toList(),
             onChanged: (String? newValue) {
-               print(newValue);
-               context.read<TransferBalanceBloc>().add(TypeChanged(newValue??"recharge"));
+              print(newValue);
+              context
+                  .read<TransferBalanceBloc>()
+                  .add(TypeChanged(newValue ?? "recharge"));
             },
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
 }
 
 class BuildDropdownAgentInput extends StatelessWidget {
-
   const BuildDropdownAgentInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<String> items = ['Agent','SalePoint'];
+    List<String> items = ['Agent', 'SalePoint'];
     var agent = context.read<TransferBalanceBloc>().state.agent;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "Agent or Sale Point".tr(),
             textAlign: TextAlign.left,
@@ -183,18 +194,20 @@ class BuildDropdownAgentInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w,top: 10.h),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
           decoration: BoxDecoration(
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryThreeElementText)
-          ),
-          child:  DropdownButton<String>(
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: DropdownButton<String>(
             elevation: 0,
             value: agent,
             underline: Container(),
@@ -210,31 +223,34 @@ class BuildDropdownAgentInput extends StatelessWidget {
             }).toList(),
             onChanged: (String? newValue) {
               print(newValue);
-              context.read<TransferBalanceBloc>().add(AgentChanged(newValue??"Agent"));
+              context
+                  .read<TransferBalanceBloc>()
+                  .add(AgentChanged(newValue ?? "Agent"));
             },
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
 }
 
 class BuildDropdownAgentNameInput extends StatelessWidget {
-
   const BuildDropdownAgentNameInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var state = context.read<TransferBalanceBloc>().state;
     TextEditingController agentController = TextEditingController();
-    List<AgentData> items = state.agentList.isEmpty?[]:state.agentList;
+    List<AgentData> items = state.agentList.isEmpty ? [] : state.agentList;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "Transferred to".tr(),
             textAlign: TextAlign.left,
@@ -243,20 +259,24 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w,top: 0.h),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 0.h),
           decoration: BoxDecoration(
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryThreeElementText)
-          ),
-          child:  TypeAheadField<AgentData>(
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: TypeAheadField<AgentData>(
             suggestionsCallback: (search) {
-              return items.where((item) => item.firstName!.contains(search)).toList();
+              return items
+                  .where((item) => item.firstName!.contains(search))
+                  .toList();
             },
             builder: (context, controller, focusNode) {
               agentController = controller;
@@ -290,43 +310,45 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
                     hintStyle: TextStyle(
                       color: AppColors.primaryThreeElementText,
                     ),
-                  )
-              );
+                  ));
             },
             itemBuilder: (context, agent) {
               return ListTile(
-                title: Text(agent.firstName??""),
-                subtitle: Text(agent.phone??""),
+                title: Text(agent.firstName ?? ""),
+                subtitle: Text(agent.phone ?? ""),
               );
             },
             onSelected: (AgentData? newValue) {
-              agentController.text = newValue?.firstName??"";
-              context.read<TransferBalanceBloc>().add(AgentItemChanged(newValue));
+              agentController.text = newValue?.firstName ?? "";
+              context
+                  .read<TransferBalanceBloc>()
+                  .add(AgentItemChanged(newValue));
             },
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
 }
 
 class BuildDropdownAgentPhoneInput extends StatelessWidget {
-
   const BuildDropdownAgentPhoneInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var state = context.read<TransferBalanceBloc>().state;
 
-    List<AgentData> items = state.agentList.isEmpty?[]:state.agentList;
+    List<AgentData> items = state.agentList.isEmpty ? [] : state.agentList;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "Transferred to".tr(),
             textAlign: TextAlign.left,
@@ -335,18 +357,20 @@ class BuildDropdownAgentPhoneInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w,top: 10.h),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
           decoration: BoxDecoration(
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryThreeElementText)
-          ),
-          child:  DropdownButton<AgentData>(
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: DropdownButton<AgentData>(
             elevation: 0,
             value: state.agentItem,
             underline: Container(),
@@ -361,31 +385,35 @@ class BuildDropdownAgentPhoneInput extends StatelessWidget {
               );
             }).toList(),
             onChanged: (AgentData? newValue) {
-              context.read<TransferBalanceBloc>().add(AgentItemChanged(newValue));
+              context
+                  .read<TransferBalanceBloc>()
+                  .add(AgentItemChanged(newValue));
             },
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
 }
 
 class BuildDropdownSalePointNameInput extends StatelessWidget {
-
   const BuildDropdownSalePointNameInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var state = context.read<TransferBalanceBloc>().state;
     TextEditingController salePointController = TextEditingController();
-    List<SalePointData> items = state.salePointList.isEmpty?[]:state.salePointList;
+    List<SalePointData> items =
+        state.salePointList.isEmpty ? [] : state.salePointList;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "Transferred to".tr(),
             textAlign: TextAlign.left,
@@ -394,20 +422,24 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w,top: 0.h),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 0.h),
           decoration: BoxDecoration(
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryThreeElementText)
-          ),
-          child:  TypeAheadField<SalePointData>(
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: TypeAheadField<SalePointData>(
             suggestionsCallback: (search) {
-              return items.where((item) => item.firstName!.contains(search)).toList();
+              return items
+                  .where((item) => item.businessName!.contains(search))
+                  .toList();
             },
             builder: (context, controller, focusNode) {
               salePointController = controller;
@@ -416,7 +448,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
                   focusNode: focusNode,
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: "Search First Name",
+                    hintText: "Search Business Name",
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -441,42 +473,47 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
                     hintStyle: TextStyle(
                       color: AppColors.primaryThreeElementText,
                     ),
-                  )
-              );
+                  ));
             },
             itemBuilder: (context, sale_point) {
               return ListTile(
-                title: Text(sale_point.firstName??""),
-                subtitle: Text(sale_point.phone??""),
+                title:
+                    Text(sale_point.businessName ?? sale_point.firstName ?? ""),
+                subtitle: Text(sale_point.phone ?? ""),
               );
             },
             onSelected: (SalePointData? newValue) {
-              salePointController.text = newValue?.firstName??"";
-              context.read<TransferBalanceBloc>().add(SalePointItemChanged(newValue));
+              salePointController.text =
+                  newValue?.businessName ?? newValue?.firstName ?? "";
+              context
+                  .read<TransferBalanceBloc>()
+                  .add(SalePointItemChanged(newValue));
             },
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
 }
 
 class BuildDropdownSalePointPhoneInput extends StatelessWidget {
-
   const BuildDropdownSalePointPhoneInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var state = context.read<TransferBalanceBloc>().state;
 
-    List<SalePointData> items = state.salePointList.isEmpty?[]:state.salePointList;
+    List<SalePointData> items =
+        state.salePointList.isEmpty ? [] : state.salePointList;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "Transferred to".tr(),
             textAlign: TextAlign.left,
@@ -485,18 +522,20 @@ class BuildDropdownSalePointPhoneInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w,top: 10.h),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
           decoration: BoxDecoration(
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryThreeElementText)
-          ),
-          child:  DropdownButton<SalePointData>(
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: DropdownButton<SalePointData>(
             elevation: 0,
             value: state.salePointItem,
             underline: Container(),
@@ -506,42 +545,43 @@ class BuildDropdownSalePointPhoneInput extends StatelessWidget {
                 child: Container(
                   width: 280.w,
                   height: 40.h,
-                  child: Text("${item.firstName}"),
+                  child: Text("${item.businessName ?? item.firstName}"),
                 ),
               );
             }).toList(),
             onChanged: (SalePointData? newValue) {
-              context.read<TransferBalanceBloc>().add(SalePointItemChanged(newValue));
+              context
+                  .read<TransferBalanceBloc>()
+                  .add(SalePointItemChanged(newValue));
             },
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
 }
 
 class BuildPhoneInput extends StatelessWidget {
-
   const BuildPhoneInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: 330.w,
       height: 46.h,
-      margin: EdgeInsets.only(right:10.w),
-      padding: EdgeInsets.only(left: 10.w,right: 10.w),
+      margin: EdgeInsets.only(right: 10.w),
+      padding: EdgeInsets.only(left: 10.w, right: 10.w),
       decoration: BoxDecoration(
           color: AppColors.primaryFourElementText,
           borderRadius: BorderRadius.all(Radius.circular(8.w)),
-          border: Border.all(color: AppColors.primaryFourElementText)
-      ),
+          border: Border.all(color: AppColors.primaryFourElementText)),
       child: TextField(
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
-          hintText: "Enter First Name".tr(),
+          hintText: "Enter Phone number".tr(),
           contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -573,7 +613,7 @@ class BuildPhoneInput extends StatelessWidget {
           fontSize: 14.sp,
         ),
         onChanged: (value) {
-           context.read<TransferBalanceBloc>().add(PhoneChanged(value));
+          context.read<TransferBalanceBloc>().add(PhoneChanged(value));
         },
         maxLines: 1,
         autocorrect: false, // 自动纠正
@@ -584,7 +624,6 @@ class BuildPhoneInput extends StatelessWidget {
 }
 
 class BuildAmountInput extends StatelessWidget {
-
   const BuildAmountInput({Key? key}) : super(key: key);
 
   @override
@@ -594,7 +633,7 @@ class BuildAmountInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 15.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 15.h),
           child: Text(
             "Amount to be transferred".tr(),
             textAlign: TextAlign.left,
@@ -603,17 +642,19 @@ class BuildAmountInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w),
           decoration: BoxDecoration(
               color: AppColors.primaryFourElementText,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryFourElementText)
-          ),
+              border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
@@ -649,14 +690,16 @@ class BuildAmountInput extends StatelessWidget {
               fontSize: 14.sp,
             ),
             onChanged: (value) {
-               context.read<TransferBalanceBloc>().add(AmountChanged(value));
+              context.read<TransferBalanceBloc>().add(AmountChanged(value));
             },
             maxLines: 1,
             autocorrect: false, // 自动纠正
             obscureText: false, // 隐藏输入内容, 密码框
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
@@ -672,23 +715,24 @@ class BuildBtn extends StatelessWidget {
         child: Container(
             height: 46.h,
             width: 160.w,
-            margin: EdgeInsets.only(top: 10.h, left: 0.w, right: 0.w,bottom: 20.h),
+            margin:
+                EdgeInsets.only(top: 10.h, left: 0.w, right: 0.w, bottom: 20.h),
             decoration: BoxDecoration(
               color: AppColors.primaryElement,
               borderRadius: BorderRadius.all(Radius.circular(10.w)),
             ),
             child: Center(
                 child: Text(
-                  "transformation".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryBackground,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.sp,
-                  ),
-                ))),
+              "transformation".tr(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryBackground,
+                fontWeight: FontWeight.normal,
+                fontSize: 16.sp,
+              ),
+            ))),
         onTap: () {
-            Logic(context: context).postTransformation();
+          Logic(context: context).postTransformation();
         });
   }
 }
