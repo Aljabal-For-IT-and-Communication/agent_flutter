@@ -5,6 +5,7 @@ import 'package:app/common/utils/utils.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:app/common/widgets/toast.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -94,6 +95,133 @@ Future<bool> printPdf(TransferCollectionData item) async {
                     style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
               ),
             ]); // Center
+      }));
+
+  return await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => pdf.save());
+}
+
+Future<bool> printCollectionReportPdf(
+    List<AgentCollectRecordData> collectionList) async {
+  bool isArabic = "No".tr() != "No";
+
+  collectionList.sort((a, b) {
+    int cmp = (a.salesPointId ?? 0).compareTo(b.salesPointId ?? 0);
+    if (cmp != 0) return cmp;
+    return (a.toAgentId ?? 0).compareTo(b.toAgentId ?? 0);
+  });
+
+  final pdf = pw.Document();
+  final font = await rootBundle.load("assets/fonts/Cairo-Regular.ttf");
+  final ttf = pw.Font.ttf(font);
+  final imageBytes = await rootBundle.load('assets/icons/logo1.png');
+  final image = pw.MemoryImage(imageBytes.buffer.asUint8List());
+
+  List<pw.Widget> widgets = [];
+
+  // Header with logo and title
+  widgets.add(pw.Center(child: pw.Image(image, width: 150, height: 150)));
+  widgets.add(pw.SizedBox(height: 20));
+  widgets.add(pw.Center(
+      child: pw.Text("Collection Report".tr(),
+          style: pw.TextStyle(font: ttf, fontSize: 24))));
+  widgets.add(pw.SizedBox(height: 20));
+
+  double overallTotal = 0;
+
+  if (collectionList.isEmpty) {
+    widgets.add(pw.Center(
+        child: pw.Text("No data available".tr(),
+            style: pw.TextStyle(font: ttf, fontSize: 16))));
+  } else {
+    // Grouping logic
+    List<List<AgentCollectRecordData>> groups = [];
+    List<String> groupTitles = [];
+    List<AgentCollectRecordData> currentGroup = [];
+    String? currentTitle;
+
+    for (var item in collectionList) {
+      String title;
+      if (item.salesPointId != null && item.salesPointId != 0) {
+        title = "${"Sales Point".tr()} : ${item.businessName}";
+      } else if (item.toAgentId != null && item.toAgentId != 0) {
+        title = "${"Agent".tr()} : ${item.firstName}";
+      } else {
+        title = "Other".tr();
+      }
+      if (currentTitle == null) {
+        currentTitle = title;
+      }
+      if (title != currentTitle) {
+        groups.add(currentGroup);
+        groupTitles.add(currentTitle);
+        currentGroup = [];
+        currentTitle = title;
+      }
+      currentGroup.add(item);
+    }
+    // Add last group
+    if (currentGroup.isNotEmpty && currentTitle != null) {
+      groups.add(currentGroup);
+      groupTitles.add(currentTitle);
+    }
+
+    // Build PDF for each group
+    for (int i = 0; i < groups.length; i++) {
+      final group = groups[i];
+      final title = groupTitles[i];
+      widgets.add(pw.Header(
+          level: 1,
+          text: title.tr(),
+          textStyle: pw.TextStyle(
+              font: ttf, fontSize: 18, fontWeight: pw.FontWeight.bold)));
+
+      final headers = ['Amount'.tr(), 'Date'.tr()];
+      final data = group.map((item) {
+        return [item.amount ?? '0', timeFormated(item.updatedAt)];
+      }).toList();
+
+      widgets.add(pw.TableHelper.fromTextArray(
+        headers: headers,
+        data: data,
+        headerStyle: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
+        cellStyle: pw.TextStyle(font: ttf),
+        headerDecoration: pw.BoxDecoration(color: PdfColors.grey300),
+        cellAlignment: pw.Alignment.center,
+        cellAlignments: isArabic
+            ? {0: pw.Alignment.centerRight, 1: pw.Alignment.centerLeft}
+            : {0: pw.Alignment.centerLeft, 1: pw.Alignment.centerRight},
+      ));
+
+      double groupTotal = group.fold(
+          0, (sum, item) => sum + (double.tryParse(item.amount ?? '0') ?? 0));
+      widgets.add(pw.SizedBox(height: 10));
+      widgets.add(pw.Align(
+        alignment: pw.Alignment.centerRight,
+        child: pw.Text("${"Subtotal".tr()}: ${groupTotal.toStringAsFixed(2)}",
+            style: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold)),
+      ));
+      widgets.add(pw.SizedBox(height: 20));
+      overallTotal += groupTotal;
+    }
+  }
+
+  // Overall Total
+  widgets.add(pw.Divider());
+  widgets.add(pw.SizedBox(height: 10));
+  widgets.add(pw.Align(
+    alignment: isArabic ? pw.Alignment.centerRight : pw.Alignment.centerLeft,
+    child: pw.Text(
+        "${"Overall Total".tr()}: ${overallTotal.toStringAsFixed(2)}",
+        style: pw.TextStyle(
+            font: ttf, fontSize: 20, fontWeight: pw.FontWeight.bold)),
+  ));
+
+  pdf.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat.a4,
+      textDirection: pw.TextDirection.rtl,
+      build: (pw.Context context) {
+        return widgets;
       }));
 
   return await Printing.layoutPdf(

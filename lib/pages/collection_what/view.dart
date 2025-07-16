@@ -1,5 +1,6 @@
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/routes.dart';
+import 'package:app/common/utils/security.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/app.dart';
 import 'package:app/common/widgets/widgets.dart';
@@ -315,6 +316,29 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                       ),
                       SizedBox(
                         height: 20.h,
+                      ),
+                      GestureDetector (
+                        onTap:  () async{
+                          await printCollectionReportPdf(await Logic(context: context).getAllTransferCollection());
+                        },
+                        child: Container(
+                          width: 160.w,
+                          height: 46.h,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryElement,
+                            borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                          ),
+                          child: Text(
+                            "PDF Print".tr(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.primaryBackground,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

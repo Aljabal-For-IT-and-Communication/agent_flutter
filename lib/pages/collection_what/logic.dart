@@ -1,3 +1,4 @@
+import 'dart:math';
 
 import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/entities/entities.dart';
@@ -8,17 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  init(){
-
-  }
-
-
+  init() {}
 
   postTransferCollection(DateRequestEntity entity) async {
     try {
@@ -26,18 +23,21 @@ class Logic{
           indicator: CircularProgressIndicator(),
           maskType: EasyLoadingMaskType.clear,
           dismissOnTap: true);
-      var result1 = await SalePointAPI.transferCollectionTotalRecord(params: entity);
+      var result1 =
+          await SalePointAPI.transferCollectionTotalRecord(params: entity);
       if (result1.code == 0) {
         context.read<CollectionWhatBloc>().add(AmountChanged(result1.data!));
       }
 
       var result = await SalePointAPI.transferCollectionList(params: entity);
-      if (result.code == 0 && result.data!=null) {
-        if(result.data!.isNotEmpty) {
+      if (result.code == 0 && result.data != null) {
+        if (result.data!.isNotEmpty) {
           final state = context.read<CollectionWhatBloc>().state;
           var agentCollectRecordList = state.agentCollectRecordList.toList();
           agentCollectRecordList.addAll(result.data!);
-          context.read<CollectionWhatBloc>().add(AgentCollectRecordListChanged(agentCollectRecordList));
+          context
+              .read<CollectionWhatBloc>()
+              .add(AgentCollectRecordListChanged(agentCollectRecordList));
         }
       }
       EasyLoading.dismiss();
@@ -49,5 +49,30 @@ class Logic{
     }
   }
 
-
+  Future<List<AgentCollectRecordData>> getAllTransferCollection() async {
+    try {
+      EasyLoading.show(
+          indicator: CircularProgressIndicator(),
+          maskType: EasyLoadingMaskType.clear,
+          dismissOnTap: true);
+      final state = context.read<CollectionWhatBloc>().state;
+      DateRequestEntity entity = DateRequestEntity();
+      entity.startDate = state.startDate;
+      entity.endDate = state.endDate;
+      entity.page = -1; // -1 for all records
+      var result = await SalePointAPI.transferCollectionList(params: entity);
+      Logger.write("getAllTransferCollection: idk");
+      if (result.code == 0 && result.data != null) {
+        EasyLoading.dismiss();
+        Logger.write("getAllTransferCollection: ${result.data!.length}");
+        return result.data!.toList();
+      }
+      EasyLoading.dismiss();
+      return [];
+    } catch (e) {
+      EasyLoading.dismiss();
+      Logger.write("${e}");
+      return [];
+    }
+  }
 }

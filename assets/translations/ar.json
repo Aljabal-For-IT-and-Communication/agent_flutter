@@ -30,6 +30,7 @@
   "Search": "بحث",
   "name": "الاسم",
   "date": "التاريخ",
+  "Date": "التاريخ",
   "Current Balance": "الرصيد الحالي",
   "Received transfer balance": "الرصيد المحول المستلم",
   "Paid money": "المبالغ المدفوعة",
@@ -122,5 +123,10 @@
   "Search First Name": "البحث بالاسم الأول",
   "Agent": "مندوب",
   "SalePoint": "نقطة بيع",
-  "ْCeiling": "السقف"
+  "ْCeiling": "السقف",
+  "Other": "أخرى",
+  "Sales Point": "نقطة البيع",
+  "Subtotal": "الإجمالي",
+  "Overall Total": "الإجمالي الكلي",
+  "Collection Report": "تقرير التحصيلات"
 }

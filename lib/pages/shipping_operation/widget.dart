@@ -68,21 +68,23 @@ class BuildAppBar extends StatelessWidget {
 
 class BuildListItem extends StatelessWidget {
   final ShippingOperationData item;
-  const BuildListItem({Key? key,required this.item}) : super(key: key);
+  const BuildListItem({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         // Navigator.of(context).pushNamed(AppRoutes.MessageDetail,arguments: item);
       },
       child: Container(
-        padding: EdgeInsets.only(top: 6.h,bottom: 12.h,left: 10.w,right: 10.w),
+        padding:
+            EdgeInsets.only(top: 6.h, bottom: 12.h, left: 10.w, right: 10.w),
         margin: EdgeInsets.only(bottom: 15.h),
         decoration: BoxDecoration(
           color: AppColors.primaryFourElementText,
-          border: Border.all(color: AppColors.primaryThreeElementText,width: 1.h),
+          border:
+              Border.all(color: AppColors.primaryThreeElementText, width: 1.h),
           borderRadius: BorderRadius.all(Radius.circular(15.w)),
         ),
         child: Row(
@@ -90,17 +92,19 @@ class BuildListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              width:40.w,
+              width: 40.w,
               height: 40.w,
               padding: EdgeInsets.all(8.w),
-              clipBehavior:Clip.hardEdge,
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: AppColors.primaryBackground,
                 borderRadius: BorderRadius.all(Radius.circular(20.w)),
               ),
-              child:  Image.asset('assets/icons/money2.png'),
+              child: Image.asset('assets/icons/money2.png'),
             ),
-            SizedBox(width: 10.w,),
+            SizedBox(
+              width: 10.w,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -122,7 +126,7 @@ class BuildListItem extends StatelessWidget {
                 Container(
                   width: 170.w,
                   child: Text(
-                    "${item.firstName}",
+                    "${item.businessName ?? item.firstName}",
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -163,7 +167,8 @@ class BuildListItem extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],),
+              ],
+            ),
             Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -182,7 +187,9 @@ class BuildListItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5.h,),
+                  SizedBox(
+                    height: 5.h,
+                  ),
                   Container(
                     width: 100.w,
                     child: Text(
@@ -199,7 +206,8 @@ class BuildListItem extends StatelessWidget {
                   )
                 ]),
           ],
-        ),),
+        ),
+      ),
     );
   }
 }
