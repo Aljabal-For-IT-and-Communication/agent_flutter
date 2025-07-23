@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
+      context.read<HomeBloc>().add(UserProfileChanged(UserItem()));
       if (mounted) {
         var userProfile = Global.storageService.getUserProfile();
         context.read<HomeBloc>().add(UserProfileChanged(userProfile));

@@ -21,11 +21,11 @@ class Logic {
 
   asyncPostAllData() async {
     var state = context.read<SignInBloc>().state;
-    if(state.phone.isEmpty){
+    if (state.phone.isEmpty) {
       toastInfo(msg: "Phone not empty!");
       return;
     }
-    if(state.password.isEmpty){
+    if (state.password.isEmpty) {
       toastInfo(msg: "Password not empty!");
       return;
     }
@@ -41,6 +41,9 @@ class Logic {
       var result = await UserAPI.Login(params: loginRequestEntity);
       print(result.code);
       if (result.code == 0) {
+        context.read<SignInBloc>().add(PasswordChanged(""));
+        context.read<SignInBloc>().add(PhoneChanged(""));
+        context.read<SignInBloc>().add(CheckChanged(false));
         Global.storageService
             .setString(STORAGE_USER_PROFILE_KEY, jsonEncode(result.data!));
         Global.storageService

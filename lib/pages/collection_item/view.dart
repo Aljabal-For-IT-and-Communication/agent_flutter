@@ -39,8 +39,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
     super.dispose();
   }
 
-
-  postTransformation() async{
+  postTransformation() async {
     final state = context.read<CollectionItemBloc>().state;
     String Amount = state.Amount;
     String phone = state.phone;
@@ -48,8 +47,13 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
     //   toastInfo(msg: "First Name not empty!");
     //   return;
     // }
-    if(Amount.isEmpty){
-      toastInfo(msg: "Amount not empty!");
+    if (Amount.isEmpty) {
+      toastInfo(msg: "Amount not empty!".tr());
+      return;
+    }
+
+    if (state.agentItem == null && state.salePointItem == null) {
+      toastInfo(msg: "Please select agent or sale point!".tr());
       return;
     }
 
@@ -59,9 +63,10 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
-    TransferRequestEntity entity =  TransferRequestEntity();
+    TransferRequestEntity entity = TransferRequestEntity();
 
-    entity.id = state.agent=="Agent"?state.agentItem?.id:state.salePointItem?.id;
+    entity.id =
+        state.agent == "Agent" ? state.agentItem?.id : state.salePointItem?.id;
     entity.Category = state.agent;
     entity.Amount = state.Amount;
     try {
@@ -72,16 +77,16 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
         context.read<CollectionItemBloc>().add(IsShowChanged(false));
         double amountOwed = 0;
         double amounts = double.parse(state.Amount);
-        if(state.agent == "Agent"){
-          double balance =  double.parse(state.agentItem?.balance??"0");
+        if (state.agent == "Agent") {
+          double balance = double.parse(state.agentItem?.balance ?? "0");
           amountOwed = balance - amounts;
-          if (amountOwed.isNaN || amountOwed.isInfinite){
+          if (amountOwed.isNaN || amountOwed.isInfinite) {
             amountOwed = 0;
           }
-        }else{
-          double balance =  double.parse(state.salePointItem?.balance??"0");
+        } else {
+          double balance = double.parse(state.salePointItem?.balance ?? "0");
           amountOwed = balance + amounts;
-          if (amountOwed.isNaN || amountOwed.isInfinite){
+          if (amountOwed.isNaN || amountOwed.isInfinite) {
             amountOwed = 0;
           }
         }
@@ -98,7 +103,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                   children: [
                     Container(
                       child: Text(
-                        "Result".tr()+":",
+                        "Result".tr() + ":",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: AppColors.primaryText,
@@ -112,7 +117,8 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                     ),
                     Container(
                       child: Text(
-                        "Name".tr()+": ${state.agent == "Agent" ? state.agentItem?.firstName : state.salePointItem?.firstName}",
+                        "Name".tr() +
+                            ": ${state.agent == "Agent" ? state.agentItem?.firstName : state.salePointItem?.businessName}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.primaryText,
@@ -126,7 +132,8 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                     ),
                     Container(
                       child: Text(
-                        "Phone Number".tr()+": ${state.agent == "Agent" ? state.agentItem?.phone : state.salePointItem?.phone}",
+                        "Phone Number".tr() +
+                            ": ${state.agent == "Agent" ? state.agentItem?.phone : state.salePointItem?.phone}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.primaryText,
@@ -140,7 +147,8 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                     ),
                     Container(
                       child: Text(
-                        "Amount owed and to be collected".tr()+": ${amountOwed}",
+                        "Amount owed and to be collected".tr() +
+                            ": ${amountOwed}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.primaryText,
@@ -154,7 +162,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                     ),
                     Container(
                       child: Text(
-                        "Amount to be collected".tr()+": ${state.Amount}",
+                        "Amount to be collected".tr() + ": ${state.Amount}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.primaryText,
@@ -175,22 +183,25 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                             decoration: BoxDecoration(
                               color: AppColors.primaryElement,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10.w)),
+                                  BorderRadius.all(Radius.circular(10.w)),
                             ),
                             child: Center(
                                 child: Text(
-                                  "PDF Print".tr(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.primaryBackground,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.sp,
-                                  ),
-                                ))),
+                              "PDF Print".tr(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.primaryBackground,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16.sp,
+                              ),
+                            ))),
                         onTap: () async {
-                           await printPdf(result.data!);
-                           Navigator.pop(contexts);
-                           Navigator.pop(context);
+                          await printPdf(result.data!,
+                              businessName: state.agent == "Agent"
+                                  ? ""
+                                  : (state.salePointItem?.businessName ?? ""));
+                          Navigator.pop(contexts);
+                          Navigator.pop(context);
                         }),
                     GestureDetector(
                         child: Container(
@@ -201,20 +212,19 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                             decoration: BoxDecoration(
                               color: AppColors.primaryElement,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10.w)),
+                                  BorderRadius.all(Radius.circular(10.w)),
                             ),
                             child: Center(
                                 child: Text(
-                                  "Cancel".tr(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.primaryBackground,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.sp,
-                                  ),
-                                ))),
+                              "Cancel".tr(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.primaryBackground,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16.sp,
+                              ),
+                            ))),
                         onTap: () {
-
                           Navigator.of(contexts).pop();
                         })
                   ],
@@ -257,13 +267,15 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                 sliver: SliverToBoxAdapter(
                   child: BuildDropdownAgentInput(),
                 )),
-           SliverPadding(
+            SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.h,
                   horizontal: 16.w,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: state.agent=="Agent"?BuildDropdownAgentNameInput():BuildDropdownSalePointNameInput(),
+                  child: state.agent == "Agent"
+                      ? BuildDropdownAgentNameInput()
+                      : BuildDropdownSalePointNameInput(),
                 )),
             SliverPadding(
                 padding: EdgeInsets.symmetric(
@@ -287,58 +299,76 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                   horizontal: 16.w,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: state.isShow?Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 30.h,),
-                      Container(
-                        child: Text(
-                          "Result".tr()+":",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10.h,),
-                      Container(
-                        child: Text(
-                          "Name".tr()+": ${state.agent=="Agent"?state.agentItem?.firstName:state.salePointItem?.businessName}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10.h,),
-                      Container(child: Text(
-                          "Phone Number".tr()+": ${state.agent=="Agent"?state.agentItem?.phone:state.salePointItem?.phone}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.sp,
-                          ),
-                        ),),
-                      SizedBox(height: 10.h,),
-                      Container(
-                        child: Text(
-                          "Amount owed and to be collected".tr()+": ${state.agent=="Agent"?state.agentItem?.balance:state.salePointItem?.balance}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20.h,),
-                    ],):Container(),
+                  child: state.isShow
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 30.h,
+                            ),
+                            Container(
+                              child: Text(
+                                "Result".tr() + ":",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: AppColors.primaryText,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Container(
+                              child: Text(
+                                "Name".tr() +
+                                    ": ${state.agent == "Agent" ? state.agentItem?.firstName : state.salePointItem?.businessName}",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: AppColors.primaryText,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Container(
+                              child: Text(
+                                "Phone Number".tr() +
+                                    ": ${state.agent == "Agent" ? state.agentItem?.phone : state.salePointItem?.phone}",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: AppColors.primaryText,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Container(
+                              child: Text(
+                                "Amount owed and to be collected".tr() +
+                                    ": ${state.agent == "Agent" ? state.agentItem?.balance : state.salePointItem?.balance}",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: AppColors.primaryText,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                          ],
+                        )
+                      : Container(),
                 )),
             SliverPadding(
                 padding: EdgeInsets.symmetric(
@@ -358,21 +388,23 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                       child: Container(
                           height: 46.h,
                           width: 160.w,
-                          margin: EdgeInsets.only(top: 20.h, left: 0.w, right: 0.w),
+                          margin:
+                              EdgeInsets.only(top: 20.h, left: 0.w, right: 0.w),
                           decoration: BoxDecoration(
                             color: AppColors.primaryElement,
-                            borderRadius: BorderRadius.all(Radius.circular(10.w)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.w)),
                           ),
                           child: Center(
                               child: Text(
-                                "collection".tr(),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: AppColors.primaryBackground,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 16.sp,
-                                ),
-                              ))),
+                            "collection".tr(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.primaryBackground,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16.sp,
+                            ),
+                          ))),
                       onTap: () async {
                         postTransformation();
                       }),

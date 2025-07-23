@@ -25,7 +25,7 @@ class Logic{
       var result = await SalePointAPI.salePointList();
       if (result.code == 0) {
         context.read<CollectionItemBloc>().add(SalePointChanged(result.data!));
-        context.read<CollectionItemBloc>().add(SalePointItemChanged(result.data!.first));
+        // context.read<CollectionItemBloc>().add(SalePointItemChanged(result.data!.first));
       }
     } catch (e) {
       Logger.write("${e}");
@@ -36,7 +36,7 @@ class Logic{
       var result = await AgentAPI.agentList();
       if (result.code == 0) {
         context.read<CollectionItemBloc>().add(AgentListChanged(result.data!));
-        context.read<CollectionItemBloc>().add(AgentItemChanged(result.data!.first));
+        // context.read<CollectionItemBloc>().add(AgentItemChanged(result.data!.first));
       }
     } catch (e) {
       Logger.write("${e}");

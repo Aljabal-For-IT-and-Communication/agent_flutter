@@ -51,7 +51,7 @@ Future<bool> request_permission(Permission permission) async {
   return true;
 }
 
-Future<bool> printPdf(TransferCollectionData item) async {
+Future<bool> printPdf(TransferCollectionData item, {String businessName = ""}) async {
   final pdf = pw.Document();
   final font = await rootBundle.load("assets/fonts/Cairo-Regular.ttf");
 
@@ -76,7 +76,7 @@ Future<bool> printPdf(TransferCollectionData item) async {
               ),
               pw.SizedBox(height: 10),
               pw.Center(
-                child: pw.Text("Name:  ${item.name}",
+                child: pw.Text("Name:  ${businessName == "" ? item.name : businessName}",
                     style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
               ),
               pw.SizedBox(height: 10),

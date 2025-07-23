@@ -6,9 +6,9 @@ const SERVER_API_WSS = 'wss://api.alafdal-pluse.ly/ws_agent';
 const SERVER_IMG_URL = 'https://admin.alafdal-pluse.ly/uploads/';
 const SERVER_API_IMG_URL = 'https://admin.alafdal-pluse.ly/';
 
-const String VersionNumber = '1.0.4';
+const String VersionNumber = '1.0.5';
 
-const String ReleaseDate = '2025-7-16';
+const String ReleaseDate = '2025-7-24';
 
 const String STORAGE_USER_PROFILE_KEY = 'user_profile';
 

@@ -12,6 +12,7 @@ import 'package:app/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'bloc.dart';
 
 class Logic{
@@ -31,7 +32,7 @@ class Logic{
       var result = await SalePointAPI.salePointList();
       if (result.code == 0) {
         context.read<TransferBalanceBloc>().add(SalePointChanged(result.data!));
-        context.read<TransferBalanceBloc>().add(SalePointItemChanged(result.data!.first));
+        // context.read<TransferBalanceBloc>().add(SalePointItemChanged(result.data!.first));
       }
     } catch (e) {
       Logger.write("${e}");
@@ -42,7 +43,7 @@ class Logic{
       var result = await AgentAPI.agentList();
       if (result.code == 0) {
         context.read<TransferBalanceBloc>().add(AgentListChanged(result.data!));
-        context.read<TransferBalanceBloc>().add(AgentItemChanged(result.data!.first));
+        // context.read<TransferBalanceBloc>().add(AgentItemChanged(result.data!.first));
       }
     } catch (e) {
       Logger.write("${e}");
@@ -73,7 +74,12 @@ class Logic{
     //   return;
     // }
     if(Amount.isEmpty){
-      toastInfo(msg: "Amount not empty!");
+      toastInfo(msg: "Amount not empty!".tr());
+      return;
+    }
+
+    if (state.agentItem == null && state.salePointItem == null) {
+      toastInfo(msg: "Please select agent or sale point!".tr());
       return;
     }
     FocusManager.instance.primaryFocus?.unfocus();

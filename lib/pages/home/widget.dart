@@ -27,8 +27,6 @@ class BuildAppBar extends StatelessWidget {
     if (indebtedness1.isNaN || indebtedness1.isInfinite) {
       indebtedness1 = 0;
     }
-    print("indebtedness1------------");
-    print(indebtedness1);
     double? balance = double.parse(userProfile?.balance ?? "0");
     double? balance1 = balance / maxBalance;
     if (balance1.isNaN || balance1.isInfinite) {
