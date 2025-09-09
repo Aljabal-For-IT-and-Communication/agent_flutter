@@ -1,5 +1,3 @@
-
-
 class LoginRequestEntity {
   String? password;
   String? phone;
@@ -10,9 +8,9 @@ class LoginRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "password": password,
-    "phone": phone,
-  };
+        "password": password,
+        "phone": phone,
+      };
 }
 
 class VerificationRequestEntity {
@@ -23,42 +21,61 @@ class VerificationRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "phone": phone,
-  };
+        "phone": phone,
+      };
 }
 
 class RegisterRequestEntity {
-   String? first_name;
-   String? middle_name;
-   String? last_name;
-   String? city;
-   String? area;
-   String? phone;
-   String? email;
-   String? password;
+  String? firstName;
+  String? middleName;
+  String? lastName;
+  String? businessName;
+  int? city;
+  int? region;
+  String? address;
+  String? phone;
+  String? agentPhone;
+  String? email;
+  String? latitude;
+  String? longitude;
+  String? machineNumber;
+  String? password;
 
   RegisterRequestEntity({
-    this.password,
-    this.email,
-    this.first_name,
-    this.middle_name,
-    this.last_name,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.businessName,
     this.city,
-    this.area,
+    this.region,
+    this.address,
     this.phone,
+    this.agentPhone,
+    this.email,
+    this.latitude,
+    this.longitude,
+    this.machineNumber,
+    this.password,
   });
 
   Map<String, dynamic> toJson() => {
-    "password": password,
-    "email": email,
-    "first_name": first_name,
-    "middle_name": middle_name,
-    "last_name": last_name,
-    "city": city,
-    "area": area,
-    "phone": phone,
-  };
+        "first_name": firstName,
+        "middle_name": middleName,
+        "last_name": lastName,
+        "business_name": businessName,
+        "city": city,
+        "region": region,
+        "address": address,
+        "phone": phone,
+        "agent_phone": agentPhone,
+        "email": email,
+        "latitude": latitude,
+        "longitude": longitude,
+        "machine_number": machineNumber,
+        "password": password,
+      };
 }
+
 class ProfileRequestEntity {
   int? gender;
   String? birthday;
@@ -75,13 +92,14 @@ class ProfileRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "gender": gender,
-    "birthday": birthday,
-    "description": description,
-    "phone": phone,
-    "name": name,
-  };
+        "gender": gender,
+        "birthday": birthday,
+        "description": description,
+        "phone": phone,
+        "name": name,
+      };
 }
+
 class ChangePasswordRequestEntity {
   String? password;
   String? repassword;
@@ -92,10 +110,11 @@ class ChangePasswordRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "password": password,
-    "repassword": repassword,
-  };
+        "password": password,
+        "repassword": repassword,
+      };
 }
+
 class ForgetPasswordRequestEntity {
   String? password;
   String? phone;
@@ -108,10 +127,10 @@ class ForgetPasswordRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "password": password,
-    "phone": phone,
-    "verification_code": verification_code,
-  };
+        "password": password,
+        "phone": phone,
+        "verification_code": verification_code,
+      };
 }
 
 class UserLoginResponseEntity {
@@ -165,28 +184,28 @@ class UserItem {
 
   UserItem(
       {this.accessToken,
-        this.avatar,
-        this.balance,
-        this.cid,
-        this.city,
-        this.createdAt,
-        this.deletedAt,
-        this.email,
-        this.firstName,
-        this.id,
-        this.indebtedness,
-        this.lastName,
-        this.level,
-        this.maxBalance,
-        this.maxIndebtedness,
-        this.middleName,
-        this.phone,
-        this.pid,
-        this.profit,
-        this.region,
-        this.status,
-        this.token,
-        this.updatedAt});
+      this.avatar,
+      this.balance,
+      this.cid,
+      this.city,
+      this.createdAt,
+      this.deletedAt,
+      this.email,
+      this.firstName,
+      this.id,
+      this.indebtedness,
+      this.lastName,
+      this.level,
+      this.maxBalance,
+      this.maxIndebtedness,
+      this.middleName,
+      this.phone,
+      this.pid,
+      this.profit,
+      this.region,
+      this.status,
+      this.token,
+      this.updatedAt});
 
   UserItem.fromJson(Map<String, dynamic> json) {
     accessToken = json['access_token'];
@@ -242,10 +261,3 @@ class UserItem {
     return data;
   }
 }
-
-
-
-
-
-
-

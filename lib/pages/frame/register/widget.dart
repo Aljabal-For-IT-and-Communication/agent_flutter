@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:app/common/entities/entities.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,13 +13,11 @@ import 'package:app/common/values/colors.dart';
 import 'bloc.dart';
 import 'logic.dart';
 
-
 class BuildPresentationBtn extends StatelessWidget {
   const BuildPresentationBtn({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return GestureDetector(
         child: Container(
             height: 46.h,
@@ -26,16 +28,16 @@ class BuildPresentationBtn extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-                  "presentation",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryBackground,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.sp,
-                  ),
-                ))),
+              "Register".tr(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryBackground,
+                fontWeight: FontWeight.normal,
+                fontSize: 16.sp,
+              ),
+            ))),
         onTap: () {
-            Logic(context: context).handleRegister();
+          Logic(context: context).handleRegister();
         });
   }
 }
@@ -43,7 +45,10 @@ class BuildPresentationBtn extends StatelessWidget {
 class BuildInput extends StatelessWidget {
   final String name;
   final Function(String)? callFunc;
-  const BuildInput({Key? key,required this.name,required this.callFunc}) : super(key: key);
+  final int? maxLength;
+  const BuildInput(
+      {Key? key, required this.name, required this.callFunc, this.maxLength})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +57,7 @@ class BuildInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "${name}",
             textAlign: TextAlign.left,
@@ -61,19 +66,22 @@ class BuildInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w),
           decoration: BoxDecoration(
               color: AppColors.primaryFourElementText,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryFourElementText)
-          ),
+              border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
             keyboardType: TextInputType.multiline,
+            maxLength: maxLength,
             decoration: InputDecoration(
               hintText: "",
               contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -108,14 +116,28 @@ class BuildInput extends StatelessWidget {
             ),
             onChanged: callFunc,
             maxLines: 1,
-            autocorrect: false, // 自动纠正
-            obscureText: false, // 隐藏输入内容, 密码框
+            autocorrect: false,
+            obscureText: false,
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
 }
 
+class BuildMachineNumberInput extends StatelessWidget {
+  const BuildMachineNumberInput({Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return BuildInput(
+      name: "Machine Number".tr(),
+      callFunc: (value) {
+        context.read<RegisterBloc>().add(MachineNumberChanged(value));
+      },
+    );
+  }
+}

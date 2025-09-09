@@ -18,18 +18,25 @@ class LastNameChanged extends RegisterEvent {
   const LastNameChanged(this.lastName);
   final String lastName;
 }
-class CityChanged extends RegisterEvent {
-  const CityChanged(this.city);
-  final String city;
-}
-class AreaChanged extends RegisterEvent {
-  const AreaChanged(this.area);
-  final String area;
+
+class BusinessNameChanged extends RegisterEvent {
+  const BusinessNameChanged(this.businessName);
+  final String businessName;
 }
 
 class PhoneChanged extends RegisterEvent {
   const PhoneChanged(this.phone);
   final String phone;
+}
+
+class AddressChanged extends RegisterEvent {
+  const AddressChanged(this.address);
+  final String address;
+}
+
+class AgentPhoneChanged extends RegisterEvent {
+  const AgentPhoneChanged(this.agentPhone);
+  final String agentPhone;
 }
 
 class EmailChanged extends RegisterEvent {
@@ -45,4 +52,14 @@ class PasswordChanged extends RegisterEvent {
 class RePasswordChanged extends RegisterEvent {
   const RePasswordChanged(this.repassword);
   final String repassword;
+}
+
+class AgentItemChanged extends RegisterEvent {
+  const AgentItemChanged(this.agentItem);
+  final AgentData? agentItem;
+}
+
+class MachineNumberChanged extends RegisterEvent {
+  const MachineNumberChanged(this.machineNumber);
+  final String machineNumber;
 }

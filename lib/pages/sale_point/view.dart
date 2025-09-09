@@ -1,7 +1,6 @@
 import 'package:app/common/entities/entities.dart';
-import 'package:app/common/routes/routes.dart';
+import 'package:app/common/routes/names.dart';
 import 'package:app/common/values/values.dart';
-import 'package:app/common/widgets/app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +37,8 @@ class _SalePointPageState extends State<SalePointPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return BlocBuilder<SalePointBloc, SalePointState>(builder: (context, state) {
+    return BlocBuilder<SalePointBloc, SalePointState>(
+        builder: (context, state) {
       return Container(
           color: AppColors.primaryBackground,
           child: CustomScrollView(slivers: [
@@ -56,19 +56,34 @@ class _SalePointPageState extends State<SalePointPage> {
                   horizontal: 16.w,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: Container(
-                    width: 180.w,
-                    child: Text(
-                      "Sale Points List".tr(),
-                      textAlign: TextAlign.start,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: AppColors.primaryText,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14.sp,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Sale Points List".tr(),
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: AppColors.primaryText,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp,
+                          ),
+                        ),
                       ),
-                    ),
+                      IconButton(
+                        onPressed: () async {
+                          await Navigator.of(context)
+                              .pushNamed(AppRoutes.Register);
+                        },
+                        icon: Icon(Icons.add),
+                        color: AppColors.primaryA,
+                        tooltip: 'Add'.tr(),
+                        iconSize: 22.sp,
+                      ),
+                    ],
                   ),
                 )),
             SliverPadding(
@@ -76,28 +91,32 @@ class _SalePointPageState extends State<SalePointPage> {
                   vertical: 15.h,
                   horizontal: 16.w,
                 ),
-                sliver:state.salePointList.isEmpty?SliverToBoxAdapter(
-                  child: Container(
-                    width: 180.w,
-                    child: Text(
-                      "No content!".tr(),
-                      textAlign: TextAlign.start,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: AppColors.primaryText,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                  ),
-                ):SliverList(delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                    SalePointData item = state.salePointList.elementAt(index);
-                    return BuildListItem(item: item);
-                  },
-                  childCount: state.salePointList.length,
-                ))),
+                sliver: state.salePointList.isEmpty
+                    ? SliverToBoxAdapter(
+                        child: Container(
+                          width: 180.w,
+                          child: Text(
+                            "No content!".tr(),
+                            textAlign: TextAlign.start,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: AppColors.primaryText,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ),
+                      )
+                    : SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          SalePointData item =
+                              state.salePointList.elementAt(index);
+                          return BuildListItem(item: item);
+                        },
+                        childCount: state.salePointList.length,
+                      ))),
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,
@@ -124,28 +143,31 @@ class _SalePointPageState extends State<SalePointPage> {
                   vertical: 15.h,
                   horizontal: 16.w,
                 ),
-                sliver:state.agentList.isEmpty?SliverToBoxAdapter(
-                  child: Container(
-                    width: 180.w,
-                    child: Text(
-                      "No content!".tr(),
-                      textAlign: TextAlign.start,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: AppColors.primaryText,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                  ),
-                ):SliverList(delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        AgentData item = state.agentList.elementAt(index);
-                    return BuildAgentListItem(item: item);
-                  },
-                  childCount: state.agentList.length,
-                ))),
+                sliver: state.agentList.isEmpty
+                    ? SliverToBoxAdapter(
+                        child: Container(
+                          width: 180.w,
+                          child: Text(
+                            "No content!".tr(),
+                            textAlign: TextAlign.start,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: AppColors.primaryText,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ),
+                      )
+                    : SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          AgentData item = state.agentList.elementAt(index);
+                          return BuildAgentListItem(item: item);
+                        },
+                        childCount: state.agentList.length,
+                      ))),
             SliverPadding(
               padding: EdgeInsets.symmetric(
                 vertical: 0.w,

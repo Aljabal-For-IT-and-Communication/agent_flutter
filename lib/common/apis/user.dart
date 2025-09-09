@@ -16,7 +16,7 @@ class UserAPI {
     RegisterRequestEntity? params,
   }) async {
     var response = await HttpUtil().post(
-      'agent/register',
+      'sale_point/register',
       data: params?.toJson(),
     );
     return BaseResponseEntity.fromJson(response);
@@ -68,6 +68,4 @@ class UserAPI {
     );
     return BaseResponseEntity.fromJson(response);
   }
-
-
 }
