@@ -85,7 +85,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
           }
         } else {
           double balance = double.parse(state.salePointItem?.balance ?? "0");
-          amountOwed = balance + amounts;
+          amountOwed = balance - amounts;
           if (amountOwed.isNaN || amountOwed.isInfinite) {
             amountOwed = 0;
           }
@@ -147,7 +147,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                     ),
                     Container(
                       child: Text(
-                        "Amount owed and to be collected".tr() +
+                        "Amount owed".tr() +
                             ": ${amountOwed}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
