@@ -1,12 +1,12 @@
 import 'package:app/common/values/values.dart';
-import 'package:app/common/widgets/widgets.dart';
+// import 'package:app/common/widgets/widgets.dart';
 import 'package:app/global.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+// import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+// import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import 'bloc.dart';
 import 'widget.dart';
@@ -27,7 +27,9 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
       if (mounted) {
         var userProfile = Global.storageService.getUserProfile();
         context.read<TransferBalanceBloc>().add(AmountChanged(""));
-        context.read<TransferBalanceBloc>().add(UserProfileChanged(userProfile));
+        context
+            .read<TransferBalanceBloc>()
+            .add(UserProfileChanged(userProfile));
         Logic(context: context).init();
       }
     });
@@ -76,7 +78,9 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
                   horizontal: 16.w,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: state.agent=="Agent"?BuildDropdownAgentNameInput():BuildDropdownSalePointNameInput(),
+                  child: state.agent == "Agent"
+                      ? BuildDropdownAgentNameInput()
+                      : BuildDropdownSalePointNameInput(),
                 )),
             SliverPadding(
                 padding: EdgeInsets.symmetric(
@@ -84,8 +88,18 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
                   horizontal: 16.w,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: BuildPhoneInput(),
+                  child: state.agent == "SalePoint" && state.type == "recharge"
+                      ? BuildDropdownRechargeTypeInput()
+                      : Container(),
                 )),
+            // SliverPadding(
+            //     padding: EdgeInsets.symmetric(
+            //       vertical: 0.h,
+            //       horizontal: 16.w,
+            //     ),
+            //     sliver: SliverToBoxAdapter(
+            //       child: BuildPhoneInput(),
+            //     )),
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.h,
@@ -115,10 +129,12 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Container(
                         child: Text(
-                          "Type of converter".tr()+": ${state.type}",
+                          "Type of converter".tr() + ": ${state.type}",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: AppColors.primaryText,
@@ -127,10 +143,13 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Container(
                         child: Text(
-                          "Name".tr()+": ${state.agent=="Agent"?state.agentItem?.firstName:state.salePointItem?.businessName}",
+                          "Name".tr() +
+                              ": ${state.agent == "Agent" ? state.agentItem?.firstName : state.salePointItem?.businessName}",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: AppColors.primaryText,
@@ -139,10 +158,13 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Container(
                         child: Text(
-                          "Phone Number".tr()+": ${state.agent=="Agent"?state.agentItem?.phone:state.salePointItem?.phone}",
+                          "Phone Number".tr() +
+                              ": ${state.agent == "Agent" ? state.agentItem?.phone : state.salePointItem?.phone}",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: AppColors.primaryText,
@@ -151,10 +173,12 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Container(
                         child: Text(
-                          "Amount to be transferred".tr()+": ${state.Amount}",
+                          "Amount to be transferred".tr() + ": ${state.Amount}",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: AppColors.primaryText,
@@ -163,7 +187,9 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20.h,),
+                      SizedBox(
+                        height: 20.h,
+                      ),
                       Container(
                         width: 330.w,
                         child: Text(
@@ -176,8 +202,11 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20.h,),
-                    ],),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                    ],
+                  ),
                 )),
             SliverPadding(
                 padding: EdgeInsets.symmetric(

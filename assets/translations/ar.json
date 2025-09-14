@@ -150,5 +150,7 @@
   "Agent Phone should not not be empty!": "رقم هاتف الوكيل لا يجب أن يكون فارغًا!",
   "Password should not not be empty!": "كلمة المرور لا يجب أن تكون فارغة!",
   "Password min length is 6!": "الحد الأدنى لطول كلمة المرور هو 6!",
-  "confirm Password not same!": "تأكيد كلمة المرور غير مطابق!"
+  "confirm Password not same!": "تأكيد كلمة المرور غير مطابق!",
+  "Recharge types": "أنواع الشحن",
+  "Recharge type": "نوع الشحن"
 }

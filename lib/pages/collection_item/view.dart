@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+// import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -42,7 +42,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
   postTransformation() async {
     final state = context.read<CollectionItemBloc>().state;
     String Amount = state.Amount;
-    String phone = state.phone;
+    // String phone = state.phone;
     // if(phone.isEmpty){
     //   toastInfo(msg: "First Name not empty!");
     //   return;
@@ -54,6 +54,10 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
 
     if (state.agentItem == null && state.salePointItem == null) {
       toastInfo(msg: "Please select agent or sale point!".tr());
+      return;
+    }
+    if (state.collectTypeId == null) {
+      toastInfo(msg: "Please select collect type".tr());
       return;
     }
 
@@ -69,6 +73,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
         state.agent == "Agent" ? state.agentItem?.id : state.salePointItem?.id;
     entity.Category = state.agent;
     entity.Amount = state.Amount;
+    entity.transferType = state.collectTypeId;
     try {
       var result = await SalePointAPI.transferCollection(params: entity);
       EasyLoading.dismiss();
@@ -147,8 +152,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                     ),
                     Container(
                       child: Text(
-                        "Amount owed".tr() +
-                            ": ${amountOwed}",
+                        "Amount owed".tr() + ": ${amountOwed}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.primaryText,
@@ -377,6 +381,14 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                 ),
                 sliver: SliverToBoxAdapter(
                   child: BuildAmountInput(),
+                )),
+            SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 0.h,
+                  horizontal: 16.w,
+                ),
+                sliver: SliverToBoxAdapter(
+                  child: BuildDropdownCollectTypeInput(),
                 )),
             SliverPadding(
                 padding: EdgeInsets.symmetric(

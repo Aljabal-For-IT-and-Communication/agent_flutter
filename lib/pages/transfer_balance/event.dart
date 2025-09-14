@@ -3,12 +3,13 @@ part of 'bloc.dart';
 abstract class TransferBalanceEvent {
   const TransferBalanceEvent();
 }
+
 class UserProfileChanged extends TransferBalanceEvent {
   const UserProfileChanged(this.userProfile);
 
   final UserItem userProfile;
-
 }
+
 class SalePointChanged extends TransferBalanceEvent {
   const SalePointChanged(this.salePointList);
 
@@ -39,7 +40,6 @@ class PageChanged extends TransferBalanceEvent {
   final int page;
 }
 
-
 class PhoneChanged extends TransferBalanceEvent {
   const PhoneChanged(this.phone);
   final String phone;
@@ -50,7 +50,6 @@ class AmountChanged extends TransferBalanceEvent {
   final String Amount;
 }
 
-
 class TypeChanged extends TransferBalanceEvent {
   const TypeChanged(this.type);
   final String type;
@@ -59,4 +58,14 @@ class TypeChanged extends TransferBalanceEvent {
 class AgentChanged extends TransferBalanceEvent {
   const AgentChanged(this.agent);
   final String agent;
+}
+
+class RechargeTypesChanged extends TransferBalanceEvent {
+  const RechargeTypesChanged(this.rechargeTypes);
+  final List<RechargeTypeData> rechargeTypes;
+}
+
+class RechargeTypeSelected extends TransferBalanceEvent {
+  const RechargeTypeSelected(this.rechargeTypeId);
+  final int? rechargeTypeId;
 }

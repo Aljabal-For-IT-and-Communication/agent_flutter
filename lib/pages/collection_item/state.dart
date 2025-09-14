@@ -11,6 +11,8 @@ class CollectionItemState {
     this.type = "recharge",
     this.agent = "Agent",
     this.isShow = false,
+    this.collectTypes = const <CollectTypeData>[],
+    this.collectTypeId,
   });
 
   final String phone;
@@ -22,6 +24,8 @@ class CollectionItemState {
   final List<AgentData> agentList;
   final AgentData? agentItem;
   final SalePointData? salePointItem;
+  final List<CollectTypeData> collectTypes;
+  final int? collectTypeId;
 
   CollectionItemState copyWith(
       {List<SalePointData>? salePointList,
@@ -32,7 +36,9 @@ class CollectionItemState {
       String? Amount,
       String? type,
       String? agent,
-      bool? isShow}) {
+      bool? isShow,
+      List<CollectTypeData>? collectTypes,
+      int? collectTypeId}) {
     return CollectionItemState(
         salePointList: salePointList ?? this.salePointList,
         agentList: agentList ?? this.agentList,
@@ -42,6 +48,8 @@ class CollectionItemState {
         agent: agent ?? this.agent,
         agentItem: agentItem ?? this.agentItem,
         salePointItem: salePointItem ?? this.salePointItem,
-        isShow: isShow ?? this.isShow);
+        isShow: isShow ?? this.isShow,
+        collectTypes: collectTypes ?? this.collectTypes,
+        collectTypeId: collectTypeId ?? this.collectTypeId);
   }
 }

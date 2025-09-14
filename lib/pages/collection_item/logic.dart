@@ -1,4 +1,3 @@
-
 import 'package:app/common/apis/agent.dart';
 import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/entities/entities.dart';
@@ -9,15 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  init(){
+  init() {
     agent();
     salePoint();
+    collectTypes();
   }
 
   salePoint() async {
@@ -31,6 +31,7 @@ class Logic{
       Logger.write("${e}");
     }
   }
+
   agent() async {
     try {
       var result = await AgentAPI.agentList();
@@ -43,6 +44,16 @@ class Logic{
     }
   }
 
-
-
+  collectTypes() async {
+    try {
+      var result = await SalePointAPI.collectTypesList();
+      if (result.code == 0) {
+        context
+            .read<CollectionItemBloc>()
+            .add(CollectTypesChanged(result.data ?? []));
+      }
+    } catch (e) {
+      Logger.write("${e}");
+    }
+  }
 }

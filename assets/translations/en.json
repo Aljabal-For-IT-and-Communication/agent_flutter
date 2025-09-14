@@ -134,5 +134,7 @@
   "Agent Phone should not not be empty!": "Agent Phone should not be empty!",
   "Password should not not be empty!": "Password should not be empty!",
   "Password min length is 6!": "Password minimum length is 6!",
-  "confirm Password not same!": "Confirm password does not match!"
+  "confirm Password not same!": "Confirm password does not match!",
+  "Recharge types": "Recharge Types",
+  "Recharge type": "Recharge Type"
 }

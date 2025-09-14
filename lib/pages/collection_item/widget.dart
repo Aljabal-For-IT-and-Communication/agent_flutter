@@ -1,8 +1,4 @@
-import 'dart:io';
-
 import 'package:app/common/entities/entities.dart';
-import 'package:app/common/utils/utils.dart';
-import 'package:app/common/widgets/toast.dart';
 import 'package:app/pages/collection_item/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'logic.dart';
 
 class BuildDropdownAgentInput extends StatelessWidget {
   const BuildDropdownAgentInput({Key? key}) : super(key: key);
@@ -626,5 +621,66 @@ class BuildBtn extends StatelessWidget {
           // }
           context.read<CollectionItemBloc>().add(IsShowChanged(true));
         });
+  }
+}
+
+class BuildDropdownCollectTypeInput extends StatelessWidget {
+  const BuildDropdownCollectTypeInput({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var state = context.read<CollectionItemBloc>().state;
+    List<CollectTypeData> items = state.collectTypes.isEmpty ? [] : state.collectTypes;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
+          child: Text(
+            "Collect type".tr(),
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              color: AppColors.primaryText,
+              fontWeight: FontWeight.normal,
+              fontSize: 14.sp,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
+        Container(
+          width: 330.w,
+          height: 46.h,
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
+          decoration: BoxDecoration(
+              color: AppColors.primaryBackground,
+              borderRadius: BorderRadius.all(Radius.circular(8.w)),
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: DropdownButton<int>(
+            elevation: 0,
+            value: state.collectTypeId,
+            underline: Container(),
+            items: items.map((CollectTypeData item) {
+              return DropdownMenuItem<int>(
+                value: item.id,
+                child: Container(
+                  width: 280.w,
+                  height: 40.h,
+                  child: Text("${item.typeName ?? ''}"),
+                ),
+              );
+            }).toList(),
+            onChanged: (int? newValue) {
+              context.read<CollectionItemBloc>().add(CollectTypeSelected(newValue));
+            },
+          ),
+        ),
+        SizedBox(
+          height: 15.h,
+        ),
+      ],
+    );
   }
 }

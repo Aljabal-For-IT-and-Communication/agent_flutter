@@ -158,10 +158,11 @@ class BuildDropdownTypeInput extends StatelessWidget {
               );
             }).toList(),
             onChanged: (String? newValue) {
-              print(newValue);
-              context
-                  .read<TransferBalanceBloc>()
-                  .add(TypeChanged(newValue ?? "recharge"));
+              final value = newValue ?? 'recharge';
+              context.read<TransferBalanceBloc>().add(TypeChanged(value));
+              if (value == 'recharge') {
+                Logic(context: context).rechargeTypes();
+              }
             },
           ),
         ),
@@ -734,5 +735,70 @@ class BuildBtn extends StatelessWidget {
         onTap: () {
           Logic(context: context).postTransformation();
         });
+  }
+}
+
+class BuildDropdownRechargeTypeInput extends StatelessWidget {
+  const BuildDropdownRechargeTypeInput({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var state = context.read<TransferBalanceBloc>().state;
+    List<RechargeTypeData> items =
+        state.rechargeTypes.isEmpty ? [] : state.rechargeTypes;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
+          child: Text(
+            "Recharge type".tr(),
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              color: AppColors.primaryText,
+              fontWeight: FontWeight.normal,
+              fontSize: 14.sp,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
+        Container(
+          width: 330.w,
+          height: 46.h,
+          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
+          decoration: BoxDecoration(
+              color: AppColors.primaryBackground,
+              borderRadius: BorderRadius.all(Radius.circular(8.w)),
+              border: Border.all(color: AppColors.primaryThreeElementText)),
+          child: DropdownButton<int>(
+            elevation: 0,
+            value: state.rechargeTypeId,
+            underline: Container(),
+            items: items.map((RechargeTypeData item) {
+              return DropdownMenuItem<int>(
+                value: item.id,
+                child: Container(
+                  width: 280.w,
+                  height: 40.h,
+                  child: Text(
+                      "${item.typeName ?? ''} ${item.profit != null ? '(' + item.profit! + ')' : ''}"),
+                ),
+              );
+            }).toList(),
+            onChanged: (int? newValue) {
+              context
+                  .read<TransferBalanceBloc>()
+                  .add(RechargeTypeSelected(newValue));
+            },
+          ),
+        ),
+        SizedBox(
+          height: 15.h,
+        ),
+      ],
+    );
   }
 }

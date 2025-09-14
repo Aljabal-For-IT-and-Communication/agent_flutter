@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:app/common/values/colors.dart';
@@ -20,12 +19,13 @@ void main() async {
   await Global.init();
   var language = Global.storageService.getLanguage();
   Locale defaultLocale = Locale('en');
-  if(language==""){
+  if (language == "") {
     // 获取设备的语言环境
     final deviceLocale = WidgetsBinding.instance.window.locale;
     // 如果设备语言是阿拉伯语（'ar'），则使用阿拉伯语；否则使用英语
-    defaultLocale = deviceLocale.languageCode == 'ar' ? Locale('ar') : Locale('en');
-  }else{
+    defaultLocale =
+        deviceLocale.languageCode == 'ar' ? Locale('ar') : Locale('en');
+  } else {
     defaultLocale = language == 'ar' ? Locale('ar') : Locale('en');
   }
   runApp(
@@ -33,7 +33,7 @@ void main() async {
       supportedLocales: [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       fallbackLocale: Locale('en'), // 回退语言为英语
-      startLocale: defaultLocale,   // 根据设备语言设置默认语言
+      startLocale: defaultLocale, // 根据设备语言设置默认语言
       child: MyApp(),
     ),
   );
@@ -48,13 +48,13 @@ Future firebaseInit() async {
   );
   if (Platform.isAndroid) {
     FirebaseMassagingHandler.flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()!
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()!
         .createNotificationChannel(FirebaseMassagingHandler.channel_message);
   }
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -62,20 +62,18 @@ class MyApp extends StatelessWidget {
         child: ScreenUtilInit(
             designSize: Size(375, 812),
             builder: (context, child) => MaterialApp(
-              title: 'Alafdal+Agents',
-              theme: AppTheme.light,
-              navigatorKey: Global.navigatorKey,
-              scaffoldMessengerKey: Global.rootScaffoldMessengerKey,
-              builder: Global.MaterialAppBuilder(),
-              debugShowCheckedModeBanner: false,
-              navigatorObservers: [AppPages.observer],
-              initialRoute: AppRoutes.Splash,
-              locale: context.locale,
-              supportedLocales: context.supportedLocales,
-              localizationsDelegates: context.localizationDelegates,
-              onGenerateRoute: AppPages.GenerateRouteSettings,
-            ))
-    );
+                  title: 'Alafdal+Agents',
+                  theme: AppTheme.light,
+                  navigatorKey: Global.navigatorKey,
+                  scaffoldMessengerKey: Global.rootScaffoldMessengerKey,
+                  builder: Global.MaterialAppBuilder(),
+                  debugShowCheckedModeBanner: false,
+                  navigatorObservers: [AppPages.observer],
+                  initialRoute: AppRoutes.Splash,
+                  locale: context.locale,
+                  supportedLocales: context.supportedLocales,
+                  localizationsDelegates: context.localizationDelegates,
+                  onGenerateRoute: AppPages.GenerateRouteSettings,
+                )));
   }
 }
-

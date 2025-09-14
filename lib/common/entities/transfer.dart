@@ -44,18 +44,18 @@ class ShippingOperationData {
 
   ShippingOperationData(
       {this.amount,
-        this.avatar,
-        this.businessName,
-        this.createdAt,
-        this.deletedAt,
-        this.firstName,
-        this.fromAgentId,
-        this.id,
-        this.phone,
-        this.profit,
-        this.salesPointId,
-        this.toAgentId,
-        this.updatedAt});
+      this.avatar,
+      this.businessName,
+      this.createdAt,
+      this.deletedAt,
+      this.firstName,
+      this.fromAgentId,
+      this.id,
+      this.phone,
+      this.profit,
+      this.salesPointId,
+      this.toAgentId,
+      this.updatedAt});
 
   ShippingOperationData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
@@ -97,20 +97,23 @@ class TransferBalanceRequestEntity {
   String? category;
   String? amount;
   String? converter;
+  int? transferType;
 
   TransferBalanceRequestEntity({
     this.id,
     this.category,
     this.amount,
     this.converter,
+    this.transferType,
   });
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "category": category,
-    "amount": amount,
-    "converter": converter,
-  };
+        "id": id,
+        "category": category,
+        "amount": amount,
+        "converter": converter,
+        "transfer_type": transferType,
+      };
 }
 
 class TransferRequestEntity {
@@ -118,22 +121,24 @@ class TransferRequestEntity {
   String? Category;
   String? Amount;
   int? page;
+  int? transferType;
 
   TransferRequestEntity({
     this.id,
     this.Category,
     this.Amount,
     this.page,
+    this.transferType,
   });
 
   Map<String, dynamic> toJson() => {
-    "category": Category,
-    "amount": Amount,
-    "id": id,
-    "page": page,
-  };
+        "category": Category,
+        "amount": Amount,
+        "id": id,
+        "page": page,
+        "transfer_type": transferType,
+      };
 }
-
 
 class AgentRechargeRecordResponseEntity {
   int? code;
@@ -181,18 +186,18 @@ class AgentRechargeRecordData {
 
   AgentRechargeRecordData(
       {this.amount,
-        this.avatar,
-        this.createdAt,
-        this.deletedAt,
-        this.firstName,
-        this.fromAgentId,
-        this.id,
-        this.phone,
-        this.profit,
-        this.salesPointId,
-        this.toAgentId,
-        this.businessName,
-        this.updatedAt});
+      this.avatar,
+      this.createdAt,
+      this.deletedAt,
+      this.firstName,
+      this.fromAgentId,
+      this.id,
+      this.phone,
+      this.profit,
+      this.salesPointId,
+      this.toAgentId,
+      this.businessName,
+      this.updatedAt});
 
   AgentRechargeRecordData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
@@ -272,15 +277,15 @@ class SuperRechargeRecordData {
 
   SuperRechargeRecordData(
       {this.amount,
-        this.createdAt,
-        this.deletedAt,
-        this.firstName,
-        this.fromAgentId,
-        this.id,
-        this.profit,
-        this.salesPointId,
-        this.toAgentId,
-        this.updatedAt});
+      this.createdAt,
+      this.deletedAt,
+      this.firstName,
+      this.fromAgentId,
+      this.id,
+      this.profit,
+      this.salesPointId,
+      this.toAgentId,
+      this.updatedAt});
 
   SuperRechargeRecordData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
@@ -354,15 +359,15 @@ class ChildRechargeRecordData {
 
   ChildRechargeRecordData(
       {this.amount,
-        this.category,
-        this.createdAt,
-        this.deletedAt,
-        this.firstName,
-        this.fromAgentId,
-        this.id,
-        this.salesPointId,
-        this.toAgentId,
-        this.updatedAt});
+      this.category,
+      this.createdAt,
+      this.deletedAt,
+      this.firstName,
+      this.fromAgentId,
+      this.id,
+      this.salesPointId,
+      this.toAgentId,
+      this.updatedAt});
 
   ChildRechargeRecordData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
@@ -392,7 +397,6 @@ class ChildRechargeRecordData {
     return data;
   }
 }
-
 
 class AgentCollectRecordResponseEntity {
   int? code;
@@ -440,18 +444,18 @@ class AgentCollectRecordData {
 
   AgentCollectRecordData(
       {this.amount,
-        this.avatar,
-        this.category,
-        this.createdAt,
-        this.deletedAt,
-        this.firstName,
-        this.fromAgentId,
-        this.id,
-        this.phone,
-        this.salesPointId,
-        this.toAgentId,
-        this.businessName,
-        this.updatedAt});
+      this.avatar,
+      this.category,
+      this.createdAt,
+      this.deletedAt,
+      this.firstName,
+      this.fromAgentId,
+      this.id,
+      this.phone,
+      this.salesPointId,
+      this.toAgentId,
+      this.businessName,
+      this.updatedAt});
 
   AgentCollectRecordData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
@@ -498,7 +502,9 @@ class TransferCollectionResponseEntity {
   TransferCollectionResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     msg = json['msg'];
-    data = json['data'] != null ? new TransferCollectionData.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? new TransferCollectionData.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -519,7 +525,8 @@ class TransferCollectionData {
   String? name;
   String? phone;
 
-  TransferCollectionData({this.amount, this.createdAt, this.id, this.name, this.phone});
+  TransferCollectionData(
+      {this.amount, this.createdAt, this.id, this.name, this.phone});
 
   TransferCollectionData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];

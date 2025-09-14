@@ -3,6 +3,7 @@ part of 'bloc.dart';
 abstract class CollectionItemEvent {
   const CollectionItemEvent();
 }
+
 class SalePointChanged extends CollectionItemEvent {
   const SalePointChanged(this.salePointList);
 
@@ -33,7 +34,6 @@ class IsShowChanged extends CollectionItemEvent {
   final bool isShow;
 }
 
-
 class PhoneChanged extends CollectionItemEvent {
   const PhoneChanged(this.phone);
   final String phone;
@@ -44,7 +44,6 @@ class AmountChanged extends CollectionItemEvent {
   final String Amount;
 }
 
-
 class TypeChanged extends CollectionItemEvent {
   const TypeChanged(this.type);
   final String type;
@@ -53,4 +52,14 @@ class TypeChanged extends CollectionItemEvent {
 class AgentChanged extends CollectionItemEvent {
   const AgentChanged(this.agent);
   final String agent;
+}
+
+class CollectTypesChanged extends CollectionItemEvent {
+  const CollectTypesChanged(this.collectTypes);
+  final List<CollectTypeData> collectTypes;
+}
+
+class CollectTypeSelected extends CollectionItemEvent {
+  const CollectTypeSelected(this.collectTypeId);
+  final int? collectTypeId;
 }
