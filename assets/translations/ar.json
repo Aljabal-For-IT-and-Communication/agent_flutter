@@ -153,4 +153,14 @@
   "confirm Password not same!": "تأكيد كلمة المرور غير مطابق!",
   "Recharge types": "أنواع الشحن",
   "Recharge type": "نوع الشحن"
+  ,
+  "Edit": "تعديل",
+  "Deactivate request sent": "تم إرسال طلب إلغاء التفعيل",
+  "Activate request sent": "تم إرسال طلب التفعيل",
+  "Activate": "تفعيل",
+  "Deactivate": "إلغاء التفعيل",
+  "request sent": "تم إرسال الطلب",
+  "Saved": "تم الحفظ",
+  "Error": "خطأ",
+  "Last activity": "آخر نشاط"
 }

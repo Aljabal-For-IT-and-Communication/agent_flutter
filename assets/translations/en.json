@@ -136,5 +136,12 @@
   "Password min length is 6!": "Password minimum length is 6!",
   "confirm Password not same!": "Confirm password does not match!",
   "Recharge types": "Recharge Types",
-  "Recharge type": "Recharge Type"
+  "Recharge type": "Recharge Type",
+  "Edit": "Edit",
+  "Activate": "Activate",
+  "Deactivate": "Deactivate",
+  "request sent": "Request sent",
+  "Saved": "Saved",
+  "Error": "Error",
+  "Last activity": "Last activity"
 }

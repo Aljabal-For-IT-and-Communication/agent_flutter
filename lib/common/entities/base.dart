@@ -1,4 +1,3 @@
-
 class BaseResponseEntity {
   int? code;
   String? msg;
@@ -18,10 +17,10 @@ class BaseResponseEntity {
       );
 
   Map<String, dynamic> toJson() => {
-    "counts": code ,
-    "msg": msg ,
-    "items": data,
-  };
+        "counts": code,
+        "msg": msg,
+        "items": data,
+      };
 }
 
 class IdRequestEntity {
@@ -32,8 +31,8 @@ class IdRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-  };
+        "id": id,
+      };
 }
 
 class TitleRequestEntity {
@@ -44,8 +43,8 @@ class TitleRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "title": title,
-  };
+        "title": title,
+      };
 }
 
 class PageRequestEntity {
@@ -58,9 +57,9 @@ class PageRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "title": title,
-    "page": page,
-  };
+        "title": title,
+        "page": page,
+      };
 }
 
 class AmountRequestEntity {
@@ -71,10 +70,9 @@ class AmountRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "amount": amount,
-  };
+        "amount": amount,
+      };
 }
-
 
 class DateRequestEntity {
   String? startDate;
@@ -88,10 +86,10 @@ class DateRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "start_date": startDate,
-    "end_date": endDate,
-    "page": page,
-  };
+        "start_date": startDate,
+        "end_date": endDate,
+        "page": page,
+      };
 }
 
 class BaseData {
@@ -99,12 +97,11 @@ class BaseData {
   String? image;
   String? name;
 
-  BaseData(
-      {
-        this.id,
-        this.image,
-        this.name,
-      });
+  BaseData({
+    this.id,
+    this.image,
+    this.name,
+  });
 
   BaseData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -121,7 +118,6 @@ class BaseData {
   }
 }
 
-
 class BindFcmTokenRequestEntity {
   String? fcmtoken;
 
@@ -130,10 +126,9 @@ class BindFcmTokenRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "fcmtoken": fcmtoken,
-  };
+        "fcmtoken": fcmtoken,
+      };
 }
-
 
 class TokenRequestEntity {
   String? token;
@@ -143,7 +138,6 @@ class TokenRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "token": token,
-  };
+        "token": token,
+      };
 }
-

@@ -121,4 +121,24 @@ class SalePointAPI {
     );
     return CollectTypesResponseEntity.fromJson(response);
   }
+
+  static Future<BaseResponseEntity> salePointDataUpdate({
+    SalePointDataUpdateRequestEntity? params,
+  }) async {
+    var response = await HttpUtil().post(
+      'agent/sale_point_data_update',
+      data: params?.toJson(),
+    );
+    return BaseResponseEntity.fromJson(response);
+  }
+
+  static Future<BaseResponseEntity> salePointStatusUpdate({
+    SalePointStatusUpdateRequestEntity? params,
+  }) async {
+    var response = await HttpUtil().post(
+      'agent/sale_point_status_update',
+      data: params?.toJson(),
+    );
+    return BaseResponseEntity.fromJson(response);
+  }
 }
