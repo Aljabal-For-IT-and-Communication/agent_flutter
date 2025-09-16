@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import 'bloc.dart';
-import 'widget.dart';
 import 'logic.dart';
 
 class AccountStatementPage extends StatefulWidget {
@@ -79,7 +79,8 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                       ),
                       Container(
                         child: Text(
-                          "Currently".tr()+": ${state.accountStatement?.moneyOwedYou??0}",
+                          "Currently".tr() +
+                              ": ${state.accountStatement?.moneyOwedYou ?? 0}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.primaryText,
@@ -100,35 +101,33 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  DatePicker.showDatePicker(context,
-                                      showTitleActions: true,
-                                      onChanged: (date) {
-                                        print('change $date');
-                                      }, onConfirm: (date) {
-                                        print('confirm $date');
-                                        String month = "${date.month}";
-                                        String day = "${date.day}";
-                                        if(date.month<10) {
-                                          month = "0${date.month}";
-                                        }
-                                        if(date.day<10) {
-                                          day = "0${date.day}";
-                                        }
-                                        String days = "${date.year}-$month-$day";
-                                        context.read<AccountStatementBloc>().add(StartDateChanged(days));
-                                      },
-                                      onCancel: (){
-                                        context.read<AccountStatementBloc>().add(StartDateChanged(""));
-                                      },
-                                      currentTime: DateTime.now(),
-                                      locale: LocaleType.en);
+                                  DatePicker.showDateTimePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    onChanged: (date) {},
+                                    onConfirm: (date) {
+                                      final formatted =
+                                          DateFormat('yyyy-MM-dd HH:mm:ss')
+                                              .format(date);
+                                      context
+                                          .read<AccountStatementBloc>()
+                                          .add(StartDateChanged(formatted));
+                                    },
+                                    onCancel: () {
+                                      context
+                                          .read<AccountStatementBloc>()
+                                          .add(StartDateChanged(""));
+                                    },
+                                    currentTime: DateTime.now(),
+                                    locale: LocaleType.en,
+                                  );
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(6.w),
                                   decoration: BoxDecoration(
                                     color: AppColors.primaryElement,
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(15.w)),
+                                        BorderRadius.all(Radius.circular(15.w)),
                                   ),
                                   child: Text(
                                     "Select date from".tr(),
@@ -150,7 +149,7 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color:
-                                    AppColors.primarySecondaryElementText,
+                                        AppColors.primarySecondaryElementText,
                                     fontWeight: FontWeight.normal,
                                     fontSize: 12.sp,
                                   ),
@@ -166,35 +165,33 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  DatePicker.showDatePicker(context,
-                                      showTitleActions: true,
-                                      onChanged: (date) {
-                                        print('change $date');
-                                      }, onConfirm: (date) {
-                                        print('confirm $date');
-                                        String month = "${date.month}";
-                                        String day = "${date.day}";
-                                        if(date.month<10) {
-                                          month = "0${date.month}";
-                                        }
-                                        if(date.day<10) {
-                                          day = "0${date.day}";
-                                        }
-                                        String days = "${date.year}-$month-$day";
-                                        context.read<AccountStatementBloc>().add(EndDateChanged(days));
-                                      },
-                                      onCancel: (){
-                                        context.read<AccountStatementBloc>().add(EndDateChanged(""));
-                                      },
-                                      currentTime: DateTime.now(),
-                                      locale: LocaleType.en);
+                                  DatePicker.showDateTimePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    onChanged: (date) {},
+                                    onConfirm: (date) {
+                                      final formatted =
+                                          DateFormat('yyyy-MM-dd HH:mm:ss')
+                                              .format(date);
+                                      context
+                                          .read<AccountStatementBloc>()
+                                          .add(EndDateChanged(formatted));
+                                    },
+                                    onCancel: () {
+                                      context
+                                          .read<AccountStatementBloc>()
+                                          .add(EndDateChanged(""));
+                                    },
+                                    currentTime: DateTime.now(),
+                                    locale: LocaleType.en,
+                                  );
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(6.w),
                                   decoration: BoxDecoration(
                                     color: AppColors.primaryElement,
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(15.w)),
+                                        BorderRadius.all(Radius.circular(15.w)),
                                   ),
                                   child: Text(
                                     "Select date to".tr(),
@@ -216,7 +213,7 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color:
-                                    AppColors.primarySecondaryElementText,
+                                        AppColors.primarySecondaryElementText,
                                     fontWeight: FontWeight.normal,
                                     fontSize: 12.sp,
                                   ),
@@ -230,17 +227,18 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                         height: 30.h,
                       ),
                       GestureDetector(
-                        onTap: (){
-                          if(state.startDate==""){
+                        onTap: () {
+                          if (state.startDate == "") {
                             toastInfo(msg: "please select date from".tr());
                             return;
                           }
-                          if(state.endDate==""){
+                          if (state.endDate == "") {
                             toastInfo(msg: "please select date to".tr());
                             return;
                           }
-                          DateTime date1 = DateTime.parse(state.startDate!);
-                          DateTime date2 = DateTime.parse(state.endDate!);
+                          final fmt = DateFormat('yyyy-MM-dd HH:mm:ss');
+                          DateTime date1 = fmt.parse(state.startDate!);
+                          DateTime date2 = fmt.parse(state.endDate!);
                           if (date1.isAfter(date2)) {
                             toastInfo(msg: "date from not After date to!".tr());
                             return;
@@ -257,7 +255,8 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: AppColors.primaryElement,
-                            borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.w)),
                           ),
                           child: Text(
                             "Search".tr(),
@@ -270,8 +269,9 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20.h,),
-
+                      SizedBox(
+                        height: 20.h,
+                      ),
                     ],
                   ),
                 )),
@@ -292,11 +292,13 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('name'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
+                            child: Text('name'.tr(),
+                                style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('data'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
+                            child: Text('data'.tr(),
+                                style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),
@@ -308,7 +310,8 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('${state.accountStatement?.currentBalance??0}'),
+                            child: Text(
+                                '${state.accountStatement?.currentBalance ?? 0}'),
                           ),
                         ],
                       ),
@@ -320,7 +323,8 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('${state.accountStatement?.receiviedTransferBalance??0}'),
+                            child: Text(
+                                '${state.accountStatement?.receiviedTransferBalance ?? 0}'),
                           ),
                         ],
                       ),
@@ -332,7 +336,8 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('${state.accountStatement?.paidMoney??0}'),
+                            child: Text(
+                                '${state.accountStatement?.paidMoney ?? 0}'),
                           ),
                         ],
                       ),
@@ -344,7 +349,8 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('${state.accountStatement?.sendBalance??0}'),
+                            child: Text(
+                                '${state.accountStatement?.sendBalance ?? 0}'),
                           ),
                         ],
                       ),
@@ -356,7 +362,8 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('${state.accountStatement?.moneyYouOwe??0}'),
+                            child: Text(
+                                '${state.accountStatement?.moneyYouOwe ?? 0}'),
                           ),
                         ],
                       ),

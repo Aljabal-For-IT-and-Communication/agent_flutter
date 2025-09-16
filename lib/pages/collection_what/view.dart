@@ -1,12 +1,10 @@
 import 'package:app/common/entities/entities.dart';
-import 'package:app/common/routes/routes.dart';
 import 'package:app/common/utils/security.dart';
 import 'package:app/common/values/values.dart';
-import 'package:app/common/widgets/app.dart';
 import 'package:app/common/widgets/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,13 +22,15 @@ class CollectionWhatPage extends StatefulWidget {
 
 class _CollectionWhatPageState extends State<CollectionWhatPage> {
   ScrollController scrollController = ScrollController();
-  var lastPostCalled;
+  DateTime? lastPostCalled;
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
       if (mounted) {
-        context.read<CollectionWhatBloc>().add(AgentCollectRecordListChanged([]));
+        context
+            .read<CollectionWhatBloc>()
+            .add(AgentCollectRecordListChanged([]));
         context.read<CollectionWhatBloc>().add(IsMoreChanged(false));
         DateRequestEntity entity = DateRequestEntity();
         entity.startDate = "";
@@ -40,8 +40,10 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
       }
     });
     scrollController.addListener(() {
-      if ((scrollController.offset + 10) > scrollController.position.maxScrollExtent) {
-        if (lastPostCalled == null || DateTime.now().difference(lastPostCalled!) > Duration(seconds: 2)) {
+      if ((scrollController.offset + 10) >
+          scrollController.position.maxScrollExtent) {
+        if (lastPostCalled == null ||
+            DateTime.now().difference(lastPostCalled!) > Duration(seconds: 2)) {
           setState(() {
             lastPostCalled = DateTime.now();
           });
@@ -71,294 +73,311 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
           color: AppColors.primaryBackground,
           child: CustomScrollView(
               controller: scrollController,
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               slivers: [
-            SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 0.w,
-                  horizontal: 0.w,
-                ),
-                sliver: SliverToBoxAdapter(
-                  child: BuildPublicAppBar(title: "What has been collected?".tr()),
-                )),
-            SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 10.h,
-                  horizontal: 16.w,
-                ),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Text(
-                          "Total amount of money collected".tr(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Container(
-                        child: Text(
-                          "${state.amount} LYD",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.primaryGreen,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Container(
-                        child: Text(
-                          "What was collected".tr(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0.w,
+                      horizontal: 0.w,
+                    ),
+                    sliver: SliverToBoxAdapter(
+                      child: BuildPublicAppBar(
+                          title: "What has been collected?".tr()),
+                    )),
+                SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 10.h,
+                      horizontal: 16.w,
+                    ),
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Column(
+                          Container(
+                            child: Text(
+                              "Total amount of money collected".tr(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.primaryText,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Container(
+                            child: Text(
+                              "${state.amount} LYD",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.primaryGreen,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Container(
+                            child: Text(
+                              "What was collected".tr(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.primaryText,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  DatePicker.showDatePicker(context,
-                                      showTitleActions: true,
-                                      onChanged: (date) {
-                                        print('change $date');
-                                      }, onConfirm: (date) {
-                                        print('confirm $date');
-                                        String month = "${date.month}";
-                                        String day = "${date.day}";
-                                        if(date.month<10) {
-                                          month = "0${date.month}";
-                                        }
-                                        if(date.day<10) {
-                                          day = "0${date.day}";
-                                        }
-                                        String days = "${date.year}-$month-$day";
-                                        context.read<CollectionWhatBloc>().add(StartDateChanged(days));
-                                      },
-                                      onCancel: (){
-                                        context.read<CollectionWhatBloc>().add(StartDateChanged(""));
-                                      },
-                                      currentTime: DateTime.now(),
-                                      locale: LocaleType.en);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(6.w),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primaryElement,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(15.w)),
-                                  ),
-                                  child: Text(
-                                    "Select date from".tr(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AppColors.primaryBackground,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.sp,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      DatePicker.showDateTimePicker(
+                                        context,
+                                        showTitleActions: true,
+                                        onChanged: (date) {
+                                          // debug print
+                                          // print('change $date');
+                                        },
+                                        onConfirm: (date) {
+                                          // format: 2006-01-02 15:04:05
+                                          final formatted =
+                                              DateFormat('yyyy-MM-dd HH:mm:ss')
+                                                  .format(date);
+                                          context
+                                              .read<CollectionWhatBloc>()
+                                              .add(StartDateChanged(formatted));
+                                        },
+                                        onCancel: () {
+                                          context
+                                              .read<CollectionWhatBloc>()
+                                              .add(StartDateChanged(""));
+                                        },
+                                        currentTime: DateTime.now(),
+                                        locale: LocaleType.en,
+                                      );
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(6.w),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primaryElement,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.w)),
+                                      ),
+                                      child: Text(
+                                        "Select date from".tr(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: AppColors.primaryBackground,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      "${state.startDate}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: AppColors
+                                            .primarySecondaryElementText,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(
-                                height: 10.h,
+                                width: 30.w,
                               ),
-                              Container(
-                                child: Text(
-                                  "${state.startDate}",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color:
-                                    AppColors.primarySecondaryElementText,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 12.sp,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      DatePicker.showDateTimePicker(
+                                        context,
+                                        showTitleActions: true,
+                                        onChanged: (date) {
+                                          // debug print
+                                          // print('change $date');
+                                        },
+                                        onConfirm: (date) {
+                                          final formatted =
+                                              DateFormat('yyyy-MM-dd HH:mm:ss')
+                                                  .format(date);
+                                          context
+                                              .read<CollectionWhatBloc>()
+                                              .add(EndDateChanged(formatted));
+                                        },
+                                        onCancel: () {
+                                          context
+                                              .read<CollectionWhatBloc>()
+                                              .add(EndDateChanged(""));
+                                        },
+                                        currentTime: DateTime.now(),
+                                        locale: LocaleType.en,
+                                      );
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(6.w),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primaryElement,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.w)),
+                                      ),
+                                      child: Text(
+                                        "Select date to".tr(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: AppColors.primaryBackground,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      "${state.endDate}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: AppColors
+                                            .primarySecondaryElementText,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                           SizedBox(
-                            width: 30.w,
+                            height: 30.h,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  DatePicker.showDatePicker(context,
-                                      showTitleActions: true,
-                                      onChanged: (date) {
-                                        print('change $date');
-                                      }, onConfirm: (date) {
-                                        print('confirm $date');
-                                        String month = "${date.month}";
-                                        String day = "${date.day}";
-                                        if(date.month<10) {
-                                          month = "0${date.month}";
-                                        }
-                                        if(date.day<10) {
-                                          day = "0${date.day}";
-                                        }
-                                        String days = "${date.year}-$month-$day";
-                                        context.read<CollectionWhatBloc>().add(EndDateChanged(days));
-                                      },
-                                      onCancel: (){
-                                        context.read<CollectionWhatBloc>().add(EndDateChanged(""));
-                                      },
-                                      currentTime: DateTime.now(),
-                                      locale: LocaleType.en);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(6.w),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primaryElement,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(15.w)),
-                                  ),
-                                  child: Text(
-                                    "Select date to".tr(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AppColors.primaryBackground,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
+                          GestureDetector(
+                            onTap: () {
+                              if (state.startDate == "") {
+                                toastInfo(msg: "please select date from".tr());
+                                return;
+                              }
+                              if (state.endDate == "") {
+                                toastInfo(msg: "please select date to".tr());
+                                return;
+                              }
+                              final fmt = DateFormat('yyyy-MM-dd HH:mm:ss');
+                              DateTime date1 = fmt.parse(state.startDate!);
+                              DateTime date2 = fmt.parse(state.endDate!);
+                              if (date1.isAfter(date2)) {
+                                toastInfo(
+                                    msg: "date from not After date to!".tr());
+                                return;
+                              }
+
+                              context
+                                  .read<CollectionWhatBloc>()
+                                  .add(AgentCollectRecordListChanged([]));
+                              context
+                                  .read<CollectionWhatBloc>()
+                                  .add(IsMoreChanged(false));
+                              DateRequestEntity entity = DateRequestEntity();
+                              entity.startDate = state.startDate;
+                              entity.endDate = state.endDate;
+                              entity.page = 0;
+                              Logic(context: context)
+                                  .postTransferCollection(entity);
+                            },
+                            child: Container(
+                              width: 160.w,
+                              height: 46.h,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryElement,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.w)),
+                              ),
+                              child: Text(
+                                "Search".tr(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: AppColors.primaryBackground,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16.sp,
                                 ),
                               ),
-                              SizedBox(
-                                height: 10.h,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              await printCollectionReportPdf(
+                                  await Logic(context: context)
+                                      .getAllTransferCollection());
+                            },
+                            child: Container(
+                              width: 160.w,
+                              height: 46.h,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryElement,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.w)),
                               ),
-                              Container(
-                                child: Text(
-                                  "${state.endDate}",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color:
-                                    AppColors.primarySecondaryElementText,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 12.sp,
-                                  ),
+                              child: Text(
+                                "PDF Print".tr(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: AppColors.primaryBackground,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16.sp,
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 30.h,
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          if(state.startDate==""){
-                            toastInfo(msg: "please select date from".tr());
-                            return;
-                          }
-                          if(state.endDate==""){
-                            toastInfo(msg: "please select date to".tr());
-                            return;
-                          }
-                          DateTime date1 = DateTime.parse(state.startDate!);
-                          DateTime date2 = DateTime.parse(state.endDate!);
-                          if (date1.isAfter(date2)) {
-                            toastInfo(msg: "date from not After date to!".tr());
-                            return;
-                          }
-
-                          context.read<CollectionWhatBloc>().add(AgentCollectRecordListChanged([]));
-                          context.read<CollectionWhatBloc>().add(IsMoreChanged(false));
-                          DateRequestEntity entity = DateRequestEntity();
-                          entity.startDate = state.startDate;
-                          entity.endDate = state.endDate;
-                          entity.page = 0;
-                          Logic(context: context).postTransferCollection(entity);
-                        },
-                        child: Container(
-                          width: 160.w,
-                          height: 46.h,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryElement,
-                            borderRadius: BorderRadius.all(Radius.circular(8.w)),
-                          ),
-                          child: Text(
-                            "Search".tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      GestureDetector (
-                        onTap:  () async{
-                          await printCollectionReportPdf(await Logic(context: context).getAllTransferCollection());
-                        },
-                        child: Container(
-                          width: 160.w,
-                          height: 46.h,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryElement,
-                            borderRadius: BorderRadius.all(Radius.circular(8.w)),
-                          ),
-                          child: Text(
-                            "PDF Print".tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
-            SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 20.w,
-                  horizontal: 16.w,
-                ),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
+                    )),
+                SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 20.w,
+                      horizontal: 16.w,
+                    ),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      AgentCollectRecordData item =state.agentCollectRecordList.elementAt(index);
-                      return BuildListItem(item: item);
-                    },
-                    childCount: state.agentCollectRecordList.length,
-                  ),
-                )),
+                          AgentCollectRecordData item =
+                              state.agentCollectRecordList.elementAt(index);
+                          return BuildListItem(item: item);
+                        },
+                        childCount: state.agentCollectRecordList.length,
+                      ),
+                    )),
                 buildBottomLoading(state.isMore),
-          ]));
+              ]));
     });
   }
 }
