@@ -101,6 +101,17 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
+                                  final fmt = DateFormat('yyyy-MM-dd HH:mm:ss');
+                                  final initial = (state.startDate != null &&
+                                          state.startDate!.isNotEmpty)
+                                      ? (() {
+                                          try {
+                                            return fmt.parse(state.startDate!);
+                                          } catch (_) {
+                                            return DateTime.now();
+                                          }
+                                        })()
+                                      : DateTime.now();
                                   DatePicker.showDateTimePicker(
                                     context,
                                     showTitleActions: true,
@@ -118,7 +129,7 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                                           .read<AccountStatementBloc>()
                                           .add(StartDateChanged(""));
                                     },
-                                    currentTime: DateTime.now(),
+                                    currentTime: initial,
                                     locale: LocaleType.en,
                                   );
                                 },
@@ -165,6 +176,17 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
+                                  final fmt = DateFormat('yyyy-MM-dd HH:mm:ss');
+                                  final initial = (state.endDate != null &&
+                                          state.endDate!.isNotEmpty)
+                                      ? (() {
+                                          try {
+                                            return fmt.parse(state.endDate!);
+                                          } catch (_) {
+                                            return DateTime.now();
+                                          }
+                                        })()
+                                      : DateTime.now();
                                   DatePicker.showDateTimePicker(
                                     context,
                                     showTitleActions: true,
@@ -182,7 +204,7 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                                           .read<AccountStatementBloc>()
                                           .add(EndDateChanged(""));
                                     },
-                                    currentTime: DateTime.now(),
+                                    currentTime: initial,
                                     locale: LocaleType.en,
                                   );
                                 },
@@ -312,19 +334,6 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                                 '${state.accountStatement?.currentBalance ?? 0}'),
-                          ),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Received transfer balance'.tr()),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                '${state.accountStatement?.receiviedTransferBalance ?? 0}'),
                           ),
                         ],
                       ),

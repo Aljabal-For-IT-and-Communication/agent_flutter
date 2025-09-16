@@ -145,6 +145,20 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
+                                      final fmt =
+                                          DateFormat('yyyy-MM-dd HH:mm:ss');
+                                      final initial = (state.startDate !=
+                                                  null &&
+                                              state.startDate!.isNotEmpty)
+                                          ? (() {
+                                              try {
+                                                return fmt
+                                                    .parse(state.startDate!);
+                                              } catch (_) {
+                                                return DateTime.now();
+                                              }
+                                            })()
+                                          : DateTime.now();
                                       DatePicker.showDateTimePicker(
                                         context,
                                         showTitleActions: true,
@@ -166,7 +180,7 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                                               .read<CollectionWhatBloc>()
                                               .add(StartDateChanged(""));
                                         },
-                                        currentTime: DateTime.now(),
+                                        currentTime: initial,
                                         locale: LocaleType.en,
                                       );
                                     },
@@ -213,6 +227,19 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
+                                      final fmt =
+                                          DateFormat('yyyy-MM-dd HH:mm:ss');
+                                      final initial = (state.endDate != null &&
+                                              state.endDate!.isNotEmpty)
+                                          ? (() {
+                                              try {
+                                                return fmt
+                                                    .parse(state.endDate!);
+                                              } catch (_) {
+                                                return DateTime.now();
+                                              }
+                                            })()
+                                          : DateTime.now();
                                       DatePicker.showDateTimePicker(
                                         context,
                                         showTitleActions: true,
@@ -233,7 +260,7 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                                               .read<CollectionWhatBloc>()
                                               .add(EndDateChanged(""));
                                         },
-                                        currentTime: DateTime.now(),
+                                        currentTime: initial,
                                         locale: LocaleType.en,
                                       );
                                     },
