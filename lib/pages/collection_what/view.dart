@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:app/common/utils/date.dart';
 
 import 'bloc.dart';
 import 'widget.dart';
@@ -330,8 +331,10 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                                   .read<CollectionWhatBloc>()
                                   .add(IsMoreChanged(false));
                               DateRequestEntity entity = DateRequestEntity();
-                              entity.startDate = state.startDate;
-                              entity.endDate = state.endDate;
+                              entity.startDate =
+                                  replaceArabicNumbers(state.startDate ?? "");
+                              entity.endDate =
+                                  replaceArabicNumbers(state.endDate ?? "");
                               entity.page = 0;
                               Logic(context: context)
                                   .postTransferCollection(entity);

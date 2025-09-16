@@ -46,3 +46,14 @@ String duTimeLineFormat(DateTime dt) {
     return str;
   }
 }
+
+// Function to convert Arabic-Indic to Western digits
+String replaceArabicNumbers(String input) {
+  const arabic = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  const normal = ['0','1','2','3','4','5','6','7','8','9'];
+
+  for (int i = 0; i < arabic.length; i++) {
+    input = input.replaceAll(arabic[i], normal[i]);
+  }
+  return input;
+}

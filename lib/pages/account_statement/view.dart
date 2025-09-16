@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:app/common/utils/date.dart';
 
 import 'bloc.dart';
 import 'logic.dart';
@@ -267,8 +268,10 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                           }
 
                           DateRequestEntity entity = DateRequestEntity();
-                          entity.startDate = state.startDate;
-                          entity.endDate = state.endDate;
+                          entity.startDate =
+                              replaceArabicNumbers(state.startDate ?? "");
+                          entity.endDate =
+                              replaceArabicNumbers(state.endDate ?? "");
                           Logic(context: context).accountStatement(entity);
                         },
                         child: Container(
