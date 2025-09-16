@@ -1,7 +1,6 @@
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/utils.dart';
 import 'package:app/common/values/constant.dart';
-import 'package:app/global.dart';
 import 'package:app/pages/home/bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -636,6 +635,130 @@ class MenuView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class BuildPendingCollectionListItem extends StatelessWidget {
+  final PendingCollectionData item;
+  const BuildPendingCollectionListItem({Key? key, required this.item})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        padding:
+            EdgeInsets.only(top: 6.h, bottom: 12.h, left: 10.w, right: 10.w),
+        margin: EdgeInsets.only(bottom: 15.h),
+        decoration: BoxDecoration(
+          color: AppColors.primaryFourElementText,
+          border:
+              Border.all(color: AppColors.primaryThreeElementText, width: 1.h),
+          borderRadius: BorderRadius.all(Radius.circular(15.w)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: 40.w,
+              height: 40.w,
+              padding: EdgeInsets.all(8.w),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                color: AppColors.primaryBackground,
+                borderRadius: BorderRadius.all(Radius.circular(20.w)),
+              ),
+              child: Image.asset('assets/icons/money2.png'),
+            ),
+            SizedBox(width: 10.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "${item.businessName}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppColors.primarySecondaryElementText,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  SizedBox(height: 5.w),
+                  Text(
+                    "${item.phone}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppColors.primarySecondaryElementText,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  SizedBox(height: 5.w),
+                  Text(
+                    "${timeFormated(item.createdAt)}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: AppColors.primarySecondaryElementText,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 100.w,
+                  child: Text(
+                    "${item.amount} LYD",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: AppColors.primaryGreen,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                  decoration: BoxDecoration(
+                    color: (item.validated ?? false)
+                        ? AppColors.primaryGreen.withOpacity(0.15)
+                        : AppColors.primaryElement.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(12.w),
+                  ),
+                  child: Text(
+                    (item.validated ?? false)
+                        ? 'Validated'.tr()
+                        : 'Pending'.tr(),
+                    style: TextStyle(
+                      color: (item.validated ?? false)
+                          ? AppColors.primaryGreen
+                          : AppColors.primaryElement,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

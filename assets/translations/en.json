@@ -143,5 +143,8 @@
   "request sent": "Request sent",
   "Saved": "Saved",
   "Error": "Error",
-  "Last activity": "Last activity"
+  "Last activity": "Last activity",
+  "Pending collections": "Pending Collections",
+  "Validated": "Validated",
+  "Pending": "Pending"
 }

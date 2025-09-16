@@ -62,6 +62,51 @@ class _HomePageState extends State<HomePage> {
                 sliver: SliverToBoxAdapter(
                   child: MenuView(),
                 )),
+            // Pending Collections section (hidden when empty)
+            if (state.pendingCollections.isNotEmpty)
+              SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 0.h,
+                    horizontal: 16.w,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Text(
+                            "Pending collections".tr(),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: AppColors.primaryText,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+            if (state.pendingCollections.isNotEmpty)
+              SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 15.h,
+                  horizontal: 16.w,
+                ),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final item = state.pendingCollections[index];
+                      return BuildPendingCollectionListItem(item: item);
+                    },
+                    childCount: state.pendingCollections.length,
+                  ),
+                ),
+              ),
+            if (state.pendingCollections.isNotEmpty)
+              SliverToBoxAdapter(child: SizedBox(height: 10.h)),
+            // Shipping operations section
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.h,
@@ -111,21 +156,13 @@ class _HomePageState extends State<HomePage> {
                 sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    ShippingOperationData item = state.shippingOperationList.elementAt(index);
+                    ShippingOperationData item =
+                        state.shippingOperationList.elementAt(index);
                     return BuildListItem(item: item);
                   },
                   childCount: state.shippingOperationList.length,
                 ))),
-            SliverPadding(
-              padding: EdgeInsets.symmetric(
-                vertical: 0.w,
-                horizontal: 0.w,
-              ),
-              sliver: SliverToBoxAdapter(
-                  child: SizedBox(
-                height: 16.h,
-              )),
-            ),
+            SliverToBoxAdapter(child: SizedBox(height: 16.h)),
           ]));
     });
   }

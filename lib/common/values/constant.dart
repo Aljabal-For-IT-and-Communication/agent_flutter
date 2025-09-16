@@ -1,7 +1,7 @@
-const SERVER_API_URL = 'https://api.alafdal-pluse.ly/';
-const SERVER_API_WSS = 'wss://api.alafdal-pluse.ly/ws_agent';
-// const SERVER_API_URL = 'http://10.0.2.2:8005/';
-// const SERVER_API_WSS = 'wss://10.0.2.2:8005/ws_agent';
+// const SERVER_API_URL = 'https://api.alafdal-pluse.ly/';
+// const SERVER_API_WSS = 'wss://api.alafdal-pluse.ly/ws_agent';
+const SERVER_API_URL = 'http://10.0.2.2:8005/';
+const SERVER_API_WSS = 'wss://10.0.2.2:8005/ws_agent';
 
 const SERVER_IMG_URL = 'https://admin.alafdal-pluse.ly/uploads/';
 const SERVER_API_IMG_URL = 'https://admin.alafdal-pluse.ly/';

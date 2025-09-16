@@ -162,5 +162,8 @@
   "request sent": "تم إرسال الطلب",
   "Saved": "تم الحفظ",
   "Error": "خطأ",
-  "Last activity": "آخر نشاط"
+  "Last activity": "آخر نشاط",
+  "Pending collections": "التحصيلات المعلّقة",
+  "Validated": "مُوثَّق",
+  "Pending": "قيد الانتظار"
 }

@@ -19,13 +19,13 @@ class Logic {
   });
   init() {
     shippingOperation();
+    pendingCollections();
     getProfile();
     fireMessage();
   }
 
   shippingOperation() async {
     try {
-
       PageRequestEntity entity = PageRequestEntity();
       entity.title = "";
       entity.page = 0;
@@ -40,6 +40,22 @@ class Logic {
     }
   }
 
+  pendingCollections() async {
+    try {
+      PageRequestEntity entity = PageRequestEntity();
+      entity.title = "";
+      entity.page = 0;
+      final result = await HomeAPI.pendingCollectionsList(params: entity);
+      if (result.code == 0) {
+        context
+            .read<HomeBloc>()
+            .add(PendingCollectionsChanged(result.data ?? []));
+      }
+    } catch (e) {
+      Logger.write("${e}");
+    }
+  }
+
   getProfile() async {
     try {
       final user = context.read<HomeBloc>().state.userProfile;
@@ -47,7 +63,8 @@ class Logic {
       if (result.code == 0) {
         var userItem = result.data;
         userItem?.accessToken = user?.accessToken;
-        Global.storageService.setString(STORAGE_USER_PROFILE_KEY, jsonEncode(userItem));
+        Global.storageService
+            .setString(STORAGE_USER_PROFILE_KEY, jsonEncode(userItem));
         context.read<HomeBloc>().add(UserProfileChanged(userItem!));
       }
     } catch (e) {
@@ -59,10 +76,10 @@ class Logic {
     String? fcmToken = await FirebaseMessaging.instance.getToken();
     print("fcmToken-----: $fcmToken");
     if (fcmToken != null) {
-      BindFcmTokenRequestEntity bindFcmTokenRequestEntity = BindFcmTokenRequestEntity();
+      BindFcmTokenRequestEntity bindFcmTokenRequestEntity =
+          BindFcmTokenRequestEntity();
       bindFcmTokenRequestEntity.fcmtoken = fcmToken;
       await ChatAPI.bindFcmToken(params: bindFcmTokenRequestEntity);
     }
-
   }
 }
