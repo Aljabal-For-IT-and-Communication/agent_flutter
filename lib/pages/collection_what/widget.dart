@@ -52,7 +52,7 @@ class BuildListItem extends StatelessWidget {
                   width: 170.w,
                   margin: EdgeInsets.only(top: 5.w),
                   child: Text(
-                    "${item.businessName ?? item}",
+                    "${item.businessName ?? item.firstName}",
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
