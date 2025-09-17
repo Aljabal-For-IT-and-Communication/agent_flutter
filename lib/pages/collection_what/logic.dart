@@ -57,8 +57,8 @@ class Logic {
           dismissOnTap: true);
       final state = context.read<CollectionWhatBloc>().state;
       DateRequestEntity entity = DateRequestEntity();
-      entity.startDate = state.startDate;
-      entity.endDate = state.endDate;
+      entity.startDate = replaceArabicNumbers(state.startDate ?? "");
+      entity.endDate = replaceArabicNumbers(state.endDate ?? "");
       entity.page = -1; // -1 for all records
       var result = await SalePointAPI.transferCollectionList(params: entity);
       Logger.write("getAllTransferCollection: idk");
