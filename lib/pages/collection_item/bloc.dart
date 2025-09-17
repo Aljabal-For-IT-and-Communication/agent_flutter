@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:app/common/entities/entities.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 part 'event.dart';
 part 'state.dart';

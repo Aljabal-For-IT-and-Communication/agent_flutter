@@ -237,7 +237,7 @@ class BuildDropdownAgentInput extends StatelessWidget {
                 child: Container(
                   width: 280.w,
                   height: 40.h,
-                  child: Text(item),
+                  child: Text(item.tr()),
                 ),
               );
             }).toList(),

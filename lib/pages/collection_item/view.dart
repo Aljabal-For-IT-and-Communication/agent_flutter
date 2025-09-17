@@ -284,14 +284,6 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.h,
-                  horizontal: 16.w,
-                ),
-                sliver: SliverToBoxAdapter(
-                  child: BuildPhoneInput(),
-                )),
-            SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 0.h,
                   horizontal: 20.w,
                 ),
                 sliver: SliverToBoxAdapter(

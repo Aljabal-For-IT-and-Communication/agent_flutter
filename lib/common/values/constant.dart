@@ -8,7 +8,7 @@ const SERVER_API_IMG_URL = 'https://admin.alafdal-pluse.ly/';
 
 const String VersionNumber = '1.0.7';
 
-const String ReleaseDate = '2025-9-16';
+const String ReleaseDate = '2025-9-17';
 
 const String STORAGE_USER_PROFILE_KEY = 'user_profile';
 

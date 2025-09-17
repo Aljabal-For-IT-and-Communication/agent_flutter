@@ -54,12 +54,11 @@ class BuildDropdownAgentInput extends StatelessWidget {
                 child: Container(
                   width: 280.w,
                   height: 40.h,
-                  child: Text(item),
+                  child: Text(item.tr()),
                 ),
               );
             }).toList(),
             onChanged: (String? newValue) {
-              print(newValue);
               context.read<CollectionItemBloc>().add(IsShowChanged(false));
               context
                   .read<CollectionItemBloc>()
@@ -123,7 +122,7 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
                   focusNode: focusNode,
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: "Search First Name",
+                    hintText: "Search First Name".tr(),
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -221,7 +220,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
                   focusNode: focusNode,
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: "Search Business Name",
+                    hintText: "Search Business Name".tr(),
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -398,67 +397,6 @@ class BuildDropdownSalePointPhoneInput extends StatelessWidget {
           height: 15.h,
         ),
       ],
-    );
-  }
-}
-
-class BuildPhoneInput extends StatelessWidget {
-  const BuildPhoneInput({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 330.w,
-      height: 46.h,
-      margin: EdgeInsets.only(right: 10.w),
-      padding: EdgeInsets.only(left: 10.w, right: 10.w),
-      decoration: BoxDecoration(
-          color: AppColors.primaryFourElementText,
-          borderRadius: BorderRadius.all(Radius.circular(8.w)),
-          border: Border.all(color: AppColors.primaryFourElementText)),
-      child: TextField(
-        keyboardType: TextInputType.multiline,
-        decoration: InputDecoration(
-          hintText:
-              "Enter ${context.read<CollectionItemBloc>().state.agent == "Agent" ? "First Name" : "Business Name"}"
-                  .tr(),
-          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
-          ),
-          hintStyle: TextStyle(
-            color: AppColors.primaryThreeElementText,
-          ),
-        ),
-        style: TextStyle(
-          color: AppColors.primaryText,
-          fontWeight: FontWeight.normal,
-          fontSize: 14.sp,
-        ),
-        onChanged: (value) {
-          context.read<CollectionItemBloc>().add(PhoneChanged(value));
-        },
-        maxLines: 1,
-        autocorrect: false, // 自动纠正
-        obscureText: false, // 隐藏输入内容, 密码框
-      ),
     );
   }
 }

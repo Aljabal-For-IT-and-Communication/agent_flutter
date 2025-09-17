@@ -3,6 +3,7 @@ import 'package:app/common/routes/names.dart';
 import 'package:app/common/utils/date.dart';
 import 'package:app/pages/chat/bloc.dart';
 import 'package:app/pages/chat/logic.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/common/values/values.dart';
@@ -82,7 +83,7 @@ class _ChatPage extends State<ChatPage> {
                                       child: state.isloading
                                           ? Align(
                                               alignment: Alignment.center,
-                                              child: new Text('loading...'),
+                                              child: new Text('loading...'.tr()),
                                             )
                                           : Container(),
                                     )),
@@ -127,7 +128,7 @@ class _ChatPage extends State<ChatPage> {
                                       controller: chatLogic.myinputController,
                                       autofocus: false,
                                       decoration: InputDecoration(
-                                        hintText: "Message...",
+                                        hintText: "Message...".tr(),
                                         isDense: true,
                                         contentPadding: EdgeInsets.only(
                                             left: 10.w, top: 0, bottom: 0),

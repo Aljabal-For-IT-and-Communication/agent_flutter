@@ -161,12 +161,11 @@ class BuildDropdownAgentInput extends StatelessWidget {
                 child: Container(
                   width: 280.w,
                   height: 40.h,
-                  child: Text(item),
+                  child: Text(item.tr()),
                 ),
               );
             }).toList(),
             onChanged: (String? newValue) {
-              print(newValue);
               context.read<RevenueBloc>().add(AgentChanged(newValue??"Agent"));
             },
           ),
@@ -222,7 +221,7 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
                   focusNode: focusNode,
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: "Search First Name",
+                    hintText: "Search First Name".tr(),
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -313,7 +312,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
                   focusNode: focusNode,
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: "Search Business Name",
+                    hintText: "Search Business Name".tr(),
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(

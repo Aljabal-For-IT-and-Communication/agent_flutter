@@ -1,5 +1,6 @@
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,7 +22,7 @@ class OrderBtn extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-                  "View Order",
+                  "View Order".tr(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: AppColors.primaryBackground,

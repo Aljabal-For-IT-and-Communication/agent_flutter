@@ -146,5 +146,15 @@
   "Last activity": "Last activity",
   "Pending collections": "Pending Collections",
   "Validated": "Validated",
-  "Pending": "Pending"
+  "Pending": "Pending",
+  "Collect Type": "Collect Type",
+  "Search Business Name": "Search Business Name",
+  "shipment report": "Shipment Report",
+  "revenue report": "Revenue Report",
+  "day": "Day",
+  "Transaction Type": "Transaction Type",
+  "Scan": "Scan",
+  "Message...": "Message...",
+  "loading...": "loading...",
+  "View Order": "View Order"
 }

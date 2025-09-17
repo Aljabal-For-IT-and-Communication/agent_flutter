@@ -134,7 +134,7 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
                       ),
                       Container(
                         child: Text(
-                          "Type of converter".tr() + ": ${state.type}",
+                          "Transaction Type".tr() + ": ${state.type.tr()}",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: AppColors.primaryText,
