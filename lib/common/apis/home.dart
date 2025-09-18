@@ -28,4 +28,13 @@ class HomeAPI {
     );
     return PendingCollectionsResponseEntity.fromJson(response);
   }
+
+  static Future<PendingRechargesResponseEntity> pendingRechargesList(
+      {PageRequestEntity? params}) async {
+    var response = await HttpUtil().post(
+      'agent/pending_recharges_list',
+      data: params?.toJson(),
+    );
+    return PendingRechargesResponseEntity.fromJson(response);
+  }
 }

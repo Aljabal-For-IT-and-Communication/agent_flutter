@@ -10,4 +10,4 @@ export 'sale_point.dart';
 export 'agent.dart';
 export 'chat.dart';
 export 'transaction_types.dart';
-export 'pending_collection.dart';
+export 'pending_transactions.dart';
