@@ -97,7 +97,7 @@ class Logic {
       toastInfo(msg: "Please select agent or sale point!".tr());
       return;
     }
-    if (state.agent == "Agent" &&
+    if (state.agent == "SalePoint" &&
         state.type == "recharge" &&
         (state.rechargeTypeId == null)) {
       toastInfo(msg: "Please select recharge type".tr());
