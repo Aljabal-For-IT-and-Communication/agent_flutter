@@ -176,5 +176,13 @@
   "Transaction Type": "نوع المعاملة",
   "Message...": "رسالة...",
   "loading...": "جارٍ التحميل...",
-  "View Order": "عرض الطلب"
+  "View Order": "عرض الطلب",
+  "Search by business name": "البحث باسم المحل",
+  "Search by first name": "البحث بالاسم الأول",
+  "Sort by balance": "ترتيب حسب الرصيد",
+  "Sort by debt": "ترتيب حسب المديونية",
+  "Balance asc": "الرصيد تصاعديًا",
+  "Balance desc": "الرصيد تنازليًا",
+  "Debt asc": "المديونية تصاعديًا",
+  "Debt desc": "المديونية تنازليًا"
 }

@@ -10,6 +10,10 @@ class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
     on<PageChanged>(_onPageChanged);
     on<AgentListChanged>(_onAgentListChanged);
     on<SetEditingSalePoint>(_onSetEditingSalePoint);
+    on<SalePointSearchChanged>(_onSalePointSearchChanged);
+    on<AgentSearchChanged>(_onAgentSearchChanged);
+    on<ToggleSalePointSort>(_onToggleSalePointSort);
+    on<ToggleAgentSort>(_onToggleAgentSort);
   }
   void _onSalePointChanged(
     SalePointChanged event,
@@ -42,6 +46,48 @@ class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
       agentList: state.agentList,
       page: state.page,
       editingSalePointId: event.salePointId,
+      salePointSearch: state.salePointSearch,
+      agentSearch: state.agentSearch,
+      salePointSortField: state.salePointSortField,
+      salePointSortAsc: state.salePointSortAsc,
+      agentSortField: state.agentSortField,
+      agentSortAsc: state.agentSortAsc,
+    ));
+  }
+
+  void _onSalePointSearchChanged(
+    SalePointSearchChanged event,
+    Emitter<SalePointState> emit,
+  ) {
+    emit(state.copyWith(salePointSearch: event.query));
+  }
+
+  void _onAgentSearchChanged(
+    AgentSearchChanged event,
+    Emitter<SalePointState> emit,
+  ) {
+    emit(state.copyWith(agentSearch: event.query));
+  }
+
+  void _onToggleSalePointSort(
+    ToggleSalePointSort event,
+    Emitter<SalePointState> emit,
+  ) {
+    final sameField = state.salePointSortField == event.field;
+    emit(state.copyWith(
+      salePointSortField: event.field,
+      salePointSortAsc: sameField ? !state.salePointSortAsc : false,
+    ));
+  }
+
+  void _onToggleAgentSort(
+    ToggleAgentSort event,
+    Emitter<SalePointState> emit,
+  ) {
+    final sameField = state.agentSortField == event.field;
+    emit(state.copyWith(
+      agentSortField: event.field,
+      agentSortAsc: sameField ? !state.agentSortAsc : false,
     ));
   }
 }

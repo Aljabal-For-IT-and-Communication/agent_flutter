@@ -27,3 +27,23 @@ class SetEditingSalePoint extends SalePointEvent {
 
   final int? salePointId; // null to cancel editing
 }
+
+class SalePointSearchChanged extends SalePointEvent {
+  const SalePointSearchChanged(this.query);
+  final String query;
+}
+
+class AgentSearchChanged extends SalePointEvent {
+  const AgentSearchChanged(this.query);
+  final String query;
+}
+
+class ToggleSalePointSort extends SalePointEvent {
+  const ToggleSalePointSort(this.field);
+  final SortField field;
+}
+
+class ToggleAgentSort extends SalePointEvent {
+  const ToggleAgentSort(this.field);
+  final SortField field;
+}

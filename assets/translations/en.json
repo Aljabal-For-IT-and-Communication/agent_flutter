@@ -156,5 +156,13 @@
   "Scan": "Scan",
   "Message...": "Message...",
   "loading...": "loading...",
-  "View Order": "View Order"
+  "View Order": "View Order",
+  "Search by business name": "Search by business name",
+  "Search by first name": "Search by first name",
+  "Sort by balance": "Sort by balance",
+  "Sort by debt": "Sort by debt",
+  "Balance asc": "Balance asc",
+  "Balance desc": "Balance desc",
+  "Debt asc": "Debt asc",
+  "Debt desc": "Debt desc"
 }
