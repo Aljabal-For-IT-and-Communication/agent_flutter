@@ -27,3 +27,9 @@ class PageChanged extends HomeEvent {
 
   final int page;
 }
+
+class PendingTransactionsChanged extends HomeEvent {
+  const PendingTransactionsChanged(this.pendingTransactions);
+
+  final List<PendingTransactionData> pendingTransactions;
+}

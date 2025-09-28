@@ -20,21 +20,12 @@ class HomeAPI {
     return ShippingOperationResponseEntity.fromJson(response);
   }
 
-  static Future<PendingCollectionsResponseEntity> pendingCollectionsList(
+  static Future<PendingTransactionsResponseEntity> pendingTransactionsList(
       {PageRequestEntity? params}) async {
     var response = await HttpUtil().post(
-      'agent/pending_collections_list',
+      'agent/pending_transactions_list',
       data: params?.toJson(),
     );
-    return PendingCollectionsResponseEntity.fromJson(response);
-  }
-
-  static Future<PendingRechargesResponseEntity> pendingRechargesList(
-      {PageRequestEntity? params}) async {
-    var response = await HttpUtil().post(
-      'agent/pending_recharges_list',
-      data: params?.toJson(),
-    );
-    return PendingRechargesResponseEntity.fromJson(response);
+    return PendingTransactionsResponseEntity.fromJson(response);
   }
 }

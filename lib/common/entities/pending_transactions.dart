@@ -101,20 +101,20 @@ class PendingCollectionData {
   }
 }
 
-class PendingRechargesResponseEntity {
+class PendingTransactionsResponseEntity {
   int? code;
   String? msg;
-  List<PendingRechargeData>? data;
+  List<PendingTransactionData>? data;
 
-  PendingRechargesResponseEntity({this.code, this.msg, this.data});
+  PendingTransactionsResponseEntity({this.code, this.msg, this.data});
 
-  PendingRechargesResponseEntity.fromJson(Map<String, dynamic> json) {
+  PendingTransactionsResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = <PendingRechargeData>[];
+      data = <PendingTransactionData>[];
       json['data'].forEach((v) {
-        data!.add(PendingRechargeData.fromJson(v));
+        data!.add(PendingTransactionData.fromJson(v));
       });
     }
   }
@@ -130,7 +130,7 @@ class PendingRechargesResponseEntity {
   }
 }
 
-class PendingRechargeData {
+class PendingTransactionData {
   String? amount;
   int? category;
   int? rechargeRecordId;
@@ -143,13 +143,13 @@ class PendingRechargeData {
   int? id;
   String? updatedAt;
   bool? validated;
-  // Optional descriptive fields if backend returns them (keeping parity with collection data)
-  String? firstName; // agent first name
-  String? businessName; // sales point name
+  bool? isRecharge;
+  String? firstName;
+  String? businessName;
   String? phone;
   String? avatar;
 
-  PendingRechargeData({
+  PendingTransactionData({
     this.amount,
     this.category,
     this.rechargeRecordId,
@@ -166,9 +166,10 @@ class PendingRechargeData {
     this.businessName,
     this.phone,
     this.avatar,
+    this.isRecharge,
   });
 
-  PendingRechargeData.fromJson(Map<String, dynamic> json) {
+  PendingTransactionData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
     category = json['category'];
     rechargeRecordId = json['recharge_record_id'];
@@ -185,6 +186,7 @@ class PendingRechargeData {
     businessName = json['business_name'];
     phone = json['phone'];
     avatar = json['avatar'];
+    isRecharge = json['is_recharge'];
   }
 
   Map<String, dynamic> toJson() {
@@ -205,6 +207,7 @@ class PendingRechargeData {
     data['business_name'] = businessName;
     data['phone'] = phone;
     data['avatar'] = avatar;
+    data['is_recharge'] = isRecharge;
     return data;
   }
 }

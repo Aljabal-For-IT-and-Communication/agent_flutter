@@ -19,7 +19,7 @@ class Logic {
   });
   init() {
     shippingOperation();
-    pendingCollections();
+    pendingTransactions();
     getProfile();
     fireMessage();
   }
@@ -40,16 +40,16 @@ class Logic {
     }
   }
 
-  pendingCollections() async {
+  pendingTransactions() async {
     try {
       PageRequestEntity entity = PageRequestEntity();
       entity.title = "";
       entity.page = 0;
-      final result = await HomeAPI.pendingCollectionsList(params: entity);
+      final result = await HomeAPI.pendingTransactionsList(params: entity);
       if (result.code == 0) {
         context
             .read<HomeBloc>()
-            .add(PendingCollectionsChanged(result.data ?? []));
+            .add(PendingTransactionsChanged(result.data ?? []));
       }
     } catch (e) {
       Logger.write("${e}");

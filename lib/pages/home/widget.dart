@@ -640,9 +640,9 @@ class MenuView extends StatelessWidget {
   }
 }
 
-class BuildPendingCollectionListItem extends StatelessWidget {
-  final PendingCollectionData item;
-  const BuildPendingCollectionListItem({Key? key, required this.item})
+class BuildPendingTransactionListItem extends StatelessWidget {
+  final PendingTransactionData item;
+  const BuildPendingTransactionListItem({Key? key, required this.item})
       : super(key: key);
 
   @override
@@ -672,7 +672,9 @@ class BuildPendingCollectionListItem extends StatelessWidget {
                 color: AppColors.primaryBackground,
                 borderRadius: BorderRadius.all(Radius.circular(20.w)),
               ),
-              child: Image.asset('assets/icons/money2.png'),
+              child: (item.isRecharge ?? false)
+                  ? Image.asset('assets/icons/recharge_bar.png')
+                  : Image.asset('assets/icons/icon3.png'),
             ),
             SizedBox(width: 10.w),
             Expanded(

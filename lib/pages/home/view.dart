@@ -62,8 +62,8 @@ class _HomePageState extends State<HomePage> {
                 sliver: SliverToBoxAdapter(
                   child: MenuView(),
                 )),
-            // Pending Collections section (hidden when empty)
-            if (state.pendingCollections.isNotEmpty)
+            // Pending Transactions section (hidden when empty)
+            if (state.pendingTransactions.isNotEmpty)
               SliverPadding(
                   padding: EdgeInsets.symmetric(
                     vertical: 0.h,
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Container(
                           child: Text(
-                            "Pending collections".tr(),
+                            "Pending transactions".tr(),
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: AppColors.primaryText,
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   )),
-            if (state.pendingCollections.isNotEmpty)
+            if (state.pendingTransactions.isNotEmpty)
               SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 15.h,
@@ -97,14 +97,14 @@ class _HomePageState extends State<HomePage> {
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      final item = state.pendingCollections[index];
-                      return BuildPendingCollectionListItem(item: item);
+                      final item = state.pendingTransactions[index];
+                      return BuildPendingTransactionListItem(item: item);
                     },
-                    childCount: state.pendingCollections.length,
+                    childCount: state.pendingTransactions.length,
                   ),
                 ),
               ),
-            if (state.pendingCollections.isNotEmpty)
+            if (state.pendingTransactions.isNotEmpty)
               SliverToBoxAdapter(child: SizedBox(height: 10.h)),
             // Shipping operations section
             SliverPadding(

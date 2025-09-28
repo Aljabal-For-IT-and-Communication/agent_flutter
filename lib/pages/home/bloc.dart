@@ -7,7 +7,7 @@ part 'state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeState()) {
     on<ShippingOperationChanged>(_onShippingOperationChanged);
-    on<PendingCollectionsChanged>(_onPendingCollectionsChanged);
+    on<PendingTransactionsChanged>(_onPendingTransactionsChanged);
     on<PageChanged>(_onPageChanged);
     on<UserProfileChanged>(_onUserProfileChanged);
   }
@@ -26,11 +26,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(shippingOperationList: event.shippingOperationList));
   }
 
-  void _onPendingCollectionsChanged(
-    PendingCollectionsChanged event,
+  void _onPendingTransactionsChanged(
+    PendingTransactionsChanged event,
     Emitter<HomeState> emit,
   ) {
-    emit(state.copyWith(pendingCollections: event.pendingCollections));
+    emit(state.copyWith(pendingTransactions: event.pendingTransactions));
   }
 
   void _onPageChanged(
