@@ -438,6 +438,40 @@ class BuildListItem extends StatelessWidget {
                         fontSize: 14.sp,
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Container(
+                    width: 100.w,
+                    child: Text(
+                      item.rechargeTypeName ?? '-',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        color: AppColors.primaryFirstElementText,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Container(
+                    width: 100.w,
+                    child: Text(
+                      item.collectTypeName ?? '-',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        color: AppColors.primaryFirstElementText,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                      ),
+                    ),
                   )
                 ]),
           ],

@@ -165,5 +165,7 @@
   "Balance asc": "Balance asc",
   "Balance desc": "Balance desc",
   "Debt asc": "Debt asc",
-  "Debt desc": "Debt desc"
+  "Debt desc": "Debt desc",
+  "Recharge Type": "Recharge Type",
+  "Collect type": "Collect type"
 }

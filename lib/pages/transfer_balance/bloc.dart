@@ -19,6 +19,7 @@ class TransferBalanceBloc
     on<UserProfileChanged>(_onUserProfileChanged);
     on<RechargeTypesChanged>(_onRechargeTypesChanged);
     on<RechargeTypeSelected>(_onRechargeTypeSelected);
+    on<ResetTransferBalance>(_onReset);
   }
 
   void _onUserProfileChanged(
@@ -105,5 +106,13 @@ class TransferBalanceBloc
     Emitter<TransferBalanceState> emit,
   ) {
     emit(state.copyWith(rechargeTypeId: event.rechargeTypeId));
+  }
+
+  void _onReset(
+    ResetTransferBalance event,
+    Emitter<TransferBalanceState> emit,
+  ) {
+    // Reset to initial defaults
+    emit(const TransferBalanceState());
   }
 }

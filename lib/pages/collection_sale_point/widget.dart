@@ -128,6 +128,8 @@ class BuildListItem extends StatelessWidget {
                           data.name = item.businessName ?? item.firstName;
                           data.phone = item.phone;
                           data.createdAt = item.createdAt;
+                          data.collectTypeName = item.collectTypeName;
+                          data.rechargeTypeName = item.rechargeTypeName;
                           var res = await printPdf(data);
                           if (res) {
                             Navigator.of(context).pop();
@@ -243,20 +245,59 @@ class BuildListItem extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              width: 100.w,
-              child: Text(
-                "${item.amount} LYD",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.end,
-                style: TextStyle(
-                  color: AppColors.primaryGreen,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14.sp,
-                ),
-              ),
-            ),
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 100.w,
+                    child: Text(
+                      "${item.amount} LYD",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        color: AppColors.primaryGreen,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Container(
+                    width: 100.w,
+                    child: Text(
+                      item.collectTypeName ?? '-',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        color: AppColors.primaryFirstElementText,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Container(
+                    width: 100.w,
+                    child: Text(
+                      item.rechargeTypeName ?? '-',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        color: AppColors.primaryFirstElementText,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  )
+                ]),
           ],
         ),
       ),

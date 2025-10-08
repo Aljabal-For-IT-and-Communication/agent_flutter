@@ -18,6 +18,7 @@ AppBar buildAppBar(String title) {
     ),
   );
 }
+
 /// 10像素 Divider
 Widget divider10Px({Color bgColor = AppColors.primaryThreeElementText}) {
   return Container(
@@ -28,17 +29,19 @@ Widget divider10Px({Color bgColor = AppColors.primaryThreeElementText}) {
   );
 }
 
-
 class BuildPublicAppBar extends StatelessWidget {
   final String title;
-  BuildPublicAppBar({Key? key,required this.title}) : super(key: key);
+  final VoidCallback? onBack;
+  BuildPublicAppBar({Key? key, required this.title, this.onBack})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
       width: 375.w,
-      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w,bottom: 30.h),
+      padding:
+          EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 30.h),
       decoration: BoxDecoration(
         color: AppColors.primaryBackground,
         image: DecorationImage(
@@ -59,11 +62,20 @@ class BuildPublicAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap:(){Navigator.pop(context);},
+                  onTap: () {
+                    if (onBack != null) {
+                      onBack!();
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
                   child: Container(
                     width: 24.w,
                     height: 24.w,
-                    child: Icon(Icons.arrow_back,color: AppColors.primaryBackground,),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: AppColors.primaryBackground,
+                    ),
                   ),
                 ),
                 Container(
@@ -80,7 +92,10 @@ class BuildPublicAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(width: 24.w, height: 24.w,)
+                Container(
+                  width: 24.w,
+                  height: 24.w,
+                )
               ],
             ),
           ),
@@ -97,20 +112,20 @@ SliverPadding buildBottomLoading(bool isMore) {
   return SliverPadding(
       padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 10.w),
       sliver: SliverToBoxAdapter(
-        child:isMore ? Container(
-          margin: EdgeInsets.only(bottom: 50.w),
-          child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                  "Data list loading...",
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14.sp,
-                  ))),
-        )
+        child: isMore
+            ? Container(
+                margin: EdgeInsets.only(bottom: 50.w),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Text("Data list loading...",
+                        style: TextStyle(
+                          color: AppColors.primaryText,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14.sp,
+                        ))),
+              )
             : Container(
-          margin: EdgeInsets.only(bottom: 50.w),
-        ),
+                margin: EdgeInsets.only(bottom: 50.w),
+              ),
       ));
 }

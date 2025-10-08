@@ -63,3 +63,7 @@ class CollectTypeSelected extends CollectionItemEvent {
   const CollectTypeSelected(this.collectTypeId);
   final int? collectTypeId;
 }
+
+class ResetCollectionItem extends CollectionItemEvent {
+  const ResetCollectionItem();
+}

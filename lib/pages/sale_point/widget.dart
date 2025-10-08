@@ -562,20 +562,39 @@ class BuildAgentListItem extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 180.w,
                         margin: EdgeInsets.only(top: 5.w),
-                        child: Text(
-                          "${item.balance ?? 0} LYD",
-                          textAlign: TextAlign.start,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: balance <= 300
-                                ? AppColors.primaryRed
-                                : AppColors.primaryGreen,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${"Balance".tr()} : ${item.indebtedness ?? 0} LYD",
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: balance <= 300
+                                    ? AppColors.primaryRed
+                                    : AppColors.primaryGreen,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            SizedBox(width: 10.h),
+                            Text(
+                              "${"Indebtedness".tr()} : ${item.balance ?? 0} LYD",
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: balance >= 1000
+                                    ? AppColors.primaryRed
+                                    : AppColors.primaryGreen,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

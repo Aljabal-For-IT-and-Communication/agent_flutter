@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:app/common/entities/entities.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 part 'event.dart';
 part 'state.dart';
@@ -19,6 +18,7 @@ class CollectionItemBloc
     on<AmountChanged>(_onAmountChanged);
     on<CollectTypesChanged>(_onCollectTypesChanged);
     on<CollectTypeSelected>(_onCollectTypeSelected);
+    on<ResetCollectionItem>(_onReset);
   }
 
   void _onAgentItemChanged(
@@ -96,5 +96,12 @@ class CollectionItemBloc
     Emitter<CollectionItemState> emit,
   ) {
     emit(state.copyWith(collectTypeId: event.collectTypeId));
+  }
+
+  void _onReset(
+    ResetCollectionItem event,
+    Emitter<CollectionItemState> emit,
+  ) {
+    emit(const CollectionItemState());
   }
 }

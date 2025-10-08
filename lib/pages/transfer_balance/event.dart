@@ -69,3 +69,7 @@ class RechargeTypeSelected extends TransferBalanceEvent {
   const RechargeTypeSelected(this.rechargeTypeId);
   final int? rechargeTypeId;
 }
+
+class ResetTransferBalance extends TransferBalanceEvent {
+  const ResetTransferBalance();
+}

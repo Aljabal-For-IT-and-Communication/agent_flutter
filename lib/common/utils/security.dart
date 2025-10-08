@@ -51,7 +51,8 @@ Future<bool> request_permission(Permission permission) async {
   return true;
 }
 
-Future<bool> printPdf(TransferCollectionData item, {String businessName = ""}) async {
+Future<bool> printPdf(TransferCollectionData item,
+    {String businessName = ""}) async {
   final pdf = pw.Document();
   final font = await rootBundle.load("assets/fonts/Cairo-Regular.ttf");
 
@@ -76,7 +77,8 @@ Future<bool> printPdf(TransferCollectionData item, {String businessName = ""}) a
               ),
               pw.SizedBox(height: 10),
               pw.Center(
-                child: pw.Text("Name:  ${businessName == "" ? item.name : businessName}",
+                child: pw.Text(
+                    "Name:  ${businessName == "" ? item.name : businessName}",
                     style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
               ),
               pw.SizedBox(height: 10),
@@ -87,6 +89,17 @@ Future<bool> printPdf(TransferCollectionData item, {String businessName = ""}) a
               pw.SizedBox(height: 10),
               pw.Center(
                 child: pw.Text("Amount:  ${item.amount}",
+                    style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Center(
+                child: pw.Text("Collect Type:  ${item.collectTypeName ?? "-"}",
+                    style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Center(
+                child: pw.Text(
+                    "Recharge Type:  ${item.rechargeTypeName ?? "-"}",
                     style: pw.TextStyle(fontSize: 20, font: pw.Font.ttf(font))),
               ),
               pw.SizedBox(height: 10),
@@ -108,7 +121,9 @@ Future<bool> printCollectionReportPdf(
   collectionList.sort((a, b) {
     int cmp = (a.salesPointId ?? 0).compareTo(b.salesPointId ?? 0);
     if (cmp != 0) return cmp;
-    return (a.toAgentId ?? 0).compareTo(b.toAgentId ?? 0);
+    cmp = (a.toAgentId ?? 0).compareTo(b.toAgentId ?? 0);
+    if (cmp != 0) return cmp;
+    return (a.id ?? 0).compareTo(b.id ?? 0);
   });
 
   final pdf = pw.Document();
@@ -176,9 +191,28 @@ Future<bool> printCollectionReportPdf(
           textStyle: pw.TextStyle(
               font: ttf, fontSize: 18, fontWeight: pw.FontWeight.bold)));
 
-      final headers = ['Amount'.tr(), 'Date'.tr()];
+      final headers = [
+        'Amount'.tr(),
+        'Collect Type'.tr(),
+        'Recharge Type'.tr(),
+        'Date'.tr()
+      ];
       final data = group.map((item) {
-        return [item.amount ?? '0', timeFormated(item.updatedAt)];
+        final collectType =
+            (item.collectTypeName != null && item.collectTypeName!.isNotEmpty)
+                ? item.collectTypeName!
+                : '-';
+        final rechargeType =
+            (item.rechargeTypeName != null && item.rechargeTypeName!.isNotEmpty)
+                ? item.rechargeTypeName!
+                : '-';
+
+        return [
+          item.amount ?? '0',
+          collectType,
+          rechargeType,
+          timeFormated(item.updatedAt)
+        ];
       }).toList();
 
       widgets.add(pw.TableHelper.fromTextArray(
@@ -189,8 +223,18 @@ Future<bool> printCollectionReportPdf(
         headerDecoration: pw.BoxDecoration(color: PdfColors.grey300),
         cellAlignment: pw.Alignment.center,
         cellAlignments: isArabic
-            ? {0: pw.Alignment.centerRight, 1: pw.Alignment.centerLeft}
-            : {0: pw.Alignment.centerLeft, 1: pw.Alignment.centerRight},
+            ? {
+                0: pw.Alignment.centerRight,
+                1: pw.Alignment.center,
+                2: pw.Alignment.center,
+                3: pw.Alignment.centerLeft,
+              }
+            : {
+                0: pw.Alignment.centerLeft,
+                1: pw.Alignment.center,
+                2: pw.Alignment.center,
+                3: pw.Alignment.centerRight,
+              },
       ));
 
       double groupTotal = group.fold(

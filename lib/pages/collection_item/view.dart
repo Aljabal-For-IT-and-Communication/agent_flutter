@@ -261,7 +261,15 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                   horizontal: 0.w,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: BuildPublicAppBar(title: "Collections".tr()),
+                  child: BuildPublicAppBar(
+                    title: "Collections".tr(),
+                    onBack: () {
+                      context
+                          .read<CollectionItemBloc>()
+                          .add(const ResetCollectionItem());
+                      Navigator.pop(context);
+                    },
+                  ),
                 )),
             SliverPadding(
                 padding: EdgeInsets.symmetric(

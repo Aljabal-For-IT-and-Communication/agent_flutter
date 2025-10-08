@@ -30,6 +30,8 @@ class ShippingOperationResponseEntity {
 class ShippingOperationData {
   String? amount;
   String? avatar;
+  String? rechargeTypeName;
+  String? collectTypeName;
   String? businessName;
   String? createdAt;
   String? deletedAt;
@@ -45,6 +47,8 @@ class ShippingOperationData {
   ShippingOperationData(
       {this.amount,
       this.avatar,
+      this.rechargeTypeName,
+      this.collectTypeName,
       this.businessName,
       this.createdAt,
       this.deletedAt,
@@ -60,6 +64,8 @@ class ShippingOperationData {
   ShippingOperationData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
     avatar = json['avatar'];
+    rechargeTypeName = json['recharge_type_name'];
+    collectTypeName = json['collect_type_name'];
     businessName = json['business_name'];
     createdAt = json['created_at'];
     deletedAt = json['deleted_at'];
@@ -77,6 +83,8 @@ class ShippingOperationData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['amount'] = this.amount;
     data['avatar'] = this.avatar;
+    data['recharge_type_name'] = this.rechargeTypeName;
+    data['collect_type_name'] = this.collectTypeName;
     data['business_name'] = this.businessName;
     data['created_at'] = this.createdAt;
     data['deleted_at'] = this.deletedAt;
@@ -172,6 +180,8 @@ class AgentRechargeRecordResponseEntity {
 class AgentRechargeRecordData {
   String? amount;
   String? avatar;
+  String? collectTypeName;
+  String? rechargeTypeName;
   String? createdAt;
   String? deletedAt;
   String? firstName;
@@ -187,6 +197,8 @@ class AgentRechargeRecordData {
   AgentRechargeRecordData(
       {this.amount,
       this.avatar,
+      this.collectTypeName,
+      this.rechargeTypeName,
       this.createdAt,
       this.deletedAt,
       this.firstName,
@@ -202,6 +214,8 @@ class AgentRechargeRecordData {
   AgentRechargeRecordData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
     avatar = json['avatar'];
+    collectTypeName = json['collect_type_name'];
+    rechargeTypeName = json['recharge_type_name'];
     createdAt = json['created_at'];
     deletedAt = json['deleted_at'];
     firstName = json['first_name'];
@@ -219,6 +233,8 @@ class AgentRechargeRecordData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['amount'] = this.amount;
     data['avatar'] = this.avatar;
+    data['collect_type_name'] = this.collectTypeName;
+    data['recharge_type_name'] = this.rechargeTypeName;
     data['created_at'] = this.createdAt;
     data['deleted_at'] = this.deletedAt;
     data['first_name'] = this.firstName;
@@ -430,6 +446,8 @@ class AgentCollectRecordResponseEntity {
 class AgentCollectRecordData {
   String? amount;
   String? avatar;
+  String? collectTypeName;
+  String? rechargeTypeName;
   int? category;
   String? createdAt;
   String? deletedAt;
@@ -445,6 +463,8 @@ class AgentCollectRecordData {
   AgentCollectRecordData(
       {this.amount,
       this.avatar,
+      this.collectTypeName,
+      this.rechargeTypeName,
       this.category,
       this.createdAt,
       this.deletedAt,
@@ -460,6 +480,8 @@ class AgentCollectRecordData {
   AgentCollectRecordData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
     avatar = json['avatar'];
+    collectTypeName = json['collect_type_name'];
+    rechargeTypeName = json['recharge_type_name'];
     category = json['category'];
     createdAt = json['created_at'];
     deletedAt = json['deleted_at'];
@@ -477,6 +499,8 @@ class AgentCollectRecordData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['amount'] = this.amount;
     data['avatar'] = this.avatar;
+    data['collect_type_name'] = this.collectTypeName;
+    data['recharge_type_name'] = this.rechargeTypeName;
     data['category'] = this.category;
     data['created_at'] = this.createdAt;
     data['deleted_at'] = this.deletedAt;
@@ -524,9 +548,11 @@ class TransferCollectionData {
   int? id;
   String? name;
   String? phone;
+  String? collectTypeName;
+  String? rechargeTypeName;
 
   TransferCollectionData(
-      {this.amount, this.createdAt, this.id, this.name, this.phone});
+      {this.amount, this.createdAt, this.id, this.name, this.phone, this.collectTypeName, this.rechargeTypeName});
 
   TransferCollectionData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
@@ -534,6 +560,8 @@ class TransferCollectionData {
     id = json['id'];
     name = json['name'];
     phone = json['phone'];
+    collectTypeName = json['collect_type_name'];
+    rechargeTypeName = json['recharge_type_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -543,6 +571,8 @@ class TransferCollectionData {
     data['id'] = this.id;
     data['name'] = this.name;
     data['phone'] = this.phone;
+    data['collect_type_name'] = this.collectTypeName;
+    data['recharge_type_name'] = this.rechargeTypeName;
     return data;
   }
 }

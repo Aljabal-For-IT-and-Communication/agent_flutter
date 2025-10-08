@@ -40,12 +40,15 @@ class BuildAppBar extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
+                    context
+                        .read<TransferBalanceBloc>()
+                        .add(const ResetTransferBalance());
                     Navigator.pop(context);
                   },
                   child: Container(
                     width: 24.w,
                     height: 24.w,
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_back,
                       color: AppColors.primaryBackground,
                     ),
