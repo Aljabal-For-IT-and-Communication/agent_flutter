@@ -167,5 +167,7 @@
   "Debt asc": "Debt asc",
   "Debt desc": "Debt desc",
   "Recharge Type": "Recharge Type",
-  "Collect type": "Collect type"
+  "Collect type": "Collect type",
+  "Recharge": "Recharge",
+  "Collection": "Collection"
 }

@@ -187,5 +187,7 @@
   "Debt asc": "المديونية تصاعديًا",
   "Debt desc": "المديونية تنازليًا",
   "Recharge Type": "نوع الشحن",
-  "Collect type": "نوع التحصيل"
+  "Collect type": "نوع التحصيل",
+  "Recharge": "إعادة شحن",
+  "Collection": "تحصيل"
 }

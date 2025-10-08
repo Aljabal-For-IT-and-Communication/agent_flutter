@@ -770,6 +770,23 @@ class BuildPendingTransactionListItem extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 5.h),
+                SizedBox(
+                  width: 100.w,
+                  child: Text(
+                    item.isRecharge ?? false
+                        ? 'Recharge'.tr()
+                        : "Collection".tr(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: AppColors.primaryFirstElementText,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5.h),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                   decoration: BoxDecoration(
