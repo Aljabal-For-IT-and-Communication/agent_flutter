@@ -1,27 +1,19 @@
-
-import 'dart:convert';
-
 import 'package:app/common/apis/home.dart';
-import 'package:app/common/apis/user.dart';
 import 'package:app/common/entities/entities.dart';
-import 'package:app/common/routes/routes.dart';
 import 'package:app/common/utils/logger.dart';
-import 'package:app/common/values/constant.dart';
-import 'package:app/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:app/common/widgets/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  message() async{
+  message() async {
     try {
       final state = context.read<MessageBloc>().state;
       EasyLoading.show(
@@ -30,10 +22,10 @@ class Logic{
           dismissOnTap: true);
 
       PageRequestEntity entity = PageRequestEntity();
-      entity.title="";
-      entity.page=state.message.length;
+      entity.title = "";
+      entity.page = state.message.length;
       var result = await HomeAPI.notificationList(params: entity);
-      if (result.code == 0 && result.data!=null) {
+      if (result.code == 0 && result.data != null) {
         if (result.data!.isNotEmpty) {
           var message = state.message.toList();
           message.addAll(result.data!);
@@ -47,7 +39,4 @@ class Logic{
       Logger.write("${e}");
     }
   }
-
-
-
 }

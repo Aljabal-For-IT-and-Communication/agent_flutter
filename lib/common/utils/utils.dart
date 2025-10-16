@@ -6,3 +6,4 @@ export 'security.dart';
 export 'date.dart';
 export 'logger.dart';
 export 'loading.dart';
+export 'locale.dart';

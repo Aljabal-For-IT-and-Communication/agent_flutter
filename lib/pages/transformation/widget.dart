@@ -1,10 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
-import 'logic.dart';
 
 class BuildAppBar extends StatelessWidget {
   BuildAppBar({Key? key}) : super(key: key);
@@ -15,14 +12,14 @@ class BuildAppBar extends StatelessWidget {
     return Container(
       width: 375.w,
       decoration: BoxDecoration(
-          color: AppColors.primaryBackground,
-          image: DecorationImage(
-            alignment: Alignment.topCenter,
-            image: AssetImage('assets/icons/headbg.png'),
-            fit: BoxFit.fitWidth, // 完全填充
-          ),
+        color: AppColors.primaryBackground,
+        image: DecorationImage(
+          alignment: Alignment.topCenter,
+          image: AssetImage('assets/icons/headbg.png'),
+          fit: BoxFit.fitWidth, // 完全填充
         ),
-      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w,bottom: 0.h),
+      ),
+      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 0.h),
       child: Column(
         children: [
           SizedBox(
@@ -99,7 +96,7 @@ class BuildAppBar extends StatelessWidget {
 
 class BuildInput extends StatelessWidget {
   final String name;
-  const BuildInput({Key? key,required this.name}) : super(key: key);
+  const BuildInput({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +105,7 @@ class BuildInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "${name}",
             textAlign: TextAlign.left,
@@ -117,17 +114,19 @@ class BuildInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w),
           decoration: BoxDecoration(
               color: AppColors.primaryFourElementText,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryFourElementText)
-          ),
+              border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
@@ -170,7 +169,9 @@ class BuildInput extends StatelessWidget {
             obscureText: false, // 隐藏输入内容, 密码框
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
@@ -193,16 +194,16 @@ class BuildBtn extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-                  "choose".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryBackground,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.sp,
-                  ),
-                ))),
+              "choose".tr(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryBackground,
+                fontWeight: FontWeight.normal,
+                fontSize: 16.sp,
+              ),
+            ))),
         onTap: () {
-        //  Logic(context: context).handleRegister();
+          //  Logic(context: context).handleRegister();
         });
   }
 }

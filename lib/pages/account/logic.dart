@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:app/common/apis/user.dart';
 import 'package:app/common/entities/entities.dart';
-import 'package:app/common/routes/routes.dart';
 import 'package:app/common/utils/logger.dart';
 import 'package:app/common/values/constant.dart';
 import 'package:app/global.dart';

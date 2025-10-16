@@ -1,11 +1,8 @@
-import 'dart:convert';
 
-import 'package:app/common/apis/chat.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/services/socketchannel.dart';
 import 'package:app/common/services/sql_db.dart';
-import 'package:app/common/widgets/toast.dart';
 import 'package:app/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

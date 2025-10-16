@@ -3,7 +3,6 @@ import 'package:app/common/values/values.dart';
 import 'package:app/global.dart';
 import 'package:app/pages/profile/widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,7 +19,7 @@ class _ProfilePage extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero,(){
+    Future.delayed(Duration.zero, () {
       var userProfile = Global.storageService.getUserProfile();
       context.read<ProfileBloc>().add(UserProfileChanged(userProfile));
     });
@@ -34,7 +33,7 @@ class _ProfilePage extends State<ProfilePage> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              automaticallyImplyLeading:false,
+              automaticallyImplyLeading: false,
               title: Container(
                 child: Text(
                   "Profile",
@@ -47,7 +46,7 @@ class _ProfilePage extends State<ProfilePage> {
               ),
               actions: [
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -65,9 +64,13 @@ class _ProfilePage extends State<ProfilePage> {
                               TextButton(
                                 child: Text("Confirm"),
                                 onPressed: () {
-                                  Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
-                                  Global.storageService.remove(STORAGE_USER_TOKEN_KEY);
-                                  Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.Sign_in, (Route<dynamic> route) => false);
+                                  Global.storageService
+                                      .remove(STORAGE_USER_PROFILE_KEY);
+                                  Global.storageService
+                                      .remove(STORAGE_USER_TOKEN_KEY);
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      AppRoutes.Sign_in,
+                                      (Route<dynamic> route) => false);
                                 },
                               )
                             ],
@@ -75,10 +78,13 @@ class _ProfilePage extends State<ProfilePage> {
                         });
                   },
                   child: Container(
-                    width:20.w,
+                    width: 20.w,
                     height: 20.h,
                     margin: EdgeInsets.only(right: 16.w),
-                    child: Image.asset("assets/images/logout.png",fit: BoxFit.fitWidth,),
+                    child: Image.asset(
+                      "assets/images/logout.png",
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 )
               ],
@@ -91,9 +97,10 @@ class _ProfilePage extends State<ProfilePage> {
                     horizontal: 16.w,
                   ),
                   sliver: SliverToBoxAdapter(
-                    child: BuildHead(item: userProfile,),
+                    child: BuildHead(
+                      item: userProfile,
+                    ),
                   )),
-
               SliverPadding(
                   padding: EdgeInsets.symmetric(
                     vertical: 16.h,
@@ -102,17 +109,26 @@ class _ProfilePage extends State<ProfilePage> {
                   sliver: SliverToBoxAdapter(
                     child: Container(
                       width: 343.w,
-                      child: Column(children: [
-
-                        SizedBox(height: 10.h,),
-                        BuildMenuItem(title: "Setting",description: "Notification, Password, FAQ, Contact",callFunc: (){
-                          Navigator.of(context).pushNamed(AppRoutes.Setting);
-                        },),
-                        SizedBox(height: 10.h,),
-                      ],),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          BuildMenuItem(
+                            title: "Setting",
+                            description: "Notification, Password, FAQ, Contact",
+                            callFunc: () {
+                              Navigator.of(context)
+                                  .pushNamed(AppRoutes.Setting);
+                            },
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                        ],
+                      ),
                     ),
                   )),
-
             ]),
           );
         });

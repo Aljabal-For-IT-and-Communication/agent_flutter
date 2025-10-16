@@ -1,4 +1,3 @@
-import 'package:app/common/routes/names.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/app.dart';
 import 'package:easy_localization/easy_localization.dart';

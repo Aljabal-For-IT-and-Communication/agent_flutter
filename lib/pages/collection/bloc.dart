@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:app/common/entities/entities.dart';
 
 part 'event.dart';
 part 'state.dart';

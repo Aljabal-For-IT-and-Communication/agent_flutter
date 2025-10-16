@@ -1,10 +1,7 @@
-import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/routes.dart';
 import 'package:app/common/values/values.dart';
-import 'package:app/common/widgets/app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -55,20 +52,40 @@ class _ReportPageState extends State<ReportPage> {
                   vertical: 15.h,
                   horizontal: 16.w,
                 ),
-                sliver:SliverToBoxAdapter(child: Column(children: [
-                  BuildListItem(title:"Debit report".tr(),iconImage: "assets/icons/icon6.png",callFunc: (){
-                    Navigator.of(context).pushNamed(AppRoutes.Debit);
-                  },),
-                  BuildListItem(title:"Shipments report".tr(),iconImage: "assets/icons/icon4.png",callFunc: (){
-                    Navigator.of(context).pushNamed(AppRoutes.Shipment);
-                  },),
-                  BuildListItem(title:"Revenue report".tr(),iconImage: "assets/icons/icon3.png",callFunc: (){
-                    Navigator.of(context).pushNamed(AppRoutes.Revenue);
-                  },),
-                  BuildListItem(title:"My report".tr(),iconImage: "assets/icons/icon1.png",callFunc: (){
-                    Navigator.of(context).pushNamed(AppRoutes.MyReport);
-                  },),
-                ],),)),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      BuildListItem(
+                        title: "Debit report".tr(),
+                        iconImage: "assets/icons/icon6.png",
+                        callFunc: () {
+                          Navigator.of(context).pushNamed(AppRoutes.Debit);
+                        },
+                      ),
+                      BuildListItem(
+                        title: "Shipments report".tr(),
+                        iconImage: "assets/icons/icon4.png",
+                        callFunc: () {
+                          Navigator.of(context).pushNamed(AppRoutes.Shipment);
+                        },
+                      ),
+                      BuildListItem(
+                        title: "Revenue report".tr(),
+                        iconImage: "assets/icons/icon3.png",
+                        callFunc: () {
+                          Navigator.of(context).pushNamed(AppRoutes.Revenue);
+                        },
+                      ),
+                      BuildListItem(
+                        title: "My report".tr(),
+                        iconImage: "assets/icons/icon1.png",
+                        callFunc: () {
+                          Navigator.of(context).pushNamed(AppRoutes.MyReport);
+                        },
+                      ),
+                    ],
+                  ),
+                )),
             SliverPadding(
               padding: EdgeInsets.symmetric(
                 vertical: 0.w,

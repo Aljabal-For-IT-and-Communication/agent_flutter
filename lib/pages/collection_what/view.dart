@@ -1,14 +1,12 @@
 import 'package:app/common/entities/entities.dart';
-import 'package:app/common/utils/security.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:app/common/utils/date.dart';
+import 'package:app/common/utils/utils.dart';
 
 import 'bloc.dart';
 import 'widget.dart';
@@ -182,7 +180,7 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                                               .add(StartDateChanged(""));
                                         },
                                         currentTime: initial,
-                                        locale: LocaleType.en,
+                                        locale: pickerLocaleFrom(context),
                                       );
                                     },
                                     child: Container(
@@ -262,7 +260,7 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                                               .add(EndDateChanged(""));
                                         },
                                         currentTime: initial,
-                                        locale: LocaleType.en,
+                                        locale: pickerLocaleFrom(context),
                                       );
                                     },
                                     child: Container(

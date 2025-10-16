@@ -1,5 +1,3 @@
-import 'package:app/common/values/constant.dart';
-import 'package:app/global.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +15,8 @@ class BuildAppBar extends StatelessWidget {
     // TODO: implement build
     return Container(
       width: 375.w,
-      padding: EdgeInsets.only(top: 80.h, left: 16.w, right: 16.w,bottom: 10.h),
+      padding:
+          EdgeInsets.only(top: 80.h, left: 16.w, right: 16.w, bottom: 10.h),
       child: Column(
         children: [
           Container(
@@ -79,18 +78,17 @@ class BuildGuestBtn extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-                  "Login as a guest".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryBackground,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.sp,
-                  ),
-                ))),
+              "Login as a guest".tr(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryBackground,
+                fontWeight: FontWeight.normal,
+                fontSize: 16.sp,
+              ),
+            ))),
         onTap: () {
           Navigator.of(context).pushNamedAndRemoveUntil(
               AppRoutes.Application, (Route<dynamic> route) => false);
-
         });
   }
 }
@@ -284,7 +282,6 @@ class ForgotPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var state = context.read<SignInBloc>().state;
     return Container(
       width: 343.w,
       height: 44.h,
@@ -311,7 +308,8 @@ class ForgotPassword extends StatelessWidget {
           //   context.read<SignInBloc>().add(CheckChanged(value));
           //   Global.storageService.setBool(STORAGE_USER_CHECKED_KEY, value??false);
           // })
-      ],),
+        ],
+      ),
     );
   }
 }

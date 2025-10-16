@@ -1,10 +1,7 @@
-import 'package:app/common/entities/chat.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/services/sql_db.dart';
 import 'package:app/common/values/constant.dart';
 import 'package:app/global.dart';
-import 'package:flutter/animation.dart';
-import 'package:flutter/scheduler.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:web_socket_channel/io.dart';

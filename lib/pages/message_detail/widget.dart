@@ -1,4 +1,3 @@
-import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrderBtn extends StatelessWidget {
   final Function()? item;
-  const OrderBtn({Key? key,required this.item}) : super(key: key);
+  const OrderBtn({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +21,14 @@ class OrderBtn extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-                  "View Order".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryBackground,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.sp,
-                  ),
-                ))),
+              "View Order".tr(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryBackground,
+                fontWeight: FontWeight.normal,
+                fontSize: 16.sp,
+              ),
+            ))),
         onTap: item);
   }
 }
