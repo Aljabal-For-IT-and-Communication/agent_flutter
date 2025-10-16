@@ -39,12 +39,12 @@ class Logic {
       String middleName = state.middleName;
       String lastName = state.lastName;
       String businessName = state.businessName;
-      int city = user?.city ?? 0;
-      int region = user?.region ?? 0;
+      // int city = user?.city ?? 0;
+      // int region = user?.region ?? 0;
       String address = state.address;
       String phone = state.phone;
-      String agentPhone = user?.phone ?? "";
-      String emailAddress = state.email;
+      String agentPhone = user.phone ?? "";
+      // String emailAddress = state.email;
       String password = state.password;
       String repassword = state.repassword;
 

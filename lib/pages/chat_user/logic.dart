@@ -26,8 +26,7 @@ class ChatUserLogic with WidgetsBindingObserver {
 
   goChat(ChatUserItem item) async {
     if (item.token != null) {
-      var result = await Navigator.of(context)
-          .pushNamed(AppRoutes.Chat, arguments: item);
+      await Navigator.of(context).pushNamed(AppRoutes.Chat, arguments: item);
       // if (result == "finish") {
       asyncLoadAllData();
       // }

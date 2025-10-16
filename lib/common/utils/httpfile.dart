@@ -136,13 +136,13 @@ class HttpFileUtil {
             return ErrorEntity(code: 108, message: "unknown mistake");
           }
         }
-      default:
-        {
-          return ErrorEntity(
-              code: -1,
-              message:
-                  error.response != null ? error.response!.statusMessage! : "");
-        }
+      // default:
+      //   {
+      //     return ErrorEntity(
+      //         code: -1,
+      //         message:
+      //             error.response != null ? error.response!.statusMessage! : "");
+      //   }
     }
   }
 

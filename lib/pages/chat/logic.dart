@@ -24,7 +24,7 @@ class Logic {
   ScrollController inputScrollController = new ScrollController();
   bool isloadmore = true;
   double inputHeightStatus = 0;
-  File? _photo;
+  // File? _photo;
   final ImagePicker _picker = ImagePicker();
 
   Logic({

@@ -44,7 +44,7 @@ class FirebaseMassagingHandler {
     }
   }
 
-  static Future<void> _receiveNotification(RemoteMessage message) async {}
+  // static Future<void> _receiveNotification(RemoteMessage message) async {}
 
   @pragma('vm:entry-point')
   static Future<void> firebaseMessagingBackground(RemoteMessage message) async {

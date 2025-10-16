@@ -3,7 +3,6 @@ part of 'bloc.dart';
 abstract class ChatEvent {
   const ChatEvent();
 
-  @override
   List<Object> get props => [];
 }
 
