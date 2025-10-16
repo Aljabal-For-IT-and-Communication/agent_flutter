@@ -12,24 +12,23 @@ class ChatUserBloc extends Bloc<ChatUserEvent, ChatUserState> {
   }
 
   void _onHeadDetailChanged(
-      HeadDetailChanged event,
-      Emitter<ChatUserState> emit,
-      ) {
+    HeadDetailChanged event,
+    Emitter<ChatUserState> emit,
+  ) {
     emit(state.copyWith(headDetail: event.headDetail));
   }
 
   void _onTabStatusChanged(
-      TabStatusChanged event,
-      Emitter<ChatUserState> emit,
-      ) {
+    TabStatusChanged event,
+    Emitter<ChatUserState> emit,
+  ) {
     emit(state.copyWith(tabStatus: event.tabStatus));
   }
 
   void _onChatListChanged(
-      ChatListChanged event,
-      Emitter<ChatUserState> emit,
-      ) {
+    ChatListChanged event,
+    Emitter<ChatUserState> emit,
+  ) {
     emit(state.copyWith(chatList: event.chatList));
   }
-
 }

@@ -1,4 +1,3 @@
-
 import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/entities/base.dart';
 import 'package:app/common/utils/utils.dart';
@@ -7,13 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  init(){
+  init() {
     DateRequestEntity entity = DateRequestEntity();
     entity.startDate = "";
     entity.endDate = "";
@@ -28,7 +27,9 @@ class Logic{
           dismissOnTap: true);
       var result = await SalePointAPI.accountStatement(params: entity);
       if (result.code == 0) {
-        context.read<AccountStatementBloc>().add(AccountStatementChanged(result.data!));
+        context
+            .read<AccountStatementBloc>()
+            .add(AccountStatementChanged(result.data!));
       }
       EasyLoading.dismiss();
     } catch (e) {
@@ -36,7 +37,4 @@ class Logic{
       Logger.write("${e}");
     }
   }
-
-
-
 }

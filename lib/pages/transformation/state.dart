@@ -7,11 +7,7 @@ class TransformationState {
 
   final int page;
 
-  TransformationState copyWith({
-    int? page
-  }) {
-    return TransformationState(
-      page:page??this.page
-    );
+  TransformationState copyWith({int? page}) {
+    return TransformationState(page: page ?? this.page);
   }
 }

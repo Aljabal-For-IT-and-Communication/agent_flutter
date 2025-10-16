@@ -1,4 +1,3 @@
-
 import 'package:app/common/apis/agent.dart';
 import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/utils/utils.dart';
@@ -6,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  init(){
+  init() {
     agent();
     salePoint();
   }
@@ -28,6 +27,7 @@ class Logic{
       Logger.write("${e}");
     }
   }
+
   agent() async {
     try {
       var result = await AgentAPI.agentList();
@@ -39,7 +39,4 @@ class Logic{
       Logger.write("${e}");
     }
   }
-
-
-
 }

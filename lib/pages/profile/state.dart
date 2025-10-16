@@ -1,6 +1,5 @@
 part of 'bloc.dart';
 
-
 class ProfileState {
   const ProfileState({
     this.userProfile,

@@ -42,14 +42,15 @@ class ShipmentState {
     return ShipmentState(
         salePointList: salePointList ?? this.salePointList,
         agentList: agentList ?? this.agentList,
-        agentRechargeRecordList: agentRechargeRecordList ?? this.agentRechargeRecordList,
+        agentRechargeRecordList:
+            agentRechargeRecordList ?? this.agentRechargeRecordList,
         phone: phone ?? this.phone,
         Amount: Amount ?? this.Amount,
         type: type ?? this.type,
         agent: agent ?? this.agent,
         agentItem: agentItem ?? this.agentItem,
         salePointItem: salePointItem ?? this.salePointItem,
-        isMore:isMore??this.isMore,
+        isMore: isMore ?? this.isMore,
         page: page ?? this.page);
   }
 }

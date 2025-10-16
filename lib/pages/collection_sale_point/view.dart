@@ -14,7 +14,8 @@ class CollectionSalePointPage extends StatefulWidget {
   const CollectionSalePointPage({Key? key}) : super(key: key);
 
   @override
-  State<CollectionSalePointPage> createState() => _CollectionSalePointPageState();
+  State<CollectionSalePointPage> createState() =>
+      _CollectionSalePointPageState();
 }
 
 class _CollectionSalePointPageState extends State<CollectionSalePointPage> {
@@ -25,7 +26,9 @@ class _CollectionSalePointPageState extends State<CollectionSalePointPage> {
     super.initState();
     Future.delayed(Duration.zero, () {
       if (mounted) {
-        context.read<CollectionSalePointBloc>().add(AgentCollectRecordListChanged([]));
+        context
+            .read<CollectionSalePointBloc>()
+            .add(AgentCollectRecordListChanged([]));
         context.read<CollectionSalePointBloc>().add(IsMoreChanged(false));
         DateRequestEntity entity = DateRequestEntity();
         entity.startDate = "";
@@ -35,8 +38,10 @@ class _CollectionSalePointPageState extends State<CollectionSalePointPage> {
       }
     });
     scrollController.addListener(() {
-      if ((scrollController.offset + 10) > scrollController.position.maxScrollExtent) {
-        if (lastPostCalled == null || DateTime.now().difference(lastPostCalled!) > Duration(seconds: 2)) {
+      if ((scrollController.offset + 10) >
+          scrollController.position.maxScrollExtent) {
+        if (lastPostCalled == null ||
+            DateTime.now().difference(lastPostCalled!) > Duration(seconds: 2)) {
           setState(() {
             lastPostCalled = DateTime.now();
           });
@@ -60,37 +65,41 @@ class _CollectionSalePointPageState extends State<CollectionSalePointPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return BlocBuilder<CollectionSalePointBloc, CollectionSalePointState>(builder: (context, state) {
+    return BlocBuilder<CollectionSalePointBloc, CollectionSalePointState>(
+        builder: (context, state) {
       return Container(
           color: AppColors.primaryBackground,
           child: CustomScrollView(
               controller: scrollController,
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               slivers: [
-            SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 0.w,
-                  horizontal: 0.w,
-                ),
-                sliver: SliverToBoxAdapter(
-                  child: BuildPublicAppBar(title: "Point of sale collections".tr()),
-                )),
-            SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 20.w,
-                  horizontal: 16.w,
-                ),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
+                SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 0.w,
+                      horizontal: 0.w,
+                    ),
+                    sliver: SliverToBoxAdapter(
+                      child: BuildPublicAppBar(
+                          title: "Point of sale collections".tr()),
+                    )),
+                SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 20.w,
+                      horizontal: 16.w,
+                    ),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      AgentCollectRecordData item =state.agentCollectRecordList.elementAt(index);
-                      return BuildListItem(item: item);
-                    },
-                    childCount: state.agentCollectRecordList.length,
-                  ),
-                )),
-            buildBottomLoading(state.isMore),
-          ]));
+                          AgentCollectRecordData item =
+                              state.agentCollectRecordList.elementAt(index);
+                          return BuildListItem(item: item);
+                        },
+                        childCount: state.agentCollectRecordList.length,
+                      ),
+                    )),
+                buildBottomLoading(state.isMore),
+              ]));
     });
   }
 }

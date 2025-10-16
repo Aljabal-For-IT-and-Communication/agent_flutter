@@ -14,22 +14,28 @@ class BuildAppBar extends StatelessWidget {
     // TODO: implement build
     return Container(
       width: 375.w,
-      padding: EdgeInsets.only(top: 40.h, left: 16.w, right: 16.w,bottom: 10.h),
+      padding:
+          EdgeInsets.only(top: 40.h, left: 16.w, right: 16.w, bottom: 10.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap:(){Navigator.pop(context);},
+            onTap: () {
+              Navigator.pop(context);
+            },
             child: Container(
               width: 24.w,
               height: 24.w,
-              child: Icon(Icons.arrow_back,color: AppColors.primaryBackground,),
+              child: Icon(
+                Icons.arrow_back,
+                color: AppColors.primaryBackground,
+              ),
             ),
           ),
           Container(
             width: 130.w,
-            margin: EdgeInsets.only(top:40.h),
+            margin: EdgeInsets.only(top: 40.h),
             alignment: Alignment.center,
             child: Image.asset("assets/icons/logo.png"),
           ),
@@ -44,7 +50,12 @@ class BuildInput extends StatelessWidget {
   final String name;
   final String icon;
   final Function(String)? callFunc;
-  BuildInput({Key? key,required this.name,required this.icon,required this.callFunc}) : super(key: key);
+  BuildInput(
+      {Key? key,
+      required this.name,
+      required this.icon,
+      required this.callFunc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +65,7 @@ class BuildInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "${name}",
             textAlign: TextAlign.left,
@@ -63,8 +74,11 @@ class BuildInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           height: 50.h,
           margin: EdgeInsets.only(bottom: 20.h, top: 0.h),
@@ -135,10 +149,7 @@ class BuildInput extends StatelessWidget {
   }
 }
 
-
-
 class BuildVerificationInput extends StatelessWidget {
-
   BuildVerificationInput({Key? key}) : super(key: key);
 
   @override
@@ -150,7 +161,7 @@ class BuildVerificationInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "verification Code".tr(),
             textAlign: TextAlign.left,
@@ -159,8 +170,11 @@ class BuildVerificationInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           height: 50.h,
           margin: EdgeInsets.only(bottom: 20.h, top: 0.h),
@@ -175,7 +189,11 @@ class BuildVerificationInput extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(left: 10.w),
                 padding: EdgeInsets.only(left: 0.w, top: 0.w),
-                child: Icon(Icons.email,color: AppColors.primaryText,size: 16,),
+                child: Icon(
+                  Icons.email,
+                  color: AppColors.primaryText,
+                  size: 16,
+                ),
               ),
               Container(
                 width: 164.w,
@@ -216,7 +234,9 @@ class BuildVerificationInput extends StatelessWidget {
                     fontSize: 14.sp,
                   ),
                   onChanged: (value) {
-                    context.read<ForgetBloc>().add(VerificationCodeChanged(value));
+                    context
+                        .read<ForgetBloc>()
+                        .add(VerificationCodeChanged(value));
                   },
                   maxLines: 1,
                   autocorrect: false, // 自动纠正
@@ -234,16 +254,18 @@ class BuildVerificationInput extends StatelessWidget {
                       ),
                       child: Center(
                           child: Text(
-                            state.isSend?"${state.countDownTime} s":"Send Code".tr(),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 12.sp,
-                            ),
-                          ))),
+                        state.isSend
+                            ? "${state.countDownTime} s"
+                            : "Send Code".tr(),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: AppColors.primaryBackground,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.sp,
+                        ),
+                      ))),
                   onTap: () {
                     Logic(context: context).handleSendCode();
                   })
@@ -271,14 +293,14 @@ class BuildLoginBtn extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-                  "Save".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryBackground,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.sp,
-                  ),
-                ))),
+              "Save".tr(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryBackground,
+                fontWeight: FontWeight.normal,
+                fontSize: 16.sp,
+              ),
+            ))),
         onTap: () {
           Logic(context: context).handleForget();
         });

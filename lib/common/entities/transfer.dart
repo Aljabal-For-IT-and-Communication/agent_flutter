@@ -552,7 +552,13 @@ class TransferCollectionData {
   String? rechargeTypeName;
 
   TransferCollectionData(
-      {this.amount, this.createdAt, this.id, this.name, this.phone, this.collectTypeName, this.rechargeTypeName});
+      {this.amount,
+      this.createdAt,
+      this.id,
+      this.name,
+      this.phone,
+      this.collectTypeName,
+      this.rechargeTypeName});
 
   TransferCollectionData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];

@@ -2,9 +2,9 @@ part of 'bloc.dart';
 
 class SignInState {
   const SignInState({
-    this.phone="",
-    this.password="",
-    this.isChecked=false,
+    this.phone = "",
+    this.password = "",
+    this.isChecked = false,
   });
 
   final String password;

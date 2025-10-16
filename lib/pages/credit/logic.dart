@@ -1,4 +1,3 @@
-
 import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/utils.dart';
@@ -9,22 +8,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  init(){
+  init() {
     var userProfile = Global.storageService.getUserProfile();
     context.read<CreditBloc>().add(UserProfileChanged(userProfile));
   }
 
-
-  postTransformation() async{
+  postTransformation() async {
     final state = context.read<CreditBloc>().state;
 
-    if(state.Amount.isEmpty){
+    if (state.Amount.isEmpty) {
       toastInfo(msg: "Amount not empty!");
       return;
     }
@@ -36,7 +34,7 @@ class Logic{
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
 
-    AmountRequestEntity entity =  AmountRequestEntity();
+    AmountRequestEntity entity = AmountRequestEntity();
     entity.amount = state.Amount;
     try {
       var result = await SalePointAPI.requestCredit(params: entity);
@@ -51,7 +49,4 @@ class Logic{
       Logger.write("${e}");
     }
   }
-
-
-
 }

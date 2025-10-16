@@ -9,9 +9,9 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<UserProfileChanged>(_onUserProfileChanged);
   }
   void _onUserProfileChanged(
-      UserProfileChanged event,
-      Emitter<AccountState> emit,
-      ) {
+    UserProfileChanged event,
+    Emitter<AccountState> emit,
+  ) {
     emit(state.copyWith(userProfile: event.userProfile));
   }
 }

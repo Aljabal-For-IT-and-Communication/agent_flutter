@@ -6,17 +6,13 @@ class ReportState {
     this.page = 0,
   });
 
-
   final int page;
   final List<BaseData> collectionList;
 
-  ReportState copyWith({
-    List<BaseData>? collectionList,
-    int? page
-  }) {
+  ReportState copyWith({List<BaseData>? collectionList, int? page}) {
     return ReportState(
-      page:page??this.page,
-      collectionList:collectionList??this.collectionList,
+      page: page ?? this.page,
+      collectionList: collectionList ?? this.collectionList,
     );
   }
 }

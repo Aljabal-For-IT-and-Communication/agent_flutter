@@ -1,5 +1,3 @@
-
-
 class AppRoutes {
   static const Splash = '/';
   static const Sign_in = '/sign_in';
@@ -36,5 +34,4 @@ class AppRoutes {
   static const Photoimgview = '/phone_img_view';
   static const Chat = '/chat';
   static const ChatUser = '/chat_user';
-
 }

@@ -4,7 +4,6 @@ abstract class CollectionSalePointEvent {
   const CollectionSalePointEvent();
 }
 
-
 class AgentCollectRecordListChanged extends CollectionSalePointEvent {
   const AgentCollectRecordListChanged(this.agentCollectRecordList);
 

@@ -25,18 +25,17 @@ class RegisterState {
   final String repassword;
   final String machineNumber;
 
-  RegisterState copyWith({
-    String? firstName,
-    String? middleName,
-    String? lastName,
-    String? businessName,
-    String? address,
-    String? phone,
-    String? email,
-    String? password,
-    String? repassword,
-    String? machineNumber
-  }) {
+  RegisterState copyWith(
+      {String? firstName,
+      String? middleName,
+      String? lastName,
+      String? businessName,
+      String? address,
+      String? phone,
+      String? email,
+      String? password,
+      String? repassword,
+      String? machineNumber}) {
     return RegisterState(
       firstName: firstName ?? this.firstName,
       middleName: middleName ?? this.middleName,

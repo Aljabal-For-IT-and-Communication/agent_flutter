@@ -10,10 +10,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   void _onUserProfileChanged(
-      UserProfileChanged event,
-      Emitter<ProfileState> emit,
-      ) {
+    UserProfileChanged event,
+    Emitter<ProfileState> emit,
+  ) {
     emit(state.copyWith(userProfile: event.userProfile));
   }
-
 }

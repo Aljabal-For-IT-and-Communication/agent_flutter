@@ -19,39 +19,41 @@ class ContactTypePage extends StatelessWidget {
               horizontal: 0.w,
             ),
             sliver: SliverToBoxAdapter(
-              child:BuildPublicAppBar(title:"Contact Type".tr()),
+              child: BuildPublicAppBar(title: "Contact Type".tr()),
             )),
-      SliverPadding(
-        padding: EdgeInsets.symmetric(
-          vertical: 0.w,
-          horizontal: 30.w,
-        ),
-        sliver: SliverToBoxAdapter(
-          child:Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(40.w),
-                child: Image.asset("assets/icons/wifi2.png"),
-              ),
-              SizedBox(height: 30.h,),
-              Container(
-                child: Text(
-                  "You are now connected via wifi!".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
+        SliverPadding(
+          padding: EdgeInsets.symmetric(
+            vertical: 0.w,
+            horizontal: 30.w,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(40.w),
+                  child: Image.asset("assets/icons/wifi2.png"),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Container(
+                  child: Text(
+                    "You are now connected via wifi!".tr(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.primaryText,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                    ),
                   ),
                 ),
-              ),
-            ],),
+              ],
+            ),
+          ),
         ),
-      ),
-    ]),);
+      ]),
+    );
   }
 }
-
-

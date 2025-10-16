@@ -41,15 +41,15 @@ class AgentData {
 
   AgentData(
       {this.avatar,
-        this.balance,
-        this.cid,
-        this.firstName,
-        this.id,
-        this.indebtedness,
-        this.lastName,
-        this.middleName,
-        this.phone,
-        this.token});
+      this.balance,
+      this.cid,
+      this.firstName,
+      this.id,
+      this.indebtedness,
+      this.lastName,
+      this.middleName,
+      this.phone,
+      this.token});
 
   AgentData.fromJson(Map<String, dynamic> json) {
     avatar = json['avatar'];

@@ -1,24 +1,23 @@
-
 import 'dart:io';
 
 import 'package:intl/intl.dart';
 
-String timeFormated(String? time){
-  if(time==null || time==""){
+String timeFormated(String? time) {
+  if (time == null || time == "") {
     return "";
   }
   final DateTime now = DateTime.parse(time).toLocal();
-  final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm:ss',Platform.localeName);
+  final DateFormat formatter =
+      DateFormat('yyyy-MM-dd HH:mm:ss', Platform.localeName);
   return formatter.format(now);
 }
 
 /// 格式化时间
 String duTimeLineFormat(DateTime dt) {
-
   var now = DateTime.now();
   var difference = now.difference(dt);
   if (difference.inSeconds < 60) {
-    if(difference.inSeconds<0){
+    if (difference.inSeconds < 0) {
       return "0s ago";
     }
     return "${difference.inSeconds}s ago";
@@ -36,12 +35,12 @@ String duTimeLineFormat(DateTime dt) {
   }
   // MM-dd
   else if (difference.inDays < 365) {
-    final dtFormat = new DateFormat('MM-dd',Platform.localeName);
+    final dtFormat = new DateFormat('MM-dd', Platform.localeName);
     return dtFormat.format(dt);
   }
   // yyyy-MM-dd
   else {
-    final dtFormat = new DateFormat('yyyy-MM-dd',Platform.localeName);
+    final dtFormat = new DateFormat('yyyy-MM-dd', Platform.localeName);
     var str = dtFormat.format(dt);
     return str;
   }
@@ -49,8 +48,8 @@ String duTimeLineFormat(DateTime dt) {
 
 // Function to convert Arabic-Indic to Western digits
 String replaceArabicNumbers(String input) {
-  const arabic = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-  const normal = ['0','1','2','3','4','5','6','7','8','9'];
+  const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  const normal = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
   for (int i = 0; i < arabic.length; i++) {
     input = input.replaceAll(arabic[i], normal[i]);

@@ -27,12 +27,11 @@ class Logic {
   File? _photo;
   final ImagePicker _picker = ImagePicker();
 
-
   Logic({
     required this.context,
   });
 
-  void init() async{
+  void init() async {
     final data = ModalRoute.of(context)!.settings.arguments as ChatUserItem;
     print(data);
     context.read<ChatBloc>().add(ProfileChanged(data));
@@ -43,53 +42,51 @@ class Logic {
     });
   }
 
-  void dispose(){
+  void dispose() {
     print("--------dispose");
 
     myinputController.dispose();
     inputScrollController.dispose();
   }
 
-
   /// WebSocket接收消息回调
-  webSocketOnMessage(Message data) async{
-    if(context.mounted){
+  webSocketOnMessage(Message data) async {
+    if (context.mounted) {
       String? token = data.token;
       String? toToken = data.toToken;
       String? friendId = context.read<ChatBloc>().state.chatUserItem?.token;
       String? myId = userProfile.token;
       //用于显示当前用户的聊天记录
-      if(token==friendId && toToken==myId){
+      if (token == friendId && toToken == myId) {
         context.read<ChatBloc>().add(MsgContentListChanged(data));
-        if(token==friendId){
-         await clearUnreadMsg(friendId);
+        if (token == friendId) {
+          await clearUnreadMsg(friendId);
         }
       }
     }
   }
 
-  clearUnreadMsg(String? token) async{
+  clearUnreadMsg(String? token) async {
     SqlDbService sqlDbService = await SqlDbService().init();
     await sqlDbService.clearByTokenReadMsgNum(token);
   }
 
-
-  privateMessageData(String? token) async{
-    TokenRequestEntity entity =  TokenRequestEntity();
+  privateMessageData(String? token) async {
+    TokenRequestEntity entity = TokenRequestEntity();
     entity.token = token;
     var res = await ChatAPI.privateMessage(params: entity);
-    if(res.code==0){
+    if (res.code == 0) {
       context.read<ChatBloc>().add(MsgContentClear());
-      for(var item in res.data!){
+      for (var item in res.data!) {
         context.read<ChatBloc>().add(MsgContentListChanged(item));
       }
     }
   }
 
   Future imgFromGallery() async {
-    if(Platform.isIOS) {
+    if (Platform.isIOS) {
       bool photosStatus = await request_permission(Permission.photos);
-      if(!photosStatus){
+      if (!photosStatus) {
         return;
       }
     }
@@ -103,7 +100,7 @@ class Logic {
 
   Future imgFromCamera() async {
     bool cameraStatus = await request_permission(Permission.camera);
-    if(cameraStatus) {
+    if (cameraStatus) {
       final pickedFile = await _picker.pickImage(source: ImageSource.camera);
 
       if (pickedFile != null) {
@@ -115,30 +112,28 @@ class Logic {
   }
 
   Future uploadFile(XFile file) async {
-
-    var result = await ChatAPI.upload_img(file:file);
-    if(result.code==0){
+    var result = await ChatAPI.upload_img(file: file);
+    if (result.code == 0) {
       print(result.data);
       String content = "img[${result.data}]";
       print(content);
       sendMessage(content);
-    }else{
+    } else {
       toastInfo(msg: "image error");
     }
   }
 
-  sendContent(){
+  sendContent() {
     String sendcontent = myinputController.text;
     print(sendcontent);
     myinputController.clear();
     sendMessage(sendcontent);
   }
 
-  sendMessage(String sendcontent) async{
-
+  sendMessage(String sendcontent) async {
     print("---------------chat-----------------");
 
-    if(sendcontent.isEmpty){
+    if (sendcontent.isEmpty) {
       toastInfo(msg: "content not empty");
       return;
     }
@@ -151,24 +146,20 @@ class Logic {
     entity.toCid = to_cid;
     var res = await ChatAPI.sendMessage(params: entity);
     print(res.data);
-    if(res.code==0 && res.data!=null){
+    if (res.code == 0 && res.data != null) {
       context.read<ChatBloc>().add(MsgContentListChanged(res.data!));
-    }else{
+    } else {
       toastInfo(msg: "${res.msg}");
     }
-
   }
 
-
-  close_all_pop() async{
+  close_all_pop() async {
     FocusManager.instance.primaryFocus?.unfocus();
     print("------close_all_pop");
   }
 
-  photoImg(Message item){
-     Navigator.of(context).pushNamed(AppRoutes.Photoimgview,arguments: {"url": item.content});
+  photoImg(Message item) {
+    Navigator.of(context)
+        .pushNamed(AppRoutes.Photoimgview, arguments: {"url": item.content});
   }
-
-
-
 }

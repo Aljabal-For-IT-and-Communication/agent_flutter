@@ -35,7 +35,6 @@ class _CreditPageState extends State<CreditPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocBuilder<CreditBloc, CreditState>(builder: (context, state) {
-
       return Container(
           color: AppColors.primaryBackground,
           child: CustomScrollView(slivers: [
@@ -53,7 +52,9 @@ class _CreditPageState extends State<CreditPage> {
                   horizontal: 16.w,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: BuildInput(name: "required balance value".tr(),),
+                  child: BuildInput(
+                    name: "required balance value".tr(),
+                  ),
                 )),
             SliverPadding(
                 padding: EdgeInsets.symmetric(
@@ -63,8 +64,6 @@ class _CreditPageState extends State<CreditPage> {
                 sliver: SliverToBoxAdapter(
                   child: BuildBtn(),
                 )),
-
-
           ]));
     });
   }

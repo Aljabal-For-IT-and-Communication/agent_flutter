@@ -17,9 +17,9 @@ class BlocEventStateObserver extends BlocObserver {
 
   @override
   void onTransition(
-      Bloc<dynamic, dynamic> bloc,
-      Transition<dynamic, dynamic> transition,
-      ) {
+    Bloc<dynamic, dynamic> bloc,
+    Transition<dynamic, dynamic> transition,
+  ) {
     super.onTransition(bloc, transition);
     log('onTransition $transition');
   }

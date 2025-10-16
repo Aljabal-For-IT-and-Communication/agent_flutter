@@ -6,7 +6,6 @@ part 'state.dart';
 
 class MyReportBloc extends Bloc<MyReportEvent, MyReportState> {
   MyReportBloc() : super(const MyReportState()) {
-
     on<PageChanged>(_onPageChanged);
     on<PhoneChanged>(_onPhoneChanged);
     on<TypeChanged>(_onTypeChanged);
@@ -19,91 +18,91 @@ class MyReportBloc extends Bloc<MyReportEvent, MyReportState> {
     on<SuperRechargeRecordChanged>(_onSuperRechargeRecordChanged);
     on<ChildRechargeRecordChanged>(_onChildRechargeRecordChanged);
     on<IsMoreChanged>(_onIsMoreChanged);
-
   }
 
-
   void _onIsMoreChanged(
-      IsMoreChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    IsMoreChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(isMore: event.isMore));
   }
 
   void _onAgentItemChanged(
-      AgentItemChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    AgentItemChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(agentItem: event.agentItem));
   }
 
   void _onSalePointItemChanged(
-      SalePointItemChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    SalePointItemChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(salePointItem: event.salePointItem));
   }
 
   void _onSalePointChanged(
-      SalePointChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    SalePointChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(salePointList: event.salePointList));
   }
 
   void _onAgentListChanged(
-      AgentListChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    AgentListChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(agentList: event.agentList));
   }
 
   void _onSuperRechargeRecordChanged(
-      SuperRechargeRecordChanged event,
-      Emitter<MyReportState> emit,
-      ) {
-    emit(state.copyWith(superRechargeRecordList: event.superRechargeRecordList));
+    SuperRechargeRecordChanged event,
+    Emitter<MyReportState> emit,
+  ) {
+    emit(
+        state.copyWith(superRechargeRecordList: event.superRechargeRecordList));
   }
 
   void _onChildRechargeRecordChanged(
-      ChildRechargeRecordChanged event,
-      Emitter<MyReportState> emit,
-      ) {
-    emit(state.copyWith(childRechargeRecordList: event.childRechargeRecordList));
+    ChildRechargeRecordChanged event,
+    Emitter<MyReportState> emit,
+  ) {
+    emit(
+        state.copyWith(childRechargeRecordList: event.childRechargeRecordList));
   }
 
   void _onPageChanged(
-      PageChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    PageChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(page: event.page));
   }
 
   void _onPhoneChanged(
-      PhoneChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    PhoneChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(phone: event.phone));
   }
 
   void _onAmountChanged(
-      AmountChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    AmountChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(Amount: event.Amount));
   }
 
   void _onTypeChanged(
-      TypeChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    TypeChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(type: event.type));
   }
+
   void _onAgentChanged(
-      AgentChanged event,
-      Emitter<MyReportState> emit,
-      ) {
+    AgentChanged event,
+    Emitter<MyReportState> emit,
+  ) {
     emit(state.copyWith(agent: event.agent));
   }
-
 }

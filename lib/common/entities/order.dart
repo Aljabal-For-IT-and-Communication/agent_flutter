@@ -27,7 +27,6 @@ class OrderResponseEntity {
   }
 }
 
-
 class OrderData {
   int? id;
   int? userId;
@@ -40,13 +39,13 @@ class OrderData {
 
   OrderData(
       {this.id,
-        this.userId,
-        this.amountTotal,
-        this.orderNum,
-        this.status,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt});
+      this.userId,
+      this.amountTotal,
+      this.orderNum,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt});
 
   OrderData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -119,18 +118,18 @@ class OrderDetailData {
 
   OrderDetailData(
       {this.amount,
-        this.cardId,
-        this.createdAt,
-        this.deletedAt,
-        this.id,
-        this.image,
-        this.orderNum,
-        this.price,
-        this.quantity,
-        this.salesPointId,
-        this.serialNumber,
-        this.supplierId,
-        this.updatedAt});
+      this.cardId,
+      this.createdAt,
+      this.deletedAt,
+      this.id,
+      this.image,
+      this.orderNum,
+      this.price,
+      this.quantity,
+      this.salesPointId,
+      this.serialNumber,
+      this.supplierId,
+      this.updatedAt});
 
   OrderDetailData.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];

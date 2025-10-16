@@ -3,6 +3,7 @@ part of 'bloc.dart';
 abstract class RevenueEvent {
   const RevenueEvent();
 }
+
 class SalePointChanged extends RevenueEvent {
   const SalePointChanged(this.salePointList);
 
@@ -45,7 +46,6 @@ class PageChanged extends RevenueEvent {
   final int page;
 }
 
-
 class PhoneChanged extends RevenueEvent {
   const PhoneChanged(this.phone);
   final String phone;
@@ -55,7 +55,6 @@ class AmountChanged extends RevenueEvent {
   const AmountChanged(this.Amount);
   final String Amount;
 }
-
 
 class TypeChanged extends RevenueEvent {
   const TypeChanged(this.type);

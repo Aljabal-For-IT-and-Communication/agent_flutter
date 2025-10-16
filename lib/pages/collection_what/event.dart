@@ -4,7 +4,6 @@ abstract class CollectionWhatEvent {
   const CollectionWhatEvent();
 }
 
-
 class AgentCollectRecordListChanged extends CollectionWhatEvent {
   const AgentCollectRecordListChanged(this.agentCollectRecordList);
 

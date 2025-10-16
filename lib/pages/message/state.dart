@@ -15,7 +15,7 @@ class MessageState {
   }) {
     return MessageState(
       message: message ?? this.message,
-      isMore:isMore??this.isMore,
+      isMore: isMore ?? this.isMore,
     );
   }
 }

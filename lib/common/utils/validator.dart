@@ -1,4 +1,3 @@
-
 bool duIsEmail(String? input) {
   if (input == null || input.isEmpty) return false;
   String regexEmail = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*\$";

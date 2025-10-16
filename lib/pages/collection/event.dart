@@ -4,7 +4,6 @@ abstract class CollectionEvent {
   const CollectionEvent();
 }
 
-
 class PageChanged extends CollectionEvent {
   const PageChanged(this.page);
 

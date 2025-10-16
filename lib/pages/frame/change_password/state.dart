@@ -1,7 +1,6 @@
 part of 'bloc.dart';
 
 class ChangePasswordState {
-
   const ChangePasswordState({
     this.password = "",
     this.repassword = "",

@@ -35,7 +35,8 @@ class _CollectionPageState extends State<CollectionPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return BlocBuilder<CollectionBloc, CollectionState>(builder: (context, state) {
+    return BlocBuilder<CollectionBloc, CollectionState>(
+        builder: (context, state) {
       return Container(
           color: AppColors.primaryBackground,
           child: CustomScrollView(slivers: [
@@ -52,17 +53,36 @@ class _CollectionPageState extends State<CollectionPage> {
                   vertical: 15.h,
                   horizontal: 16.w,
                 ),
-                sliver:SliverToBoxAdapter(child: Column(children: [
-                  BuildListItem(title:"Collections".tr(),iconImage: "assets/icons/icon6.png",callFunc: (){
-                     Navigator.of(context).pushNamed(AppRoutes.CollectionItem);
-                  },),
-                  BuildListItem(title:"Point of sale collections".tr(),iconImage: "assets/icons/icon4.png",callFunc: (){
-                     Navigator.of(context).pushNamed(AppRoutes.CollectionSalePoint);
-                  },),
-                  BuildListItem(title:"What has been collected?".tr(),iconImage: "assets/icons/icon3.png",callFunc: (){
-                     Navigator.of(context).pushNamed(AppRoutes.CollectionWhat);
-                  },),
-                ],),)),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      BuildListItem(
+                        title: "Collections".tr(),
+                        iconImage: "assets/icons/icon6.png",
+                        callFunc: () {
+                          Navigator.of(context)
+                              .pushNamed(AppRoutes.CollectionItem);
+                        },
+                      ),
+                      BuildListItem(
+                        title: "Point of sale collections".tr(),
+                        iconImage: "assets/icons/icon4.png",
+                        callFunc: () {
+                          Navigator.of(context)
+                              .pushNamed(AppRoutes.CollectionSalePoint);
+                        },
+                      ),
+                      BuildListItem(
+                        title: "What has been collected?".tr(),
+                        iconImage: "assets/icons/icon3.png",
+                        callFunc: () {
+                          Navigator.of(context)
+                              .pushNamed(AppRoutes.CollectionWhat);
+                        },
+                      ),
+                    ],
+                  ),
+                )),
           ]));
     });
   }

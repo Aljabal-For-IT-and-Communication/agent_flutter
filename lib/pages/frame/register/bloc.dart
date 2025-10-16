@@ -80,6 +80,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) {
     emit(state.copyWith(repassword: event.repassword));
   }
+
   void _onMachineNumberChanged(
     MachineNumberChanged event,
     Emitter<RegisterState> emit,

@@ -51,7 +51,6 @@ class Global {
       appleProvider: AppleProvider.appAttest,
     );
     storageService = await StorageService().init();
-
   }
 
   static TransitionBuilder MaterialAppBuilder({
@@ -63,13 +62,13 @@ class Global {
             context,
             Overlay(initialEntries: [
               OverlayEntry(builder: (BuildContext context) {
-                return FlutterEasyLoading(key:GlobalKey(),child: child);
+                return FlutterEasyLoading(key: GlobalKey(), child: child);
               }),
             ]));
       } else {
         return Overlay(initialEntries: [
           OverlayEntry(builder: (BuildContext context) {
-            return FlutterEasyLoading(key:GlobalKey(),child: child);
+            return FlutterEasyLoading(key: GlobalKey(), child: child);
           }),
         ]);
       }

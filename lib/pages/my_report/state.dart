@@ -45,13 +45,15 @@ class MyReportState {
     return MyReportState(
         salePointList: salePointList ?? this.salePointList,
         agentList: agentList ?? this.agentList,
-        superRechargeRecordList: superRechargeRecordList ?? this.superRechargeRecordList,
-        childRechargeRecordList: childRechargeRecordList ?? this.childRechargeRecordList,
+        superRechargeRecordList:
+            superRechargeRecordList ?? this.superRechargeRecordList,
+        childRechargeRecordList:
+            childRechargeRecordList ?? this.childRechargeRecordList,
         phone: phone ?? this.phone,
         Amount: Amount ?? this.Amount,
         type: type ?? this.type,
         agent: agent ?? this.agent,
-        isMore:isMore??this.isMore,
+        isMore: isMore ?? this.isMore,
         agentItem: agentItem ?? this.agentItem,
         salePointItem: salePointItem ?? this.salePointItem,
         page: page ?? this.page);

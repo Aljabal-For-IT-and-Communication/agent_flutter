@@ -24,8 +24,8 @@ class _AccountPage extends State<AccountPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero,(){
-      if(mounted){
+    Future.delayed(Duration.zero, () {
+      if (mounted) {
         var userProfile = Global.storageService.getUserProfile();
         context.read<AccountBloc>().add(UserProfileChanged(userProfile));
         // nameController.text = userProfile.name??"";
@@ -38,7 +38,6 @@ class _AccountPage extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<AccountBloc, AccountState>(builder: (context, state) {
       return Scaffold(
         appBar: buildAppBar("Edit Profile"),
@@ -51,14 +50,14 @@ class _AccountPage extends State<AccountPage> {
             ),
             sliver: SliverToBoxAdapter(
               child: Container(
-                padding: EdgeInsets.only(left:16.w,right: 16.w),
-                margin: EdgeInsets.only(bottom: 0.h,top: 30.h),
+                padding: EdgeInsets.only(left: 16.w, right: 16.w),
+                margin: EdgeInsets.only(bottom: 0.h, top: 30.h),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+                      margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
                       child: Text(
                         "Full Name",
                         textAlign: TextAlign.left,
@@ -67,10 +66,11 @@ class _AccountPage extends State<AccountPage> {
                           fontWeight: FontWeight.normal,
                           fontSize: 14.sp,
                         ),
-                      ),),
-                    BuildTextInput(type: "name",controller: nameController),
+                      ),
+                    ),
+                    BuildTextInput(type: "name", controller: nameController),
                     Container(
-                      margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+                      margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
                       child: Text(
                         "Date of Birth",
                         textAlign: TextAlign.left,
@@ -79,10 +79,11 @@ class _AccountPage extends State<AccountPage> {
                           fontWeight: FontWeight.normal,
                           fontSize: 14.sp,
                         ),
-                      ),),
+                      ),
+                    ),
                     BuildBirthInput(controller: birthdayController),
                     Container(
-                      margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+                      margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
                       child: Text(
                         "Gender",
                         textAlign: TextAlign.left,
@@ -91,10 +92,11 @@ class _AccountPage extends State<AccountPage> {
                           fontWeight: FontWeight.normal,
                           fontSize: 14.sp,
                         ),
-                      ),),
-                  //  BuildGenderInput(gender: state.userProfile?.gender??1,),
+                      ),
+                    ),
+                    //  BuildGenderInput(gender: state.userProfile?.gender??1,),
                     Container(
-                      margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+                      margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
                       child: Text(
                         "Phone Number",
                         textAlign: TextAlign.left,
@@ -103,10 +105,11 @@ class _AccountPage extends State<AccountPage> {
                           fontWeight: FontWeight.normal,
                           fontSize: 14.sp,
                         ),
-                      ),),
-                    BuildTextInput(type: "phone",controller: phoneController),
+                      ),
+                    ),
+                    BuildTextInput(type: "phone", controller: phoneController),
                     Container(
-                      margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+                      margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
                       child: Text(
                         "Description",
                         textAlign: TextAlign.left,
@@ -115,16 +118,18 @@ class _AccountPage extends State<AccountPage> {
                           fontWeight: FontWeight.normal,
                           fontSize: 14.sp,
                         ),
-                      ),),
-                    BuildTextInput(type: "description",controller: descriptionController),
+                      ),
+                    ),
+                    BuildTextInput(
+                        type: "description", controller: descriptionController),
                     BuildEditBtn(),
-                  ],),),
+                  ],
+                ),
+              ),
             ),
           ),
         ]),
       );
     });
   }
-
 }
-

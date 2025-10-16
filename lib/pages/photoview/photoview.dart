@@ -15,39 +15,36 @@ class PhotoViewPage extends StatefulWidget {
 }
 
 class _PhotoViewPage extends State<PhotoViewPage> {
-
   @override
   void initState() {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
-    var url = data["url"]??"";
+    var url = data["url"] ?? "";
     print(data);
     return Container(
         color: Colors.white,
         child: SafeArea(
-        child: Scaffold(
-        appBar: _buildAppBar(),
-        backgroundColor: Colors.white,
-        body: url.isEmpty
-            ? Center(
-          child: SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                  color: Colors.black26, strokeWidth: 2)),
-        )
-            : Container(
-            child: PhotoImgView.PhotoView(
-              imageProvider: NetworkImage(url),
-            )
-        )
-    )));
+            child: Scaffold(
+                appBar: _buildAppBar(),
+                backgroundColor: Colors.white,
+                body: url.isEmpty
+                    ? Center(
+                        child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                                color: Colors.black26, strokeWidth: 2)),
+                      )
+                    : Container(
+                        child: PhotoImgView.PhotoView(
+                        imageProvider: NetworkImage(url),
+                      )))));
   }
+
   AppBar _buildAppBar() {
     return AppBar(
         bottom: PreferredSize(

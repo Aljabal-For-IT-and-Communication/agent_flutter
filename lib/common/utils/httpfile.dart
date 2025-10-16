@@ -8,7 +8,6 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:app/global.dart';
 
-
 class HttpFileUtil {
   static HttpFileUtil _instance = HttpFileUtil._internal();
   factory HttpFileUtil() => _instance;
@@ -31,10 +30,10 @@ class HttpFileUtil {
       createHttpClient: () {
         // Don't trust any certificate just because their root cert is trusted.
         final HttpClient client =
-        HttpClient(context: SecurityContext(withTrustedRoots: false));
+            HttpClient(context: SecurityContext(withTrustedRoots: false));
         // You can test the intermediate / root cert here. We just ignore it.
         client.badCertificateCallback =
-        ((X509Certificate cert, String host, int port) => true);
+            ((X509Certificate cert, String host, int port) => true);
         return client;
       },
     );
@@ -46,7 +45,6 @@ class HttpFileUtil {
         return handler.next(options); //continue
       },
       onResponse: (response, handler) {
-
         return handler.next(response); // continue
       },
       onError: (DioException e, ErrorInterceptorHandler handler) {
@@ -66,13 +64,15 @@ class HttpFileUtil {
       case 401:
         Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
         Global.storageService.remove(STORAGE_USER_TOKEN_KEY);
-        if(Global.navigatorKey.currentContext!=null){
-          Navigator.of(Global.navigatorKey.currentContext!).pushNamedAndRemoveUntil(AppRoutes.Sign_in, (Route<dynamic> route) => false);
+        if (Global.navigatorKey.currentContext != null) {
+          Navigator.of(Global.navigatorKey.currentContext!)
+              .pushNamedAndRemoveUntil(
+                  AppRoutes.Sign_in, (Route<dynamic> route) => false);
         }
         EasyLoading.showError("Token expired, do log in again！");
         break;
       default:
-      // EasyLoading.showError('unknown mistake');
+        // EasyLoading.showError('unknown mistake');
         break;
     }
   }
@@ -98,7 +98,7 @@ class HttpFileUtil {
         {
           try {
             int errCode =
-            error.response != null ? error.response!.statusCode! : -1;
+                error.response != null ? error.response!.statusCode! : -1;
             switch (errCode) {
               case 400:
                 return ErrorEntity(
@@ -141,7 +141,7 @@ class HttpFileUtil {
           return ErrorEntity(
               code: -1,
               message:
-              error.response != null ? error.response!.statusMessage! : "");
+                  error.response != null ? error.response!.statusMessage! : "");
         }
     }
   }
@@ -163,11 +163,11 @@ class HttpFileUtil {
   }
 
   Future post(
-      String path, {
-        dynamic data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-      }) async {
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
     // EasyLoading.show(indicator: CircularProgressIndicator(),maskType: EasyLoadingMaskType.clear,dismissOnTap: true);
     Options requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
@@ -198,4 +198,3 @@ class ErrorEntity implements Exception {
     return "Exception: code $code, $message";
   }
 }
-

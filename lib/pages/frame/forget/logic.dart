@@ -18,31 +18,30 @@ class Logic {
     required this.context,
   });
 
-
-  handleForget() async{
+  handleForget() async {
     final state = context.read<ForgetBloc>().state;
     String phone = state.phone;
     String password = state.password;
     String confirmPassword = state.confirmPassword;
     String verificationCode = state.verificationCode;
 
-    if(phone.isEmpty){
+    if (phone.isEmpty) {
       toastInfo(msg: "phone number not empty!");
       return;
     }
-    if(password.isEmpty){
+    if (password.isEmpty) {
       toastInfo(msg: "password not empty!");
       return;
     }
-    if(password.length<6){
+    if (password.length < 6) {
       toastInfo(msg: "New Password min length is 6!");
       return;
     }
-    if(password != confirmPassword){
+    if (password != confirmPassword) {
       toastInfo(msg: "New Password and Confirm password not Same !");
       return;
     }
-    if(verificationCode.isEmpty){
+    if (verificationCode.isEmpty) {
       toastInfo(msg: "Verification Code not empty!");
       return;
     }
@@ -52,7 +51,7 @@ class Logic {
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
-    ForgetPasswordRequestEntity entity =  ForgetPasswordRequestEntity();
+    ForgetPasswordRequestEntity entity = ForgetPasswordRequestEntity();
     entity.password = state.password;
     entity.phone = state.phone;
     entity.verification_code = state.verificationCode;
@@ -62,7 +61,8 @@ class Logic {
       toastInfo(msg: "${result.msg}");
       if (result.code == 0) {
         toastInfo(msg: "Log back into your account！");
-        Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.Sign_in, (Route<dynamic> route) => false);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            AppRoutes.Sign_in, (Route<dynamic> route) => false);
       }
     } catch (e) {
       EasyLoading.dismiss();
@@ -71,16 +71,16 @@ class Logic {
     }
   }
 
-  handleSendCode() async{
+  handleSendCode() async {
     final state = context.read<ForgetBloc>().state;
     String phone = state.phone;
     bool isSend = state.isSend;
 
-    if(phone.isEmpty){
+    if (phone.isEmpty) {
       toastInfo(msg: "phone number not empty!");
       return;
     }
-    if(isSend){
+    if (isSend) {
       toastInfo(msg: "Sending in ${state.countDownTime} seconds!");
       return;
     }
@@ -90,7 +90,7 @@ class Logic {
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
-    VerificationRequestEntity entity =  VerificationRequestEntity();
+    VerificationRequestEntity entity = VerificationRequestEntity();
     entity.phone = state.phone;
     try {
       var result = await UserAPI.sendCode(params: entity);
@@ -102,7 +102,7 @@ class Logic {
         context.read<ForgetBloc>().add(CountDownTimeChanged(30));
         context.read<ForgetBloc>().add(IsSendChanged(true));
         startCountdownTimer();
-      }else{
+      } else {
         toastInfo(msg: "${result.msg}");
       }
     } catch (e) {
@@ -123,12 +123,9 @@ class Logic {
       } else {
         var countDownTime = state.countDownTime - 1;
         context.read<ForgetBloc>().add(CountDownTimeChanged(countDownTime));
-
       }
     }
 
     _timer = Timer.periodic(oneSec, callback);
   }
-
-
 }

@@ -19,63 +19,70 @@ class AboutPage extends StatelessWidget {
               horizontal: 0.w,
             ),
             sliver: SliverToBoxAdapter(
-              child:BuildPublicAppBar(title:"About the application".tr()),
+              child: BuildPublicAppBar(title: "About the application".tr()),
             )),
-      SliverPadding(
-        padding: EdgeInsets.symmetric(
-          vertical: 0.w,
-          horizontal: 30.w,
+        SliverPadding(
+          padding: EdgeInsets.symmetric(
+            vertical: 0.w,
+            horizontal: 30.w,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(40.w),
+                  child: Image.asset("assets/icons/logo1.png"),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Container(
+                  child: Text(
+                    "The best plus application for leading logistics services in the field of electronic solutions"
+                        .tr(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.primaryText,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                Container(
+                  child: Text(
+                    "Version Number".tr() + ": ${VersionNumber}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.primaryText,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                Container(
+                  child: Text(
+                    "Release Date".tr() + ": ${ReleaseDate}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.primaryText,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-        sliver: SliverToBoxAdapter(
-          child:Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(40.w),
-                child: Image.asset("assets/icons/logo1.png"),
-              ),
-              SizedBox(height: 30.h,),
-              Container(
-                child: Text(
-                  "The best plus application for leading logistics services in the field of electronic solutions".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              SizedBox(height: 15.h,),
-              Container(
-                child: Text(
-                  "Version Number".tr()+": ${VersionNumber}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              SizedBox(height: 15.h,),
-              Container(
-                child: Text(
-                  "Release Date".tr()+": ${ReleaseDate}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-            ],),
-        ),
-      ),
-    ]),);
+      ]),
+    );
   }
 }
-
-

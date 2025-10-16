@@ -13,7 +13,6 @@ class ChatState {
   final bool more_status;
   final List<Message> msgcontentList;
 
-
   ChatState copyWith({
     ChatUserItem? chatUserItem,
     bool? isloading,

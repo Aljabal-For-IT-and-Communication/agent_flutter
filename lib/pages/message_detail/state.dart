@@ -1,4 +1,5 @@
 part of 'bloc.dart';
+
 class MessageDetailState {
   const MessageDetailState({
     this.detail,

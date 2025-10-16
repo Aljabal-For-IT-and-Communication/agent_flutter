@@ -39,7 +39,7 @@ class SocketDbService {
   Map<String, dynamic>? getAuthorizationHeader() {
     var headers = <String, dynamic>{};
     var accessToken = Global.storageService.getUserToken();
-    if (accessToken!="") {
+    if (accessToken != "") {
       headers['Authorization'] = 'Bearer $accessToken';
     }
     return headers;
@@ -49,7 +49,8 @@ class SocketDbService {
   void openSocket() {
     closeSocket();
     Map<String, dynamic>? authorization = getAuthorizationHeader();
-    _webSocket = IOWebSocketChannel.connect(_SOCKET_URL,headers:authorization);
+    _webSocket =
+        IOWebSocketChannel.connect(_SOCKET_URL, headers: authorization);
     print('WebSocket连接成功: $_SOCKET_URL');
     // 连接成功，返回WebSocket实例
     _socketStatus = SocketStatus.SocketStatusConnected;
@@ -61,7 +62,7 @@ class SocketDbService {
     }
     initHeartBeat();
     // 接收消息
-    _webSocket!.stream.listen((message) async{
+    _webSocket!.stream.listen((message) async {
       print('-- 新消息: $message');
       Map<String, dynamic> result = jsonDecode(message);
       Message res = Message.fromJson(result);
@@ -72,9 +73,9 @@ class SocketDbService {
 
   //添加消息里面的新用户
 
-  addOrUpdateChatUser(Message item) async{
+  addOrUpdateChatUser(Message item) async {
     UserItem userProfile = Global.storageService.getUserProfile();
-    if(userProfile.token==item.token){
+    if (userProfile.token == item.token) {
       return;
     }
     SqlDbService sqlDbService = await SqlDbService().init();
@@ -84,14 +85,14 @@ class SocketDbService {
     ChatUserItem userItem = ChatUserItem();
     userItem.token = item.token;
     userItem.name = item.name;
-    userItem.cid = item.cid??0;
+    userItem.cid = item.cid ?? 0;
     userItem.avatar = item.avatar;
-    userItem.msgNum = msgNum+1;
+    userItem.msgNum = msgNum + 1;
     userItem.lastMsg = item.content;
     userItem.lastTime = item.createdAt;
-    if(result.isEmpty){
+    if (result.isEmpty) {
       await sqlDbService.insertChatUser(userItem);
-    }else{
+    } else {
       await sqlDbService.updateChatUser(userItem);
     }
   }
@@ -100,7 +101,7 @@ class SocketDbService {
   webSocketOnDone() {
     print('WebSocket closed');
     bool isLogin = Global.storageService.getIsLogin();
-    if(isLogin){
+    if (isLogin) {
       reconnect();
     }
   }
@@ -150,7 +151,7 @@ class SocketDbService {
     if (_webSocket != null) {
       switch (_socketStatus) {
         case SocketStatus.SocketStatusConnected:
-        // print('发送中：' + message);
+          // print('发送中：' + message);
           _webSocket!.sink.add(message);
           break;
         case SocketStatus.SocketStatusClosed:
@@ -165,13 +166,13 @@ class SocketDbService {
     }
   }
 
-
   /// 重连机制
   void reconnect() {
     if (_reconnectTimes < _reconnectCount) {
       _reconnectTimes++;
       print("reconnect start ${_reconnectTimes}");
-      _reconnectTimer = Timer.periodic(Duration(milliseconds: _heartTimes), (timer) {
+      _reconnectTimer =
+          Timer.periodic(Duration(milliseconds: _heartTimes), (timer) {
         openSocket();
       });
     } else {
@@ -183,5 +184,4 @@ class SocketDbService {
       return;
     }
   }
-
 }

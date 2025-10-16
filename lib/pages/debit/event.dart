@@ -3,6 +3,7 @@ part of 'bloc.dart';
 abstract class DebitEvent {
   const DebitEvent();
 }
+
 class SalePointChanged extends DebitEvent {
   const SalePointChanged(this.salePointList);
 
@@ -33,7 +34,6 @@ class IsShowChanged extends DebitEvent {
   final bool isShow;
 }
 
-
 class PhoneChanged extends DebitEvent {
   const PhoneChanged(this.phone);
   final String phone;
@@ -43,7 +43,6 @@ class AmountChanged extends DebitEvent {
   const AmountChanged(this.Amount);
   final String Amount;
 }
-
 
 class TypeChanged extends DebitEvent {
   const TypeChanged(this.type);

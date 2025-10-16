@@ -36,8 +36,7 @@ class _DebitPageState extends State<DebitPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return BlocBuilder<DebitBloc, DebitState>(
-        builder: (context, state) {
+    return BlocBuilder<DebitBloc, DebitState>(builder: (context, state) {
       return Container(
           color: AppColors.primaryBackground,
           child: CustomScrollView(slivers: [
@@ -57,13 +56,15 @@ class _DebitPageState extends State<DebitPage> {
                 sliver: SliverToBoxAdapter(
                   child: BuildDropdownAgentInput(),
                 )),
-           SliverPadding(
+            SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.h,
                   horizontal: 16.w,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: state.agent=="Agent"?BuildDropdownAgentNameInput():BuildDropdownSalePointNameInput(),
+                  child: state.agent == "Agent"
+                      ? BuildDropdownAgentNameInput()
+                      : BuildDropdownSalePointNameInput(),
                 )),
             SliverPadding(
                 padding: EdgeInsets.symmetric(
@@ -79,58 +80,76 @@ class _DebitPageState extends State<DebitPage> {
                   horizontal: 16.w,
                 ),
                 sliver: SliverToBoxAdapter(
-                  child: state.isShow?Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 30.h,),
-                      Container(
-                        child: Text(
-                          "Result".tr()+":",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10.h,),
-                      Container(
-                        child: Text(
-                          "Name".tr()+": ${state.agent=="Agent"?state.agentItem?.firstName:state.salePointItem?.businessName}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10.h,),
-                      Container(child: Text(
-                          "Phone Number".tr()+": ${state.agent=="Agent"?state.agentItem?.phone:state.salePointItem?.phone}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.sp,
-                          ),
-                        ),),
-                      SizedBox(height: 10.h,),
-                      Container(
-                        child: Text(
-                          "Amount of debt".tr()+": ${state.agent=="Agent"?state.agentItem?.balance:state.salePointItem?.balance}",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20.h,),
-                    ],):Container(),
+                  child: state.isShow
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 30.h,
+                            ),
+                            Container(
+                              child: Text(
+                                "Result".tr() + ":",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: AppColors.primaryText,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Container(
+                              child: Text(
+                                "Name".tr() +
+                                    ": ${state.agent == "Agent" ? state.agentItem?.firstName : state.salePointItem?.businessName}",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: AppColors.primaryText,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Container(
+                              child: Text(
+                                "Phone Number".tr() +
+                                    ": ${state.agent == "Agent" ? state.agentItem?.phone : state.salePointItem?.phone}",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: AppColors.primaryText,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Container(
+                              child: Text(
+                                "Amount of debt".tr() +
+                                    ": ${state.agent == "Agent" ? state.agentItem?.balance : state.salePointItem?.balance}",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: AppColors.primaryText,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                          ],
+                        )
+                      : Container(),
                 )),
           ]));
     });

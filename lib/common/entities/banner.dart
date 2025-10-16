@@ -38,12 +38,12 @@ class BannerData {
 
   BannerData(
       {this.createdAt,
-        this.deletedAt,
-        this.id,
-        this.image,
-        this.name,
-        this.status,
-        this.updatedAt});
+      this.deletedAt,
+      this.id,
+      this.image,
+      this.name,
+      this.status,
+      this.updatedAt});
 
   BannerData.fromJson(Map<String, dynamic> json) {
     createdAt = json['created_at'];

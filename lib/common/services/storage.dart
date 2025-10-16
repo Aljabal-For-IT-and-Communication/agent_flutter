@@ -47,6 +47,7 @@ class StorageService {
   String getLanguage() {
     return _prefs.getString(STORAGE_LANGUAGE_CODE) ?? "";
   }
+
   Future<bool> setLanguage(String value) async {
     return await _prefs.setString(STORAGE_LANGUAGE_CODE, value);
   }
@@ -54,20 +55,20 @@ class StorageService {
   bool getDeviceFirstOpen() {
     return _prefs.getBool(STORAGE_DEVICE_FIRST_OPEN_KEY) ?? false;
   }
+
   bool getCheck() {
     return _prefs.getBool(STORAGE_USER_CHECKED_KEY) ?? false;
   }
+
   bool getIsLogin() {
-    return _prefs.getString(STORAGE_USER_TOKEN_KEY)==null?false:true;
+    return _prefs.getString(STORAGE_USER_TOKEN_KEY) == null ? false : true;
   }
+
   UserItem getUserProfile() {
-    var profileOffline = _prefs.getString(STORAGE_USER_PROFILE_KEY)??"";
-    if(profileOffline.isNotEmpty) {
+    var profileOffline = _prefs.getString(STORAGE_USER_PROFILE_KEY) ?? "";
+    if (profileOffline.isNotEmpty) {
       return UserItem.fromJson(jsonDecode(profileOffline));
     }
     return UserItem();
   }
-
-
-
 }

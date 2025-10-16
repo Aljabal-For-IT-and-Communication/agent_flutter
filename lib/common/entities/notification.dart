@@ -40,14 +40,14 @@ class NotificationData {
 
   NotificationData(
       {this.category,
-        this.content,
-        this.createdAt,
-        this.deletedAt,
-        this.id,
-        this.pic,
-        this.title,
-        this.updatedAt,
-        this.userId});
+      this.content,
+      this.createdAt,
+      this.deletedAt,
+      this.id,
+      this.pic,
+      this.title,
+      this.updatedAt,
+      this.userId});
 
   NotificationData.fromJson(Map<String, dynamic> json) {
     category = json['category'];

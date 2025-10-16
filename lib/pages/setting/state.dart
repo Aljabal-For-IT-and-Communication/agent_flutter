@@ -7,13 +7,10 @@ class SettingState {
   final bool isOpen;
   final bool language;
 
-  SettingState copyWith({
-    bool? isOpen,
-    bool? language
-  }) {
+  SettingState copyWith({bool? isOpen, bool? language}) {
     return SettingState(
-      isOpen:isOpen??this.isOpen,
-      language:language??this.language,
+      isOpen: isOpen ?? this.isOpen,
+      language: language ?? this.language,
     );
   }
 }

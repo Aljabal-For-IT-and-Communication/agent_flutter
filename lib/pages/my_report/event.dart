@@ -3,6 +3,7 @@ part of 'bloc.dart';
 abstract class MyReportEvent {
   const MyReportEvent();
 }
+
 class SalePointChanged extends MyReportEvent {
   const SalePointChanged(this.salePointList);
 
@@ -14,6 +15,7 @@ class AgentListChanged extends MyReportEvent {
 
   final List<AgentData> agentList;
 }
+
 class IsMoreChanged extends MyReportEvent {
   const IsMoreChanged(this.isMore);
 
@@ -50,7 +52,6 @@ class PageChanged extends MyReportEvent {
   final int page;
 }
 
-
 class PhoneChanged extends MyReportEvent {
   const PhoneChanged(this.phone);
   final String phone;
@@ -60,7 +61,6 @@ class AmountChanged extends MyReportEvent {
   const AmountChanged(this.Amount);
   final String Amount;
 }
-
 
 class TypeChanged extends MyReportEvent {
   const TypeChanged(this.type);

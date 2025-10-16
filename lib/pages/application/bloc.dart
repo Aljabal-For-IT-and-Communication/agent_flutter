@@ -8,9 +8,9 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
   }
 
   void _onPageChanged(
-      PageChanged event,
-      Emitter<ApplicationState> emit,
-      ) {
+    PageChanged event,
+    Emitter<ApplicationState> emit,
+  ) {
     emit(state.copyWith(page: event.page));
   }
 }

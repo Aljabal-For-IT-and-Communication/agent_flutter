@@ -11,21 +11,23 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   void _onPhoneChanged(
-      PhoneChanged event,
-      Emitter<SignInState> emit,
-      ) {
+    PhoneChanged event,
+    Emitter<SignInState> emit,
+  ) {
     emit(state.copyWith(phone: event.phone));
   }
+
   void _onPasswordChanged(
-      PasswordChanged event,
-      Emitter<SignInState> emit,
-      ) {
+    PasswordChanged event,
+    Emitter<SignInState> emit,
+  ) {
     emit(state.copyWith(password: event.password));
   }
+
   void _onCheckChanged(
-      CheckChanged event,
-      Emitter<SignInState> emit,
-      ) {
+    CheckChanged event,
+    Emitter<SignInState> emit,
+  ) {
     emit(state.copyWith(isChecked: event.isChecked));
   }
 }

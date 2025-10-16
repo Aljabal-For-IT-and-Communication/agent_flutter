@@ -34,5 +34,4 @@ class ForgetState {
       isSend: isSend ?? this.isSend,
     );
   }
-
 }

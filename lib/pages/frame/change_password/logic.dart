@@ -1,4 +1,3 @@
-
 import 'package:app/common/apis/user.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
@@ -12,30 +11,30 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  handleChangePassword() async{
+  handleChangePassword() async {
     final state = context.read<ChangePasswordBloc>().state;
     String password = state.password;
     String repassword = state.repassword;
     String confirm_password = state.confirm_password;
-    if(password.isEmpty){
+    if (password.isEmpty) {
       toastInfo(msg: "Password not empty!");
       return;
     }
-    if(repassword.isEmpty){
+    if (repassword.isEmpty) {
       toastInfo(msg: "New Password not empty!");
       return;
     }
-    if(repassword.length<6){
+    if (repassword.length < 6) {
       toastInfo(msg: "New Password min length is 6!");
       return;
     }
-    if(repassword != confirm_password){
+    if (repassword != confirm_password) {
       toastInfo(msg: "New Password and Confirm password not Same !");
       return;
     }
@@ -45,7 +44,7 @@ class Logic{
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
-    ChangePasswordRequestEntity entity =  ChangePasswordRequestEntity();
+    ChangePasswordRequestEntity entity = ChangePasswordRequestEntity();
     entity.password = state.password;
     entity.repassword = state.repassword;
     try {
@@ -56,15 +55,13 @@ class Logic{
         toastInfo(msg: "Log back into your account！");
         Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
         Global.storageService.remove(STORAGE_USER_TOKEN_KEY);
-        Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.Sign_in, (Route<dynamic> route) => false);
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            AppRoutes.Sign_in, (Route<dynamic> route) => false);
       }
     } catch (e) {
       EasyLoading.dismiss();
       toastInfo(msg: 'internet error');
       Logger.write("${e}");
     }
-
   }
-
-
 }

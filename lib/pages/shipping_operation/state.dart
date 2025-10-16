@@ -20,10 +20,11 @@ class ShippingOperationState {
     bool? isMore,
   }) {
     return ShippingOperationState(
-      shippingOperationList: shippingOperationList ?? this.shippingOperationList,
+      shippingOperationList:
+          shippingOperationList ?? this.shippingOperationList,
       day: day ?? this.day,
-      page:page??this.page,
-      isMore:isMore??this.isMore,
+      page: page ?? this.page,
+      isMore: isMore ?? this.isMore,
     );
   }
 }

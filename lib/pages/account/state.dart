@@ -1,4 +1,5 @@
 part of 'bloc.dart';
+
 class AccountState {
   const AccountState({
     this.userProfile,

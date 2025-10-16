@@ -11,14 +11,14 @@ class BuildAppBar extends StatelessWidget {
     return Container(
       width: 375.w,
       decoration: BoxDecoration(
-          color: AppColors.primaryBackground,
-          image: DecorationImage(
-            alignment: Alignment.topCenter,
-            image: AssetImage('assets/icons/headbg.png'),
-            fit: BoxFit.fitWidth, // 完全填充
-          ),
+        color: AppColors.primaryBackground,
+        image: DecorationImage(
+          alignment: Alignment.topCenter,
+          image: AssetImage('assets/icons/headbg.png'),
+          fit: BoxFit.fitWidth, // 完全填充
         ),
-      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w,bottom: 0.h),
+      ),
+      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 0.h),
       child: Column(
         children: [
           SizedBox(
@@ -31,11 +31,16 @@ class BuildAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap:(){Navigator.pop(context);},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     width: 24.w,
                     height: 24.w,
-                    child: Icon(Icons.arrow_back,color: AppColors.primaryBackground,),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: AppColors.primaryBackground,
+                    ),
                   ),
                 ),
                 Container(
@@ -52,8 +57,10 @@ class BuildAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container( width: 24.w,
-                  height: 24.w,)
+                Container(
+                  width: 24.w,
+                  height: 24.w,
+                )
               ],
             ),
           ),
@@ -94,18 +101,23 @@ class BuildAppBar extends StatelessWidget {
   }
 }
 
-
 class BuildListItem extends StatelessWidget {
   final String title;
   final String icon;
   final Color color;
   final String route;
-  const BuildListItem({Key? key,required this.title,required this.icon,required this.color,required this.route,}) : super(key: key);
+  const BuildListItem({
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.color,
+    required this.route,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         // Navigator.pushNamed(context, AppRoutes.Detail,arguments: item);
       },
       child: Container(
@@ -121,9 +133,14 @@ class BuildListItem extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(15.w)),
               ),
               padding: EdgeInsets.all(20.w),
-              child: Image.asset(icon,fit: BoxFit.fill,),
+              child: Image.asset(
+                icon,
+                fit: BoxFit.fill,
+              ),
             ),
-            SizedBox(height: 8.h,),
+            SizedBox(
+              height: 8.h,
+            ),
             Container(
               child: Text(
                 "${title}",
@@ -137,7 +154,8 @@ class BuildListItem extends StatelessWidget {
                 ),
               ),
             ),
-          ],),
+          ],
+        ),
       ),
     );
   }

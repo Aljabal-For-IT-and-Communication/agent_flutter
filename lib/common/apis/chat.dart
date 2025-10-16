@@ -1,4 +1,3 @@
-
 import 'package:app/common/utils/httpfile.dart';
 import 'package:dio/dio.dart';
 import 'package:app/common/entities/entities.dart';
@@ -6,10 +5,8 @@ import 'package:app/common/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChatAPI {
-
   static Future<BaseResponseEntity> bindFcmToken(
-      {BindFcmTokenRequestEntity? params}
-      ) async {
+      {BindFcmTokenRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/bind_fcmtoken',
       data: params?.toJson(),
@@ -18,8 +15,7 @@ class ChatAPI {
   }
 
   static Future<SendMessageResponseEntity> sendMessage(
-      {ChatRequestEntity? params}
-      ) async {
+      {ChatRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/send_message',
       data: params?.toJson(),
@@ -28,8 +24,7 @@ class ChatAPI {
   }
 
   static Future<MessageResponseEntity> privateMessage(
-      {TokenRequestEntity? params}
-      ) async {
+      {TokenRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/chat_list',
       data: params?.toJson(),
@@ -37,17 +32,13 @@ class ChatAPI {
     return MessageResponseEntity.fromJson(response);
   }
 
-
-  static Future<BaseResponseEntity> upload_img(
-      {XFile? file}
-      ) async {
-
+  static Future<BaseResponseEntity> upload_img({XFile? file}) async {
     String fileName = file!.path.split('/').last;
 
     FormData data = FormData.fromMap({
       'file': await MultipartFile.fromFile(
-          file.path,
-          filename: fileName,
+        file.path,
+        filename: fileName,
       ),
     });
     var response = await HttpFileUtil().post(
@@ -56,9 +47,4 @@ class ChatAPI {
     );
     return BaseResponseEntity.fromJson(response);
   }
-
-
-
-
-
 }

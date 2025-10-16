@@ -8,21 +8,19 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   MessageBloc() : super(const MessageState()) {
     on<MessageChanged>(_onMessageChanged);
     on<IsMoreChanged>(_onIsMoreChanged);
-
   }
 
   void _onMessageChanged(
-      MessageChanged event,
-      Emitter<MessageState> emit,
-      ) {
+    MessageChanged event,
+    Emitter<MessageState> emit,
+  ) {
     emit(state.copyWith(message: event.message));
   }
 
   void _onIsMoreChanged(
-      IsMoreChanged event,
-      Emitter<MessageState> emit,
-      ) {
+    IsMoreChanged event,
+    Emitter<MessageState> emit,
+  ) {
     emit(state.copyWith(isMore: event.isMore));
   }
-
 }

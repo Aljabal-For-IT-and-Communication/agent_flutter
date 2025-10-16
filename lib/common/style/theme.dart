@@ -15,7 +15,7 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       elevation: 0,
       centerTitle: true,
-      scrolledUnderElevation:0.0,
+      scrolledUnderElevation: 0.0,
       backgroundColor: Colors.white,
       iconTheme: IconThemeData(
         color: AppColors.primaryText,
@@ -42,9 +42,11 @@ class AppTheme {
       indicatorSize: TabBarIndicatorSize.label,
       labelColor: AppColors.primaryThreeElementText,
       unselectedLabelColor: AppColors.primaryElement,
-    ), colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: AppColors.primaryText,
-    ).copyWith(background: AppColors.primaryBackground),
+    ),
+    colorScheme: ColorScheme.fromSwatch()
+        .copyWith(
+          secondary: AppColors.primaryText,
+        )
+        .copyWith(background: AppColors.primaryBackground),
   );
-
 }

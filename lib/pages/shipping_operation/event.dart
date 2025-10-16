@@ -3,6 +3,7 @@ part of 'bloc.dart';
 abstract class ShippingOperationEvent {
   const ShippingOperationEvent();
 }
+
 class ShippingOperationChanged extends ShippingOperationEvent {
   const ShippingOperationChanged(this.shippingOperationList);
 

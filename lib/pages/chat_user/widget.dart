@@ -3,9 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class BuildAppBar extends StatelessWidget {
-
   BuildAppBar({Key? key}) : super(key: key);
 
   @override
@@ -13,7 +11,8 @@ class BuildAppBar extends StatelessWidget {
     // TODO: implement build
     return Container(
       width: 375.w,
-      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w,bottom: 30.h),
+      padding:
+          EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 30.h),
       decoration: BoxDecoration(
         color: AppColors.primaryBackground,
         image: DecorationImage(
@@ -47,7 +46,6 @@ class BuildAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -59,4 +57,3 @@ class BuildAppBar extends StatelessWidget {
     );
   }
 }
-

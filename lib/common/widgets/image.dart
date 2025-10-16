@@ -10,19 +10,18 @@ Widget netImageCached(
   EdgeInsetsGeometry? margin,
 }) {
   return CachedNetworkImage(
-    imageUrl: url,
-    imageBuilder: (context, imageProvider) => Container(
-      height: height.h,
-      width: width.w,
-      margin: margin,
-      decoration: BoxDecoration(
-        borderRadius: Radii.k54pxRadius,
-        image: DecorationImage(
-          image: imageProvider,
-          fit: BoxFit.cover,
-          // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn),
-        ),
-      ),
-    )
-  );
+      imageUrl: url,
+      imageBuilder: (context, imageProvider) => Container(
+            height: height.h,
+            width: width.w,
+            margin: margin,
+            decoration: BoxDecoration(
+              borderRadius: Radii.k54pxRadius,
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.cover,
+                // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn),
+              ),
+            ),
+          ));
 }

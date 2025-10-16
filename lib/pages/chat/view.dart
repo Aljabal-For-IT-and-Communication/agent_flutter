@@ -68,7 +68,8 @@ class _ChatPage extends State<ChatPage> {
                                       delegate: SliverChildBuilderDelegate(
                                     (content, index) {
                                       var item = state.msgcontentList[index];
-                                      if (item.token == chatLogic.userProfile.token) {
+                                      if (item.token ==
+                                          chatLogic.userProfile.token) {
                                         return ChatRightItem(item);
                                       }
                                       return ChatLeftItem(item);
@@ -83,7 +84,8 @@ class _ChatPage extends State<ChatPage> {
                                       child: state.isloading
                                           ? Align(
                                               alignment: Alignment.center,
-                                              child: new Text('loading...'.tr()),
+                                              child:
+                                                  new Text('loading...'.tr()),
                                             )
                                           : Container(),
                                     )),
@@ -190,9 +192,11 @@ class _ChatPage extends State<ChatPage> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(40.w)),
                                     ),
-                                    child: Image.asset("assets/icons/send.png",color: AppColors.primaryBackground,)),
+                                    child: Image.asset(
+                                      "assets/icons/send.png",
+                                      color: AppColors.primaryBackground,
+                                    )),
                                 onTap: () {
-
                                   chatLogic.sendContent();
                                 }),
                           ],
@@ -229,14 +233,17 @@ class _ChatPage extends State<ChatPage> {
   Widget ChatLeftItem(Message item) {
     String type = "text";
     String? path = "";
-    RegExp imgExp =  RegExp(r"img\[(.*?)\]");
+    RegExp imgExp = RegExp(r"img\[(.*?)\]");
     var res = imgExp.hasMatch("${item.content}");
-    if(res){
+    if (res) {
       type = "img";
-      path = "${item.content}".replaceFirst(RegExp(r"img\["), "").replaceFirst(RegExp(r"\]"), "");
+      path = "${item.content}"
+          .replaceFirst(RegExp(r"img\["), "")
+          .replaceFirst(RegExp(r"\]"), "");
     }
     return Container(
-      padding: EdgeInsets.only(top: 10.h, left: 20.w, right: 20.w, bottom: 10.h),
+      padding:
+          EdgeInsets.only(top: 10.h, left: 20.w, right: 20.w, bottom: 10.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,26 +266,25 @@ class _ChatPage extends State<ChatPage> {
             ),
             child: item.avatar == null
                 ? Image(
-              image: AssetImage('assets/images/account_header.png'),
-            )
+                    image: AssetImage('assets/images/account_header.png'),
+                  )
                 : CachedNetworkImage(
-              imageUrl: "${SERVER_IMG_URL}${item.avatar}",
-              height: 44.w,
-              width: 44.w,
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(22.w)),
-                  image: DecorationImage(
-                      image: imageProvider, fit: BoxFit.fill
-                    // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn),
+                    imageUrl: "${SERVER_IMG_URL}${item.avatar}",
+                    height: 44.w,
+                    width: 44.w,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(22.w)),
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.fill
+                            // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn),
+                            ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Image(
+                      image: AssetImage('assets/images/account_header.png'),
+                    ),
                   ),
-                ),
-              ),
-              errorWidget: (context, url, error) => Image(
-                image: AssetImage('assets/images/account_header.png'),
-              ),
-            ),
           ),
           ConstrainedBox(
               constraints: BoxConstraints(
@@ -297,23 +303,25 @@ class _ChatPage extends State<ChatPage> {
                         color: AppColors.primarySecondaryBackground,
                         borderRadius: BorderRadius.all(Radius.circular(5.w)),
                       ),
-                      child: type=="img"?ConstrainedBox(
-                          constraints: BoxConstraints(maxWidth: 90.w),
-                          child: GestureDetector(
-                            child: CachedNetworkImage(
-                                imageUrl: "${SERVER_IMG_URL}${path}"),
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, AppRoutes.Photoimgview,
-                                  arguments: {"url": "${SERVER_IMG_URL}${path}"});
-                            },
-                          ))
-                          :Text(
-                          "${item.content}",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.primaryText,
-                          )),
+                      child: type == "img"
+                          ? ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 90.w),
+                              child: GestureDetector(
+                                child: CachedNetworkImage(
+                                    imageUrl: "${SERVER_IMG_URL}${path}"),
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.Photoimgview,
+                                      arguments: {
+                                        "url": "${SERVER_IMG_URL}${path}"
+                                      });
+                                },
+                              ))
+                          : Text("${item.content}",
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: AppColors.primaryText,
+                              )),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 10.h),
@@ -328,16 +336,16 @@ class _ChatPage extends State<ChatPage> {
     );
   }
 
-
-
   Widget ChatRightItem(Message item) {
     String type = "text";
     String? path = "";
-    RegExp imgExp =  RegExp(r"img\[(.*?)\]");
+    RegExp imgExp = RegExp(r"img\[(.*?)\]");
     var res = imgExp.hasMatch("${item.content}");
-    if(res){
+    if (res) {
       type = "img";
-      path = "${item.content}".replaceFirst(RegExp(r"img\["), "").replaceFirst(RegExp(r"\]"), "");
+      path = "${item.content}"
+          .replaceFirst(RegExp(r"img\["), "")
+          .replaceFirst(RegExp(r"\]"), "");
     }
     return Container(
       padding:
@@ -356,31 +364,32 @@ class _ChatPage extends State<ChatPage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(right: 0.w, top: 0.w),
-                    padding: EdgeInsets.only(
-                        top: 10.w, bottom: 10.w, left: 10.w, right: 10.w),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryElement,
-                      borderRadius: BorderRadius.all(Radius.circular(5.w)),
-                    ),
-                    child: type=="img"? ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 90.w),
-                        child: GestureDetector(
-                          child: CachedNetworkImage(
-                              imageUrl: "${SERVER_IMG_URL}${path}"),
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, AppRoutes.Photoimgview,
-                                arguments: {"url": "${SERVER_IMG_URL}${path}"});
-                          },
-                        ))
-                        : Text(
-                        "${item.content}",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.primaryElementText,
-                        ))
-                  ),
+                      margin: EdgeInsets.only(right: 0.w, top: 0.w),
+                      padding: EdgeInsets.only(
+                          top: 10.w, bottom: 10.w, left: 10.w, right: 10.w),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryElement,
+                        borderRadius: BorderRadius.all(Radius.circular(5.w)),
+                      ),
+                      child: type == "img"
+                          ? ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 90.w),
+                              child: GestureDetector(
+                                child: CachedNetworkImage(
+                                    imageUrl: "${SERVER_IMG_URL}${path}"),
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.Photoimgview,
+                                      arguments: {
+                                        "url": "${SERVER_IMG_URL}${path}"
+                                      });
+                                },
+                              ))
+                          : Text("${item.content}",
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: AppColors.primaryElementText,
+                              ))),
                   Container(
                     margin: EdgeInsets.only(top: 10.h),
                     child: Text("${timeFormated(item.createdAt)}",
@@ -401,7 +410,7 @@ class _ChatPage extends State<ChatPage> {
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child:  Wrap(
+              child: Wrap(
                 children: [
                   ListTile(
                       leading: const Icon(Icons.photo_library),
@@ -424,5 +433,4 @@ class _ChatPage extends State<ChatPage> {
           );
         });
   }
-
 }

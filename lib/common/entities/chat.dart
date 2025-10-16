@@ -10,10 +10,10 @@ class ChatRequestEntity {
   });
 
   Map<String, dynamic> toJson() => {
-    "to_cid": toCid,
-    "to_token": toToken,
-    "content": content,
-  };
+        "to_cid": toCid,
+        "to_token": toToken,
+        "content": content,
+      };
 }
 
 class SendMessageResponseEntity {
@@ -84,16 +84,16 @@ class Message {
 
   Message(
       {this.avatar,
-        this.cid,
-        this.content,
-        this.createdAt,
-        this.deletedAt,
-        this.id,
-        this.name,
-        this.toCid,
-        this.toToken,
-        this.token,
-        this.updatedAt});
+      this.cid,
+      this.content,
+      this.createdAt,
+      this.deletedAt,
+      this.id,
+      this.name,
+      this.toCid,
+      this.toToken,
+      this.token,
+      this.updatedAt});
 
   Message.fromJson(Map<String, dynamic> json) {
     avatar = json['avatar'];
@@ -137,12 +137,12 @@ class ChatUserItem {
 
   ChatUserItem(
       {this.avatar,
-        this.cid,
-        this.lastMsg,
-        this.lastTime,
-        this.name,
-        this.msgNum,
-        this.token});
+      this.cid,
+      this.lastMsg,
+      this.lastTime,
+      this.name,
+      this.msgNum,
+      this.token});
 
   ChatUserItem.fromJson(Map<String, dynamic> json) {
     avatar = json['avatar'];

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
 
 import 'logic.dart';
+
 class BuildAppBar extends StatelessWidget {
   BuildAppBar({Key? key}) : super(key: key);
 
@@ -12,7 +13,8 @@ class BuildAppBar extends StatelessWidget {
     // TODO: implement build
     return Container(
       width: 375.w,
-      padding: EdgeInsets.only(top: 80.h, left: 16.w, right: 16.w,bottom: 10.h),
+      padding:
+          EdgeInsets.only(top: 80.h, left: 16.w, right: 16.w, bottom: 10.h),
       child: Column(
         children: [
           Container(
@@ -29,7 +31,8 @@ class BuildAppBar extends StatelessWidget {
 class BuildInput extends StatelessWidget {
   final String name;
   final Function(String)? callFunc;
-  const BuildInput({Key? key,required this.name,required this.callFunc}) : super(key: key);
+  const BuildInput({Key? key, required this.name, required this.callFunc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class BuildInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
             "${name}",
             textAlign: TextAlign.left,
@@ -47,16 +50,18 @@ class BuildInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryFourElementText)
-          ),
+              border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
@@ -91,13 +96,15 @@ class BuildInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-            onChanged:callFunc,
+            onChanged: callFunc,
             maxLines: 1,
             autocorrect: false, // 自动纠正
             obscureText: false, // 隐藏输入内容, 密码框
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
@@ -120,14 +127,14 @@ class BuildBtn extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-                  "Save changes".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryBackground,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.sp,
-                  ),
-                ))),
+              "Save changes".tr(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryBackground,
+                fontWeight: FontWeight.normal,
+                fontSize: 16.sp,
+              ),
+            ))),
         onTap: () {
           Logic(context: context).handleChangePassword();
         });

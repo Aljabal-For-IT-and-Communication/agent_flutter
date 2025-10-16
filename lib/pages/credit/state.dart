@@ -11,15 +11,10 @@ class CreditState {
   final String Amount;
   final UserItem? userProfile;
 
-  CreditState copyWith({
-    int? page,
-    String? Amount,
-    UserItem? userProfile
-  }) {
+  CreditState copyWith({int? page, String? Amount, UserItem? userProfile}) {
     return CreditState(
-      page:page??this.page,
-      Amount:Amount??this.Amount,
-      userProfile: userProfile ?? this.userProfile
-    );
+        page: page ?? this.page,
+        Amount: Amount ?? this.Amount,
+        userProfile: userProfile ?? this.userProfile);
   }
 }

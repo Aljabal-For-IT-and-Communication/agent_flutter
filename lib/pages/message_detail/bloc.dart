@@ -9,9 +9,9 @@ class MessageDetailBloc extends Bloc<MessageDetailEvent, MessageDetailState> {
     on<MessageDetailChanged>(_onMessageDetailChanged);
   }
   void _onMessageDetailChanged(
-      MessageDetailChanged event,
-      Emitter<MessageDetailState> emit,
-      ) {
+    MessageDetailChanged event,
+    Emitter<MessageDetailState> emit,
+  ) {
     emit(state.copyWith(detail: event.detail));
   }
 }

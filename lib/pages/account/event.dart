@@ -8,5 +8,4 @@ class UserProfileChanged extends AccountEvent {
   const UserProfileChanged(this.userProfile);
 
   final UserItem userProfile;
-
 }

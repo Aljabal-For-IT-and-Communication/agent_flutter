@@ -21,4 +21,3 @@ final subtitleTextMediumWhite = TextStyle(
   fontSize: 16.sp,
   fontWeight: FontWeight.w500,
 );
-

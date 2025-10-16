@@ -8,6 +8,7 @@ class PhoneChanged extends SignInEvent {
   final String phone;
   const PhoneChanged(this.phone);
 }
+
 class PasswordChanged extends SignInEvent {
   final String password;
   const PasswordChanged(this.password);

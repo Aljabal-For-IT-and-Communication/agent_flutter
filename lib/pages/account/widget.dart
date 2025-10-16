@@ -6,8 +6,6 @@ import 'package:app/common/values/colors.dart';
 import 'bloc.dart';
 import 'logic.dart';
 
-
-
 class BuildEditBtn extends StatelessWidget {
   BuildEditBtn({Key? key}) : super(key: key);
 
@@ -34,17 +32,16 @@ class BuildEditBtn extends StatelessWidget {
               ),
             ))),
         onTap: () {
-            Logic(context: context).handleProfile();
+          Logic(context: context).handleProfile();
         });
   }
 }
 
 class BuildTextInput extends StatelessWidget {
-
-
   final String type;
   final TextEditingController controller;
-  const BuildTextInput({Key? key,required this.type,required this.controller}) : super(key: key);
+  const BuildTextInput({Key? key, required this.type, required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,20 +100,18 @@ class BuildTextInput extends StatelessWidget {
               onChanged: (value) {
                 var useritem = context.read<AccountBloc>().state.userProfile;
 
-                 if(useritem!=null){
-                   // if(type=="name"){
-                   //   useritem.name= value;
-                   // }
-                   // if(type=="description"){
-                   //   useritem.description= value;
-                   // }
-                   if(type=="phone"){
-                     useritem.phone= value;
-                   }
-                   context.read<AccountBloc>().add(UserProfileChanged(useritem));
-                 }
-
-
+                if (useritem != null) {
+                  // if(type=="name"){
+                  //   useritem.name= value;
+                  // }
+                  // if(type=="description"){
+                  //   useritem.description= value;
+                  // }
+                  if (type == "phone") {
+                    useritem.phone = value;
+                  }
+                  context.read<AccountBloc>().add(UserProfileChanged(useritem));
+                }
               },
               maxLines: 1,
               autocorrect: false, // 自动纠正
@@ -130,10 +125,8 @@ class BuildTextInput extends StatelessWidget {
 }
 
 class BuildBirthInput extends StatelessWidget {
-
-
   final TextEditingController controller;
-  const BuildBirthInput({Key? key,required this.controller}) : super(key: key);
+  const BuildBirthInput({Key? key, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -192,14 +185,12 @@ class BuildBirthInput extends StatelessWidget {
               onChanged: (value) {
                 var useritem = context.read<AccountBloc>().state.userProfile;
 
-                if(useritem!=null){
-                 // useritem.birthday= value;
+                if (useritem != null) {
+                  // useritem.birthday= value;
                   context.read<AccountBloc>().add(UserProfileChanged(useritem));
                 }
               },
-              onTap: (){
-
-              },
+              onTap: () {},
               maxLines: 1,
               readOnly: false,
               autocorrect: false, // 自动纠正
@@ -222,7 +213,7 @@ class BuildBirthInput extends StatelessWidget {
 
 class BuildGenderInput extends StatelessWidget {
   final int gender;
-  const BuildGenderInput({Key? key,required this.gender}) : super(key: key);
+  const BuildGenderInput({Key? key, required this.gender}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -235,72 +226,85 @@ class BuildGenderInput extends StatelessWidget {
             Container(
               width: 150.w,
               child: Row(
-                mainAxisAlignment:MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                GestureDetector(
-                  child: Container(
-                      width: 24.h,
-                      height: 24.h,
-                      child: Image.asset(
-                        gender==1?"assets/icons/check.png":"assets/icons/uncheck.png",
-                        fit: BoxFit.fill,
-                      )),
-                  onTap: () {
-                    var useritem = context.read<AccountBloc>().state.userProfile;
+                  GestureDetector(
+                    child: Container(
+                        width: 24.h,
+                        height: 24.h,
+                        child: Image.asset(
+                          gender == 1
+                              ? "assets/icons/check.png"
+                              : "assets/icons/uncheck.png",
+                          fit: BoxFit.fill,
+                        )),
+                    onTap: () {
+                      var useritem =
+                          context.read<AccountBloc>().state.userProfile;
 
-                    if(useritem!=null){
-                    //  useritem.gender= 1;
-                      context.read<AccountBloc>().add(UserProfileChanged(useritem));
-                    }
-                  },
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 10.w),
-                  child: Text(
-                    "Male",
-                    style: TextStyle(
-                      color: AppColors.primaryElement,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16.sp,
+                      if (useritem != null) {
+                        //  useritem.gender= 1;
+                        context
+                            .read<AccountBloc>()
+                            .add(UserProfileChanged(useritem));
+                      }
+                    },
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 10.w),
+                    child: Text(
+                      "Male",
+                      style: TextStyle(
+                        color: AppColors.primaryElement,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.sp,
+                      ),
                     ),
                   ),
-                ),
-              ],),
+                ],
+              ),
             ),
             Container(
               width: 150.w,
               child: Row(
-                mainAxisAlignment:MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                GestureDetector(
-                  child: Container(
-                      width: 24.h,
-                      height: 24.h,
-                      child: Image.asset(gender==2?"assets/icons/check.png":"assets/icons/uncheck.png", fit: BoxFit.fill)),
-                  onTap: () {
-                    var useritem = context.read<AccountBloc>().state.userProfile;
+                  GestureDetector(
+                    child: Container(
+                        width: 24.h,
+                        height: 24.h,
+                        child: Image.asset(
+                            gender == 2
+                                ? "assets/icons/check.png"
+                                : "assets/icons/uncheck.png",
+                            fit: BoxFit.fill)),
+                    onTap: () {
+                      var useritem =
+                          context.read<AccountBloc>().state.userProfile;
 
-                    if(useritem!=null){
-                     // useritem.gender= 2;
-                      context.read<AccountBloc>().add(UserProfileChanged(useritem));
-                    }
-                  },
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 10.w),
-                  child: Text(
-                    "Female",
-                    style: TextStyle(
-                      color: AppColors.primaryElement,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16.sp,
+                      if (useritem != null) {
+                        // useritem.gender= 2;
+                        context
+                            .read<AccountBloc>()
+                            .add(UserProfileChanged(useritem));
+                      }
+                    },
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 10.w),
+                    child: Text(
+                      "Female",
+                      style: TextStyle(
+                        color: AppColors.primaryElement,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.sp,
+                      ),
                     ),
                   ),
-                ),
-              ],),
+                ],
+              ),
             )
           ],
         ));
   }
 }
-

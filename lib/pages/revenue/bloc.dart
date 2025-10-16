@@ -6,7 +6,6 @@ part 'state.dart';
 
 class RevenueBloc extends Bloc<RevenueEvent, RevenueState> {
   RevenueBloc() : super(const RevenueState()) {
-
     on<PageChanged>(_onPageChanged);
     on<PhoneChanged>(_onPhoneChanged);
     on<TypeChanged>(_onTypeChanged);
@@ -18,84 +17,82 @@ class RevenueBloc extends Bloc<RevenueEvent, RevenueState> {
     on<AmountChanged>(_onAmountChanged);
     on<AgentCollectRecordListChanged>(_onAgentCollectRecordListChanged);
     on<IsMoreChanged>(_onIsMoreChanged);
-
   }
 
-
   void _onIsMoreChanged(
-      IsMoreChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    IsMoreChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(isMore: event.isMore));
   }
 
   void _onAgentItemChanged(
-      AgentItemChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    AgentItemChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(agentItem: event.agentItem));
   }
 
   void _onAgentCollectRecordListChanged(
-      AgentCollectRecordListChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    AgentCollectRecordListChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(agentCollectRecordList: event.agentCollectRecordList));
   }
 
   void _onSalePointItemChanged(
-      SalePointItemChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    SalePointItemChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(salePointItem: event.salePointItem));
   }
 
   void _onSalePointChanged(
-      SalePointChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    SalePointChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(salePointList: event.salePointList));
   }
 
   void _onAgentListChanged(
-      AgentListChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    AgentListChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(agentList: event.agentList));
   }
 
   void _onPageChanged(
-      PageChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    PageChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(page: event.page));
   }
 
   void _onPhoneChanged(
-      PhoneChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    PhoneChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(phone: event.phone));
   }
 
   void _onAmountChanged(
-      AmountChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    AmountChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(Amount: event.Amount));
   }
 
   void _onTypeChanged(
-      TypeChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    TypeChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(type: event.type));
   }
+
   void _onAgentChanged(
-      AgentChanged event,
-      Emitter<RevenueState> emit,
-      ) {
+    AgentChanged event,
+    Emitter<RevenueState> emit,
+  ) {
     emit(state.copyWith(agent: event.agent));
   }
-
 }

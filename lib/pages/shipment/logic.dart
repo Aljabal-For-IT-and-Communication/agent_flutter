@@ -1,4 +1,3 @@
-
 import 'package:app/common/apis/agent.dart';
 import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/entities/entities.dart';
@@ -9,13 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  init(){
+  init() {
     agent();
     salePoint();
   }
@@ -25,12 +24,15 @@ class Logic{
       var result = await SalePointAPI.salePointList();
       if (result.code == 0) {
         context.read<ShipmentBloc>().add(SalePointChanged(result.data!));
-        context.read<ShipmentBloc>().add(SalePointItemChanged(result.data!.first));
+        context
+            .read<ShipmentBloc>()
+            .add(SalePointItemChanged(result.data!.first));
       }
     } catch (e) {
       Logger.write("${e}");
     }
   }
+
   agent() async {
     try {
       var result = await AgentAPI.agentList();
@@ -43,7 +45,7 @@ class Logic{
     }
   }
 
-  postTransformation() async{
+  postTransformation() async {
     final state = context.read<ShipmentBloc>().state;
 
     FocusManager.instance.primaryFocus?.unfocus();
@@ -52,24 +54,29 @@ class Logic{
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
-    TransferRequestEntity entity =  TransferRequestEntity();
+    TransferRequestEntity entity = TransferRequestEntity();
 
-    entity.id = state.agent=="Agent"?state.agentItem?.id:state.salePointItem?.id;
+    entity.id =
+        state.agent == "Agent" ? state.agentItem?.id : state.salePointItem?.id;
     entity.Category = state.agent;
     entity.Amount = state.Amount;
     entity.page = state.agentRechargeRecordList.length;
     try {
-      var result = await SalePointAPI.salePointRechargeRecordList(params: entity);
+      var result =
+          await SalePointAPI.salePointRechargeRecordList(params: entity);
       EasyLoading.dismiss();
-      if (result.code == 0 && result.data!=null) {
+      if (result.code == 0 && result.data != null) {
         if (result.data!.isNotEmpty) {
           var agentRechargeRecordList = state.agentRechargeRecordList.toList();
           for (var item in result.data!) {
-            if (!agentRechargeRecordList.any((element) => element.id == item.id)) {
+            if (!agentRechargeRecordList
+                .any((element) => element.id == item.id)) {
               agentRechargeRecordList.add(item);
             }
           }
-          context.read<ShipmentBloc>().add(AgentRechargeRecordChanged(agentRechargeRecordList));
+          context
+              .read<ShipmentBloc>()
+              .add(AgentRechargeRecordChanged(agentRechargeRecordList));
         }
       }
       context.read<ShipmentBloc>().add(IsMoreChanged(false));
@@ -80,6 +87,4 @@ class Logic{
       Logger.write("${e}");
     }
   }
-
-
 }

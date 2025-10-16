@@ -8,8 +8,8 @@ class UserProfileChanged extends CreditEvent {
   const UserProfileChanged(this.userProfile);
 
   final UserItem userProfile;
-
 }
+
 class PageChanged extends CreditEvent {
   const PageChanged(this.page);
 

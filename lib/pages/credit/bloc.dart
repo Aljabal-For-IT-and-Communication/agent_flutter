@@ -11,26 +11,24 @@ class CreditBloc extends Bloc<CreditEvent, CreditState> {
     on<UserProfileChanged>(_onUserProfileChanged);
   }
 
-
   void _onUserProfileChanged(
-      UserProfileChanged event,
-      Emitter<CreditState> emit,
-      ) {
+    UserProfileChanged event,
+    Emitter<CreditState> emit,
+  ) {
     emit(state.copyWith(userProfile: event.userProfile));
   }
 
   void _onPageChanged(
-      PageChanged event,
-      Emitter<CreditState> emit,
-      ) {
+    PageChanged event,
+    Emitter<CreditState> emit,
+  ) {
     emit(state.copyWith(page: event.page));
   }
 
   void _onAmountChanged(
-      AmountChanged event,
-      Emitter<CreditState> emit,
-      ) {
+    AmountChanged event,
+    Emitter<CreditState> emit,
+  ) {
     emit(state.copyWith(Amount: event.Amount));
   }
-
 }

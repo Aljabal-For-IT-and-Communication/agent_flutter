@@ -19,51 +19,55 @@ class ContactPage extends StatelessWidget {
               horizontal: 0.w,
             ),
             sliver: SliverToBoxAdapter(
-              child:BuildPublicAppBar(title:"Contact us".tr()),
+              child: BuildPublicAppBar(title: "Contact us".tr()),
             )),
-      SliverPadding(
-        padding: EdgeInsets.symmetric(
-          vertical: 0.w,
-          horizontal: 30.w,
-        ),
-        sliver: SliverToBoxAdapter(
-          child:Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(40.w),
-                child: Image.asset("assets/icons/logo1.png"),
-              ),
-              SizedBox(height: 30.h,),
-              Container(
-                child: Text(
-                  "Contact us to answer all your".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
+        SliverPadding(
+          padding: EdgeInsets.symmetric(
+            vertical: 0.w,
+            horizontal: 30.w,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(40.w),
+                  child: Image.asset("assets/icons/logo1.png"),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Container(
+                  child: Text(
+                    "Contact us to answer all your".tr(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.primaryText,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 20.h,),
-              Container(
-                child: Text(
-                  "inquiries: Phone number:".tr()+" +218919491111",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
+                SizedBox(
+                  height: 20.h,
+                ),
+                Container(
+                  child: Text(
+                    "inquiries: Phone number:".tr() + " +218919491111",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.primaryText,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                    ),
                   ),
                 ),
-              ),
-            ],),
+              ],
+            ),
+          ),
         ),
-      ),
-    ]),);
+      ]),
+    );
   }
 }
-
-

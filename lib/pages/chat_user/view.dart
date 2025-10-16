@@ -1,4 +1,3 @@
-
 import 'package:app/common/entities/chat.dart';
 import 'package:app/common/widgets/message_badge.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -19,20 +18,19 @@ class ChatUserPage extends StatefulWidget {
   State<ChatUserPage> createState() => _ChatUserPage();
 }
 
-class _ChatUserPage extends State<ChatUserPage>{
-
+class _ChatUserPage extends State<ChatUserPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero,(){
-      if(mounted){
+    Future.delayed(Duration.zero, () {
+      if (mounted) {
         ChatUserLogic(context: context).init();
       }
     });
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
@@ -40,58 +38,60 @@ class _ChatUserPage extends State<ChatUserPage>{
   Widget build(BuildContext context) {
     return BlocConsumer<ChatUserBloc, ChatUserState>(
         listener: (context, state) {},
-    builder: (context, state) {
-          return Container( color: AppColors.primaryBackground,
+        builder: (context, state) {
+          return Container(
+            color: AppColors.primaryBackground,
             child: CustomScrollView(slivers: [
-            SliverPadding(
+              SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 0.w,
+                    horizontal: 0.w,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: BuildAppBar(),
+                  )),
+              SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,
-                  horizontal: 0.w,
+                  horizontal: 16.w,
                 ),
-                sliver: SliverToBoxAdapter(
-                  child: BuildAppBar(),
-                )),
-            SliverPadding(
-              padding: EdgeInsets.symmetric(
-                vertical: 0.w,
-                horizontal: 16.w,
-              ),
-              sliver: state.chatList.length == 0
-                  ? SliverToBoxAdapter(
-                child: Container(
-                  width: 375.w,
-                  height: 512.h,
-                  padding: EdgeInsets.only(left: 30.w, right: 30.w),
-                  child: Center(
-                    child: Text(
-                      'No Chat User!'.tr(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.primarySecondaryElementText,
-                        fontSize: 16.sp,
-                      ),
-                    ),
-                  ),
-                ),
-              )
-                  : SliverList(
-                  delegate: SliverChildBuilderDelegate(
+                sliver: state.chatList.length == 0
+                    ? SliverToBoxAdapter(
+                        child: Container(
+                          width: 375.w,
+                          height: 512.h,
+                          padding: EdgeInsets.only(left: 30.w, right: 30.w),
+                          child: Center(
+                            child: Text(
+                              'No Chat User!'.tr(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: AppColors.primarySecondaryElementText,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : SliverList(
+                        delegate: SliverChildBuilderDelegate(
                         (content, index) {
-                      var item = state.chatList[index];
-                      return chatListItem(item);
-                    },
-                    childCount: state.chatList.length,
-                  )),
-            )
-          ]),);
+                          var item = state.chatList[index];
+                          return chatListItem(item);
+                        },
+                        childCount: state.chatList.length,
+                      )),
+              )
+            ]),
+          );
+        });
   }
-    );}
 
   Widget chatListItem(ChatUserItem item) {
-    RegExp imgExp =  RegExp(r"img\[(.*?)\]");
+    RegExp imgExp = RegExp(r"img\[(.*?)\]");
     var res = imgExp.hasMatch("${item.lastMsg}");
-    if(res){
+    if (res) {
       item.lastMsg = "[image]";
     }
     return Container(
@@ -130,12 +130,11 @@ class _ChatUserPage extends State<ChatUserPage>{
                   width: 44.w,
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(22.w)),
+                      borderRadius: BorderRadius.all(Radius.circular(22.w)),
                       image: DecorationImage(
                           image: imageProvider, fit: BoxFit.fill
-                        // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn),
-                      ),
+                          // colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn),
+                          ),
                     ),
                   ),
                   errorWidget: (context, url, error) => Image(
@@ -207,7 +206,9 @@ class _ChatUserPage extends State<ChatUserPage>{
                             ),
                           ),
                           Container(
-                            child: MessageBadge(unreadCount: item.msgNum??0,),
+                            child: MessageBadge(
+                              unreadCount: item.msgNum ?? 0,
+                            ),
                           )
                         ],
                       ),
@@ -219,9 +220,4 @@ class _ChatUserPage extends State<ChatUserPage>{
           )),
     );
   }
-
-
 }
-
-
-

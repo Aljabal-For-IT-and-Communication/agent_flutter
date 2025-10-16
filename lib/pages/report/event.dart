@@ -4,7 +4,6 @@ abstract class ReportEvent {
   const ReportEvent();
 }
 
-
 class PageChanged extends ReportEvent {
   const PageChanged(this.page);
 

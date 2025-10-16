@@ -565,7 +565,8 @@ class BuildDropdownCollectTypeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = context.read<CollectionItemBloc>().state;
-    List<CollectTypeData> items = state.collectTypes.isEmpty ? [] : state.collectTypes;
+    List<CollectTypeData> items =
+        state.collectTypes.isEmpty ? [] : state.collectTypes;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -608,7 +609,9 @@ class BuildDropdownCollectTypeInput extends StatelessWidget {
               );
             }).toList(),
             onChanged: (int? newValue) {
-              context.read<CollectionItemBloc>().add(CollectTypeSelected(newValue));
+              context
+                  .read<CollectionItemBloc>()
+                  .add(CollectTypeSelected(newValue));
             },
           ),
         ),

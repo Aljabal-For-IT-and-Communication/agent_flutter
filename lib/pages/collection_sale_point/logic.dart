@@ -6,15 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  init(){
-
-  }
+  init() {}
 
   postTransferCollection(DateRequestEntity entity) async {
     try {
@@ -23,12 +21,14 @@ class Logic{
           maskType: EasyLoadingMaskType.clear,
           dismissOnTap: true);
       var result = await SalePointAPI.transferCollectionList(params: entity);
-      if (result.code == 0 && result.data!=null) {
-        if(result.data!.isNotEmpty) {
+      if (result.code == 0 && result.data != null) {
+        if (result.data!.isNotEmpty) {
           final state = context.read<CollectionSalePointBloc>().state;
           var agentCollectRecordList = state.agentCollectRecordList.toList();
           agentCollectRecordList.addAll(result.data!);
-          context.read<CollectionSalePointBloc>().add(AgentCollectRecordListChanged(agentCollectRecordList));
+          context
+              .read<CollectionSalePointBloc>()
+              .add(AgentCollectRecordListChanged(agentCollectRecordList));
         }
       }
       context.read<CollectionSalePointBloc>().add(IsMoreChanged(false));
@@ -39,8 +39,4 @@ class Logic{
       Logger.write("${e}");
     }
   }
-
-
-
-
 }

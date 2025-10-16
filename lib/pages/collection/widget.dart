@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
 
 class BuildAppBar extends StatelessWidget {
-
   BuildAppBar({Key? key}) : super(key: key);
 
   @override
@@ -12,7 +11,8 @@ class BuildAppBar extends StatelessWidget {
     // TODO: implement build
     return Container(
       width: 375.w,
-      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w,bottom: 30.h),
+      padding:
+          EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 30.h),
       decoration: BoxDecoration(
         color: AppColors.primaryBackground,
         image: DecorationImage(
@@ -46,7 +46,6 @@ class BuildAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -63,15 +62,21 @@ class BuildListItem extends StatelessWidget {
   final String title;
   final String iconImage;
   final Function()? callFunc;
-  const BuildListItem({Key? key,required this.title,required this.iconImage,required this.callFunc}) : super(key: key);
+  const BuildListItem(
+      {Key? key,
+      required this.title,
+      required this.iconImage,
+      required this.callFunc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return GestureDetector(
-      onTap:callFunc,
+      onTap: callFunc,
       child: Container(
-        padding: EdgeInsets.only(top: 12.h,bottom: 12.h,left: 10.w,right: 10.w),
+        padding:
+            EdgeInsets.only(top: 12.h, bottom: 12.h, left: 10.w, right: 10.w),
         margin: EdgeInsets.only(bottom: 15.h),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -80,8 +85,8 @@ class BuildListItem extends StatelessWidget {
             BoxShadow(
               color: AppColors.primaryFourElementText, // 阴影颜色
               spreadRadius: 1, // 阴影扩展半径
-              blurRadius: 10,  // 模糊半径
-              offset: Offset(5, 5),  // 右下方向的阴影偏移
+              blurRadius: 10, // 模糊半径
+              offset: Offset(5, 5), // 右下方向的阴影偏移
             ),
             BoxShadow(
               color: AppColors.primaryFourElementText,
@@ -96,17 +101,19 @@ class BuildListItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              width:40.w,
+              width: 40.w,
               height: 40.w,
               padding: EdgeInsets.all(8.w),
-              clipBehavior:Clip.hardEdge,
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: AppColors.primaryFourElementText,
                 borderRadius: BorderRadius.all(Radius.circular(10.w)),
               ),
-              child:  Image.asset(iconImage),
+              child: Image.asset(iconImage),
             ),
-            SizedBox(width: 10.w,),
+            SizedBox(
+              width: 10.w,
+            ),
             Container(
               width: 260.w,
               child: Text(
@@ -122,8 +129,8 @@ class BuildListItem extends StatelessWidget {
               ),
             ),
           ],
-        ),),
+        ),
+      ),
     );
   }
 }
-

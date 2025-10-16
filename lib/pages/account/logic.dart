@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:app/common/apis/user.dart';
@@ -13,17 +12,20 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'bloc.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  handleProfile() async{
+  handleProfile() async {
     final userItem = context.read<AccountBloc>().state.userProfile;
     FocusManager.instance.primaryFocus?.unfocus();
-    EasyLoading.show(indicator: const CircularProgressIndicator(), maskType: EasyLoadingMaskType.clear, dismissOnTap: true);
-    ProfileRequestEntity entity =  ProfileRequestEntity();
+    EasyLoading.show(
+        indicator: const CircularProgressIndicator(),
+        maskType: EasyLoadingMaskType.clear,
+        dismissOnTap: true);
+    ProfileRequestEntity entity = ProfileRequestEntity();
 
     entity.phone = userItem?.phone;
     try {
@@ -31,8 +33,9 @@ class Logic{
       EasyLoading.dismiss();
       toastInfo(msg: "${result.msg}");
       if (result.code == 0) {
-        if(userItem!=null) {
-          Global.storageService.setString(STORAGE_USER_PROFILE_KEY, jsonEncode(userItem));
+        if (userItem != null) {
+          Global.storageService
+              .setString(STORAGE_USER_PROFILE_KEY, jsonEncode(userItem));
         }
         Navigator.of(context).pop();
       }
@@ -41,8 +44,5 @@ class Logic{
       toastInfo(msg: 'internet error');
       Logger.write("${e}");
     }
-
   }
-
-
 }

@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Logic{
+class Logic {
   final BuildContext context;
   Logic({
     required this.context,
   });
 
-  init(){
-
-  }
-
-
-
-
+  init() {}
 }

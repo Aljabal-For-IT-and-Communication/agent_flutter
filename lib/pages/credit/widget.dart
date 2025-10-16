@@ -15,14 +15,14 @@ class BuildAppBar extends StatelessWidget {
     return Container(
       width: 375.w,
       decoration: BoxDecoration(
-          color: AppColors.primaryBackground,
-          image: DecorationImage(
-            alignment: Alignment.topCenter,
-            image: AssetImage('assets/icons/headbg.png'),
-            fit: BoxFit.fitWidth, // 完全填充
-          ),
+        color: AppColors.primaryBackground,
+        image: DecorationImage(
+          alignment: Alignment.topCenter,
+          image: AssetImage('assets/icons/headbg.png'),
+          fit: BoxFit.fitWidth, // 完全填充
         ),
-      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w,bottom: 0.h),
+      ),
+      padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 0.h),
       child: Column(
         children: [
           SizedBox(
@@ -35,11 +35,16 @@ class BuildAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap:(){Navigator.pop(context);},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     width: 24.w,
                     height: 24.w,
-                    child: Icon(Icons.arrow_back,color: AppColors.primaryBackground,),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: AppColors.primaryBackground,
+                    ),
                   ),
                 ),
                 Container(
@@ -56,8 +61,10 @@ class BuildAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container( width: 24.w,
-                  height: 24.w,)
+                Container(
+                  width: 24.w,
+                  height: 24.w,
+                )
               ],
             ),
           ),
@@ -80,7 +87,7 @@ class BuildAppBar extends StatelessWidget {
           ),
           Container(
             child: Text(
-              "${userProfile?.indebtedness??0}LYD",
+              "${userProfile?.indebtedness ?? 0}LYD",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.primaryBackground,
@@ -98,10 +105,9 @@ class BuildAppBar extends StatelessWidget {
   }
 }
 
-
 class BuildInput extends StatelessWidget {
   final String name;
-  const BuildInput({Key? key,required this.name}) : super(key: key);
+  const BuildInput({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -110,26 +116,28 @@ class BuildInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(bottom: 5.h,top: 0.h),
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
-            "Enter the".tr()+" ${name}",
+            "Enter the".tr() + " ${name}",
             textAlign: TextAlign.left,
             style: TextStyle(
               color: AppColors.primaryText,
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-          ),),
-        SizedBox(height: 6.h,),
+          ),
+        ),
+        SizedBox(
+          height: 6.h,
+        ),
         Container(
           width: 330.w,
           height: 46.h,
-          padding: EdgeInsets.only(left: 10.w,right: 10.w),
+          padding: EdgeInsets.only(left: 10.w, right: 10.w),
           decoration: BoxDecoration(
               color: AppColors.primaryFourElementText,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryFourElementText)
-          ),
+              border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
@@ -165,14 +173,16 @@ class BuildInput extends StatelessWidget {
               fontSize: 14.sp,
             ),
             onChanged: (value) {
-               context.read<CreditBloc>().add(AmountChanged(value));
+              context.read<CreditBloc>().add(AmountChanged(value));
             },
             maxLines: 1,
             autocorrect: false, // 自动纠正
             obscureText: false, // 隐藏输入内容, 密码框
           ),
         ),
-        SizedBox(height: 15.h,),
+        SizedBox(
+          height: 15.h,
+        ),
       ],
     );
   }
@@ -195,14 +205,14 @@ class BuildBtn extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-                  "Send request".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.primaryBackground,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16.sp,
-                  ),
-                ))),
+              "Send request".tr(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryBackground,
+                fontWeight: FontWeight.normal,
+                fontSize: 16.sp,
+              ),
+            ))),
         onTap: () {
           Logic(context: context).postTransformation();
         });

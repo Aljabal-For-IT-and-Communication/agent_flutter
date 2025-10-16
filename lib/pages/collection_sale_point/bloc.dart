@@ -4,7 +4,8 @@ import 'package:bloc/bloc.dart';
 part 'event.dart';
 part 'state.dart';
 
-class CollectionSalePointBloc extends Bloc<CollectionSalePointEvent, CollectionSalePointState> {
+class CollectionSalePointBloc
+    extends Bloc<CollectionSalePointEvent, CollectionSalePointState> {
   CollectionSalePointBloc() : super(const CollectionSalePointState()) {
     on<PageChanged>(_onPageChanged);
     on<StartDateChanged>(_onStartDateChanged);
@@ -14,47 +15,45 @@ class CollectionSalePointBloc extends Bloc<CollectionSalePointEvent, CollectionS
     on<IsMoreChanged>(_onIsMoreChanged);
   }
 
-
   void _onIsMoreChanged(
-      IsMoreChanged event,
-      Emitter<CollectionSalePointState> emit,
-      ) {
+    IsMoreChanged event,
+    Emitter<CollectionSalePointState> emit,
+  ) {
     emit(state.copyWith(isMore: event.isMore));
   }
 
   void _onAgentCollectRecordListChanged(
-      AgentCollectRecordListChanged event,
-      Emitter<CollectionSalePointState> emit,
-      ) {
+    AgentCollectRecordListChanged event,
+    Emitter<CollectionSalePointState> emit,
+  ) {
     emit(state.copyWith(agentCollectRecordList: event.agentCollectRecordList));
   }
 
   void _onPageChanged(
-      PageChanged event,
-      Emitter<CollectionSalePointState> emit,
-      ) {
+    PageChanged event,
+    Emitter<CollectionSalePointState> emit,
+  ) {
     emit(state.copyWith(page: event.page));
   }
 
   void _onStartDateChanged(
-      StartDateChanged event,
-      Emitter<CollectionSalePointState> emit,
-      ) {
+    StartDateChanged event,
+    Emitter<CollectionSalePointState> emit,
+  ) {
     emit(state.copyWith(startDate: event.startDate));
   }
 
   void _onEndDateChanged(
-      EndDateChanged event,
-      Emitter<CollectionSalePointState> emit,
-      ) {
+    EndDateChanged event,
+    Emitter<CollectionSalePointState> emit,
+  ) {
     emit(state.copyWith(endDate: event.endDate));
   }
 
-void _onAmountChanged(
-      AmountChanged event,
-      Emitter<CollectionSalePointState> emit,
-      ) {
+  void _onAmountChanged(
+    AmountChanged event,
+    Emitter<CollectionSalePointState> emit,
+  ) {
     emit(state.copyWith(amount: event.amount));
   }
-
 }

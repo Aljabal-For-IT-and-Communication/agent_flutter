@@ -42,14 +42,15 @@ class RevenueState {
     return RevenueState(
         salePointList: salePointList ?? this.salePointList,
         agentList: agentList ?? this.agentList,
-        agentCollectRecordList: agentCollectRecordList ?? this.agentCollectRecordList,
+        agentCollectRecordList:
+            agentCollectRecordList ?? this.agentCollectRecordList,
         phone: phone ?? this.phone,
         Amount: Amount ?? this.Amount,
         type: type ?? this.type,
         agent: agent ?? this.agent,
         agentItem: agentItem ?? this.agentItem,
         salePointItem: salePointItem ?? this.salePointItem,
-        isMore:isMore??this.isMore,
+        isMore: isMore ?? this.isMore,
         page: page ?? this.page);
   }
 }
