@@ -248,6 +248,89 @@ Future<bool> printCollectionReportPdf(
       widgets.add(pw.SizedBox(height: 20));
       overallTotal += groupTotal;
     }
+
+    // Calculate collectType and rechargeType totals (excluding items without names)
+    Map<String, double> collectTypeTotals = {};
+    Map<String, double> rechargeTypeTotals = {};
+    double validItemsTotal = 0;
+    
+    for (var item in collectionList) {
+      double amount = double.tryParse(item.amount ?? '0') ?? 0;
+      
+      // Calculate collectType totals
+      if (item.collectTypeName != null && 
+          item.collectTypeName!.isNotEmpty && 
+          item.collectTypeName != '-') {
+        String collectType = item.collectTypeName!;
+        collectTypeTotals.update(collectType, (value) => value + amount, 
+            ifAbsent: () => amount);
+        validItemsTotal += amount;
+      }
+      
+      // Calculate rechargeType totals
+      if (item.rechargeTypeName != null && 
+          item.rechargeTypeName!.isNotEmpty && 
+          item.rechargeTypeName != '-') {
+        String rechargeType = item.rechargeTypeName!;
+        rechargeTypeTotals.update(rechargeType, (value) => value + amount, 
+            ifAbsent: () => amount);
+      }
+    }
+
+    // Add combined summary table before overall total
+    if (collectTypeTotals.isNotEmpty || rechargeTypeTotals.isNotEmpty) {
+      widgets.add(pw.Header(
+          level: 2,
+          text: "Collect and Recharge Details".tr(),
+          textStyle: pw.TextStyle(
+              font: ttf, fontSize: 16, fontWeight: pw.FontWeight.bold)));
+
+      // Create combined data for the table
+      final summaryHeaders = ['Type'.tr(), 'Name'.tr(), 'Total Amount'.tr()];
+      List<List<String>> summaryData = [];
+
+      // Add collectType entries
+      collectTypeTotals.entries.forEach((entry) {
+        summaryData.add([
+          'Collect Type'.tr(),
+          entry.key,
+          entry.value.toStringAsFixed(2)
+        ]);
+      });
+
+      // Add rechargeType entries
+      rechargeTypeTotals.entries.forEach((entry) {
+        summaryData.add([
+          'Recharge Type'.tr(),
+          entry.key,
+          entry.value.toStringAsFixed(2)
+        ]);
+      });
+
+     
+
+      widgets.add(pw.TableHelper.fromTextArray(
+        headers: summaryHeaders,
+        data: summaryData,
+        headerStyle: pw.TextStyle(font: ttf, fontWeight: pw.FontWeight.bold),
+        cellStyle: pw.TextStyle(font: ttf),
+        headerDecoration: pw.BoxDecoration(color: PdfColors.grey300),
+        cellAlignment: pw.Alignment.center,
+        cellAlignments: isArabic
+            ? {
+                0: pw.Alignment.centerRight,
+                1: pw.Alignment.centerRight,
+                2: pw.Alignment.centerLeft,
+              }
+            : {
+                0: pw.Alignment.centerLeft,
+                1: pw.Alignment.centerLeft,
+                2: pw.Alignment.centerRight,
+              },
+      ));
+
+      widgets.add(pw.SizedBox(height: 20));
+    }
   }
 
   // Overall Total
