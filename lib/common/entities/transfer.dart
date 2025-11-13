@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 class ShippingOperationResponseEntity {
   int? code;
   String? msg;
@@ -106,6 +108,9 @@ class TransferBalanceRequestEntity {
   String? amount;
   String? converter;
   int? transferType;
+  // Optional validation attachment (image or pdf)
+  String? validationFilePath;
+  String? validationFileName;
 
   TransferBalanceRequestEntity({
     this.id,
@@ -113,6 +118,8 @@ class TransferBalanceRequestEntity {
     this.amount,
     this.converter,
     this.transferType,
+    this.validationFilePath,
+    this.validationFileName,
   });
 
   Map<String, dynamic> toJson() => {
@@ -122,6 +129,25 @@ class TransferBalanceRequestEntity {
         "converter": converter,
         "transfer_type": transferType,
       };
+
+  // Build multipart form when validation file exists
+  Future<dynamic> toRequestBody() async {
+    if (validationFilePath != null && validationFilePath!.isNotEmpty) {
+      return FormData.fromMap({
+        "id": id,
+        "category": category,
+        "amount": amount,
+        "converter": converter,
+        "transfer_type": transferType,
+        // Backend field name for file
+        "file": await MultipartFile.fromFile(
+          validationFilePath!,
+          filename: validationFileName ?? 'attachment',
+        ),
+      });
+    }
+    return toJson();
+  }
 }
 
 class TransferRequestEntity {
@@ -130,6 +156,9 @@ class TransferRequestEntity {
   String? Amount;
   int? page;
   int? transferType;
+  // Optional validation attachment (image or pdf)
+  String? validationFilePath;
+  String? validationFileName;
 
   TransferRequestEntity({
     this.id,
@@ -137,6 +166,8 @@ class TransferRequestEntity {
     this.Amount,
     this.page,
     this.transferType,
+    this.validationFilePath,
+    this.validationFileName,
   });
 
   Map<String, dynamic> toJson() => {
@@ -146,6 +177,24 @@ class TransferRequestEntity {
         "page": page,
         "transfer_type": transferType,
       };
+
+  // Build multipart form when validation file exists
+  Future<dynamic> toRequestBody() async {
+    if (validationFilePath != null && validationFilePath!.isNotEmpty) {
+      return FormData.fromMap({
+        "category": Category,
+        "amount": Amount,
+        "id": id,
+        "page": page,
+        "transfer_type": transferType,
+        "file": await MultipartFile.fromFile(
+          validationFilePath!,
+          filename: validationFileName ?? 'attachment',
+        ),
+      });
+    }
+    return toJson();
+  }
 }
 
 class AgentRechargeRecordResponseEntity {

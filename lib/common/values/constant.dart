@@ -7,15 +7,15 @@ const SERVER_API_WSS = 'wss://api.alafdal-pluse.ly/ws_agent';
 // const SERVER_API_WSS = 'wss://10.0.2.2:8005/ws_agent';
 
 /*.  LOCAL NETWORK   */
-// const SERVER_API_URL = 'http://192.168.31.243:8005/';
-// const SERVER_API_WSS = 'wss://192.168.31.243:8005/ws_agent';
+// const SERVER_API_URL = 'https://lwzfktzd-8005.euw.devtunnels.ms/';
+// const SERVER_API_WSS = 'wss://lwzfktzd-8005.euw.devtunnels.ms/ws_agent';
 
 const SERVER_IMG_URL = 'https://admin.alafdal-pluse.ly/uploads/';
 const SERVER_API_IMG_URL = 'https://admin.alafdal-pluse.ly/';
 
-const String VersionNumber = '1.1.1';
+const String VersionNumber = '1.1.2';
 
-const String ReleaseDate = '2025-10-8';
+const String ReleaseDate = '2025-11-13';
 
 const String STORAGE_USER_PROFILE_KEY = 'user_profile';
 

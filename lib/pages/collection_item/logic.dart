@@ -19,6 +19,8 @@ class Logic {
 
   salePoint() async {
     try {
+      // Clear existing list before fetching to avoid stale data
+      context.read<CollectionItemBloc>().add(const SalePointChanged([]));
       var result = await SalePointAPI.salePointList();
       if (result.code == 0) {
         context.read<CollectionItemBloc>().add(SalePointChanged(result.data!));
@@ -31,6 +33,8 @@ class Logic {
 
   agent() async {
     try {
+      // Clear existing list before fetching to avoid stale data
+      context.read<CollectionItemBloc>().add(const AgentListChanged([]));
       var result = await AgentAPI.agentList();
       if (result.code == 0) {
         context.read<CollectionItemBloc>().add(AgentListChanged(result.data!));

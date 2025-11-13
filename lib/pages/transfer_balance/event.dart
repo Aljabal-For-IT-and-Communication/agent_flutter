@@ -73,3 +73,14 @@ class RechargeTypeSelected extends TransferBalanceEvent {
 class ResetTransferBalance extends TransferBalanceEvent {
   const ResetTransferBalance();
 }
+
+class ValidationFilePicked extends TransferBalanceEvent {
+  const ValidationFilePicked(this.path, this.name);
+
+  final String path;
+  final String name;
+}
+
+class ValidationFileCleared extends TransferBalanceEvent {
+  const ValidationFileCleared();
+}

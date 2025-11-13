@@ -42,7 +42,7 @@ class Logic {
       // int city = user?.city ?? 0;
       // int region = user?.region ?? 0;
       String address = state.address;
-      String phone = state.phone;
+      String phone = state.phone.replaceAll(RegExp(r'[^0-9]'), '');
       String agentPhone = user.phone ?? "";
       // String emailAddress = state.email;
       String password = state.password;
@@ -74,6 +74,10 @@ class Logic {
       }
       if (phone.isEmpty) {
         toastInfo(msg: "Phone should not not be empty!".tr());
+        return;
+      }
+      if (phone.length != 10) {
+        toastInfo(msg: "Phone length is invalid!".tr());
         return;
       }
       if (agentPhone.isEmpty) {

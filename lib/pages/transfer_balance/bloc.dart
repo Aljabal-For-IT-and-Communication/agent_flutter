@@ -20,6 +20,8 @@ class TransferBalanceBloc
     on<RechargeTypesChanged>(_onRechargeTypesChanged);
     on<RechargeTypeSelected>(_onRechargeTypeSelected);
     on<ResetTransferBalance>(_onReset);
+    on<ValidationFilePicked>(_onValidationFilePicked);
+    on<ValidationFileCleared>(_onValidationFileCleared);
   }
 
   void _onUserProfileChanged(
@@ -83,7 +85,8 @@ class TransferBalanceBloc
     Emitter<TransferBalanceState> emit,
   ) {
     // reset selected recharge type when type changes
-    emit(state.copyWith(type: event.type, rechargeTypeId: null));
+    emit(state.copyWith(
+        type: event.type, rechargeTypeId: null, clearValidationFile: true));
   }
 
   void _onAgentChanged(
@@ -91,7 +94,8 @@ class TransferBalanceBloc
     Emitter<TransferBalanceState> emit,
   ) {
     // reset selected recharge type when agent changes
-    emit(state.copyWith(agent: event.agent, rechargeTypeId: null));
+    emit(state.copyWith(
+        agent: event.agent, rechargeTypeId: null, clearValidationFile: true));
   }
 
   void _onRechargeTypesChanged(
@@ -105,14 +109,34 @@ class TransferBalanceBloc
     RechargeTypeSelected event,
     Emitter<TransferBalanceState> emit,
   ) {
-    emit(state.copyWith(rechargeTypeId: event.rechargeTypeId));
+    // Clear any previously selected file when type changes
+    emit(state.copyWith(
+        rechargeTypeId: event.rechargeTypeId, clearValidationFile: true));
   }
 
   void _onReset(
     ResetTransferBalance event,
     Emitter<TransferBalanceState> emit,
   ) {
-    // Reset to initial defaults
-    emit(const TransferBalanceState());
+    // Reset to initial defaults, keep userProfile, and bump formVersion to refresh inputs
+    emit(TransferBalanceState(
+      userProfile: state.userProfile,
+      formVersion: state.formVersion + 1,
+    ));
+  }
+
+  void _onValidationFilePicked(
+    ValidationFilePicked event,
+    Emitter<TransferBalanceState> emit,
+  ) {
+    emit(state.copyWith(
+        validationFilePath: event.path, validationFileName: event.name));
+  }
+
+  void _onValidationFileCleared(
+    ValidationFileCleared event,
+    Emitter<TransferBalanceState> emit,
+  ) {
+    emit(state.copyWith(clearValidationFile: true));
   }
 }

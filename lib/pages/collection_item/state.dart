@@ -13,6 +13,9 @@ class CollectionItemState {
     this.isShow = false,
     this.collectTypes = const <CollectTypeData>[],
     this.collectTypeId,
+    this.validationFilePath,
+    this.validationFileName,
+    this.formVersion = 0,
   });
 
   final String phone;
@@ -26,19 +29,27 @@ class CollectionItemState {
   final SalePointData? salePointItem;
   final List<CollectTypeData> collectTypes;
   final int? collectTypeId;
+  final String? validationFilePath;
+  final String? validationFileName;
+  final int formVersion;
 
-  CollectionItemState copyWith(
-      {List<SalePointData>? salePointList,
-      List<AgentData>? agentList,
-      AgentData? agentItem,
-      SalePointData? salePointItem,
-      String? phone,
-      String? Amount,
-      String? type,
-      String? agent,
-      bool? isShow,
-      List<CollectTypeData>? collectTypes,
-      int? collectTypeId}) {
+  CollectionItemState copyWith({
+    List<SalePointData>? salePointList,
+    List<AgentData>? agentList,
+    AgentData? agentItem,
+    SalePointData? salePointItem,
+    String? phone,
+    String? Amount,
+    String? type,
+    String? agent,
+    bool? isShow,
+    List<CollectTypeData>? collectTypes,
+    int? collectTypeId,
+    String? validationFilePath,
+    String? validationFileName,
+    bool clearValidationFile = false,
+    int? formVersion,
+  }) {
     return CollectionItemState(
         salePointList: salePointList ?? this.salePointList,
         agentList: agentList ?? this.agentList,
@@ -50,6 +61,13 @@ class CollectionItemState {
         salePointItem: salePointItem ?? this.salePointItem,
         isShow: isShow ?? this.isShow,
         collectTypes: collectTypes ?? this.collectTypes,
-        collectTypeId: collectTypeId ?? this.collectTypeId);
+        collectTypeId: collectTypeId ?? this.collectTypeId,
+        validationFilePath: clearValidationFile
+            ? null
+            : (validationFilePath ?? this.validationFilePath),
+        validationFileName: clearValidationFile
+            ? null
+            : (validationFileName ?? this.validationFileName),
+        formVersion: formVersion ?? this.formVersion);
   }
 }

@@ -47,9 +47,10 @@ class SalePointAPI {
 
   static Future<TransferCollectionResponseEntity> transferCollection(
       {TransferRequestEntity? params}) async {
+    final data = params == null ? null : await params.toRequestBody();
     var response = await HttpUtil().post(
       'agent/transfer_collection',
-      data: params?.toJson(),
+      data: data,
     );
     return TransferCollectionResponseEntity.fromJson(response);
   }
@@ -91,9 +92,10 @@ class SalePointAPI {
 
   static Future<BaseResponseEntity> transferBalance(
       {TransferBalanceRequestEntity? params}) async {
+    final data = params == null ? null : await params.toRequestBody();
     var response = await HttpUtil().post(
       'agent/transfer_balance',
-      data: params?.toJson(),
+      data: data,
     );
     return BaseResponseEntity.fromJson(response);
   }

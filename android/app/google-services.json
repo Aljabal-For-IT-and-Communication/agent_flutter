@@ -1,65 +1,64 @@
 {
   "project_info": {
-    "project_number": "539554129699",
-    "project_id": "valiant-monitor-352501",
-    "storage_bucket": "valiant-monitor-352501.firebasestorage.app"
+    "project_number": "824945283679",
+    "project_id": "alafdal-plus",
+    "storage_bucket": "alafdal-plus.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:539554129699:android:f00ea5348c19560eeace96",
+        "mobilesdk_app_id": "1:824945283679:android:f2c3a28628f421d8ab41ea",
         "android_client_info": {
           "package_name": "com.zonecard.agent.agent"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "539554129699-nu4m27t0t2l3utasqm9ulro3g0lbas40.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBoCpRJNvb5kQ-U3iZ0mHhqY2Cldx1g-8c"
+          "current_key": "AIzaSyBFn9J3i6ShxdpEhvb4Ud9OL8fJUnyMCzs"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "539554129699-nu4m27t0t2l3utasqm9ulro3g0lbas40.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:539554129699:android:029cc57c74d9b753eace96",
+        "mobilesdk_app_id": "1:824945283679:android:114957afd0afb6b4ab41ea",
         "android_client_info": {
-          "package_name": "com.zonecard.zone_card"
+          "package_name": "com.zonecard.old_zone_card"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "539554129699-nu4m27t0t2l3utasqm9ulro3g0lbas40.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBoCpRJNvb5kQ-U3iZ0mHhqY2Cldx1g-8c"
+          "current_key": "AIzaSyBFn9J3i6ShxdpEhvb4Ud9OL8fJUnyMCzs"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "539554129699-nu4m27t0t2l3utasqm9ulro3g0lbas40.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824945283679:android:2a5718e1fa389decab41ea",
+        "android_client_info": {
+          "package_name": "com.zonecard.zone_card"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFn9J3i6ShxdpEhvb4Ud9OL8fJUnyMCzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }

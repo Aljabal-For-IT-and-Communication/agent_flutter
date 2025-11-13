@@ -189,5 +189,11 @@
   "Recharge Type": "نوع الشحن",
   "Collect type": "نوع التحصيل",
   "Recharge": "إعادة شحن",
-  "Collection": "تحصيل"
+  "Collection": "تحصيل",
+  "Phone length is invalid!": "طول رقم الهاتف غير صالح!",
+  "Please attach validation document": "يرجى إرفاق وثيقة التحقق",
+  "Validation document (image/pdf)": "وثيقة التحقق (صورة/بي دي إف)",
+  "Change file": "تغيير الملف",
+  "Choose file": "اختر ملفًا",
+  "No file chosen": "لم يتم اختيار ملف"
 }

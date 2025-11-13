@@ -67,3 +67,14 @@ class CollectTypeSelected extends CollectionItemEvent {
 class ResetCollectionItem extends CollectionItemEvent {
   const ResetCollectionItem();
 }
+
+class ValidationFilePicked extends CollectionItemEvent {
+  const ValidationFilePicked(this.path, this.name);
+
+  final String path;
+  final String name;
+}
+
+class ValidationFileCleared extends CollectionItemEvent {
+  const ValidationFileCleared();
+}

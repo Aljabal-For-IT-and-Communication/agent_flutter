@@ -14,6 +14,9 @@ class TransferBalanceState {
     this.page = 0,
     this.rechargeTypes = const <RechargeTypeData>[],
     this.rechargeTypeId,
+    this.validationFilePath,
+    this.validationFileName,
+    this.formVersion = 0,
   });
   final UserItem? userProfile;
   final String phone;
@@ -27,6 +30,9 @@ class TransferBalanceState {
   final SalePointData? salePointItem;
   final List<RechargeTypeData> rechargeTypes;
   final int? rechargeTypeId;
+  final String? validationFilePath;
+  final String? validationFileName;
+  final int formVersion;
 
   TransferBalanceState copyWith({
     List<SalePointData>? salePointList,
@@ -41,6 +47,10 @@ class TransferBalanceState {
     UserItem? userProfile,
     List<RechargeTypeData>? rechargeTypes,
     int? rechargeTypeId,
+    String? validationFilePath,
+    String? validationFileName,
+    bool clearValidationFile = false,
+    int? formVersion,
   }) {
     return TransferBalanceState(
       salePointList: salePointList ?? this.salePointList,
@@ -55,6 +65,13 @@ class TransferBalanceState {
       userProfile: userProfile ?? this.userProfile,
       rechargeTypes: rechargeTypes ?? this.rechargeTypes,
       rechargeTypeId: rechargeTypeId ?? this.rechargeTypeId,
+      validationFilePath: clearValidationFile
+          ? null
+          : (validationFilePath ?? this.validationFilePath),
+      validationFileName: clearValidationFile
+          ? null
+          : (validationFileName ?? this.validationFileName),
+      formVersion: formVersion ?? this.formVersion,
     );
   }
 }

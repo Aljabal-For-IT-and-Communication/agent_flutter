@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBoCpRJNvb5kQ-U3iZ0mHhqY2Cldx1g-8c',
-    appId: '1:539554129699:android:f00ea5348c19560eeace96',
-    messagingSenderId: '539554129699',
-    projectId: 'valiant-monitor-352501',
-    storageBucket: 'valiant-monitor-352501.firebasestorage.app',
+    apiKey: 'AIzaSyBFn9J3i6ShxdpEhvb4Ud9OL8fJUnyMCzs',
+    appId: '1:824945283679:android:f2c3a28628f421d8ab41ea',
+    messagingSenderId: '824945283679',
+    projectId: 'alafdal-plus',
+    storageBucket: 'alafdal-plus.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDpMc7finKXrum6RjFWZJsxF7D8Mz4BCg4',
-    appId: '1:539554129699:ios:03c23b6b84b9a2feeace96',
-    messagingSenderId: '539554129699',
-    projectId: 'valiant-monitor-352501',
-    storageBucket: 'valiant-monitor-352501.firebasestorage.app',
-    iosBundleId: 'com.zonecard.agent.agent',
+    apiKey: 'AIzaSyD2gOW-d5iD_sVWNSqEBQi8MYiDFXzjUpM',
+    appId: '1:824945283679:ios:d045db580e80375bab41ea',
+    messagingSenderId: '824945283679',
+    projectId: 'alafdal-plus',
+    storageBucket: 'alafdal-plus.firebasestorage.app',
+    iosBundleId: 'com.zonecard.agent',
   );
+
 }

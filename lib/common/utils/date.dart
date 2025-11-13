@@ -9,7 +9,7 @@ String timeFormated(String? time) {
   final DateTime now = DateTime.parse(time).toLocal();
   final DateFormat formatter =
       DateFormat('yyyy-MM-dd HH:mm:ss', Platform.localeName);
-  return formatter.format(now);
+  return replaceArabicNumbers(formatter.format(now));
 }
 
 /// 格式化时间

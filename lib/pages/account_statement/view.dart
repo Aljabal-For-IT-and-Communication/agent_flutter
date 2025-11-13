@@ -155,7 +155,7 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                               ),
                               Container(
                                 child: Text(
-                                  "${state.startDate}",
+                                  replaceArabicNumbers(state.startDate ?? ""),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color:
@@ -230,7 +230,7 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                               ),
                               Container(
                                 child: Text(
-                                  "${state.endDate}",
+                                  replaceArabicNumbers(state.endDate ?? ""),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color:

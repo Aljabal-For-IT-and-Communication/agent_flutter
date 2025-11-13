@@ -96,6 +96,7 @@ class RechargeTypeData {
   String? profit;
   bool? available;
   bool? autoCollect;
+  bool? needsValidation;
   String? filter;
 
   RechargeTypeData({
@@ -104,6 +105,7 @@ class RechargeTypeData {
     this.profit,
     this.available,
     this.autoCollect,
+    this.needsValidation,
     this.filter,
   });
 
@@ -113,6 +115,7 @@ class RechargeTypeData {
     profit = json['profit']?.toString();
     available = json['available'];
     autoCollect = json['auto_collect'];
+    needsValidation = json['needs_validation'];
     filter = json['filter'];
   }
 
@@ -123,6 +126,7 @@ class RechargeTypeData {
     data['profit'] = this.profit;
     data['available'] = this.available;
     data['auto_collect'] = this.autoCollect;
+    data['needs_validation'] = this.needsValidation;
     data['filter'] = this.filter;
     return data;
   }

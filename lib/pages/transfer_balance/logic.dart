@@ -29,6 +29,8 @@ class Logic {
 
   salePoint() async {
     try {
+      // Clear existing list before fetching to avoid stale data
+      context.read<TransferBalanceBloc>().add(const SalePointChanged([]));
       var result = await SalePointAPI.salePointList();
       if (result.code == 0) {
         context.read<TransferBalanceBloc>().add(SalePointChanged(result.data!));
@@ -41,6 +43,8 @@ class Logic {
 
   agent() async {
     try {
+      // Clear existing list before fetching to avoid stale data
+      context.read<TransferBalanceBloc>().add(const AgentListChanged([]));
       var result = await AgentAPI.agentList();
       if (result.code == 0) {
         context.read<TransferBalanceBloc>().add(AgentListChanged(result.data!));
@@ -117,13 +121,30 @@ class Logic {
     entity.converter = state.type;
     if (state.agent == "SalePoint" && state.type == "recharge") {
       entity.transferType = state.rechargeTypeId;
+      // If selected recharge type needs validation, ensure file is picked
+      final selected = state.rechargeTypes.firstWhere(
+          (e) => e.id == state.rechargeTypeId,
+          orElse: () => RechargeTypeData());
+      final needsValidation = selected.needsValidation ?? false;
+      if (needsValidation) {
+        if (state.validationFilePath == null ||
+            state.validationFilePath!.isEmpty) {
+          EasyLoading.dismiss();
+          toastInfo(msg: "Please attach validation document".tr());
+          return;
+        }
+        entity.validationFilePath = state.validationFilePath;
+        entity.validationFileName = state.validationFileName;
+      }
     }
     try {
       var result = await SalePointAPI.transferBalance(params: entity);
       EasyLoading.dismiss();
       toastInfo(msg: "${result.msg}");
       if (result.code == 0) {
-        Navigator.pop(context, "ok");
+        // Clear all fields and dropdowns, then reload lists/profile
+        context.read<TransferBalanceBloc>().add(const ResetTransferBalance());
+        Logic(context: context).init();
       }
     } catch (e) {
       EasyLoading.dismiss();

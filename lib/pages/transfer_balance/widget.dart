@@ -1,4 +1,5 @@
 import 'package:app/common/entities/entities.dart';
+import 'package:app/common/widgets/widgets.dart';
 import 'package:app/pages/transfer_balance/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'logic.dart';
+import 'package:file_picker/file_picker.dart';
 
 class BuildAppBar extends StatelessWidget {
   BuildAppBar({Key? key}) : super(key: key);
@@ -116,7 +118,7 @@ class BuildDropdownTypeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> items = ['recharge', 'retrack'];
-    var type = context.read<TransferBalanceBloc>().state.type;
+    var type = context.watch<TransferBalanceBloc>().state.type;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -571,6 +573,7 @@ class BuildPhoneInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<TransferBalanceBloc>().state;
     return Container(
       width: 330.w,
       height: 46.h,
@@ -581,6 +584,7 @@ class BuildPhoneInput extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8.w)),
           border: Border.all(color: AppColors.primaryFourElementText)),
       child: TextField(
+        key: ValueKey("tb_phone_${state.formVersion}"),
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
           hintText: "Enter Phone number".tr(),
@@ -630,6 +634,7 @@ class BuildAmountInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<TransferBalanceBloc>().state;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -659,6 +664,7 @@ class BuildAmountInput extends StatelessWidget {
               border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
             keyboardType: TextInputType.number,
+            key: ValueKey("tb_amount_${state.formVersion}"),
             decoration: InputDecoration(
               hintText: "Enter the Amount to be transferred".tr(),
               contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -744,9 +750,14 @@ class BuildDropdownRechargeTypeInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var state = context.read<TransferBalanceBloc>().state;
+    // Use watch so that validation UI reacts to recharge type changes.
+    var state = context.watch<TransferBalanceBloc>().state;
     List<RechargeTypeData> items =
         state.rechargeTypes.isEmpty ? [] : state.rechargeTypes;
+    final selected = items.firstWhere((e) => e.id == state.rechargeTypeId,
+        orElse: () => RechargeTypeData());
+    final needsValidation = selected.needsValidation ?? false;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -799,6 +810,98 @@ class BuildDropdownRechargeTypeInput extends StatelessWidget {
         SizedBox(
           height: 15.h,
         ),
+        if (needsValidation) BuildValidationAttachmentInput(),
+      ],
+    );
+  }
+}
+
+class BuildValidationAttachmentInput extends StatelessWidget {
+  const BuildValidationAttachmentInput({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.watch<TransferBalanceBloc>().state;
+    final hasFile = state.validationFilePath != null &&
+        (state.validationFilePath!.isNotEmpty);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
+          child: Text(
+            "Validation document (image/pdf)".tr(),
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              color: AppColors.primaryText,
+              fontWeight: FontWeight.normal,
+              fontSize: 14.sp,
+            ),
+          ),
+        ),
+        SizedBox(height: 6.h),
+        Row(
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () async {
+                final res = await FilePicker.platform.pickFiles(
+                  type: FileType.custom,
+                  allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+                );
+                if (res != null && res.files.isNotEmpty) {
+                  final f = res.files.first;
+                  if (f.path != null) {
+                    context
+                        .read<TransferBalanceBloc>()
+                        .add(ValidationFilePicked(f.path!, f.name));
+                  }
+                }
+              },
+              child: Container(
+                height: 40.h,
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryElement,
+                  borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                ),
+                child: Center(
+                  child: Text(
+                    hasFile ? "Change file".tr() : "Choose file".tr(),
+                    style: TextStyle(
+                      color: AppColors.primaryBackground,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: 10.w),
+            Expanded(
+              child: Text(
+                hasFile
+                    ? (state.validationFileName ?? '')
+                    : "No file chosen".tr(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: AppColors.primarySecondaryElementText,
+                  fontSize: 12.sp,
+                ),
+              ),
+            ),
+            if (hasFile)
+              IconButton(
+                icon: Icon(Icons.close, size: 20.w),
+                onPressed: () {
+                  context
+                      .read<TransferBalanceBloc>()
+                      .add(const ValidationFileCleared());
+                },
+              )
+          ],
+        ),
+        SizedBox(height: 15.h),
       ],
     );
   }

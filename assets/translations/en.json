@@ -169,5 +169,11 @@
   "Recharge Type": "Recharge Type",
   "Collect type": "Collect type",
   "Recharge": "Recharge",
-  "Collection": "Collection"
+  "Collection": "Collection",
+  "Phone length is invalid!": "Phone length is invalid!",
+  "Please attach validation document": "Please attach validation document",
+  "Validation document (image/pdf)": "Validation document (image/pdf)",
+  "Change file": "Change file",
+  "Choose file": "Choose file",
+  "No file chosen": "No file chosen"
 }

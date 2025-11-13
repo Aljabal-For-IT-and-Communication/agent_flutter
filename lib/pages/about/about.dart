@@ -1,5 +1,6 @@
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/app.dart';
+import 'package:app/common/utils/date.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,7 +56,8 @@ class AboutPage extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    "Version Number".tr() + ": ${VersionNumber}",
+                    "Version Number".tr() +
+                        ": ${replaceArabicNumbers(VersionNumber)}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.primaryText,
@@ -69,7 +71,8 @@ class AboutPage extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    "Release Date".tr() + ": ${ReleaseDate}",
+                    "Release Date".tr() +
+                        ": ${replaceArabicNumbers(ReleaseDate)}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.primaryText,

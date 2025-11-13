@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/apis/sale_point.dart';
 import '../../common/entities/transfer.dart';
+import 'package:app/common/entities/entities.dart';
 import '../../common/utils/logger.dart';
 import '../../common/utils/security.dart';
 import 'bloc.dart';
@@ -73,11 +74,28 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
     entity.Category = state.agent;
     entity.Amount = state.Amount;
     entity.transferType = state.collectTypeId;
+    // If selected collect type needs validation, ensure file is picked
+    final selected = state.collectTypes.firstWhere(
+        (e) => e.id == state.collectTypeId,
+        orElse: () => CollectTypeData());
+    final needsValidation = selected.needsValidation ?? false;
+    if (needsValidation) {
+      if (state.validationFilePath == null ||
+          state.validationFilePath!.isEmpty) {
+        EasyLoading.dismiss();
+        toastInfo(msg: "Please attach validation document!".tr());
+        return;
+      }
+      entity.validationFilePath = state.validationFilePath;
+      entity.validationFileName = state.validationFileName;
+    }
     try {
       var result = await SalePointAPI.transferCollection(params: entity);
       EasyLoading.dismiss();
       toastInfo(msg: "${result.msg}");
       if (result.code == 0) {
+        // Clear all fields and dropdowns
+        context.read<CollectionItemBloc>().add(const ResetCollectionItem());
         context.read<CollectionItemBloc>().add(IsShowChanged(false));
         double amountOwed = 0;
         double amounts = double.parse(state.Amount);
@@ -236,6 +254,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
             );
           },
         );
+        // Reload dropdown lists after reset
         Logic(context: context).init();
         //  Navigator.pop(context);
       }

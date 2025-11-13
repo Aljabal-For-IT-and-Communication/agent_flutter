@@ -19,6 +19,8 @@ class CollectionItemBloc
     on<CollectTypesChanged>(_onCollectTypesChanged);
     on<CollectTypeSelected>(_onCollectTypeSelected);
     on<ResetCollectionItem>(_onReset);
+    on<ValidationFilePicked>(_onValidationFilePicked);
+    on<ValidationFileCleared>(_onValidationFileCleared);
   }
 
   void _onAgentItemChanged(
@@ -95,13 +97,31 @@ class CollectionItemBloc
     CollectTypeSelected event,
     Emitter<CollectionItemState> emit,
   ) {
-    emit(state.copyWith(collectTypeId: event.collectTypeId));
+    emit(state.copyWith(
+      collectTypeId: event.collectTypeId,
+      clearValidationFile: true,
+    ));
   }
 
   void _onReset(
     ResetCollectionItem event,
     Emitter<CollectionItemState> emit,
   ) {
-    emit(const CollectionItemState());
+    emit(CollectionItemState(formVersion: state.formVersion + 1));
+  }
+
+  void _onValidationFilePicked(
+    ValidationFilePicked event,
+    Emitter<CollectionItemState> emit,
+  ) {
+    emit(state.copyWith(
+        validationFilePath: event.path, validationFileName: event.name));
+  }
+
+  void _onValidationFileCleared(
+    ValidationFileCleared event,
+    Emitter<CollectionItemState> emit,
+  ) {
+    emit(state.copyWith(clearValidationFile: true));
   }
 }

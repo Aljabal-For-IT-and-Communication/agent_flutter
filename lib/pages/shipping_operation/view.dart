@@ -113,9 +113,7 @@ class _ShippingOperationPageState extends State<ShippingOperationPage> {
                                   DatePicker.showDatePicker(context,
                                       showTitleActions: true,
                                       onChanged: (date) {
-                                    print('change $date');
                                   }, onConfirm: (date) {
-                                    print('confirm $date');
                                     String month = "${date.month}";
                                     String day = "${date.day}";
                                     if (date.month < 10) {
@@ -141,14 +139,14 @@ class _ShippingOperationPageState extends State<ShippingOperationPage> {
                                   width: 150.w,
                                   height: 46.h,
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
                                               width: 2,
                                               color:
                                                   AppColors.primaryElement))),
                                   child: Text(
-                                    "${state.day}",
+                                    replaceArabicNumbers(state.day),
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: AppColors.primaryElement,

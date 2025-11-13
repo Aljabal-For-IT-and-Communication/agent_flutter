@@ -206,7 +206,8 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                                   ),
                                   Container(
                                     child: Text(
-                                      "${state.startDate}",
+                                      replaceArabicNumbers(
+                                          state.startDate ?? ""),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: AppColors
@@ -286,7 +287,7 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
                                   ),
                                   Container(
                                     child: Text(
-                                      "${state.endDate}",
+                                      replaceArabicNumbers(state.endDate ?? ""),
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: AppColors
