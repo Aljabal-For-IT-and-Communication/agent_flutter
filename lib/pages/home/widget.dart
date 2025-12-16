@@ -149,7 +149,7 @@ class BuildAppBar extends StatelessWidget {
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -237,6 +237,54 @@ class BuildAppBar extends StatelessWidget {
                           child: LinearProgressIndicator(
                             backgroundColor: AppColors.primaryBackground,
                             color: AppColors.primaryRed,
+                            value: indebtedness1,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Text(
+                            "Ceiling".tr(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.primaryBackground,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Container(
+                          child: Text(
+                            "${userProfile?.balance ?? 0} LYD",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.primaryBackground,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Container(
+                          height: 8.h,
+                          width: 85.w,
+                          child: LinearProgressIndicator(
+                            backgroundColor: AppColors.primaryBackground,
+                            color: AppColors.primaryFirstElement,
                             value: indebtedness1,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(5.0)),
