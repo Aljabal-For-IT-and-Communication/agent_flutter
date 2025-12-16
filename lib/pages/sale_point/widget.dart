@@ -8,6 +8,48 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc.dart';
 import 'logic.dart';
 
+Widget outlinedText(
+  String text, {
+  required Color fillColor,
+  double fontSize = 14,
+  FontWeight fontWeight = FontWeight.bold,
+  Color strokeColor = Colors.black,
+  double strokeWidth = 0.3,
+  TextAlign? textAlign,
+  int? maxLines,
+  TextOverflow? overflow,
+}) {
+  return Stack(
+    children: [
+      Text(
+        text,
+        textAlign: textAlign,
+        maxLines: maxLines,
+        overflow: overflow,
+        style: TextStyle(
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          foreground: Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = strokeWidth
+            ..color = strokeColor,
+        ),
+      ),
+      Text(
+        text,
+        textAlign: textAlign,
+        maxLines: maxLines,
+        overflow: overflow,
+        style: TextStyle(
+          color: fillColor,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+        ),
+      ),
+    ],
+  );
+}
+
 class BuildAppBar extends StatelessWidget {
   BuildAppBar({Key? key}) : super(key: key);
 
@@ -145,59 +187,51 @@ class _BuildListItemState extends State<BuildListItem> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        child: Text(
+                        child: outlinedText(
                           "${item.businessName}",
                           textAlign: TextAlign.start,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp,
-                          ),
+                          fillColor: AppColors.primaryText,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp,
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 5.w),
-                        child: Text(
+                        child: outlinedText(
                           "${item.firstName}",
                           textAlign: TextAlign.start,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: AppColors.primarySecondaryElementText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12.sp,
-                          ),
+                          fillColor: AppColors.primarySecondaryElementText,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.sp,
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 5.w),
-                        child: Text(
+                        child: outlinedText(
                           "${item.phone}",
                           textAlign: TextAlign.start,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: AppColors.primarySecondaryElementText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12.sp,
-                          ),
+                          fillColor: AppColors.primarySecondaryElementText,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.sp,
                         ),
                       ),
                       if ((item.lastLogin ?? '').isNotEmpty)
                         Container(
                           margin: EdgeInsets.only(top: 5.w),
-                          child: Text(
+                          child: outlinedText(
                             "${'Last activity'.tr()}: ${timeFormated(item.lastLogin)}",
                             textAlign: TextAlign.start,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: AppColors.primarySecondaryElementText,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 12.sp,
-                            ),
+                            fillColor: AppColors.primarySecondaryElementText,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12.sp,
                           ),
                         ),
                       Container(
@@ -206,32 +240,28 @@ class _BuildListItemState extends State<BuildListItem> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
+                            outlinedText(
                               "${"Balance".tr()} : ${item.indebtedness ?? 0} LYD",
                               textAlign: TextAlign.start,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: balance <= 300
-                                    ? AppColors.primaryRed
-                                    : AppColors.primaryGreen,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.sp,
-                              ),
+                              fillColor: balance <= 300
+                                  ? AppColors.primaryRed
+                                  : AppColors.primarySuccess,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
                             ),
                             SizedBox(width: 10.h),
-                            Text(
+                            outlinedText(
                               "${"Indebtedness".tr()} : ${item.balance ?? 0} LYD",
                               textAlign: TextAlign.start,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: balance >= 1000
-                                    ? AppColors.primaryRed
-                                    : AppColors.primaryGreen,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.sp,
-                              ),
+                              fillColor: balance >= 1000
+                                  ? AppColors.primaryRed
+                                  : AppColors.primarySuccess,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
                             ),
                           ],
                         ),
@@ -260,13 +290,12 @@ class _BuildListItemState extends State<BuildListItem> {
                       borderRadius: BorderRadius.all(Radius.circular(10.w)),
                     ),
                     alignment: Alignment.center,
-                    child: Text(
+                    child: outlinedText(
                       'chat'.tr(),
-                      style: TextStyle(
-                        color: AppColors.primaryBackground,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14.sp,
-                      ),
+                      fillColor: AppColors.primaryBackground,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 14.sp,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
@@ -488,7 +517,12 @@ class BuildAgentListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var balance = double.parse(item.balance ?? "0");
+    var balance = double.parse(item.indebtedness ?? "0");
+    var realDebt = double.parse(item.realDebt ?? "0");
+    var pendingRevenue = double.parse(item.pendingRevenue ?? "0");
+    var agentDebt = double.parse(item.agentDebt ?? "0");
+    var salePointsDebt = double.parse(item.salePointsDebt ?? "0");
+
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -532,31 +566,27 @@ class BuildAgentListItem extends StatelessWidget {
                       Container(
                         width: 180.w,
                         margin: EdgeInsets.only(top: 5.w),
-                        child: Text(
-                          "${item.firstName}",
+                        child: outlinedText(
+                          "${item.firstName} ${item.middleName} ${item.lastName}",
                           textAlign: TextAlign.start,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: AppColors.primarySecondaryElementText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12.sp,
-                          ),
+                          fillColor: AppColors.primaryText,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.sp,
                         ),
                       ),
                       Container(
                         width: 180.w,
                         margin: EdgeInsets.only(top: 5.w),
-                        child: Text(
+                        child: outlinedText(
                           "${item.phone}",
                           textAlign: TextAlign.start,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: AppColors.primarySecondaryElementText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12.sp,
-                          ),
+                          fillColor: AppColors.primaryText,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.sp,
                         ),
                       ),
                       Container(
@@ -565,32 +595,74 @@ class BuildAgentListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
+                            outlinedText(
                               "${"Balance".tr()} : ${item.indebtedness ?? 0} LYD",
                               textAlign: TextAlign.start,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: balance <= 300
-                                    ? AppColors.primaryRed
-                                    : AppColors.primaryGreen,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.sp,
-                              ),
+                              fillColor: balance <= 300
+                                  ? AppColors.primaryRed
+                                  : AppColors.primarySuccess,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
                             ),
                             SizedBox(width: 10.h),
-                            Text(
-                              "${"Indebtedness".tr()} : ${item.balance ?? 0} LYD",
+                            outlinedText(
+                              "${"Agents Debt".tr()} : ${item.subAgentsDebt ?? 0} LYD",
                               textAlign: TextAlign.start,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: balance >= 1000
-                                    ? AppColors.primaryRed
-                                    : AppColors.primaryGreen,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.sp,
-                              ),
+                              fillColor: agentDebt < 0
+                                  ? AppColors.primaryRed
+                                  : AppColors.primarySuccess,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
+                            ),
+                            SizedBox(width: 10.h),
+                            outlinedText(
+                              "${"Sale Points Debt".tr()} : ${item.salePointsDebt ?? 0} LYD",
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              fillColor: salePointsDebt < 0
+                                  ? AppColors.primaryRed
+                                  : AppColors.primarySuccess,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
+                            ),
+                            SizedBox(width: 10.h),
+                            outlinedText(
+                              "${"Pending Revenue".tr()} : ${item.pendingRevenue ?? 0} LYD",
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              fillColor: pendingRevenue < 0
+                                  ? AppColors.primaryRed
+                                  : AppColors.primarySuccess,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
+                            ),
+                            SizedBox(width: 10.h),
+                            outlinedText(
+                              "${"Indebtedness".tr()} : ${item.realDebt ?? 0} LYD",
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              fillColor: realDebt < 0
+                                  ? AppColors.primaryRed
+                                  : AppColors.primarySuccess,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
+                            ),
+                            SizedBox(width: 10.h),
+                            outlinedText(
+                              "${"Ceiling".tr()} : ${item.balance ?? 0} LYD",
+                              textAlign: TextAlign.start,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              fillColor: AppColors.primaryElement,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
                             ),
                           ],
                         ),
@@ -617,13 +689,11 @@ class BuildAgentListItem extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(10.w)),
                       ),
                       alignment: Alignment.center,
-                      child: Text(
+                      child: outlinedText(
                         "chat".tr(),
-                        style: TextStyle(
-                          color: AppColors.primaryBackground,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14.sp,
-                        ),
+                        fillColor: AppColors.primaryBackground,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 14.sp,
                       ),
                     ),
                   ),

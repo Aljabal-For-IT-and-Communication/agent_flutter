@@ -23,7 +23,7 @@ class BuildAppBar extends StatelessWidget {
         image: DecorationImage(
           alignment: Alignment.topCenter,
           image: AssetImage('assets/icons/headbg.png'),
-          fit: BoxFit.fitWidth, // 完全填充
+          fit: BoxFit.fitHeight, // 完全填充
         ),
       ),
       padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 0.h),

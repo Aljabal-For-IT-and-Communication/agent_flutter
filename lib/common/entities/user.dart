@@ -162,6 +162,7 @@ class UserItem {
   String? avatar;
   String? balance;
   int? cid;
+  int? countryId;
   int? city;
   String? createdAt;
   String? deletedAt;
@@ -179,6 +180,11 @@ class UserItem {
   String? profit;
   int? region;
   int? status;
+  String? realDebt;
+  String? pendingRevenue;
+  String? agentDebt;
+  String? subAgentsDebt;
+  String? salePointsDebt;
   String? token;
   String? updatedAt;
 
@@ -202,8 +208,14 @@ class UserItem {
       this.phone,
       this.pid,
       this.profit,
+      this.countryId,
       this.region,
       this.status,
+      this.realDebt,
+      this.pendingRevenue,
+      this.agentDebt,
+      this.subAgentsDebt,
+      this.salePointsDebt,
       this.token,
       this.updatedAt});
 
@@ -229,6 +241,12 @@ class UserItem {
     profit = json['profit'];
     region = json['region'];
     status = json['status'];
+    countryId = json['country_id'];
+    realDebt = json['real_debt'];
+    pendingRevenue = json['pending_revenue'];
+    agentDebt = json['agent_debt'];
+    subAgentsDebt = json['sub_agents_debt'];
+    salePointsDebt = json['sale_points_debt'];
     token = json['token'];
     updatedAt = json['updated_at'];
   }
@@ -256,6 +274,12 @@ class UserItem {
     data['profit'] = this.profit;
     data['region'] = this.region;
     data['status'] = this.status;
+    data['country_id'] = this.countryId;
+    data['real_debt'] = this.realDebt;
+    data['pending_revenue'] = this.pendingRevenue;
+    data['sub_agents_debt'] = this.subAgentsDebt;
+    data['sale_points_debt'] = this.salePointsDebt;
+    data['agent_debt'] = this.agentDebt;
     data['token'] = this.token;
     data['updated_at'] = this.updatedAt;
     return data;

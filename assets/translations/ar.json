@@ -124,7 +124,7 @@
   "Search First Name": "البحث بالاسم الأول",
   "Agent": "مندوب",
   "SalePoint": "نقطة بيع",
-  "ْCeiling": "السقف",
+  "Ceiling": "السقف",
   "Other": "أخرى",
   "Sales Point": "نقطة البيع",
   "Subtotal": "الإجمالي",
@@ -195,5 +195,9 @@
   "Validation document (image/pdf)": "وثيقة التحقق (صورة/بي دي إف)",
   "Change file": "تغيير الملف",
   "Choose file": "اختر ملفًا",
-  "No file chosen": "لم يتم اختيار ملف"
+  "No file chosen": "لم يتم اختيار ملف",
+  "Pending Revenue": "الإيرادات المعلقة",
+  "Given Debt": "المديونية المعطاة",
+  "Agents Debt": "مديونية الوكلاء",
+  "Sale Points Debt": "مديونية نقاط البيع"
 }

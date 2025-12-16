@@ -34,6 +34,11 @@ class AgentData {
   String? firstName;
   int? id;
   String? indebtedness;
+  String? realDebt;
+  String? pendingRevenue;
+  String? agentDebt;
+  String? subAgentsDebt;
+  String? salePointsDebt;
   String? lastName;
   String? middleName;
   String? phone;
@@ -46,6 +51,11 @@ class AgentData {
       this.firstName,
       this.id,
       this.indebtedness,
+      this.realDebt,
+      this.pendingRevenue,
+      this.agentDebt,
+      this.subAgentsDebt,
+      this.salePointsDebt,
       this.lastName,
       this.middleName,
       this.phone,
@@ -58,6 +68,11 @@ class AgentData {
     firstName = json['first_name'];
     id = json['id'];
     indebtedness = json['indebtedness'];
+    realDebt = json['real_debt'];
+    pendingRevenue = json['pending_revenue'];
+    agentDebt = json['agent_debt'];
+    subAgentsDebt = json['sub_agents_debt'];
+    salePointsDebt = json['sale_points_debt'];
     lastName = json['last_name'];
     middleName = json['middle_name'];
     phone = json['phone'];
@@ -72,6 +87,11 @@ class AgentData {
     data['first_name'] = this.firstName;
     data['id'] = this.id;
     data['indebtedness'] = this.indebtedness;
+    data['real_debt'] = this.realDebt;
+    data['pending_revenue'] = this.pendingRevenue;
+    data['agent_debt'] = this.agentDebt;
+    data['sub_agents_debt'] = this.subAgentsDebt;
+    data['sale_points_debt'] = this.salePointsDebt;
     data['last_name'] = this.lastName;
     data['middle_name'] = this.middleName;
     data['phone'] = this.phone;

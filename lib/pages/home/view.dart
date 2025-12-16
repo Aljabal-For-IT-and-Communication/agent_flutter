@@ -1,5 +1,6 @@
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
+import 'package:app/common/routes/pages.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/global.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -19,7 +20,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with RouteAware {
+  bool _routeObserverSubscribed = false;
   @override
   void initState() {
     super.initState();
@@ -34,7 +36,36 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_routeObserverSubscribed) {
+      final route = ModalRoute.of(context);
+      if (route is PageRoute) {
+        AppPages.observer.subscribe(this, route);
+        _routeObserverSubscribed = true;
+      }
+    }
+  }
+
+  // Called when a new route above this one is popped and this route shows again
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    // Refresh after navigation completes to avoid using a deactivated context
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final userProfile = Global.storageService.getUserProfile();
+      context.read<HomeBloc>().add(UserProfileChanged(userProfile));
+      Logic(context: context).init();
+    });
+  }
+
+  @override
   void dispose() {
+    if (_routeObserverSubscribed) {
+      AppPages.observer.unsubscribe(this);
+      _routeObserverSubscribed = false;
+    }
     super.dispose();
   }
 
