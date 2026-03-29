@@ -21,6 +21,7 @@ class AppRoutes {
   static const AccountStatement = '/account_statement';
   static const TransferBalance = '/transfer_balance';
   static const SalePoint = '/sale_point';
+  static const SalePointDetail = '/sale_point_detail';
   static const Collection = '/collection';
   static const CollectionItem = '/collection_item';
   static const CollectionSalePoint = '/collection_sale_point';

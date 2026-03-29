@@ -9,7 +9,6 @@ class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
     on<SalePointChanged>(_onSalePointChanged);
     on<PageChanged>(_onPageChanged);
     on<AgentListChanged>(_onAgentListChanged);
-    on<SetEditingSalePoint>(_onSetEditingSalePoint);
     on<SalePointSearchChanged>(_onSalePointSearchChanged);
     on<AgentSearchChanged>(_onAgentSearchChanged);
     on<ToggleSalePointSort>(_onToggleSalePointSort);
@@ -34,25 +33,6 @@ class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
     Emitter<SalePointState> emit,
   ) {
     emit(state.copyWith(page: event.page));
-  }
-
-  void _onSetEditingSalePoint(
-    SetEditingSalePoint event,
-    Emitter<SalePointState> emit,
-  ) {
-    // Explicitly set editingSalePointId, allowing null to clear editing.
-    emit(SalePointState(
-      salePointList: state.salePointList,
-      agentList: state.agentList,
-      page: state.page,
-      editingSalePointId: event.salePointId,
-      salePointSearch: state.salePointSearch,
-      agentSearch: state.agentSearch,
-      salePointSortField: state.salePointSortField,
-      salePointSortAsc: state.salePointSortAsc,
-      agentSortField: state.agentSortField,
-      agentSortAsc: state.agentSortAsc,
-    ));
   }
 
   void _onSalePointSearchChanged(

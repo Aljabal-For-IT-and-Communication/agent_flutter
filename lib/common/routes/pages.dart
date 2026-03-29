@@ -49,6 +49,7 @@ import 'package:app/pages/revenue/bloc.dart';
 import 'package:app/pages/revenue/view.dart';
 import 'package:app/pages/sale_point/bloc.dart';
 import 'package:app/pages/sale_point/view.dart';
+import 'package:app/pages/sale_point_detail/view.dart';
 import 'package:app/pages/setting/bloc.dart';
 import 'package:app/pages/setting/view.dart';
 import 'package:app/pages/shipment/bloc.dart';
@@ -137,6 +138,10 @@ class AppPages {
           path: AppRoutes.SalePoint,
           page: SalePointPage(),
           bloc: BlocProvider(create: (_) => SalePointBloc())),
+      PageEntity(
+          path: AppRoutes.SalePointDetail,
+          page: SalePointDetailPage(),
+          bloc: null),
       PageEntity(
           path: AppRoutes.Collection,
           page: CollectionPage(),

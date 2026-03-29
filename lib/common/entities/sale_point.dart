@@ -205,3 +205,40 @@ class SalePointStatusUpdateRequestEntity {
         "status": status,
       };
 }
+
+class SalePointIdRequestEntity {
+  int? salePointId;
+
+  SalePointIdRequestEntity({
+    this.salePointId,
+  });
+
+  Map<String, dynamic> toJson() => {
+        "sale_point_id": salePointId,
+      };
+}
+
+class WalletPasswordResponseEntity {
+  int? code;
+  String? msg;
+  String? walletPassword;
+
+  WalletPasswordResponseEntity({
+    this.code,
+    this.msg,
+    this.walletPassword,
+  });
+
+  factory WalletPasswordResponseEntity.fromJson(Map<String, dynamic> json) =>
+      WalletPasswordResponseEntity(
+        code: json["code"],
+        msg: json["msg"],
+        walletPassword: json["wallet_password"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "code": code,
+        "msg": msg,
+        "wallet_password": walletPassword,
+      };
+}

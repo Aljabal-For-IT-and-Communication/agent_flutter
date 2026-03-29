@@ -7,9 +7,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:app/global.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HttpUtil {
   static HttpUtil _instance = HttpUtil._internal();
+  static bool _isShowingUpdateDialog = false;
   factory HttpUtil() => _instance;
 
   late Dio dio;
@@ -38,13 +40,18 @@ class HttpUtil {
       },
     );
 
-    // 添加拦截器
+    // Add interceptors
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         // Do something before request is sent
         return handler.next(options); //continue
       },
       onResponse: (response, handler) {
+        // Check for version-outdated response
+        if (response.data is Map && response.data['code'] == -2) {
+          _showForceUpdateDialog(
+              response.data['msg'] ?? 'Please update the app'.tr());
+        }
         return handler.next(response); // continue
       },
       onError: (DioException e, ErrorInterceptorHandler handler) {
@@ -158,8 +165,35 @@ class HttpUtil {
     }
     var language = Global.storageService.getLanguage();
     headers['Accept-Language'] = language == 'ar' ? 'ar' : 'en';
+    headers['X-App-Version'] = VersionNumber;
     print(headers);
     return headers;
+  }
+
+  static void _showForceUpdateDialog(String message) {
+    if (_isShowingUpdateDialog) return;
+    final context = Global.navigatorKey.currentContext;
+    if (context == null) return;
+    _isShowingUpdateDialog = true;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: Text('Update Required'.tr()),
+          content: Text(message),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                // TODO: open app store / play store link
+              },
+              child: Text('Update'.tr()),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Future post(

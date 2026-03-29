@@ -143,4 +143,24 @@ class SalePointAPI {
     );
     return BaseResponseEntity.fromJson(response);
   }
+
+  static Future<BaseResponseEntity> resetPassword({
+    SalePointIdRequestEntity? params,
+  }) async {
+    var response = await HttpUtil().post(
+      'agent/sale_point_reset_password',
+      data: params?.toJson(),
+    );
+    return BaseResponseEntity.fromJson(response);
+  }
+
+  static Future<WalletPasswordResponseEntity> getWalletPassword({
+    SalePointIdRequestEntity? params,
+  }) async {
+    var response = await HttpUtil().post(
+      'agent/sale_point_wallet_password',
+      data: params?.toJson(),
+    );
+    return WalletPasswordResponseEntity.fromJson(response);
+  }
 }

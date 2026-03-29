@@ -22,12 +22,6 @@ class AgentListChanged extends SalePointEvent {
   final List<AgentData> agentList;
 }
 
-class SetEditingSalePoint extends SalePointEvent {
-  const SetEditingSalePoint(this.salePointId);
-
-  final int? salePointId; // null to cancel editing
-}
-
 class SalePointSearchChanged extends SalePointEvent {
   const SalePointSearchChanged(this.query);
   final String query;
