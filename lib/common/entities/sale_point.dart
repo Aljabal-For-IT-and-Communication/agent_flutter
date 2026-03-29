@@ -242,3 +242,29 @@ class WalletPasswordResponseEntity {
         "wallet_password": walletPassword,
       };
 }
+
+
+class SalePointPasswordResponseEntity {
+  int? code;
+  String? msg;
+  String? newPassword;
+
+  SalePointPasswordResponseEntity({
+    this.code,
+    this.msg,
+    this.newPassword,
+  });
+
+  factory SalePointPasswordResponseEntity.fromJson(Map<String, dynamic> json) =>
+      SalePointPasswordResponseEntity(
+        code: json["code"],
+        msg: json["msg"],
+        newPassword: json["new_password"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "code": code,
+        "msg": msg,
+        "new_password": newPassword,
+      };
+}

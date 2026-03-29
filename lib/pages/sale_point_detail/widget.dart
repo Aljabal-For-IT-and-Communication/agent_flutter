@@ -467,7 +467,41 @@ class ActionButtonsGrid extends StatelessWidget {
         params: SalePointIdRequestEntity(salePointId: item.id),
       );
       if (res.code == 0) {
-        Loading.toast(res.msg ?? 'Password reset successfully'.tr());
+        final walletPwd = res.newPassword ?? '';
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('New Password'.tr()),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SelectableText(
+                  walletPwd,
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryText,
+                    letterSpacing: 2,
+                  ),
+                ),
+                SizedBox(height: 12.h),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: walletPwd));
+                    Loading.toast('Copied'.tr());
+                  },
+                  icon: const Icon(Icons.copy),
+                  label: Text('Copy'.tr()),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: Text('Close'.tr())),
+            ],
+          ),
+        );
       } else {
         Loading.toast(res.msg ?? 'Error'.tr());
       }

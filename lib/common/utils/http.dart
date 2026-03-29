@@ -186,9 +186,9 @@ class HttpUtil {
           actions: [
             ElevatedButton(
               onPressed: () {
-                // TODO: open app store / play store link
+                exit(0);
               },
-              child: Text('Update'.tr()),
+              child: Text('Exit'.tr()),
             ),
           ],
         ),
