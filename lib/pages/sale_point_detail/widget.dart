@@ -309,6 +309,7 @@ class EditFormCard extends StatelessWidget {
   }
 
   void _save(BuildContext context) async {
+    Loading.show();
     try {
       final res = await SalePointAPI.salePointDataUpdate(
         params: SalePointDataUpdateRequestEntity(
@@ -328,6 +329,8 @@ class EditFormCard extends StatelessWidget {
       }
     } catch (e) {
       Loading.toast('Error'.tr());
+    } finally {
+      Loading.dismiss();
     }
   }
 }
@@ -415,6 +418,7 @@ class ActionButtonsGrid extends StatelessWidget {
       ),
     );
     if (confirmed != true) return;
+    Loading.show();
     try {
       final res = await SalePointAPI.deleteSalePoint(
         params: SalePointIdRequestEntity(
@@ -429,12 +433,15 @@ class ActionButtonsGrid extends StatelessWidget {
       }
     } catch (e) {
       Loading.toast('Error'.tr());
+    } finally {
+      Loading.dismiss();
     }
   }
 
   void _toggleStatus(BuildContext context) async {
     final isActive = item.status == 1;
     final newStatus = isActive ? 2 : 1;
+    Loading.show();
     try {
       final res = await SalePointAPI.salePointStatusUpdate(
         params: SalePointStatusUpdateRequestEntity(
@@ -453,6 +460,8 @@ class ActionButtonsGrid extends StatelessWidget {
       }
     } catch (e) {
       Loading.toast('Error'.tr());
+    } finally {
+      Loading.dismiss();
     }
   }
 
@@ -500,6 +509,7 @@ class ActionButtonsGrid extends StatelessWidget {
     );
     if (confirmed != true) return;
 
+    Loading.show();
     try {
       final res = await SalePointAPI.resetPassword(
         params: SalePointIdRequestEntity(salePointId: item.id),
@@ -545,10 +555,13 @@ class ActionButtonsGrid extends StatelessWidget {
       }
     } catch (e) {
       Loading.toast('Error'.tr());
+    } finally {
+      Loading.dismiss();
     }
   }
 
   void _showWalletPassword(BuildContext context) async {
+    Loading.show();
     try {
       final res = await SalePointAPI.getWalletPassword(
         params: SalePointIdRequestEntity(salePointId: item.id),
@@ -594,6 +607,8 @@ class ActionButtonsGrid extends StatelessWidget {
       }
     } catch (e) {
       Loading.toast('Error'.tr());
+    } finally {
+      Loading.dismiss();
     }
   }
 }
