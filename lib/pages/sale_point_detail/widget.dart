@@ -67,8 +67,7 @@ class DetailAppBar extends StatelessWidget {
 class SalePointInfoCard extends StatelessWidget {
   final SalePointData item;
   final double balance;
-  const SalePointInfoCard(
-      {Key? key, required this.item, required this.balance})
+  const SalePointInfoCard({Key? key, required this.item, required this.balance})
       : super(key: key);
 
   @override
@@ -117,10 +116,11 @@ class SalePointInfoCard extends StatelessWidget {
           _row('Machine Number'.tr(), item.machineNumber ?? ''),
           if ((item.lastLogin ?? '').isNotEmpty)
             _row('Last activity'.tr(), timeFormated(item.lastLogin)),
-          _row('Status'.tr(),
-              item.status == 1 ? 'Active'.tr() : 'Inactive'.tr(),
-              valueColor:
-                  item.status == 1 ? AppColors.primarySuccess : AppColors.primaryRed),
+          _row(
+              'Status'.tr(), item.status == 1 ? 'Active'.tr() : 'Inactive'.tr(),
+              valueColor: item.status == 1
+                  ? AppColors.primarySuccess
+                  : AppColors.primaryRed),
           SizedBox(height: 8.h),
           // Balance / Indebtedness
           Row(
@@ -188,14 +188,11 @@ class SalePointInfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style: TextStyle(fontSize: 11.sp, color: color)),
+          Text(label, style: TextStyle(fontSize: 11.sp, color: color)),
           SizedBox(height: 2.h),
           Text(value,
               style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: color)),
+                  fontSize: 14.sp, fontWeight: FontWeight.bold, color: color)),
         ],
       ),
     );
@@ -290,8 +287,7 @@ class EditFormCard extends StatelessWidget {
                   ),
                   onPressed: () => _save(context),
                   child: Text('Save'.tr(),
-                      style:
-                          TextStyle(color: AppColors.primaryBackground)),
+                      style: TextStyle(color: AppColors.primaryBackground)),
                 ),
               ),
               SizedBox(width: 8.w),
@@ -389,8 +385,51 @@ class ActionButtonsGrid extends StatelessWidget {
           color: Colors.teal,
           onTap: () => _showWalletPassword(context),
         ),
+        _ActionButton(
+          icon: Icons.delete,
+          label: 'Delete'.tr(),
+          color: Colors.redAccent,
+          onTap: () => _deleteSalePoint(context),
+        ),
       ],
     );
+  }
+
+  void _deleteSalePoint(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Delete'.tr()),
+        content: Text('Are you sure you want to delete this sale point?'.tr()),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text('Cancel'.tr())),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.deepOrange),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text('Delete'.tr(),
+                style: const TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    try {
+      final res = await SalePointAPI.deleteSalePoint(
+        params: SalePointIdRequestEntity(
+          salePointId: item.id,
+        ),
+      );
+      if (res.code == 0) {
+        Loading.toast("Sale point deleted".tr());
+        Navigator.of(context).pop(true);
+      } else {
+        Loading.toast(res.msg ?? 'Error'.tr());
+      }
+    } catch (e) {
+      Loading.toast('Error'.tr());
+    }
   }
 
   void _toggleStatus(BuildContext context) async {
@@ -451,11 +490,10 @@ class ActionButtonsGrid extends StatelessWidget {
               onPressed: () => Navigator.pop(ctx, false),
               child: Text('Cancel'.tr())),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepOrange),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.deepOrange),
             onPressed: () => Navigator.pop(ctx, true),
-            child: Text('Reset'.tr(),
-                style: const TextStyle(color: Colors.white)),
+            child:
+                Text('Reset'.tr(), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),

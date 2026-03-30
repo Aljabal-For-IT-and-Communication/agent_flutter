@@ -1,21 +1,21 @@
 /*.  PRODUCTION   */
-const SERVER_API_URL = 'https://api.alafdal-pluse.ly/';
-const SERVER_API_WSS = 'wss://api.alafdal-pluse.ly/ws_agent';
+// const SERVER_API_URL = 'https://api.alafdal-pluse.ly/';
+// const SERVER_API_WSS = 'wss://api.alafdal-pluse.ly/ws_agent';
 
 /*.  LOCAL EMULATOR   */
 // const SERVER_API_URL = 'http://10.0.2.2:8005/';
 // const SERVER_API_WSS = 'wss://10.0.2.2:8005/ws_agent';
 
 /*.  LOCAL NETWORK   */
-// const SERVER_API_URL = 'https://06p9c95f-8005.uks1.devtunnels.ms/';
-// const SERVER_API_WSS = 'wss://06p9c95f-8005.uks1.devtunnels.ms/ws_agent';
+const SERVER_API_URL = 'https://06p9c95f-8005.uks1.devtunnels.ms/';
+const SERVER_API_WSS = 'wss://06p9c95f-8005.uks1.devtunnels.ms/ws_agent';
 
 const SERVER_IMG_URL = 'https://admin.alafdal-pluse.ly/uploads/';
 const SERVER_API_IMG_URL = 'https://admin.alafdal-pluse.ly/';
 
-const String VersionNumber = '1.1.4';
+const String VersionNumber = '1.1.5';
 
-const String ReleaseDate = '2026-03-29';
+const String ReleaseDate = '2026-03-30';
 
 const String STORAGE_USER_PROFILE_KEY = 'user_profile';
 

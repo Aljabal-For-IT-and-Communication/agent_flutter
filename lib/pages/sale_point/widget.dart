@@ -5,6 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
+import 'package:app/pages/sale_point/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Widget outlinedText(
   String text, {
@@ -111,11 +113,14 @@ class BuildListItem extends StatelessWidget {
     final balance = double.tryParse(item.balance ?? "0") ?? 0;
 
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(
+      onTap: () async {
+        final deleted = await Navigator.of(context).pushNamed(
           AppRoutes.SalePointDetail,
           arguments: item,
         );
+        if (deleted == true && context.mounted) {
+          context.read<SalePointBloc>().add(SalePointRemoved(item.id));
+        }
       },
       child: Container(
         padding:

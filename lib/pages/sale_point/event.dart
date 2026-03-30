@@ -41,3 +41,8 @@ class ToggleAgentSort extends SalePointEvent {
   const ToggleAgentSort(this.field);
   final SortField field;
 }
+
+class SalePointRemoved extends SalePointEvent {
+  const SalePointRemoved(this.salePointId);
+  final int? salePointId;
+}

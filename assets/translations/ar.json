@@ -218,5 +218,8 @@
   "Update Required": "تحديث مطلوب",
   "Update": "تحديث",
   "Please update the app": "يرجى تحديث التطبيق",
-  "Exit": "خروج"
+  "Exit": "خروج",
+  "Delete": "حذف",
+  "Are you sure you want to delete this sale point?": "هل أنت متأكد من حذف نقطة البيع؟",
+  "Sale point deleted": "تم حذف نقاط البيع"
 }

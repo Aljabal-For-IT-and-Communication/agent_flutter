@@ -124,6 +124,16 @@ class SalePointAPI {
     return CollectTypesResponseEntity.fromJson(response);
   }
 
+  static Future<BaseResponseEntity> deleteSalePoint({
+    SalePointIdRequestEntity? params,
+  }) async {
+    var response = await HttpUtil().post(
+      'agent/delete_sale_point',
+      data: params?.toJson(),
+    );
+    return BaseResponseEntity.fromJson(response);
+  }
+
   static Future<BaseResponseEntity> salePointDataUpdate({
     SalePointDataUpdateRequestEntity? params,
   }) async {

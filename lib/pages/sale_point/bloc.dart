@@ -13,6 +13,7 @@ class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
     on<AgentSearchChanged>(_onAgentSearchChanged);
     on<ToggleSalePointSort>(_onToggleSalePointSort);
     on<ToggleAgentSort>(_onToggleAgentSort);
+    on<SalePointRemoved>(_onSalePointRemoved);
   }
   void _onSalePointChanged(
     SalePointChanged event,
@@ -69,5 +70,15 @@ class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
       agentSortField: event.field,
       agentSortAsc: sameField ? !state.agentSortAsc : false,
     ));
+  }
+
+  void _onSalePointRemoved(
+    SalePointRemoved event,
+    Emitter<SalePointState> emit,
+  ) {
+    final updated = state.salePointList
+        .where((sp) => sp.id != event.salePointId)
+        .toList();
+    emit(state.copyWith(salePointList: updated));
   }
 }
