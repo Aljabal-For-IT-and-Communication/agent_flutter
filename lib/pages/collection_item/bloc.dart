@@ -21,6 +21,7 @@ class CollectionItemBloc
     on<ResetCollectionItem>(_onReset);
     on<ValidationFilePicked>(_onValidationFilePicked);
     on<ValidationFileCleared>(_onValidationFileCleared);
+    on<LockedModeSet>(_onLockedModeSet);
   }
 
   void _onAgentItemChanged(
@@ -123,5 +124,17 @@ class CollectionItemBloc
     Emitter<CollectionItemState> emit,
   ) {
     emit(state.copyWith(clearValidationFile: true));
+  }
+
+  void _onLockedModeSet(
+    LockedModeSet event,
+    Emitter<CollectionItemState> emit,
+  ) {
+    emit(state.copyWith(
+      isLocked: true,
+      agent: 'SalePoint',
+      salePointItem: event.salePointItem,
+      salePointList: [event.salePointItem],
+    ));
   }
 }

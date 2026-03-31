@@ -84,3 +84,12 @@ class ValidationFilePicked extends TransferBalanceEvent {
 class ValidationFileCleared extends TransferBalanceEvent {
   const ValidationFileCleared();
 }
+
+class LockedModeSet extends TransferBalanceEvent {
+  const LockedModeSet({
+    required this.salePointItem,
+    required this.type,
+  });
+  final SalePointData salePointItem;
+  final String type;
+}

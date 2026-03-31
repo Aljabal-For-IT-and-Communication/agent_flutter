@@ -1,5 +1,6 @@
 import 'package:app/common/values/values.dart';
 // import 'package:app/common/widgets/widgets.dart';
+import 'package:app/common/entities/entities.dart';
 import 'package:app/global.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,19 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
         context
             .read<TransferBalanceBloc>()
             .add(UserProfileChanged(userProfile));
-        Logic(context: context).init();
+
+        // Check if navigated from sale_point_detail with pre-filled data
+        final args = ModalRoute.of(context)?.settings.arguments;
+        if (args is Map<String, dynamic> && args['salePoint'] is SalePointData) {
+          final sp = args['salePoint'] as SalePointData;
+          final type = args['type'] as String? ?? 'recharge';
+          context.read<TransferBalanceBloc>().add(
+            LockedModeSet(salePointItem: sp, type: type),
+          );
+          Logic(context: context).init(isLocked: true);
+        } else {
+          Logic(context: context).init();
+        }
       }
     });
   }

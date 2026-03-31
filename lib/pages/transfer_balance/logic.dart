@@ -20,9 +20,11 @@ class Logic {
     required this.context,
   });
 
-  init() {
-    agent();
-    salePoint();
+  init({bool isLocked = false}) {
+    if (!isLocked) {
+      agent();
+      salePoint();
+    }
     rechargeTypes();
     getProfile();
   }
@@ -142,9 +144,17 @@ class Logic {
       EasyLoading.dismiss();
       toastInfo(msg: "${result.msg}");
       if (result.code == 0) {
-        // Clear all fields and dropdowns, then reload lists/profile
-        context.read<TransferBalanceBloc>().add(const ResetTransferBalance());
-        Logic(context: context).init();
+        if (state.isLocked) {
+          // Pop back to sale_point_detail with result data
+          Navigator.of(context).pop({
+            'type': state.type,
+            'amount': state.Amount,
+          });
+        } else {
+          // Clear all fields and dropdowns, then reload lists/profile
+          context.read<TransferBalanceBloc>().add(const ResetTransferBalance());
+          Logic(context: context).init();
+        }
       }
     } catch (e) {
       EasyLoading.dismiss();

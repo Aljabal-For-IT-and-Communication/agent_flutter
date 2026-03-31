@@ -11,9 +11,11 @@ class Logic {
     required this.context,
   });
 
-  init() {
-    agent();
-    salePoint();
+  init({bool isLocked = false}) {
+    if (!isLocked) {
+      agent();
+      salePoint();
+    }
     collectTypes();
   }
 

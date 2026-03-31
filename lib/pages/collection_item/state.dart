@@ -16,6 +16,7 @@ class CollectionItemState {
     this.validationFilePath,
     this.validationFileName,
     this.formVersion = 0,
+    this.isLocked = false,
   });
 
   final String phone;
@@ -32,6 +33,7 @@ class CollectionItemState {
   final String? validationFilePath;
   final String? validationFileName;
   final int formVersion;
+  final bool isLocked;
 
   CollectionItemState copyWith({
     List<SalePointData>? salePointList,
@@ -49,6 +51,7 @@ class CollectionItemState {
     String? validationFileName,
     bool clearValidationFile = false,
     int? formVersion,
+    bool? isLocked,
   }) {
     return CollectionItemState(
         salePointList: salePointList ?? this.salePointList,
@@ -68,6 +71,7 @@ class CollectionItemState {
         validationFileName: clearValidationFile
             ? null
             : (validationFileName ?? this.validationFileName),
-        formVersion: formVersion ?? this.formVersion);
+        formVersion: formVersion ?? this.formVersion,
+        isLocked: isLocked ?? this.isLocked);
   }
 }

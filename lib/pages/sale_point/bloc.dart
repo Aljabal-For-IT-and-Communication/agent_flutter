@@ -14,6 +14,7 @@ class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
     on<ToggleSalePointSort>(_onToggleSalePointSort);
     on<ToggleAgentSort>(_onToggleAgentSort);
     on<SalePointRemoved>(_onSalePointRemoved);
+    on<SalePointItemUpdated>(_onSalePointItemUpdated);
   }
   void _onSalePointChanged(
     SalePointChanged event,
@@ -79,6 +80,19 @@ class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
     final updated = state.salePointList
         .where((sp) => sp.id != event.salePointId)
         .toList();
+    emit(state.copyWith(salePointList: updated));
+  }
+
+  void _onSalePointItemUpdated(
+    SalePointItemUpdated event,
+    Emitter<SalePointState> emit,
+  ) {
+    final updated = state.salePointList.map((sp) {
+      if (sp.id == event.updatedItem.id) {
+        return event.updatedItem;
+      }
+      return sp;
+    }).toList();
     emit(state.copyWith(salePointList: updated));
   }
 }

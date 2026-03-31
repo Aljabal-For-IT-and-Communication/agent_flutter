@@ -29,7 +29,17 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
     super.initState();
     Future.delayed(Duration.zero, () {
       if (mounted) {
-        Logic(context: context).init();
+        // Check if navigated from sale_point_detail with pre-filled data
+        final args = ModalRoute.of(context)?.settings.arguments;
+        if (args is Map<String, dynamic> && args['salePoint'] is SalePointData) {
+          final sp = args['salePoint'] as SalePointData;
+          context.read<CollectionItemBloc>().add(
+            LockedModeSet(salePointItem: sp),
+          );
+          Logic(context: context).init(isLocked: true);
+        } else {
+          Logic(context: context).init();
+        }
       }
     });
   }
@@ -94,6 +104,17 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
       EasyLoading.dismiss();
       toastInfo(msg: "${result.msg}");
       if (result.code == 0) {
+        final isLocked = state.isLocked;
+
+        if (isLocked) {
+          // Pop back to sale_point_detail with result data
+          Navigator.of(context).pop({
+            'type': 'collect',
+            'amount': state.Amount,
+          });
+          return;
+        }
+
         // Clear all fields and dropdowns
         context.read<CollectionItemBloc>().add(const ResetCollectionItem());
         context.read<CollectionItemBloc>().add(IsShowChanged(false));

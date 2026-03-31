@@ -14,7 +14,9 @@ class BuildDropdownAgentInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> items = ['Agent', 'SalePoint'];
-    var agent = context.read<CollectionItemBloc>().state.agent;
+    var state = context.watch<CollectionItemBloc>().state;
+    var agent = state.agent;
+    final isLocked = state.isLocked;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,34 +36,39 @@ class BuildDropdownAgentInput extends StatelessWidget {
         SizedBox(
           height: 6.h,
         ),
-        Container(
-          width: 330.w,
-          height: 46.h,
-          padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
-          decoration: BoxDecoration(
-              color: AppColors.primaryBackground,
-              borderRadius: BorderRadius.all(Radius.circular(8.w)),
-              border: Border.all(color: AppColors.primaryThreeElementText)),
-          child: DropdownButton<String>(
-            elevation: 0,
-            value: agent,
-            underline: Container(),
-            items: items.map((String item) {
-              return DropdownMenuItem<String>(
-                value: item,
-                child: Container(
-                  width: 280.w,
-                  height: 40.h,
-                  child: Text(item.tr()),
-                ),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              context.read<CollectionItemBloc>().add(IsShowChanged(false));
-              context
-                  .read<CollectionItemBloc>()
-                  .add(AgentChanged(newValue ?? "Agent"));
-            },
+        Opacity(
+          opacity: isLocked ? 0.6 : 1.0,
+          child: Container(
+            width: 330.w,
+            height: 46.h,
+            padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
+            decoration: BoxDecoration(
+                color: isLocked ? AppColors.primaryFourElementText : AppColors.primaryBackground,
+                borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                border: Border.all(color: AppColors.primaryThreeElementText)),
+            child: DropdownButton<String>(
+              elevation: 0,
+              value: agent,
+              underline: Container(),
+              items: items.map((String item) {
+                return DropdownMenuItem<String>(
+                  value: item,
+                  child: Container(
+                    width: 280.w,
+                    height: 40.h,
+                    child: Text(item.tr()),
+                  ),
+                );
+              }).toList(),
+              onChanged: isLocked
+                  ? null
+                  : (String? newValue) {
+                      context.read<CollectionItemBloc>().add(IsShowChanged(false));
+                      context
+                          .read<CollectionItemBloc>()
+                          .add(AgentChanged(newValue ?? "Agent"));
+                    },
+            ),
           ),
         ),
         SizedBox(
@@ -174,7 +181,53 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var state = context.read<CollectionItemBloc>().state;
+    var state = context.watch<CollectionItemBloc>().state;
+    final isLocked = state.isLocked;
+
+    // When locked, show a read-only display instead of the search field
+    if (isLocked && state.salePointItem != null) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
+            child: Text(
+              "Transferred to".tr(),
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: AppColors.primaryText,
+                fontWeight: FontWeight.normal,
+                fontSize: 14.sp,
+              ),
+            ),
+          ),
+          SizedBox(height: 6.h),
+          Opacity(
+            opacity: 0.6,
+            child: Container(
+              width: 330.w,
+              height: 46.h,
+              padding: EdgeInsets.only(left: 10.w, right: 10.w),
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                  color: AppColors.primaryFourElementText,
+                  borderRadius: BorderRadius.all(Radius.circular(8.w)),
+                  border: Border.all(color: AppColors.primaryThreeElementText)),
+              child: Text(
+                state.salePointItem?.businessName ?? state.salePointItem?.firstName ?? '',
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                  fontSize: 14.sp,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 15.h),
+        ],
+      );
+    }
+
     TextEditingController salePointController = TextEditingController();
     List<SalePointData> items =
         state.salePointList.isEmpty ? [] : state.salePointList;

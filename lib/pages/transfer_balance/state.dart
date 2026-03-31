@@ -17,8 +17,10 @@ class TransferBalanceState {
     this.validationFilePath,
     this.validationFileName,
     this.formVersion = 0,
+    this.isLocked = false,
   });
   final UserItem? userProfile;
+  final bool isLocked;
   final String phone;
   final String Amount;
   final String type;
@@ -51,6 +53,7 @@ class TransferBalanceState {
     String? validationFileName,
     bool clearValidationFile = false,
     int? formVersion,
+    bool? isLocked,
   }) {
     return TransferBalanceState(
       salePointList: salePointList ?? this.salePointList,
@@ -72,6 +75,7 @@ class TransferBalanceState {
           ? null
           : (validationFileName ?? this.validationFileName),
       formVersion: formVersion ?? this.formVersion,
+      isLocked: isLocked ?? this.isLocked,
     );
   }
 }

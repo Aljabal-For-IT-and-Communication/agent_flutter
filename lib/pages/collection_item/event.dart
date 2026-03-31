@@ -78,3 +78,10 @@ class ValidationFilePicked extends CollectionItemEvent {
 class ValidationFileCleared extends CollectionItemEvent {
   const ValidationFileCleared();
 }
+
+class LockedModeSet extends CollectionItemEvent {
+  const LockedModeSet({
+    required this.salePointItem,
+  });
+  final SalePointData salePointItem;
+}

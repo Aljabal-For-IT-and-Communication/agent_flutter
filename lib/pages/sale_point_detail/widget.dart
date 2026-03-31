@@ -36,7 +36,7 @@ class DetailAppBar extends StatelessWidget {
           Row(
             children: [
               GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => Navigator.of(context).pop(item),
                 child: Icon(Icons.arrow_back_ios,
                     color: AppColors.primaryBackground, size: 20.sp),
               ),
@@ -341,6 +341,7 @@ class ActionButtonsGrid extends StatelessWidget {
   final bool isEditing;
   final VoidCallback onToggleEdit;
   final VoidCallback? onStatusChanged;
+  final void Function(Map<String, dynamic> result)? onTransactionResult;
 
   const ActionButtonsGrid({
     Key? key,
@@ -348,6 +349,7 @@ class ActionButtonsGrid extends StatelessWidget {
     required this.isEditing,
     required this.onToggleEdit,
     this.onStatusChanged,
+    this.onTransactionResult,
   }) : super(key: key);
 
   @override
@@ -377,6 +379,24 @@ class ActionButtonsGrid extends StatelessWidget {
           onTap: () => _goChat(context),
         ),
         _ActionButton(
+          icon: Icons.account_balance_wallet_outlined,
+          label: 'Collect'.tr(),
+          color: Colors.indigo,
+          onTap: () => _goCollect(context),
+        ),
+        _ActionButton(
+          icon: Icons.add_circle_outline,
+          label: 'recharge'.tr(),
+          color: AppColors.primarySuccess,
+          onTap: () => _goRecharge(context),
+        ),
+        _ActionButton(
+          icon: Icons.remove_circle_outline,
+          label: 'retrack'.tr(),
+          color: Colors.deepPurple,
+          onTap: () => _goRetrack(context),
+        ),
+        _ActionButton(
           icon: Icons.lock_reset,
           label: 'Reset Password'.tr(),
           color: Colors.deepOrange,
@@ -396,6 +416,36 @@ class ActionButtonsGrid extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _goCollect(BuildContext context) async {
+    final result = await Navigator.of(context).pushNamed(
+      AppRoutes.CollectionItem,
+      arguments: {'salePoint': item},
+    );
+    if (result is Map<String, dynamic>) {
+      onTransactionResult?.call(result);
+    }
+  }
+
+  void _goRecharge(BuildContext context) async {
+    final result = await Navigator.of(context).pushNamed(
+      AppRoutes.TransferBalance,
+      arguments: {'salePoint': item, 'type': 'recharge'},
+    );
+    if (result is Map<String, dynamic>) {
+      onTransactionResult?.call(result);
+    }
+  }
+
+  void _goRetrack(BuildContext context) async {
+    final result = await Navigator.of(context).pushNamed(
+      AppRoutes.TransferBalance,
+      arguments: {'salePoint': item, 'type': 'retrack'},
+    );
+    if (result is Map<String, dynamic>) {
+      onTransactionResult?.call(result);
+    }
   }
 
   void _deleteSalePoint(BuildContext context) async {

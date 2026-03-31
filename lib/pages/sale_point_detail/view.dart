@@ -129,6 +129,36 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
                       onStatusChanged: () {
                         setState(() {});
                       },
+                      onTransactionResult: (result) {
+                        final type = result['type'] as String?;
+                        final amount =
+                            double.tryParse(result['amount'] ?? '') ?? 0;
+                        if (amount == 0) return;
+
+                        setState(() {
+                          final currentBalance =
+                              double.tryParse(_item.balance ?? '0') ?? 0;
+                          final currentIndebtedness =
+                              double.tryParse(_item.indebtedness ?? '0') ?? 0;
+
+                          if (type == 'recharge') {
+                            _item.balance =
+                                (currentBalance + amount).toStringAsFixed(2);
+                            _item.indebtedness =
+                                (currentIndebtedness + amount)
+                                    .toStringAsFixed(2);
+                          } else if (type == 'retrack') {
+                            _item.balance =
+                                (currentBalance - amount).toStringAsFixed(2);
+                            _item.indebtedness =
+                                (currentIndebtedness - amount)
+                                    .toStringAsFixed(2);
+                          } else if (type == 'collect') {
+                            _item.balance =
+                                (currentBalance - amount).toStringAsFixed(2);
+                          }
+                        });
+                      },
                     ),
                     SizedBox(height: 24.h),
                   ],

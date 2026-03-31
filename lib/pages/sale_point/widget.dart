@@ -114,12 +114,17 @@ class BuildListItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () async {
-        final deleted = await Navigator.of(context).pushNamed(
+        final result = await Navigator.of(context).pushNamed(
           AppRoutes.SalePointDetail,
           arguments: item,
         );
-        if (deleted == true && context.mounted) {
+        if (!context.mounted) return;
+        if (result == true) {
+          // Deleted
           context.read<SalePointBloc>().add(SalePointRemoved(item.id));
+        } else if (result is SalePointData) {
+          // Updated
+          context.read<SalePointBloc>().add(SalePointItemUpdated(result));
         }
       },
       child: Container(

@@ -46,3 +46,8 @@ class SalePointRemoved extends SalePointEvent {
   const SalePointRemoved(this.salePointId);
   final int? salePointId;
 }
+
+class SalePointItemUpdated extends SalePointEvent {
+  const SalePointItemUpdated(this.updatedItem);
+  final SalePointData updatedItem;
+}
