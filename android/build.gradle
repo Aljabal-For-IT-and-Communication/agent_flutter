@@ -3,6 +3,11 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    tasks.withType(JavaCompile).configureEach { t ->
+        options.warnings = false
+        options.compilerArgs += ['-Xlint:none', '-nowarn']
+    }
 }
 
 rootProject.buildDir = '../build'
@@ -30,6 +35,7 @@ gradle.projectsEvaluated {
             proj.tasks.withType(JavaCompile).configureEach { t ->
                 sourceCompatibility = JavaVersion.VERSION_17.toString()
                 targetCompatibility = JavaVersion.VERSION_17.toString()
+                options.compilerArgs += ['-Xlint:none']
             }
         }
         // Align Kotlin bytecode where Kotlin Android plugin is applied

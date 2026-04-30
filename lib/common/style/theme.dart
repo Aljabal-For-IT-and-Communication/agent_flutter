@@ -38,7 +38,7 @@ class AppTheme {
       unselectedItemColor: Color(0xffA2A5B9),
       selectedItemColor: AppColors.primaryElement,
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       indicatorSize: TabBarIndicatorSize.label,
       labelColor: AppColors.primaryThreeElementText,
       unselectedLabelColor: AppColors.primaryElement,

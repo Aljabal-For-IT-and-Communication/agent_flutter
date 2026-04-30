@@ -34,16 +34,15 @@ dependencies:
 
   cupertino_icons: ^1.0.6
   easy_localization: ^3.0.7
-  intl: ^0.19.0
+  intl: ^0.20.2
   bloc: ^8.1.4
   flutter_bloc: ^8.1.5
-  permission_handler: ^11.4.0
+  permission_handler: ^12.0.1
   flutter_screenutil: ^5.9.0
-  shared_preferences: ^2.2.2
+  shared_preferences: ^2.5.5
   flutter_local_notifications: ^18.0.0
   path_provider: ^2.1.4
   image_picker: ^1.0.4
-  fluttertoast: ^8.2.4
   flutter_easyloading: ^3.0.5
   http: ^1.1.0
   dio: ^5.3.0
@@ -53,7 +52,7 @@ dependencies:
   cached_network_image: ^3.2.3
   photo_view: ^0.14.0
   dots_indicator: ^2.1.0
-  video_player: ^2.8.3
+  video_player: ^2.11.1
   flash: ^3.0.5
   webview_flutter: ^4.10.0
   animated_rating_stars: ^1.0.1
@@ -68,10 +67,10 @@ dependencies:
   pointer_interceptor: ^0.10.1+2
   flutter_typeahead: ^5.2.0
   path: ^1.9.0
-  firebase_core: ^3.9.0
-  firebase_messaging: ^15.1.6
-  firebase_app_check: ^0.3.1+7
-  simple_barcode_scanner: ^0.2.0
+  firebase_core: ^4.7.0
+  firebase_messaging: ^16.2.0
+  firebase_app_check: ^0.4.3
+  simple_barcode_scanner: ^0.6.0
   file_picker: ^8.1.4
 
 dependency_overrides:

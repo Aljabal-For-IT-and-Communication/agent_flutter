@@ -1,5 +1,4 @@
 import 'package:app/common/entities/entities.dart';
-import 'package:app/common/widgets/widgets.dart';
 import 'package:app/pages/transfer_balance/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
