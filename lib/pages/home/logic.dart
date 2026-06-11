@@ -73,7 +73,6 @@ class Logic {
 
   fireMessage() async {
     String? fcmToken = await FirebaseMessaging.instance.getToken();
-    print("fcmToken-----: $fcmToken");
     if (fcmToken != null) {
       BindFcmTokenRequestEntity bindFcmTokenRequestEntity =
           BindFcmTokenRequestEntity();

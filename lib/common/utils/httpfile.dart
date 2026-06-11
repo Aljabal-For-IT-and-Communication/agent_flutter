@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/values/values.dart';
@@ -26,17 +25,7 @@ class HttpFileUtil {
     );
 
     dio = Dio(options);
-    dio.httpClientAdapter = IOHttpClientAdapter(
-      createHttpClient: () {
-        // Don't trust any certificate just because their root cert is trusted.
-        final HttpClient client =
-            HttpClient(context: SecurityContext(withTrustedRoots: false));
-        // You can test the intermediate / root cert here. We just ignore it.
-        client.badCertificateCallback =
-            ((X509Certificate cert, String host, int port) => true);
-        return client;
-      },
-    );
+    dio.httpClientAdapter = IOHttpClientAdapter();
 
     // 添加拦截器
     dio.interceptors.add(InterceptorsWrapper(
@@ -158,7 +147,6 @@ class HttpFileUtil {
     }
     var language = Global.storageService.getLanguage();
     headers['Accept-Language'] = language == 'ar' ? 'ar' : 'en';
-    print(headers);
     return headers;
   }
 

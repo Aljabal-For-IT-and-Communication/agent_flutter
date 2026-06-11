@@ -36,9 +36,7 @@ void main() async {
       child: MyApp(),
     ),
   );
-  firebaseInit().whenComplete(() {
-    FirebaseMassagingHandler.config();
-  });
+  firebaseInit();
 }
 
 Future firebaseInit() async {

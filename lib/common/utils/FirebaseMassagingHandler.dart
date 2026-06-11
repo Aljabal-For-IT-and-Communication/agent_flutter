@@ -33,15 +33,8 @@ class FirebaseMassagingHandler {
           .setForegroundNotificationPresentationOptions(
               alert: true, badge: true, sound: true);
 
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-        print("FirebaseMessaging.onMessage.listen--->${message}");
-        // if (message != null) {
-        //   _receiveNotification(message);
-        // }
-      });
-    } on Exception catch (e) {
-      print("FirebaseMessaging.onMessage.listen--->${e}");
-    }
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {});
+    } on Exception catch (_) {}
   }
 
   // static Future<void> _receiveNotification(RemoteMessage message) async {}
@@ -51,6 +44,5 @@ class FirebaseMassagingHandler {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    print("firebaseMessagingBackground--message-----${message}");
   }
 }

@@ -34,14 +34,11 @@ String getOrderNumber() {
 
 Future<bool> request_permission(Permission permission) async {
   var permission_status = await permission.status;
-  print("permission_status------${permission_status}");
   if (permission_status != PermissionStatus.granted) {
     //here
     var status = await permission.request();
 
     if (status != PermissionStatus.granted) {
-      //here
-      print("denied");
       toastInfo(msg: "Please open the setting page to set permissions");
       await openAppSettings();
       return false;
@@ -253,26 +250,26 @@ Future<bool> printCollectionReportPdf(
     Map<String, double> collectTypeTotals = {};
     Map<String, double> rechargeTypeTotals = {};
     double validItemsTotal = 0;
-    
+
     for (var item in collectionList) {
       double amount = double.tryParse(item.amount ?? '0') ?? 0;
-      
+
       // Calculate collectType totals
-      if (item.collectTypeName != null && 
-          item.collectTypeName!.isNotEmpty && 
+      if (item.collectTypeName != null &&
+          item.collectTypeName!.isNotEmpty &&
           item.collectTypeName != '-') {
         String collectType = item.collectTypeName!;
-        collectTypeTotals.update(collectType, (value) => value + amount, 
+        collectTypeTotals.update(collectType, (value) => value + amount,
             ifAbsent: () => amount);
         validItemsTotal += amount;
       }
-      
+
       // Calculate rechargeType totals
-      if (item.rechargeTypeName != null && 
-          item.rechargeTypeName!.isNotEmpty && 
+      if (item.rechargeTypeName != null &&
+          item.rechargeTypeName!.isNotEmpty &&
           item.rechargeTypeName != '-') {
         String rechargeType = item.rechargeTypeName!;
-        rechargeTypeTotals.update(rechargeType, (value) => value + amount, 
+        rechargeTypeTotals.update(rechargeType, (value) => value + amount,
             ifAbsent: () => amount);
       }
     }
@@ -291,23 +288,15 @@ Future<bool> printCollectionReportPdf(
 
       // Add collectType entries
       collectTypeTotals.entries.forEach((entry) {
-        summaryData.add([
-          'Collect Type'.tr(),
-          entry.key,
-          entry.value.toStringAsFixed(2)
-        ]);
+        summaryData.add(
+            ['Collect Type'.tr(), entry.key, entry.value.toStringAsFixed(2)]);
       });
 
       // Add rechargeType entries
       rechargeTypeTotals.entries.forEach((entry) {
-        summaryData.add([
-          'Recharge Type'.tr(),
-          entry.key,
-          entry.value.toStringAsFixed(2)
-        ]);
+        summaryData.add(
+            ['Recharge Type'.tr(), entry.key, entry.value.toStringAsFixed(2)]);
       });
-
-     
 
       widgets.add(pw.TableHelper.fromTextArray(
         headers: summaryHeaders,

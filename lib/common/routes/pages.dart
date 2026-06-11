@@ -41,6 +41,7 @@ import 'package:app/pages/message_detail/view.dart';
 import 'package:app/pages/my_report/bloc.dart';
 import 'package:app/pages/my_report/view.dart';
 import 'package:app/pages/photoview/photoview.dart';
+import 'package:app/pages/privacy_policy/privacy_policy.dart';
 import 'package:app/pages/profile/bloc.dart';
 import 'package:app/pages/profile/view.dart';
 import 'package:app/pages/report/bloc.dart';
@@ -195,6 +196,8 @@ class AppPages {
       PageEntity(
           path: AppRoutes.ContactType, page: ContactTypePage(), bloc: null),
       PageEntity(path: AppRoutes.About, page: AboutPage(), bloc: null),
+      PageEntity(
+          path: AppRoutes.PrivacyPolicy, page: PrivacyPolicyPage(), bloc: null),
       PageEntity(path: AppRoutes.Contact, page: ContactPage(), bloc: null),
     ];
   }

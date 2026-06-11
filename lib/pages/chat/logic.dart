@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:app/common/apis/chat.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/services/socketchannel.dart';
@@ -33,7 +32,6 @@ class Logic {
 
   void init() async {
     final data = ModalRoute.of(context)!.settings.arguments as ChatUserItem;
-    print(data);
     context.read<ChatBloc>().add(ProfileChanged(data));
     privateMessageData(data.token);
     await clearUnreadMsg(data.token);
@@ -43,8 +41,6 @@ class Logic {
   }
 
   void dispose() {
-    print("--------dispose");
-
     myinputController.dispose();
     inputScrollController.dispose();
   }
@@ -84,17 +80,9 @@ class Logic {
   }
 
   Future imgFromGallery() async {
-    if (Platform.isIOS) {
-      bool photosStatus = await request_permission(Permission.photos);
-      if (!photosStatus) {
-        return;
-      }
-    }
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       uploadFile(pickedFile);
-    } else {
-      print('No image selected.');
     }
   }
 
@@ -105,8 +93,6 @@ class Logic {
 
       if (pickedFile != null) {
         uploadFile(pickedFile);
-      } else {
-        print('No image selected.');
       }
     }
   }
@@ -114,9 +100,7 @@ class Logic {
   Future uploadFile(XFile file) async {
     var result = await ChatAPI.upload_img(file: file);
     if (result.code == 0) {
-      print(result.data);
       String content = "img[${result.data}]";
-      print(content);
       sendMessage(content);
     } else {
       toastInfo(msg: "image error");
@@ -125,14 +109,11 @@ class Logic {
 
   sendContent() {
     String sendcontent = myinputController.text;
-    print(sendcontent);
     myinputController.clear();
     sendMessage(sendcontent);
   }
 
   sendMessage(String sendcontent) async {
-    print("---------------chat-----------------");
-
     if (sendcontent.isEmpty) {
       toastInfo(msg: "content not empty");
       return;
@@ -145,7 +126,6 @@ class Logic {
     entity.toToken = to_token;
     entity.toCid = to_cid;
     var res = await ChatAPI.sendMessage(params: entity);
-    print(res.data);
     if (res.code == 0 && res.data != null) {
       context.read<ChatBloc>().add(MsgContentListChanged(res.data!));
     } else {
@@ -155,7 +135,6 @@ class Logic {
 
   close_all_pop() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    print("------close_all_pop");
   }
 
   photoImg(Message item) {

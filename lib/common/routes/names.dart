@@ -13,6 +13,7 @@ class AppRoutes {
   static const ChangePassword = '/change_password';
   static const ContactType = '/contact_type';
   static const About = '/about';
+  static const PrivacyPolicy = '/privacy_policy';
   static const Contact = '/contact';
   static const Report = '/report';
   static const Transformation = '/transformation';

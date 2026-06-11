@@ -28,17 +28,7 @@ class HttpUtil {
     );
 
     dio = Dio(options);
-    dio.httpClientAdapter = IOHttpClientAdapter(
-      createHttpClient: () {
-        // Don't trust any certificate just because their root cert is trusted.
-        final HttpClient client =
-            HttpClient(context: SecurityContext(withTrustedRoots: false));
-        // You can test the intermediate / root cert here. We just ignore it.
-        client.badCertificateCallback =
-            ((X509Certificate cert, String host, int port) => true);
-        return client;
-      },
-    );
+    dio.httpClientAdapter = IOHttpClientAdapter();
 
     // Add interceptors
     dio.interceptors.add(InterceptorsWrapper(
@@ -166,7 +156,6 @@ class HttpUtil {
     var language = Global.storageService.getLanguage();
     headers['Accept-Language'] = language == 'ar' ? 'ar' : 'en';
     headers['X-App-Version'] = VersionNumber;
-    print(headers);
     return headers;
   }
 

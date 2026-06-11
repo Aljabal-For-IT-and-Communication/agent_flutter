@@ -1,4 +1,5 @@
 import 'package:app/common/values/values.dart';
+import 'package:app/common/utils/FirebaseMassagingHandler.dart';
 import 'package:app/global.dart';
 import 'package:app/pages/setting/bloc.dart';
 import 'package:app/pages/setting/event.dart';
@@ -10,13 +11,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class BuildListItem extends StatelessWidget {
   final String title;
   final String iconImage;
+  final Color? iconColor;
   final Function()? callFunc;
-  const BuildListItem(
-      {Key? key,
-      required this.title,
-      required this.iconImage,
-      required this.callFunc})
-      : super(key: key);
+  const BuildListItem({
+    Key? key,
+    required this.title,
+    required this.iconImage,
+    this.iconColor,
+    required this.callFunc,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class BuildListItem extends StatelessWidget {
             Container(
               width: 24.h,
               height: 24.h,
-              child: Image.asset(iconImage),
+              child: Image.asset(iconImage, color: iconColor),
             ),
             Container(
               margin: EdgeInsets.only(left: 10.w),
@@ -77,7 +80,7 @@ class BuildNotification extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(left: 10.w),
                   child: Text(
-                    "Notication".tr(),
+                    "Notification".tr(),
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       color: AppColors.primaryText,
@@ -94,7 +97,14 @@ class BuildNotification extends StatelessWidget {
               child: Switch(
                 value: state.isOpen,
                 activeColor: AppColors.primaryElement,
-                onChanged: (bool value) {
+                onChanged: (bool value) async {
+                  if (value) {
+                    await FirebaseMassagingHandler.config();
+                  }
+                  await Global.storageService.setBool(
+                    STORAGE_NOTIFICATION_ENABLED_KEY,
+                    value,
+                  );
                   context.read<SettingBloc>().add(IsOpenChanged(value));
                 },
               ),

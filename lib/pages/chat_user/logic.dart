@@ -19,7 +19,6 @@ class ChatUserLogic with WidgetsBindingObserver {
   void init() {
     asyncLoadAllData();
     Global.eventBus.on<WebSocketEvent>().listen((event) {
-      print(event.message);
       asyncLoadAllData();
     });
   }

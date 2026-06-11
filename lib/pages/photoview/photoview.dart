@@ -24,7 +24,6 @@ class _PhotoViewPage extends State<PhotoViewPage> {
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
     var url = data["url"] ?? "";
-    print(data);
     return Container(
         color: Colors.white,
         child: SafeArea(

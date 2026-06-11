@@ -1,6 +1,6 @@
 class SettingState {
   const SettingState({
-    this.isOpen = true,
+    this.isOpen = false,
     this.language = false,
   });
 

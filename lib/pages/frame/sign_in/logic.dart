@@ -39,7 +39,6 @@ class Logic {
     FocusManager.instance.primaryFocus?.unfocus();
     try {
       var result = await UserAPI.Login(params: loginRequestEntity);
-      print(result.code);
       if (result.code == 0) {
         context.read<SignInBloc>().add(PasswordChanged(""));
         context.read<SignInBloc>().add(PhoneChanged(""));

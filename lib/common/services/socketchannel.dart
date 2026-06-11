@@ -5,7 +5,6 @@ import 'package:app/global.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 /// WebSocket地址
 const String _SOCKET_URL = SERVER_API_WSS;
@@ -51,7 +50,6 @@ class SocketDbService {
     Map<String, dynamic>? authorization = getAuthorizationHeader();
     _webSocket =
         IOWebSocketChannel.connect(_SOCKET_URL, headers: authorization);
-    print('WebSocket连接成功: $_SOCKET_URL');
     // 连接成功，返回WebSocket实例
     _socketStatus = SocketStatus.SocketStatusConnected;
     // 连接成功，重置重连计数器
@@ -63,7 +61,6 @@ class SocketDbService {
     initHeartBeat();
     // 接收消息
     _webSocket!.stream.listen((message) async {
-      print('-- 新消息: $message');
       Map<String, dynamic> result = jsonDecode(message);
       Message res = Message.fromJson(result);
       await addOrUpdateChatUser(res);
@@ -99,7 +96,6 @@ class SocketDbService {
 
   /// WebSocket关闭连接回调
   webSocketOnDone() {
-    print('WebSocket closed');
     bool isLogin = Global.storageService.getIsLogin();
     if (isLogin) {
       reconnect();
@@ -108,9 +104,7 @@ class SocketDbService {
 
   /// WebSocket连接错误回调
   webSocketOnError(e) {
-    WebSocketChannelException ex = e;
     _socketStatus = SocketStatus.SocketStatusFailed;
-    print(ex.message);
     closeSocket();
   }
 
@@ -139,7 +133,6 @@ class SocketDbService {
   /// 关闭WebSocket
   void closeSocket() {
     if (_webSocket != null) {
-      print('WebSocket连接关闭');
       _webSocket!.sink.close();
       destroyHeartBeat();
       _socketStatus = SocketStatus.SocketStatusClosed;
@@ -155,10 +148,8 @@ class SocketDbService {
           _webSocket!.sink.add(message);
           break;
         case SocketStatus.SocketStatusClosed:
-          print('连接已关闭');
           break;
         case SocketStatus.SocketStatusFailed:
-          print('发送失败');
           break;
         default:
           break;
@@ -170,14 +161,12 @@ class SocketDbService {
   void reconnect() {
     if (_reconnectTimes < _reconnectCount) {
       _reconnectTimes++;
-      print("reconnect start ${_reconnectTimes}");
       _reconnectTimer =
           Timer.periodic(Duration(milliseconds: _heartTimes), (timer) {
         openSocket();
       });
     } else {
       if (_reconnectTimer != null) {
-        print('重连次数超过最大次数');
         _reconnectTimer!.cancel();
         _reconnectTimer = null;
       }
