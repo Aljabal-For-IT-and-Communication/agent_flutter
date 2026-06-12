@@ -1,5 +1,6 @@
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/utils.dart';
+import 'package:dio/dio.dart';
 
 class SalePointAPI {
   static Future<SalePointResponseEntity> salePointList() async {
@@ -47,11 +48,28 @@ class SalePointAPI {
 
   static Future<TransferCollectionResponseEntity> transferCollection(
       {TransferRequestEntity? params}) async {
+    const endpoint = 'agent/transfer_collection';
+    final requestId = await Idempotency.getOrCreate(
+      endpoint: endpoint,
+      fingerprintData: {
+        'category': params?.Category,
+        'amount': params?.Amount,
+        'id': params?.id,
+        'transfer_type': params?.transferType,
+        'file_path': params?.validationFilePath,
+        'file_name': params?.validationFileName,
+      },
+    );
     final data = params == null ? null : await params.toRequestBody();
     var response = await HttpUtil().post(
-      'agent/transfer_collection',
+      endpoint,
       data: data,
+      options: Options(
+        headers: {Idempotency.headerName: requestId},
+        receiveTimeout: Idempotency.testReceiveTimeout,
+      ),
     );
+    await Idempotency.clearIfFinal(endpoint, requestId, response);
     return TransferCollectionResponseEntity.fromJson(response);
   }
 
@@ -92,11 +110,29 @@ class SalePointAPI {
 
   static Future<BaseResponseEntity> transferBalance(
       {TransferBalanceRequestEntity? params}) async {
+    const endpoint = 'agent/transfer_balance';
+    final requestId = await Idempotency.getOrCreate(
+      endpoint: endpoint,
+      fingerprintData: {
+        'category': params?.category,
+        'amount': params?.amount,
+        'id': params?.id,
+        'converter': params?.converter,
+        'transfer_type': params?.transferType,
+        'file_path': params?.validationFilePath,
+        'file_name': params?.validationFileName,
+      },
+    );
     final data = params == null ? null : await params.toRequestBody();
     var response = await HttpUtil().post(
-      'agent/transfer_balance',
+      endpoint,
       data: data,
+      options: Options(
+        headers: {Idempotency.headerName: requestId},
+        receiveTimeout: Idempotency.testReceiveTimeout,
+      ),
     );
+    await Idempotency.clearIfFinal(endpoint, requestId, response);
     return BaseResponseEntity.fromJson(response);
   }
 
