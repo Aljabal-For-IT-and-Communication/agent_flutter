@@ -5,7 +5,6 @@ import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/logger.dart';
 import 'package:app/common/values/constant.dart';
 import 'package:app/global.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -20,7 +19,6 @@ class Logic {
     shippingOperation();
     pendingTransactions();
     getProfile();
-    fireMessage();
   }
 
   shippingOperation() async {
@@ -30,7 +28,11 @@ class Logic {
       entity.page = 0;
       var result = await HomeAPI.shippingOperationList(params: entity);
       if (result.code == 0) {
-        context.read<HomeBloc>().add(ShippingOperationChanged(result.data!));
+        context
+            .read<HomeBloc>()
+            .add(ShippingOperationChanged(result.data ?? []));
+      } else {
+        Logger.write("shippingOperationList failed: ${result.msg}");
       }
       EasyLoading.dismiss();
     } catch (e) {
@@ -41,10 +43,7 @@ class Logic {
 
   pendingTransactions() async {
     try {
-      PageRequestEntity entity = PageRequestEntity();
-      entity.title = "";
-      entity.page = 0;
-      final result = await HomeAPI.pendingTransactionsList(params: entity);
+      final result = await HomeAPI.pendingTransactionsList();
       if (result.code == 0) {
         context
             .read<HomeBloc>()
@@ -68,16 +67,6 @@ class Logic {
       }
     } catch (e) {
       Logger.write("${e}");
-    }
-  }
-
-  fireMessage() async {
-    String? fcmToken = await FirebaseMessaging.instance.getToken();
-    if (fcmToken != null) {
-      BindFcmTokenRequestEntity bindFcmTokenRequestEntity =
-          BindFcmTokenRequestEntity();
-      bindFcmTokenRequestEntity.fcmtoken = fcmToken;
-      await ChatAPI.bindFcmToken(params: bindFcmTokenRequestEntity);
     }
   }
 }

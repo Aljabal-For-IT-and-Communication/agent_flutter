@@ -10,8 +10,15 @@ class SalePointAPI {
     return SalePointResponseEntity.fromJson(response);
   }
 
+  static Future<SalePointResponseEntity> salePointPickerList() async {
+    var response = await HttpUtil().post(
+      'agent/sale_point_picker_list',
+    );
+    return SalePointResponseEntity.fromJson(response);
+  }
+
   static Future<AgentRechargeRecordResponseEntity> salePointRechargeRecordList(
-      {TransferRequestEntity? params}) async {
+      {TransferRecordListRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/sale_point_recharge_record_list',
       data: params?.toJson(),
@@ -20,7 +27,7 @@ class SalePointAPI {
   }
 
   static Future<AgentCollectRecordResponseEntity> salePointCollectRecordList(
-      {TransferRequestEntity? params}) async {
+      {TransferRecordListRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/sale_point_collect_record_list',
       data: params?.toJson(),
@@ -38,7 +45,7 @@ class SalePointAPI {
   }
 
   static Future<BaseResponseEntity> transferCollectionTotalRecord(
-      {DateRequestEntity? params}) async {
+      {DateRangeRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/transfer_collection_total_record',
       data: params?.toJson(),
@@ -47,13 +54,13 @@ class SalePointAPI {
   }
 
   static Future<TransferCollectionResponseEntity> transferCollection(
-      {TransferRequestEntity? params}) async {
+      {TransferCollectionRequestEntity? params}) async {
     const endpoint = 'agent/transfer_collection';
     final requestId = await Idempotency.getOrCreate(
       endpoint: endpoint,
       fingerprintData: {
-        'category': params?.Category,
-        'amount': params?.Amount,
+        'category': params?.category,
+        'amount': params?.amount,
         'id': params?.id,
         'transfer_type': params?.transferType,
         'file_path': params?.validationFilePath,
@@ -74,7 +81,7 @@ class SalePointAPI {
   }
 
   static Future<SuperRechargeRecordResponseEntity> superRechargeRecordList(
-      {PageRequestEntity? params}) async {
+      {PageOnlyRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/super_recharge_record_list',
       data: params?.toJson(),
@@ -83,7 +90,7 @@ class SalePointAPI {
   }
 
   static Future<ChildRechargeRecordResponseEntity> superCollectRecordList(
-      {PageRequestEntity? params}) async {
+      {PageOnlyRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/super_collect_record_list',
       data: params?.toJson(),
@@ -100,7 +107,7 @@ class SalePointAPI {
   }
 
   static Future<AccountStatementResponseEntity> accountStatement(
-      {DateRequestEntity? params}) async {
+      {DateRangeRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/account_statement',
       data: params?.toJson(),

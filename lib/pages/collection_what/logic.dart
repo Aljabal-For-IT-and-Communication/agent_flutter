@@ -20,8 +20,12 @@ class Logic {
           indicator: CircularProgressIndicator(),
           maskType: EasyLoadingMaskType.clear,
           dismissOnTap: true);
+      final totalEntity = DateRangeRequestEntity(
+        startDate: entity.startDate,
+        endDate: entity.endDate,
+      );
       var result1 =
-          await SalePointAPI.transferCollectionTotalRecord(params: entity);
+          await SalePointAPI.transferCollectionTotalRecord(params: totalEntity);
       if (result1.code == 0) {
         context.read<CollectionWhatBloc>().add(AmountChanged(result1.data!));
       }

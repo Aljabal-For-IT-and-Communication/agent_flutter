@@ -28,50 +28,26 @@ class NotificationResponseEntity {
 }
 
 class NotificationData {
-  int? category;
   String? content;
   String? createdAt;
-  String? deletedAt;
-  int? id;
   String? pic;
   String? title;
-  String? updatedAt;
-  int? userId;
 
-  NotificationData(
-      {this.category,
-      this.content,
-      this.createdAt,
-      this.deletedAt,
-      this.id,
-      this.pic,
-      this.title,
-      this.updatedAt,
-      this.userId});
+  NotificationData({this.content, this.createdAt, this.pic, this.title});
 
   NotificationData.fromJson(Map<String, dynamic> json) {
-    category = json['category'];
     content = json['content'];
     createdAt = json['created_at'];
-    deletedAt = json['deleted_at'];
-    id = json['id'];
     pic = json['pic'];
     title = json['title'];
-    updatedAt = json['updated_at'];
-    userId = json['user_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['category'] = this.category;
     data['content'] = this.content;
     data['created_at'] = this.createdAt;
-    data['deleted_at'] = this.deletedAt;
-    data['id'] = this.id;
     data['pic'] = this.pic;
     data['title'] = this.title;
-    data['updated_at'] = this.updatedAt;
-    data['user_id'] = this.userId;
     return data;
   }
 }

@@ -3,7 +3,7 @@ import 'package:app/common/utils/utils.dart';
 
 class HomeAPI {
   static Future<NotificationResponseEntity> notificationList(
-      {PageRequestEntity? params}) async {
+      {PageOnlyRequestEntity? params}) async {
     var response = await HttpUtil().post(
       'agent/notification',
       data: params?.toJson(),
@@ -20,11 +20,10 @@ class HomeAPI {
     return ShippingOperationResponseEntity.fromJson(response);
   }
 
-  static Future<PendingTransactionsResponseEntity> pendingTransactionsList(
-      {PageRequestEntity? params}) async {
+  static Future<PendingTransactionsResponseEntity>
+      pendingTransactionsList() async {
     var response = await HttpUtil().post(
       'agent/pending_transactions_list',
-      data: params?.toJson(),
     );
     return PendingTransactionsResponseEntity.fromJson(response);
   }

@@ -18,7 +18,7 @@ class Logic {
 
   salePoint() async {
     try {
-      var result = await SalePointAPI.salePointList();
+      var result = await SalePointAPI.salePointPickerList();
       if (result.code == 0) {
         context.read<DebitBloc>().add(SalePointChanged(result.data!));
         context.read<DebitBloc>().add(SalePointItemChanged(result.data!.first));
@@ -30,7 +30,7 @@ class Logic {
 
   agent() async {
     try {
-      var result = await AgentAPI.agentList();
+      var result = await AgentAPI.agentPickerList();
       if (result.code == 0) {
         context.read<DebitBloc>().add(AgentListChanged(result.data!));
         context.read<DebitBloc>().add(AgentItemChanged(result.data!.first));

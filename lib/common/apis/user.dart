@@ -16,7 +16,7 @@ class UserAPI {
     RegisterRequestEntity? params,
   }) async {
     var response = await HttpUtil().post(
-      'sale_point/register',
+      'agent/sale_point_create',
       data: params?.toJson(),
     );
     return BaseResponseEntity.fromJson(response);
@@ -55,6 +55,13 @@ class UserAPI {
   static Future<UserLoginResponseEntity> getProfile() async {
     var response = await HttpUtil().post(
       'agent/get_profile',
+    );
+    return UserLoginResponseEntity.fromJson(response);
+  }
+
+  static Future<UserLoginResponseEntity> getBalanceSummary() async {
+    var response = await HttpUtil().post(
+      'agent/get_balance_summary',
     );
     return UserLoginResponseEntity.fromJson(response);
   }

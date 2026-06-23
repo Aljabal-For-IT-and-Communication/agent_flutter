@@ -8,4 +8,11 @@ class AgentAPI {
     );
     return AgentResponseEntity.fromJson(response);
   }
+
+  static Future<AgentResponseEntity> agentPickerList() async {
+    var response = await HttpUtil().post(
+      'agent/agent_child_picker_list',
+    );
+    return AgentResponseEntity.fromJson(response);
+  }
 }

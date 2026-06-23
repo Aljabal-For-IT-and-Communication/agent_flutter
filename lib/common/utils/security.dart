@@ -4,9 +4,7 @@ import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/utils.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:app/common/widgets/toast.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -30,22 +28,6 @@ String getRandomString(int length) {
 
 String getOrderNumber() {
   return DateTime.now().millisecondsSinceEpoch.toString();
-}
-
-Future<bool> request_permission(Permission permission) async {
-  var permission_status = await permission.status;
-  if (permission_status != PermissionStatus.granted) {
-    //here
-    var status = await permission.request();
-
-    if (status != PermissionStatus.granted) {
-      toastInfo(msg: "Please open the setting page to set permissions");
-      await openAppSettings();
-      return false;
-    }
-  }
-
-  return true;
 }
 
 Future<bool> printPdf(TransferCollectionData item,

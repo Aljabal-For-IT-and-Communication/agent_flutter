@@ -34,11 +34,6 @@ class AddressChanged extends RegisterEvent {
   final String address;
 }
 
-class AgentPhoneChanged extends RegisterEvent {
-  const AgentPhoneChanged(this.agentPhone);
-  final String agentPhone;
-}
-
 class EmailChanged extends RegisterEvent {
   const EmailChanged(this.email);
   final String email;
@@ -52,11 +47,6 @@ class PasswordChanged extends RegisterEvent {
 class RePasswordChanged extends RegisterEvent {
   const RePasswordChanged(this.repassword);
   final String repassword;
-}
-
-class AgentItemChanged extends RegisterEvent {
-  const AgentItemChanged(this.agentItem);
-  final AgentData? agentItem;
 }
 
 class MachineNumberChanged extends RegisterEvent {

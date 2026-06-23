@@ -1,7 +1,4 @@
-import 'package:app/common/entities/chat.dart';
-import 'package:app/common/apis/chat.dart';
 import 'package:app/common/routes/names.dart';
-import 'package:app/common/services/sql_db.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/app.dart';
 import 'package:app/common/widgets/toast.dart';
@@ -32,11 +29,6 @@ class _SettingPage extends State<SettingPage> {
         var language = Global.storageService.getLanguage();
         bool defaultLocale = language == 'ar' ? true : false;
         context.read<SettingBloc>().add(IsLanguageChanged(defaultLocale));
-        context.read<SettingBloc>().add(
-          IsOpenChanged(
-            Global.storageService.getBool(STORAGE_NOTIFICATION_ENABLED_KEY),
-          ),
-        );
       }
     });
   }
@@ -74,16 +66,14 @@ class _SettingPage extends State<SettingPage> {
                           ).pushNamed(AppRoutes.ChangePassword);
                         },
                       ),
+                      BuildLanguage(),
                       BuildListItem(
-                        title: "Contact type".tr(),
-                        iconImage: "assets/icons/wifi.png",
+                        title: "Contact us".tr(),
+                        iconImage: "assets/icons/phone.png",
                         callFunc: () {
-                          Navigator.of(
-                            context,
-                          ).pushNamed(AppRoutes.ContactType);
+                          Navigator.of(context).pushNamed(AppRoutes.Contact);
                         },
                       ),
-                      BuildNotification(),
                       BuildListItem(
                         title: "Privacy Policy".tr(),
                         iconImage: "assets/icons/lock.png",
@@ -100,40 +90,12 @@ class _SettingPage extends State<SettingPage> {
                         callFunc: _confirmAccountDeletionRequest,
                       ),
                       BuildListItem(
-                        title: "Contact us".tr(),
-                        iconImage: "assets/icons/phone.png",
-                        callFunc: () async {
-                          // Navigator.of(context).pushNamed(AppRoutes.Contact);
-                          ChatUserItem userItem = ChatUserItem();
-                          userItem.token = SUPPORT_CHAT_TOKEN;
-                          userItem.name = "support";
-                          userItem.cid = 0;
-                          userItem.avatar = "images/4.jpg";
-                          userItem.msgNum = 0;
-                          userItem.lastMsg = "no msg!";
-                          userItem.lastTime = "";
-                          SqlDbService sqlDbService = await SqlDbService()
-                              .init();
-                          // await sqlDbService.deleteAllChatUser();
-                          var result = await sqlDbService.queryByTokenRow(
-                            userItem.token,
-                          );
-                          if (result.isEmpty) {
-                            await sqlDbService.insertChatUser(userItem);
-                          }
-                          await Navigator.of(
-                            context,
-                          ).pushNamed(AppRoutes.Chat, arguments: userItem);
-                        },
-                      ),
-                      BuildListItem(
                         title: "About the application".tr(),
                         iconImage: "assets/icons/question.png",
                         callFunc: () {
                           Navigator.of(context).pushNamed(AppRoutes.About);
                         },
                       ),
-                      BuildLanguage(),
                       BuildListItem(
                         title: "Sign out".tr(),
                         iconImage: "assets/icons/close.png",
@@ -200,7 +162,7 @@ class _SettingPage extends State<SettingPage> {
               onPressed: () => Navigator.of(dialogContext).pop(false),
             ),
             TextButton(
-              child: Text("Send request".tr()),
+              child: Text("Open contact".tr()),
               onPressed: () => Navigator.of(dialogContext).pop(true),
             ),
           ],
@@ -213,21 +175,7 @@ class _SettingPage extends State<SettingPage> {
   }
 
   Future<void> _sendAccountDeletionRequest() async {
-    try {
-      final user = Global.storageService.getUserProfile();
-      final entity = ChatRequestEntity()
-        ..toToken = SUPPORT_CHAT_TOKEN
-        ..toCid = 0
-        ..content =
-            "Account deletion request for agent ID ${user.id ?? '-'}, phone ${user.phone ?? '-'}, name ${user.firstName ?? ''} ${user.lastName ?? ''}. Please delete the account and associated personal data that is not legally required to be retained.";
-      final response = await ChatAPI.sendMessage(params: entity);
-      if (response.code == 0) {
-        toastInfo(msg: "Account deletion request sent".tr());
-      } else {
-        toastInfo(msg: response.msg ?? "Error".tr());
-      }
-    } catch (_) {
-      toastInfo(msg: "Error".tr());
-    }
+    toastInfo(msg: "Contact support for account deletion".tr());
+    Navigator.of(context).pushNamed(AppRoutes.Contact);
   }
 }

@@ -21,7 +21,7 @@ class Logic {
 
   salePoint() async {
     try {
-      var result = await SalePointAPI.salePointList();
+      var result = await SalePointAPI.salePointPickerList();
       if (result.code == 0) {
         context.read<ShipmentBloc>().add(SalePointChanged(result.data!));
         context
@@ -35,7 +35,7 @@ class Logic {
 
   agent() async {
     try {
-      var result = await AgentAPI.agentList();
+      var result = await AgentAPI.agentPickerList();
       if (result.code == 0) {
         context.read<ShipmentBloc>().add(AgentListChanged(result.data!));
         context.read<ShipmentBloc>().add(AgentItemChanged(result.data!.first));
@@ -54,12 +54,11 @@ class Logic {
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
-    TransferRequestEntity entity = TransferRequestEntity();
+    TransferRecordListRequestEntity entity = TransferRecordListRequestEntity();
 
     entity.id =
         state.agent == "Agent" ? state.agentItem?.id : state.salePointItem?.id;
-    entity.Category = state.agent;
-    entity.Amount = state.Amount;
+    entity.category = state.agent;
     entity.page = state.agentRechargeRecordList.length;
     try {
       var result =

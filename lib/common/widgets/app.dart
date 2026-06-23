@@ -32,8 +32,13 @@ Widget divider10Px({Color bgColor = AppColors.primaryThreeElementText}) {
 class BuildPublicAppBar extends StatelessWidget {
   final String title;
   final VoidCallback? onBack;
-  BuildPublicAppBar({Key? key, required this.title, this.onBack})
-      : super(key: key);
+  final bool showBack;
+  BuildPublicAppBar({
+    Key? key,
+    required this.title,
+    this.onBack,
+    this.showBack = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,23 +66,29 @@ class BuildPublicAppBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    if (onBack != null) {
-                      onBack!();
-                    } else {
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: Container(
+                if (showBack)
+                  GestureDetector(
+                    onTap: () {
+                      if (onBack != null) {
+                        onBack!();
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Container(
+                      width: 24.w,
+                      height: 24.w,
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: AppColors.primaryBackground,
+                      ),
+                    ),
+                  )
+                else
+                  Container(
                     width: 24.w,
                     height: 24.w,
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: AppColors.primaryBackground,
-                    ),
                   ),
-                ),
                 Container(
                   width: 260.w,
                   child: Text(

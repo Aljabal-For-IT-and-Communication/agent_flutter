@@ -41,7 +41,6 @@ class Logic {
       String businessName = state.businessName;
       String address = state.address;
       String phone = state.phone.replaceAll(RegExp(r'[^0-9]'), '');
-      String agentPhone = user.phone ?? "";
       String password = state.password;
       String repassword = state.repassword;
 
@@ -73,11 +72,6 @@ class Logic {
         toastInfo(msg: "Phone length is invalid!".tr());
         return;
       }
-      if (agentPhone.isEmpty) {
-        toastInfo(msg: "Agent Phone should not not be empty!".tr());
-        return;
-      }
-
       if (password.isEmpty) {
         toastInfo(msg: "Password should not not be empty!".tr());
         return;
@@ -117,8 +111,7 @@ class Logic {
       entity.city = user.city ?? 0;
       entity.region = user.region ?? 0;
       entity.address = state.address;
-      entity.phone = state.phone;
-      entity.agentPhone = user.phone ?? "";
+      entity.phone = phone;
       entity.latitude = "";
       entity.longitude = "";
       entity.machineNumber = state.machineNumber;

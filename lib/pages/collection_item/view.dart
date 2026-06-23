@@ -31,11 +31,12 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
       if (mounted) {
         // Check if navigated from sale_point_detail with pre-filled data
         final args = ModalRoute.of(context)?.settings.arguments;
-        if (args is Map<String, dynamic> && args['salePoint'] is SalePointData) {
+        if (args is Map<String, dynamic> &&
+            args['salePoint'] is SalePointData) {
           final sp = args['salePoint'] as SalePointData;
           context.read<CollectionItemBloc>().add(
-            LockedModeSet(salePointItem: sp),
-          );
+                LockedModeSet(salePointItem: sp),
+              );
           Logic(context: context).init(isLocked: true);
         } else {
           Logic(context: context).init();
@@ -77,12 +78,12 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
-    TransferRequestEntity entity = TransferRequestEntity();
+    TransferCollectionRequestEntity entity = TransferCollectionRequestEntity();
 
     entity.id =
         state.agent == "Agent" ? state.agentItem?.id : state.salePointItem?.id;
-    entity.Category = state.agent;
-    entity.Amount = state.Amount;
+    entity.category = state.agent;
+    entity.amount = state.Amount;
     entity.transferType = state.collectTypeId;
     // If selected collect type needs validation, ensure file is picked
     final selected = state.collectTypes.firstWhere(

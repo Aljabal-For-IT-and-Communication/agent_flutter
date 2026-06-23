@@ -1,8 +1,7 @@
-import 'package:app/common/services/socketchannel.dart';
 import 'package:app/common/values/colors.dart';
-import 'package:app/pages/chat_user/view.dart';
 import 'package:app/pages/collection/view.dart';
 import 'package:app/pages/home/view.dart';
+import 'package:app/pages/pending_operations/view.dart';
 import 'package:app/pages/report/view.dart';
 import 'package:app/pages/sale_point/view.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -10,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../common/services/sql_db.dart';
-import '../../global.dart';
 import 'bloc.dart';
 
 class ApplicationPage extends StatefulWidget {
@@ -22,30 +19,7 @@ class ApplicationPage extends StatefulWidget {
 }
 
 class _ApplicationPage extends State<ApplicationPage> {
-  int _unreadMessages = 0;
   final PageController pageController = PageController(initialPage: 0);
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      if (mounted) {
-        await SocketDbService().init();
-      }
-      SqlDbService sqlDbService = await SqlDbService().init();
-      var unreadMsg = await sqlDbService.getUnreadMsgNum();
-      setState(() {
-        _unreadMessages = unreadMsg;
-      });
-    });
-    Global.eventBus.on<WebSocketEvent>().listen((event) async {
-      SqlDbService sqlDbService = await SqlDbService().init();
-      var unreadMsg = await sqlDbService.getUnreadMsgNum();
-      setState(() {
-        _unreadMessages = unreadMsg;
-      });
-    });
-  }
 
   @override
   void dispose() {
@@ -142,7 +116,7 @@ class _ApplicationPage extends State<ApplicationPage> {
           HomePage(),
           ReportPage(),
           CollectionPage(),
-          ChatUserPage(),
+          PendingOperationsPage(),
           SalePointPage(),
         ],
       ),
@@ -159,8 +133,8 @@ class _ApplicationPage extends State<ApplicationPage> {
                 tabBarItem("home".tr(), "assets/icons/main.png", 0),
                 tabBarItem("report".tr(), "assets/icons/doc1.png", 0),
                 tabBarItem("collection".tr(), "assets/icons/wallets.png", 0),
-                tabBarItem("message".tr(), "assets/icons/message.png",
-                    _unreadMessages),
+                tabBarItem(
+                    "Pending operations".tr(), "assets/icons/doc.png", 0),
                 tabBarItem("sale points".tr(), "assets/icons/store.png", 0),
               ],
               currentIndex: state.page,
@@ -170,11 +144,6 @@ class _ApplicationPage extends State<ApplicationPage> {
               onTap: (value) async {
                 context.read<ApplicationBloc>().add(PageChanged(value));
                 pageController.jumpToPage(value);
-                SqlDbService sqlDbService = await SqlDbService().init();
-                var unreadMsg = await sqlDbService.getUnreadMsgNum();
-                setState(() {
-                  _unreadMessages = unreadMsg;
-                });
               },
               showSelectedLabels: true,
               showUnselectedLabels: true,

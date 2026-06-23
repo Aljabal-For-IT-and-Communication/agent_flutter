@@ -33,6 +33,8 @@ class Logic {
               .add(ShippingOperationChanged(shippingOperationList));
           context.read<ShippingOperationBloc>().add(IsMoreChanged(false));
         }
+      } else if (result.code != 0) {
+        Logger.write("shippingOperationList failed: ${result.msg}");
       }
       context.read<ShippingOperationBloc>().add(IsMoreChanged(false));
       EasyLoading.dismiss();

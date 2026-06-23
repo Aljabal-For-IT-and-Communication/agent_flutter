@@ -11,7 +11,6 @@ class AppRoutes {
   static const Setting = '/setting';
   static const MessageDetail = '/message_detail';
   static const ChangePassword = '/change_password';
-  static const ContactType = '/contact_type';
   static const About = '/about';
   static const PrivacyPolicy = '/privacy_policy';
   static const Contact = '/contact';
@@ -34,6 +33,4 @@ class AppRoutes {
   static const Revenue = '/revenue';
   static const MyReport = '/my_report';
   static const Photoimgview = '/phone_img_view';
-  static const Chat = '/chat';
-  static const ChatUser = '/chat_user';
 }

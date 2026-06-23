@@ -40,7 +40,6 @@ class SalePointData {
   String? middleName;
   String? phone;
   String? token;
-  String? createdAt;
   String? lastLogin;
   int? status;
 
@@ -57,24 +56,22 @@ class SalePointData {
       this.middleName,
       this.phone,
       this.token,
-      this.createdAt,
       this.lastLogin,
       this.status});
 
   SalePointData.fromJson(Map<String, dynamic> json) {
     avatar = json['avatar'];
-    balance = json['balance'];
+    balance = json['balance']?.toString();
     machineNumber = json['machine_number'];
     businessName = json['business_name'];
     cid = json['cid'];
     firstName = json['first_name'];
     id = json['id'];
-    indebtedness = json['indebtedness'];
+    indebtedness = json['indebtedness']?.toString();
     lastName = json['last_name'];
     middleName = json['middle_name'];
     phone = json['phone'];
     token = json['token'];
-    createdAt = json['created_at'];
     lastLogin = json['last_login'];
     status = json['status'];
   }
@@ -93,7 +90,6 @@ class SalePointData {
     data['middle_name'] = this.middleName;
     data['phone'] = this.phone;
     data['token'] = this.token;
-    data['created_at'] = this.createdAt;
     data['last_login'] = this.lastLogin;
     data['status'] = this.status;
     return data;
@@ -131,7 +127,6 @@ class AccountStatementData {
   String? moneyOwedYou;
   String? moneyYouOwe;
   String? paidMoney;
-  String? receiviedTransferBalance;
   String? sendBalance;
 
   AccountStatementData(
@@ -139,16 +134,14 @@ class AccountStatementData {
       this.moneyOwedYou,
       this.moneyYouOwe,
       this.paidMoney,
-      this.receiviedTransferBalance,
       this.sendBalance});
 
   AccountStatementData.fromJson(Map<String, dynamic> json) {
-    currentBalance = json['current_balance'];
-    moneyOwedYou = json['money_owed_you'];
-    moneyYouOwe = json['money_you_owe'];
-    paidMoney = json['paid_money'];
-    receiviedTransferBalance = json['receivied_transfer_balance'];
-    sendBalance = json['send_balance'];
+    currentBalance = json['current_balance']?.toString();
+    moneyOwedYou = json['money_owed_you']?.toString();
+    moneyYouOwe = json['money_you_owe']?.toString();
+    paidMoney = json['paid_money']?.toString();
+    sendBalance = json['send_balance']?.toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -157,7 +150,6 @@ class AccountStatementData {
     data['money_owed_you'] = this.moneyOwedYou;
     data['money_you_owe'] = this.moneyYouOwe;
     data['paid_money'] = this.paidMoney;
-    data['receivied_transfer_balance'] = this.receiviedTransferBalance;
     data['send_balance'] = this.sendBalance;
     return data;
   }
@@ -242,7 +234,6 @@ class WalletPasswordResponseEntity {
         "wallet_password": walletPassword,
       };
 }
-
 
 class SalePointPasswordResponseEntity {
   int? code;

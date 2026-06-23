@@ -13,13 +13,13 @@ class Logic {
   });
 
   init() {
-    DateRequestEntity entity = DateRequestEntity();
+    DateRangeRequestEntity entity = DateRangeRequestEntity();
     entity.startDate = "";
     entity.endDate = "";
     accountStatement(entity);
   }
 
-  accountStatement(DateRequestEntity entity) async {
+  accountStatement(DateRangeRequestEntity entity) async {
     try {
       EasyLoading.show(
           indicator: CircularProgressIndicator(),

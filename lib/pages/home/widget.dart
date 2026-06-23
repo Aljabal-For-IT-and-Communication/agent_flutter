@@ -19,15 +19,9 @@ class BuildAppBar extends StatelessWidget {
     var userProfile = context.read<HomeBloc>().state.userProfile;
     double indebtedness = double.parse(userProfile?.indebtedness ?? "0");
     double maxIndebtedness = double.parse(userProfile?.maxIndebtedness ?? "0");
-    double? maxBalance = double.parse(userProfile?.maxBalance ?? "0");
     double? indebtedness1 = indebtedness / maxIndebtedness;
     if (indebtedness1.isNaN || indebtedness1.isInfinite) {
       indebtedness1 = 0;
-    }
-    double? balance = double.parse(userProfile?.balance ?? "0");
-    double? balance1 = balance / maxBalance;
-    if (balance1.isNaN || balance1.isInfinite) {
-      balance1 = 0;
     }
     return Container(
       width: 375.w,
@@ -144,321 +138,127 @@ class BuildAppBar extends StatelessWidget {
           SizedBox(
             height: 30.h,
           ),
-          Container(
-            child: Column(
+          SizedBox(
+            width: 343.w,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              runAlignment: WrapAlignment.spaceBetween,
+              spacing: 8.w,
+              runSpacing: 16.h,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Text(
-                            "Balance".tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Container(
-                          child: Text(
-                            "${userProfile?.indebtedness ?? 0} LYD",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Container(
-                          height: 8.h,
-                          width: 85.w,
-                          child: LinearProgressIndicator(
-                            backgroundColor: AppColors.primaryBackground,
-                            color: AppColors.primaryGreen,
-                            value: indebtedness1,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 20.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Text(
-                            "Indebtedness".tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Container(
-                          child: Text(
-                            "${(userProfile?.realDebt ?? 0)} LYD",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Container(
-                          height: 8.h,
-                          width: 85.w,
-                          child: LinearProgressIndicator(
-                            backgroundColor: AppColors.primaryBackground,
-                            color: AppColors.primaryRed,
-                            value: indebtedness1,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 20.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Text(
-                            "Ceiling".tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Container(
-                          child: Text(
-                            "${userProfile?.balance ?? 0} LYD",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Container(
-                          height: 8.h,
-                          width: 85.w,
-                          child: LinearProgressIndicator(
-                            backgroundColor: AppColors.primaryBackground,
-                            color: AppColors.primaryFirstElement,
-                            value: indebtedness1,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
+                _HeaderMetric(
+                  label: "Balance".tr(),
+                  amount: "${userProfile?.indebtedness ?? 0} LYD",
+                  color: AppColors.primaryGreen,
+                  progress: indebtedness1,
                 ),
-                SizedBox(
-                  height: 10.h,
+                _HeaderMetric(
+                  label: "Indebtedness".tr(),
+                  amount: "${(userProfile?.realDebt ?? 0)} LYD",
+                  color: AppColors.primaryRed,
+                  progress: indebtedness1,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    userProfile?.subAgentsDebt != "0"
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                child: Text(
-                                  "Agents Debt".tr(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.primaryBackground,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Container(
-                                child: Text(
-                                  "${userProfile?.subAgentsDebt ?? 0} LYD",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.primaryBackground,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Container(
-                                height: 8.h,
-                                width: 70.w,
-                                child: LinearProgressIndicator(
-                                  backgroundColor: AppColors.primaryBackground,
-                                  color: AppColors.primaryRed,
-                                  value: indebtedness1,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                              )
-                            ],
-                          )
-                        : SizedBox(),
-                    userProfile?.subAgentsDebt != "0"
-                        ? SizedBox(
-                            width: 15.w,
-                          )
-                        : SizedBox(),
-                    userProfile?.salePointsDebt != "0"
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                child: Text(
-                                  "Sale Points Debt".tr(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.primaryBackground,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Container(
-                                child: Text(
-                                  "${userProfile?.salePointsDebt ?? 0} LYD",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.primaryBackground,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Container(
-                                height: 8.h,
-                                width: 70.w,
-                                child: LinearProgressIndicator(
-                                  backgroundColor: AppColors.primaryBackground,
-                                  color: AppColors.primaryRed,
-                                  value: indebtedness1,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5.0)),
-                                ),
-                              )
-                            ],
-                          )
-                        : SizedBox(),
-                    userProfile?.salePointsDebt != "0"
-                        ? SizedBox(
-                            width: 15.w,
-                          )
-                        : SizedBox(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Text(
-                            "Pending Revenue".tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Container(
-                          child: Text(
-                            "${userProfile?.pendingRevenue ?? 0} LYD",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.primaryBackground,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Container(
-                          height: 8.h,
-                          width: 70.w,
-                          child: LinearProgressIndicator(
-                            backgroundColor: AppColors.primaryBackground,
-                            color: "${userProfile?.pendingRevenue ?? 0}" != "0"
-                                ? AppColors.primaryRed
-                                : AppColors.primaryGreen,
-                            value: indebtedness1,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
+                _HeaderMetric(
+                  label: "Ceiling".tr(),
+                  amount: "${userProfile?.balance ?? 0} LYD",
+                  color: AppColors.primaryFirstElement,
+                  progress: indebtedness1,
+                ),
+                if (userProfile?.subAgentsDebt != "0")
+                  _HeaderMetric(
+                    label: "Agents Debt".tr(),
+                    amount: "${userProfile?.subAgentsDebt ?? 0} LYD",
+                    color: AppColors.primaryRed,
+                    progress: indebtedness1,
+                  ),
+                if (userProfile?.salePointsDebt != "0")
+                  _HeaderMetric(
+                    label: "Sale Points Debt".tr(),
+                    amount: "${userProfile?.salePointsDebt ?? 0} LYD",
+                    color: AppColors.primaryRed,
+                    progress: indebtedness1,
+                  ),
+                _HeaderMetric(
+                  label: "Pending Revenue".tr(),
+                  amount: "${userProfile?.pendingRevenue ?? 0} LYD",
+                  color: "${userProfile?.pendingRevenue ?? 0}" != "0"
+                      ? AppColors.primaryRed
+                      : AppColors.primaryGreen,
+                  progress: indebtedness1,
                 ),
               ],
             ),
           ),
           SizedBox(
             height: 25.h,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HeaderMetric extends StatelessWidget {
+  final String label;
+  final String amount;
+  final Color color;
+  final double progress;
+
+  const _HeaderMetric({
+    required this.label,
+    required this.amount,
+    required this.color,
+    required this.progress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 104.w,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.visible,
+            style: TextStyle(
+              color: AppColors.primaryBackground,
+              fontWeight: FontWeight.normal,
+              fontSize: 16.sp,
+            ),
+          ),
+          SizedBox(height: 10.h),
+          SizedBox(
+            width: double.infinity,
+            height: 22.h,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.center,
+              child: Text(
+                amount,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                style: TextStyle(
+                  color: AppColors.primaryBackground,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16.sp,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 10.h),
+          SizedBox(
+            height: 8.h,
+            width: 76.w,
+            child: LinearProgressIndicator(
+              backgroundColor: AppColors.primaryBackground,
+              color: color,
+              value: progress,
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            ),
           ),
         ],
       ),

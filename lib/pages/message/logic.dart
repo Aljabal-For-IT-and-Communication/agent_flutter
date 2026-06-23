@@ -21,8 +21,7 @@ class Logic {
           maskType: EasyLoadingMaskType.clear,
           dismissOnTap: true);
 
-      PageRequestEntity entity = PageRequestEntity();
-      entity.title = "";
+      PageOnlyRequestEntity entity = PageOnlyRequestEntity();
       entity.page = state.message.length;
       var result = await HomeAPI.notificationList(params: entity);
       if (result.code == 0 && result.data != null) {

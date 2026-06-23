@@ -23,7 +23,7 @@ class Logic {
     try {
       // Clear existing list before fetching to avoid stale data
       context.read<CollectionItemBloc>().add(const SalePointChanged([]));
-      var result = await SalePointAPI.salePointList();
+      var result = await SalePointAPI.salePointPickerList();
       if (result.code == 0) {
         context.read<CollectionItemBloc>().add(SalePointChanged(result.data!));
         // context.read<CollectionItemBloc>().add(SalePointItemChanged(result.data!.first));
@@ -37,7 +37,7 @@ class Logic {
     try {
       // Clear existing list before fetching to avoid stale data
       context.read<CollectionItemBloc>().add(const AgentListChanged([]));
-      var result = await AgentAPI.agentList();
+      var result = await AgentAPI.agentPickerList();
       if (result.code == 0) {
         context.read<CollectionItemBloc>().add(AgentListChanged(result.data!));
         // context.read<CollectionItemBloc>().add(AgentItemChanged(result.data!.first));

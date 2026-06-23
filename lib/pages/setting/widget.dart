@@ -1,5 +1,4 @@
 import 'package:app/common/values/values.dart';
-import 'package:app/common/utils/FirebaseMassagingHandler.dart';
 import 'package:app/global.dart';
 import 'package:app/pages/setting/bloc.dart';
 import 'package:app/pages/setting/event.dart';
@@ -52,67 +51,6 @@ class BuildListItem extends StatelessWidget {
         ),
       ),
       onTap: callFunc,
-    );
-  }
-}
-
-class BuildNotification extends StatelessWidget {
-  const BuildNotification({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final state = context.read<SettingBloc>().state;
-    // TODO: implement build
-    return GestureDetector(
-      child: Container(
-        padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: 24.h,
-                  height: 24.h,
-                  child: Image.asset("assets/icons/notification.png"),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 10.w),
-                  child: Text(
-                    "Notification".tr(),
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      color: AppColors.primaryText,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              width: 24.h,
-              height: 24.h,
-              child: Switch(
-                value: state.isOpen,
-                activeColor: AppColors.primaryElement,
-                onChanged: (bool value) async {
-                  if (value) {
-                    await FirebaseMassagingHandler.config();
-                  }
-                  await Global.storageService.setBool(
-                    STORAGE_NOTIFICATION_ENABLED_KEY,
-                    value,
-                  );
-                  context.read<SettingBloc>().add(IsOpenChanged(value));
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-      onTap: () {},
     );
   }
 }

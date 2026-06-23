@@ -1,4 +1,3 @@
-import 'package:app/common/entities/entities.dart';
 import 'package:bloc/bloc.dart';
 
 part 'event.dart';

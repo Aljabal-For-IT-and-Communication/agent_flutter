@@ -265,7 +265,8 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
                             return;
                           }
 
-                          DateRequestEntity entity = DateRequestEntity();
+                          DateRangeRequestEntity entity =
+                              DateRangeRequestEntity();
                           entity.startDate =
                               replaceArabicNumbers(state.startDate ?? "");
                           entity.endDate =

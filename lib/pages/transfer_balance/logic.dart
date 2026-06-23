@@ -33,7 +33,7 @@ class Logic {
     try {
       // Clear existing list before fetching to avoid stale data
       context.read<TransferBalanceBloc>().add(const SalePointChanged([]));
-      var result = await SalePointAPI.salePointList();
+      var result = await SalePointAPI.salePointPickerList();
       if (result.code == 0) {
         context.read<TransferBalanceBloc>().add(SalePointChanged(result.data!));
         // context.read<TransferBalanceBloc>().add(SalePointItemChanged(result.data!.first));
@@ -47,7 +47,7 @@ class Logic {
     try {
       // Clear existing list before fetching to avoid stale data
       context.read<TransferBalanceBloc>().add(const AgentListChanged([]));
-      var result = await AgentAPI.agentList();
+      var result = await AgentAPI.agentPickerList();
       if (result.code == 0) {
         context.read<TransferBalanceBloc>().add(AgentListChanged(result.data!));
         // context.read<TransferBalanceBloc>().add(AgentItemChanged(result.data!.first));
@@ -72,14 +72,18 @@ class Logic {
 
   getProfile() async {
     try {
-      final user = context.read<TransferBalanceBloc>().state.userProfile;
-      var result = await UserAPI.getProfile();
+      final user = context.read<TransferBalanceBloc>().state.userProfile ??
+          Global.storageService.getUserProfile();
+      var result = await UserAPI.getBalanceSummary();
       if (result.code == 0) {
-        var userItem = result.data;
-        userItem?.accessToken = user?.accessToken;
+        var userItem = user;
+        userItem.accessToken = user.accessToken;
+        userItem.balance = result.data?.balance ?? userItem.balance;
+        userItem.indebtedness =
+            result.data?.indebtedness ?? userItem.indebtedness;
         Global.storageService
             .setString(STORAGE_USER_PROFILE_KEY, jsonEncode(userItem));
-        context.read<TransferBalanceBloc>().add(UserProfileChanged(userItem!));
+        context.read<TransferBalanceBloc>().add(UserProfileChanged(userItem));
       }
     } catch (e) {
       Logger.write("${e}");

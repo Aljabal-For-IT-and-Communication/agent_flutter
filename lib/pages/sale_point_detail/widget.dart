@@ -1,7 +1,6 @@
 import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
-import 'package:app/common/services/sql_db.dart';
 import 'package:app/common/utils/date.dart';
 import 'package:app/common/utils/loading.dart';
 
@@ -373,12 +372,6 @@ class ActionButtonsGrid extends StatelessWidget {
           onTap: () => _toggleStatus(context),
         ),
         _ActionButton(
-          icon: Icons.chat_bubble_outline,
-          label: 'Chat'.tr(),
-          color: AppColors.primaryElement,
-          onTap: () => _goChat(context),
-        ),
-        _ActionButton(
           icon: Icons.account_balance_wallet_outlined,
           label: 'Collect'.tr(),
           color: Colors.indigo,
@@ -512,26 +505,6 @@ class ActionButtonsGrid extends StatelessWidget {
       Loading.toast('Error'.tr());
     } finally {
       Loading.dismiss();
-    }
-  }
-
-  void _goChat(BuildContext context) async {
-    if (item.token != null) {
-      SqlDbService sqlDbService = await SqlDbService().init();
-      var result = await sqlDbService.queryByTokenRow(item.token);
-      ChatUserItem userItem = ChatUserItem();
-      userItem.token = item.token;
-      userItem.name = item.firstName;
-      userItem.cid = item.cid ?? 0;
-      userItem.avatar = item.avatar;
-      userItem.msgNum = 0;
-      userItem.lastMsg = 'no msg!';
-      userItem.lastTime = '';
-      if (result.isEmpty) {
-        await sqlDbService.insertChatUser(userItem);
-      }
-      await Navigator.of(context)
-          .pushNamed(AppRoutes.Chat, arguments: userItem);
     }
   }
 

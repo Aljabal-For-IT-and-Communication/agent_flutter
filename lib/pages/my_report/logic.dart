@@ -14,7 +14,7 @@ class Logic {
 
   init() {}
 
-  superRechargeRecord(PageRequestEntity entity) async {
+  superRechargeRecord(PageOnlyRequestEntity entity) async {
     EasyLoading.show(
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
@@ -40,7 +40,7 @@ class Logic {
     }
   }
 
-  childRechargeRecord(PageRequestEntity entity) async {
+  childRechargeRecord(PageOnlyRequestEntity entity) async {
     EasyLoading.show(
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
@@ -68,8 +68,7 @@ class Logic {
 
   postTransformation(int page) async {
     final state = context.read<MyReportBloc>().state;
-    PageRequestEntity entity = PageRequestEntity();
-    entity.title = state.agent;
+    PageOnlyRequestEntity entity = PageOnlyRequestEntity();
     entity.page = page;
     if (state.agent == "shipment report") {
       superRechargeRecord(entity);

@@ -27,9 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Alafdal+Agents uses the camera to scan machine barcodes and capture chat photos you choose to send.</string>
+	<string>Alafdal+Agents uses the camera to scan machine barcodes and capture validation photos you choose to send.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Alafdal+Agents uses selected photos or documents only when you attach them to chats or validation requests.</string>
+	<string>Alafdal+Agents uses selected photos or documents only when you attach them to validation requests.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

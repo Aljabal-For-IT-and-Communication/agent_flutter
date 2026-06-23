@@ -5,10 +5,6 @@ import 'package:app/pages/account_statement/bloc.dart';
 import 'package:app/pages/account_statement/view.dart';
 import 'package:app/pages/application/bloc.dart';
 import 'package:app/pages/application/view.dart';
-import 'package:app/pages/chat/bloc.dart';
-import 'package:app/pages/chat/view.dart';
-import 'package:app/pages/chat_user/bloc.dart';
-import 'package:app/pages/chat_user/view.dart';
 import 'package:app/pages/collection/bloc.dart';
 import 'package:app/pages/collection/view.dart';
 import 'package:app/pages/collection_item/bloc.dart';
@@ -18,7 +14,6 @@ import 'package:app/pages/collection_sale_point/view.dart';
 import 'package:app/pages/collection_what/bloc.dart';
 import 'package:app/pages/collection_what/view.dart';
 import 'package:app/pages/contact/contact.dart';
-import 'package:app/pages/contact_type/contact_type.dart';
 import 'package:app/pages/credit/bloc.dart';
 import 'package:app/pages/credit/view.dart';
 import 'package:app/pages/debit/bloc.dart';
@@ -184,17 +179,7 @@ class AppPages {
           page: MyReportPage(),
           bloc: BlocProvider(create: (_) => MyReportBloc())),
       PageEntity(
-          path: AppRoutes.Chat,
-          page: ChatPage(),
-          bloc: BlocProvider(create: (_) => ChatBloc())),
-      PageEntity(
-          path: AppRoutes.ChatUser,
-          page: ChatUserPage(),
-          bloc: BlocProvider(create: (_) => ChatUserBloc())),
-      PageEntity(
           path: AppRoutes.Photoimgview, page: PhotoViewPage(), bloc: null),
-      PageEntity(
-          path: AppRoutes.ContactType, page: ContactTypePage(), bloc: null),
       PageEntity(path: AppRoutes.About, page: AboutPage(), bloc: null),
       PageEntity(
           path: AppRoutes.PrivacyPolicy, page: PrivacyPolicyPage(), bloc: null),

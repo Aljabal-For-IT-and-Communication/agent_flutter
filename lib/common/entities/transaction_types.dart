@@ -31,23 +31,17 @@ class CollectTypeData {
   int? id;
   String? typeName;
   bool? needsValidation;
-  bool? available;
-  String? filter;
 
   CollectTypeData({
     this.id,
     this.typeName,
     this.needsValidation,
-    this.available,
-    this.filter,
   });
 
   CollectTypeData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     typeName = json['type_name'];
     needsValidation = json['needs_validation'];
-    available = json['available'];
-    filter = json['filter'];
   }
 
   Map<String, dynamic> toJson() {
@@ -55,8 +49,6 @@ class CollectTypeData {
     data['id'] = this.id;
     data['type_name'] = this.typeName;
     data['needs_validation'] = this.needsValidation;
-    data['available'] = this.available;
-    data['filter'] = this.filter;
     return data;
   }
 }
@@ -94,29 +86,20 @@ class RechargeTypeData {
   int? id;
   String? typeName;
   String? profit;
-  bool? available;
-  bool? autoCollect;
   bool? needsValidation;
-  String? filter;
 
   RechargeTypeData({
     this.id,
     this.typeName,
     this.profit,
-    this.available,
-    this.autoCollect,
     this.needsValidation,
-    this.filter,
   });
 
   RechargeTypeData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     typeName = json['type_name'];
     profit = json['profit']?.toString();
-    available = json['available'];
-    autoCollect = json['auto_collect'];
     needsValidation = json['needs_validation'];
-    filter = json['filter'];
   }
 
   Map<String, dynamic> toJson() {
@@ -124,10 +107,7 @@ class RechargeTypeData {
     data['id'] = this.id;
     data['type_name'] = this.typeName;
     data['profit'] = this.profit;
-    data['available'] = this.available;
-    data['auto_collect'] = this.autoCollect;
     data['needs_validation'] = this.needsValidation;
-    data['filter'] = this.filter;
     return data;
   }
 }

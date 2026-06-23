@@ -34,7 +34,6 @@ class RegisterRequestEntity {
   int? region;
   String? address;
   String? phone;
-  String? agentPhone;
   String? email;
   String? latitude;
   String? longitude;
@@ -50,7 +49,6 @@ class RegisterRequestEntity {
     this.region,
     this.address,
     this.phone,
-    this.agentPhone,
     this.email,
     this.latitude,
     this.longitude,
@@ -67,7 +65,6 @@ class RegisterRequestEntity {
         "region": region,
         "address": address,
         "phone": phone,
-        "agent_phone": agentPhone,
         "email": email,
         "latitude": latitude,
         "longitude": longitude,
@@ -77,26 +74,14 @@ class RegisterRequestEntity {
 }
 
 class ProfileRequestEntity {
-  int? gender;
-  String? birthday;
-  String? description;
   String? phone;
-  String? name;
 
   ProfileRequestEntity({
-    this.gender,
-    this.birthday,
-    this.description,
     this.phone,
-    this.name,
   });
 
   Map<String, dynamic> toJson() => {
-        "gender": gender,
-        "birthday": birthday,
-        "description": description,
         "phone": phone,
-        "name": name,
       };
 }
 
@@ -161,94 +146,61 @@ class UserItem {
   String? accessToken;
   String? avatar;
   String? balance;
-  int? cid;
-  int? countryId;
   int? city;
-  String? createdAt;
-  String? deletedAt;
   String? email;
   String? firstName;
   int? id;
   String? indebtedness;
   String? lastName;
-  int? level;
-  String? maxBalance;
   String? maxIndebtedness;
-  String? middleName;
   String? phone;
-  int? pid;
-  String? profit;
   int? region;
-  int? status;
   String? realDebt;
   String? pendingRevenue;
   String? agentDebt;
   String? subAgentsDebt;
   String? salePointsDebt;
   String? token;
-  String? updatedAt;
 
   UserItem(
       {this.accessToken,
       this.avatar,
       this.balance,
-      this.cid,
       this.city,
-      this.createdAt,
-      this.deletedAt,
       this.email,
       this.firstName,
       this.id,
       this.indebtedness,
       this.lastName,
-      this.level,
-      this.maxBalance,
       this.maxIndebtedness,
-      this.middleName,
       this.phone,
-      this.pid,
-      this.profit,
-      this.countryId,
       this.region,
-      this.status,
       this.realDebt,
       this.pendingRevenue,
       this.agentDebt,
       this.subAgentsDebt,
       this.salePointsDebt,
-      this.token,
-      this.updatedAt});
+      this.token});
 
   UserItem.fromJson(Map<String, dynamic> json) {
     accessToken = json['access_token'];
     avatar = json['avatar'];
-    balance = json['balance'];
-    cid = json['cid'];
+    balance = json['balance']?.toString();
     city = json['city'];
-    createdAt = json['created_at'];
-    deletedAt = json['deleted_at'];
     email = json['email'];
     firstName = json['first_name'];
     id = json['id'];
-    indebtedness = json['indebtedness'];
+    indebtedness = json['indebtedness']?.toString();
     lastName = json['last_name'];
-    level = json['level'];
-    maxBalance = json['max_balance'];
-    maxIndebtedness = json['max_indebtedness'];
-    middleName = json['middle_name'];
+    maxIndebtedness = json['max_indebtedness']?.toString();
     phone = json['phone'];
-    pid = json['pid'];
-    profit = json['profit'];
     region = json['region'];
-    status = json['status'];
-    countryId = json['country_id'];
-    realDebt = json['real_debt'];
-    pendingRevenue = json['pending_revenue'];
-    agentDebt = json['agent_debt'];
-    subAgentsDebt = json['sub_agents_debt'];
-    salePointsDebt = json['sale_points_debt'];
+    realDebt = json['real_debt']?.toString();
+    pendingRevenue = json['pending_revenue']?.toString();
+    agentDebt = json['agent_debt']?.toString();
+    subAgentsDebt = json['sub_agents_debt']?.toString();
+    salePointsDebt = json['sale_points_debt']?.toString();
     token = json['token'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -256,32 +208,21 @@ class UserItem {
     data['access_token'] = this.accessToken;
     data['avatar'] = this.avatar;
     data['balance'] = this.balance;
-    data['cid'] = this.cid;
     data['city'] = this.city;
-    data['created_at'] = this.createdAt;
-    data['deleted_at'] = this.deletedAt;
     data['email'] = this.email;
     data['first_name'] = this.firstName;
     data['id'] = this.id;
     data['indebtedness'] = this.indebtedness;
     data['last_name'] = this.lastName;
-    data['level'] = this.level;
-    data['max_balance'] = this.maxBalance;
     data['max_indebtedness'] = this.maxIndebtedness;
-    data['middle_name'] = this.middleName;
     data['phone'] = this.phone;
-    data['pid'] = this.pid;
-    data['profit'] = this.profit;
     data['region'] = this.region;
-    data['status'] = this.status;
-    data['country_id'] = this.countryId;
     data['real_debt'] = this.realDebt;
     data['pending_revenue'] = this.pendingRevenue;
     data['sub_agents_debt'] = this.subAgentsDebt;
     data['sale_points_debt'] = this.salePointsDebt;
     data['agent_debt'] = this.agentDebt;
     data['token'] = this.token;
-    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

@@ -28,9 +28,7 @@ class AgentResponseEntity {
 }
 
 class AgentData {
-  String? avatar;
   String? balance;
-  int? cid;
   String? firstName;
   int? id;
   String? indebtedness;
@@ -42,12 +40,9 @@ class AgentData {
   String? lastName;
   String? middleName;
   String? phone;
-  String? token;
 
   AgentData(
-      {this.avatar,
-      this.balance,
-      this.cid,
+      {this.balance,
       this.firstName,
       this.id,
       this.indebtedness,
@@ -58,32 +53,26 @@ class AgentData {
       this.salePointsDebt,
       this.lastName,
       this.middleName,
-      this.phone,
-      this.token});
+      this.phone});
 
   AgentData.fromJson(Map<String, dynamic> json) {
-    avatar = json['avatar'];
-    balance = json['balance'];
-    cid = json['cid'];
+    balance = json['balance']?.toString();
     firstName = json['first_name'];
     id = json['id'];
-    indebtedness = json['indebtedness'];
-    realDebt = json['real_debt'];
-    pendingRevenue = json['pending_revenue'];
-    agentDebt = json['agent_debt'];
-    subAgentsDebt = json['sub_agents_debt'];
-    salePointsDebt = json['sale_points_debt'];
+    indebtedness = json['indebtedness']?.toString();
+    realDebt = json['real_debt']?.toString();
+    pendingRevenue = json['pending_revenue']?.toString();
+    agentDebt = json['agent_debt']?.toString();
+    subAgentsDebt = json['sub_agents_debt']?.toString();
+    salePointsDebt = json['sale_points_debt']?.toString();
     lastName = json['last_name'];
     middleName = json['middle_name'];
     phone = json['phone'];
-    token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['avatar'] = this.avatar;
     data['balance'] = this.balance;
-    data['cid'] = this.cid;
     data['first_name'] = this.firstName;
     data['id'] = this.id;
     data['indebtedness'] = this.indebtedness;
@@ -95,7 +84,6 @@ class AgentData {
     data['last_name'] = this.lastName;
     data['middle_name'] = this.middleName;
     data['phone'] = this.phone;
-    data['token'] = this.token;
     return data;
   }
 }

@@ -35,18 +35,6 @@ class IdRequestEntity {
       };
 }
 
-class TitleRequestEntity {
-  String? title;
-
-  TitleRequestEntity({
-    this.title,
-  });
-
-  Map<String, dynamic> toJson() => {
-        "title": title,
-      };
-}
-
 class PageRequestEntity {
   String? title;
   int? page;
@@ -58,6 +46,18 @@ class PageRequestEntity {
 
   Map<String, dynamic> toJson() => {
         "title": title,
+        "page": page,
+      };
+}
+
+class PageOnlyRequestEntity {
+  int? page;
+
+  PageOnlyRequestEntity({
+    this.page,
+  });
+
+  Map<String, dynamic> toJson() => {
         "page": page,
       };
 }
@@ -92,6 +92,21 @@ class DateRequestEntity {
       };
 }
 
+class DateRangeRequestEntity {
+  String? startDate;
+  String? endDate;
+
+  DateRangeRequestEntity({
+    this.startDate,
+    this.endDate,
+  });
+
+  Map<String, dynamic> toJson() => {
+        "start_date": startDate,
+        "end_date": endDate,
+      };
+}
+
 class BaseData {
   int? id;
   String? image;
@@ -116,18 +131,6 @@ class BaseData {
     data['name'] = this.name;
     return data;
   }
-}
-
-class BindFcmTokenRequestEntity {
-  String? fcmtoken;
-
-  BindFcmTokenRequestEntity({
-    this.fcmtoken,
-  });
-
-  Map<String, dynamic> toJson() => {
-        "fcmtoken": fcmtoken,
-      };
 }
 
 class TokenRequestEntity {
