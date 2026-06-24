@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:app/global.dart';
+import 'package:app/common/utils/i18n.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class HttpUtil {
@@ -66,7 +67,8 @@ class HttpUtil {
               .pushNamedAndRemoveUntil(
                   AppRoutes.Sign_in, (Route<dynamic> route) => false);
         }
-        EasyLoading.showError("Token expired, do log in again！");
+        EasyLoading.showError(
+            trServerMessage("Token expired, do log in again！"));
         break;
       default:
         // EasyLoading.showError('unknown mistake');

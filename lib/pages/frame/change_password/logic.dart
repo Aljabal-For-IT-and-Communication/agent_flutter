@@ -2,6 +2,7 @@ import 'package:app/common/apis/user.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/utils/logger.dart';
+import 'package:app/common/utils/i18n.dart';
 import 'package:app/common/values/constant.dart';
 import 'package:app/global.dart';
 import 'package:flutter/material.dart';
@@ -23,19 +24,20 @@ class Logic {
     String repassword = state.repassword;
     String confirm_password = state.confirm_password;
     if (password.isEmpty) {
-      toastInfo(msg: "Password not empty!");
+      toastInfo(msg: trServerMessage("Password not empty!"));
       return;
     }
     if (repassword.isEmpty) {
-      toastInfo(msg: "New Password not empty!");
+      toastInfo(msg: trServerMessage("New Password not empty!"));
       return;
     }
     if (repassword.length < 6) {
-      toastInfo(msg: "New Password min length is 6!");
+      toastInfo(msg: trServerMessage("New Password min length is 6!"));
       return;
     }
     if (repassword != confirm_password) {
-      toastInfo(msg: "New Password and Confirm password not Same !");
+      toastInfo(
+          msg: trServerMessage("New Password and Confirm password not Same !"));
       return;
     }
     FocusManager.instance.primaryFocus?.unfocus();
@@ -50,9 +52,9 @@ class Logic {
     try {
       var result = await UserAPI.changePassword(params: entity);
       EasyLoading.dismiss();
-      toastInfo(msg: "${result.msg}");
+      toastInfo(msg: trServerMessage("${result.msg}"));
       if (result.code == 0) {
-        toastInfo(msg: "Log back into your account！");
+        toastInfo(msg: trServerMessage("Log back into your account！"));
         Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
         Global.storageService.remove(STORAGE_USER_TOKEN_KEY);
         Navigator.of(context).pushNamedAndRemoveUntil(
@@ -60,7 +62,7 @@ class Logic {
       }
     } catch (e) {
       EasyLoading.dismiss();
-      toastInfo(msg: 'internet error');
+      toastInfo(msg: trServerMessage('internet error'));
       Logger.write("${e}");
     }
   }

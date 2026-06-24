@@ -82,7 +82,7 @@ class Logic {
     } catch (e) {
       context.read<ShipmentBloc>().add(IsMoreChanged(false));
       EasyLoading.dismiss();
-      toastInfo(msg: 'internet error');
+      toastInfo(msg: trServerMessage('internet error'));
       Logger.write("${e}");
     }
   }

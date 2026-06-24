@@ -22,11 +22,11 @@ class Logic {
   asyncPostAllData() async {
     var state = context.read<SignInBloc>().state;
     if (state.phone.isEmpty) {
-      toastInfo(msg: "Phone not empty!");
+      toastInfo(msg: trServerMessage("Phone not empty!"));
       return;
     }
     if (state.password.isEmpty) {
-      toastInfo(msg: "Password not empty!");
+      toastInfo(msg: trServerMessage("Password not empty!"));
       return;
     }
     EasyLoading.show(
@@ -52,11 +52,11 @@ class Logic {
             AppRoutes.Application, (Route<dynamic> route) => false);
       } else {
         EasyLoading.dismiss();
-        toastInfo(msg: '${result.msg}');
+        toastInfo(msg: trServerMessage('${result.msg}'));
       }
     } catch (e) {
       EasyLoading.dismiss();
-      toastInfo(msg: 'internet error');
+      toastInfo(msg: trServerMessage('internet error'));
       Logger.write("${e}");
     }
   }

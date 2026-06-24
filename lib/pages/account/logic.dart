@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:app/common/apis/user.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/logger.dart';
+import 'package:app/common/utils/i18n.dart';
 import 'package:app/common/values/constant.dart';
 import 'package:app/global.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class Logic {
     try {
       var result = await UserAPI.updateProfile(params: entity);
       EasyLoading.dismiss();
-      toastInfo(msg: "${result.msg}");
+      toastInfo(msg: trServerMessage("${result.msg}"));
       if (result.code == 0) {
         if (userItem != null) {
           Global.storageService
@@ -41,7 +42,7 @@ class Logic {
       }
     } catch (e) {
       EasyLoading.dismiss();
-      toastInfo(msg: 'internet error');
+      toastInfo(msg: trServerMessage('internet error'));
       Logger.write("${e}");
     }
   }

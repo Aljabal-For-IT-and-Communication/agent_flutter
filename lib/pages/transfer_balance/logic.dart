@@ -146,7 +146,7 @@ class Logic {
     try {
       var result = await SalePointAPI.transferBalance(params: entity);
       EasyLoading.dismiss();
-      toastInfo(msg: "${result.msg}");
+      toastInfo(msg: trServerMessage("${result.msg}"));
       if (result.code == 0) {
         if (state.isLocked) {
           // Pop back to sale_point_detail with result data
@@ -162,7 +162,7 @@ class Logic {
       }
     } catch (e) {
       EasyLoading.dismiss();
-      toastInfo(msg: 'internet error');
+      toastInfo(msg: trServerMessage('internet error'));
       Logger.write("${e}");
     }
   }

@@ -26,23 +26,24 @@ class Logic {
     String verificationCode = state.verificationCode;
 
     if (phone.isEmpty) {
-      toastInfo(msg: "phone number not empty!");
+      toastInfo(msg: trServerMessage("phone number not empty!"));
       return;
     }
     if (password.isEmpty) {
-      toastInfo(msg: "password not empty!");
+      toastInfo(msg: trServerMessage("password not empty!"));
       return;
     }
     if (password.length < 6) {
-      toastInfo(msg: "New Password min length is 6!");
+      toastInfo(msg: trServerMessage("New Password min length is 6!"));
       return;
     }
     if (password != confirmPassword) {
-      toastInfo(msg: "New Password and Confirm password not Same !");
+      toastInfo(
+          msg: trServerMessage("New Password and Confirm password not Same !"));
       return;
     }
     if (verificationCode.isEmpty) {
-      toastInfo(msg: "Verification Code not empty!");
+      toastInfo(msg: trServerMessage("Verification Code not empty!"));
       return;
     }
     FocusManager.instance.primaryFocus?.unfocus();
@@ -58,15 +59,15 @@ class Logic {
     try {
       var result = await UserAPI.forgetPassword(params: entity);
       EasyLoading.dismiss();
-      toastInfo(msg: "${result.msg}");
+      toastInfo(msg: trServerMessage("${result.msg}"));
       if (result.code == 0) {
-        toastInfo(msg: "Log back into your account！");
+        toastInfo(msg: trServerMessage("Log back into your account！"));
         Navigator.of(context).pushNamedAndRemoveUntil(
             AppRoutes.Sign_in, (Route<dynamic> route) => false);
       }
     } catch (e) {
       EasyLoading.dismiss();
-      toastInfo(msg: 'internet error');
+      toastInfo(msg: trServerMessage('internet error'));
       Logger.write("${e}");
     }
   }
@@ -77,11 +78,12 @@ class Logic {
     bool isSend = state.isSend;
 
     if (phone.isEmpty) {
-      toastInfo(msg: "phone number not empty!");
+      toastInfo(msg: trServerMessage("phone number not empty!"));
       return;
     }
     if (isSend) {
-      toastInfo(msg: "Sending in ${state.countDownTime} seconds!");
+      toastInfo(
+          msg: trServerMessage("Sending in ${state.countDownTime} seconds!"));
       return;
     }
     FocusManager.instance.primaryFocus?.unfocus();
@@ -97,17 +99,17 @@ class Logic {
       EasyLoading.dismiss();
 
       if (result.code == 0) {
-        toastInfo(msg: "Verification code send success！");
+        toastInfo(msg: trServerMessage("Verification code send success！"));
         //倒计时
         context.read<ForgetBloc>().add(CountDownTimeChanged(30));
         context.read<ForgetBloc>().add(IsSendChanged(true));
         startCountdownTimer();
       } else {
-        toastInfo(msg: "${result.msg}");
+        toastInfo(msg: trServerMessage("${result.msg}"));
       }
     } catch (e) {
       EasyLoading.dismiss();
-      toastInfo(msg: 'internet error');
+      toastInfo(msg: trServerMessage('internet error'));
       Logger.write("${e}");
     }
   }

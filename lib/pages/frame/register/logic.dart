@@ -1,6 +1,7 @@
 import 'package:app/common/apis/user.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/logger.dart';
+import 'package:app/common/utils/i18n.dart';
 import 'package:app/global.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -119,13 +120,13 @@ class Logic {
 
       var result = await UserAPI.register(params: entity);
       EasyLoading.dismiss();
-      toastInfo(msg: "${result.msg}");
+      toastInfo(msg: trServerMessage("${result.msg}"));
       if (result.code == 0) {
         Navigator.of(context).pop();
       }
     } catch (e) {
       EasyLoading.dismiss();
-      toastInfo(msg: "Error:${e}");
+      toastInfo(msg: "${trServerMessage("Error")}: $e");
       Logger.write("${e}");
     }
   }

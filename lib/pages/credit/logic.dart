@@ -23,7 +23,7 @@ class Logic {
     final state = context.read<CreditBloc>().state;
 
     if (state.Amount.isEmpty) {
-      toastInfo(msg: "Amount not empty!");
+      toastInfo(msg: trServerMessage("Amount not empty!"));
       return;
     }
 
@@ -39,13 +39,13 @@ class Logic {
     try {
       var result = await SalePointAPI.requestCredit(params: entity);
       EasyLoading.dismiss();
-      toastInfo(msg: "${result.msg}");
+      toastInfo(msg: trServerMessage("${result.msg}"));
       if (result.code == 0) {
         Navigator.pop(context);
       }
     } catch (e) {
       EasyLoading.dismiss();
-      toastInfo(msg: 'internet error');
+      toastInfo(msg: trServerMessage('internet error'));
       Logger.write("${e}");
     }
   }

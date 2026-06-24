@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:app/common/utils/i18n.dart';
 import '../../common/apis/sale_point.dart';
 import '../../common/entities/transfer.dart';
 import 'package:app/common/entities/entities.dart';
@@ -103,7 +104,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
     try {
       var result = await SalePointAPI.transferCollection(params: entity);
       EasyLoading.dismiss();
-      toastInfo(msg: "${result.msg}");
+      toastInfo(msg: trServerMessage("${result.msg}"));
       if (result.code == 0) {
         final isLocked = state.isLocked;
 
@@ -282,7 +283,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
       }
     } catch (e) {
       EasyLoading.dismiss();
-      toastInfo(msg: 'internet error');
+      toastInfo(msg: trServerMessage('internet error'));
       Logger.write("${e}");
     }
   }

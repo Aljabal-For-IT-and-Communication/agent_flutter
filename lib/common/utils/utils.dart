@@ -8,3 +8,4 @@ export 'logger.dart';
 export 'loading.dart';
 export 'locale.dart';
 export 'idempotency.dart';
+export 'i18n.dart';

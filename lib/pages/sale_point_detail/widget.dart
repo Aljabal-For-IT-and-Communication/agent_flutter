@@ -2,6 +2,7 @@ import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/utils/date.dart';
+import 'package:app/common/utils/i18n.dart';
 import 'package:app/common/utils/loading.dart';
 
 import 'package:app/common/values/colors.dart';
@@ -324,7 +325,8 @@ class EditFormCard extends StatelessWidget {
         Loading.toast('Saved'.tr());
         onSaved();
       } else {
-        Loading.toast(res.msg ?? 'Error'.tr());
+        Loading.toast(
+            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
       }
     } catch (e) {
       Loading.toast('Error'.tr());
@@ -472,7 +474,8 @@ class ActionButtonsGrid extends StatelessWidget {
         Loading.toast("Sale point deleted".tr());
         Navigator.of(context).pop(true);
       } else {
-        Loading.toast(res.msg ?? 'Error'.tr());
+        Loading.toast(
+            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
       }
     } catch (e) {
       Loading.toast('Error'.tr());
@@ -499,7 +502,8 @@ class ActionButtonsGrid extends StatelessWidget {
         item.status = newStatus;
         onStatusChanged?.call();
       } else {
-        Loading.toast(res.msg ?? 'Error'.tr());
+        Loading.toast(
+            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
       }
     } catch (e) {
       Loading.toast('Error'.tr());
@@ -574,7 +578,8 @@ class ActionButtonsGrid extends StatelessWidget {
           ),
         );
       } else {
-        Loading.toast(res.msg ?? 'Error'.tr());
+        Loading.toast(
+            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
       }
     } catch (e) {
       Loading.toast('Error'.tr());
@@ -626,7 +631,8 @@ class ActionButtonsGrid extends StatelessWidget {
           ),
         );
       } else {
-        Loading.toast(res.msg ?? 'Error'.tr());
+        Loading.toast(
+            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
       }
     } catch (e) {
       Loading.toast('Error'.tr());
