@@ -64,59 +64,70 @@ class BuildPublicAppBar extends StatelessWidget {
           Container(
             width: 343.w,
             alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (showBack)
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      if (onBack != null) {
-                        onBack!();
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: Container(
-                      width: 40.w,
-                      height: 40.w,
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: AppColors.primaryBackground,
-                        size: 28.sp,
+            child: showBack
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          if (onBack != null) {
+                            onBack!();
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: Container(
+                          width: 40.w,
+                          height: 40.w,
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: AppColors.primaryBackground,
+                            size: 28.sp,
+                          ),
+                        ),
                       ),
-                    ),
+                      _PublicAppBarTitle(title: title, width: 240.w),
+                      Container(
+                        width: 40.w,
+                        height: 40.w,
+                      )
+                    ],
                   )
-                else
-                  Container(
-                    width: 40.w,
-                    height: 40.w,
-                  ),
-                Container(
-                  width: 240.w,
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: AppColors.primaryBackground,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.sp,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 40.w,
-                  height: 40.w,
-                )
-              ],
-            ),
+                : _PublicAppBarTitle(title: title, width: 260.w),
           ),
           SizedBox(
             height: 30.h,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _PublicAppBarTitle extends StatelessWidget {
+  final String title;
+  final double width;
+
+  const _PublicAppBarTitle({
+    required this.title,
+    required this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: AppColors.primaryBackground,
+          fontWeight: FontWeight.bold,
+          fontSize: 18.sp,
+        ),
       ),
     );
   }
