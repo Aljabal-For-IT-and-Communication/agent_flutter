@@ -19,7 +19,7 @@ class BuildAppBar extends StatelessWidget {
         image: DecorationImage(
           alignment: Alignment.topCenter,
           image: AssetImage('assets/icons/headbg.png'),
-          fit: BoxFit.fitWidth, // 完全填充
+          fit: BoxFit.fill, // 完全填充
         ),
       ),
       padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 0.h),
@@ -35,15 +35,17 @@ class BuildAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: Container(
-                    width: 24.w,
-                    height: 24.w,
+                    width: 40.w,
+                    height: 40.w,
                     child: Icon(
                       Icons.arrow_back,
                       color: AppColors.primaryBackground,
+                      size: 28.sp,
                     ),
                   ),
                 ),
@@ -56,14 +58,14 @@ class BuildAppBar extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppColors.primaryBackground,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),
                 Container(
-                  width: 24.w,
-                  height: 24.w,
+                  width: 40.w,
+                  height: 40.w,
                 )
               ],
             ),

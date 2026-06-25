@@ -27,7 +27,7 @@ class DetailAppBar extends StatelessWidget {
         image: const DecorationImage(
           alignment: Alignment.topCenter,
           image: AssetImage('assets/icons/headbg3.png'),
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fill,
         ),
       ),
       child: Column(
@@ -36,9 +36,14 @@ class DetailAppBar extends StatelessWidget {
           Row(
             children: [
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () => Navigator.of(context).pop(item),
-                child: Icon(Icons.arrow_back_ios,
-                    color: AppColors.primaryBackground, size: 20.sp),
+                child: SizedBox(
+                  width: 40.w,
+                  height: 40.w,
+                  child: Icon(Icons.arrow_back_ios,
+                      color: AppColors.primaryBackground, size: 28.sp),
+                ),
               ),
               Expanded(
                 child: Text(
@@ -48,12 +53,12 @@ class DetailAppBar extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: AppColors.primaryBackground,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.sp,
                   ),
                 ),
               ),
-              SizedBox(width: 20.sp), // balance for back icon
+              SizedBox(width: 40.w), // balance for back icon
             ],
           ),
           SizedBox(height: 15.h),

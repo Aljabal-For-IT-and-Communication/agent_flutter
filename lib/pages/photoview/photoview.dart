@@ -46,6 +46,7 @@ class _PhotoViewPage extends State<PhotoViewPage> {
 
   AppBar _buildAppBar() {
     return AppBar(
+        centerTitle: true,
         bottom: PreferredSize(
             child: Container(
               color: AppColors.primaryThreeElementText,
@@ -56,8 +57,8 @@ class _PhotoViewPage extends State<PhotoViewPage> {
           "PhotoView",
           style: TextStyle(
             color: AppColors.primaryText,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.normal,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
           ),
         ));
   }

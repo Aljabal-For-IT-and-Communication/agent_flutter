@@ -32,18 +32,32 @@ class Global {
     TransitionBuilder? builder,
   }) {
     return (BuildContext context, Widget? child) {
+      final keyboardDismissChild = GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: child,
+      );
+
       if (builder != null) {
         return builder(
             context,
             Overlay(initialEntries: [
               OverlayEntry(builder: (BuildContext context) {
-                return FlutterEasyLoading(key: GlobalKey(), child: child);
+                return FlutterEasyLoading(
+                  key: GlobalKey(),
+                  child: keyboardDismissChild,
+                );
               }),
             ]));
       } else {
         return Overlay(initialEntries: [
           OverlayEntry(builder: (BuildContext context) {
-            return FlutterEasyLoading(key: GlobalKey(), child: child);
+            return FlutterEasyLoading(
+              key: GlobalKey(),
+              child: keyboardDismissChild,
+            );
           }),
         ]);
       }

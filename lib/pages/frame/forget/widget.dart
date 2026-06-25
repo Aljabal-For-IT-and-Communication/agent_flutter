@@ -21,15 +21,17 @@ class BuildAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () {
               Navigator.pop(context);
             },
             child: Container(
-              width: 24.w,
-              height: 24.w,
+              width: 40.w,
+              height: 40.w,
               child: Icon(
                 Icons.arrow_back,
                 color: AppColors.primaryBackground,
+                size: 28.sp,
               ),
             ),
           ),

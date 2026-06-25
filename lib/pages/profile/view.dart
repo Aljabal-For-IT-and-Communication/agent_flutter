@@ -34,13 +34,14 @@ class _ProfilePage extends State<ProfilePage> {
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
+              centerTitle: true,
               title: Container(
                 child: Text(
                   "Profile",
                   style: TextStyle(
                     color: AppColors.primaryText,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
+                    fontSize: 18.sp,
                   ),
                 ),
               ),

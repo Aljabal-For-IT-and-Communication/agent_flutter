@@ -6,13 +6,14 @@ import 'package:app/common/values/values.dart';
 AppBar buildAppBar(String title) {
   return AppBar(
     backgroundColor: AppColors.primaryBackground,
+    centerTitle: true,
     title: Container(
       child: Text(
         title,
         style: TextStyle(
           color: AppColors.primaryText,
           fontWeight: FontWeight.bold,
-          fontSize: 16.sp,
+          fontSize: 18.sp,
         ),
       ),
     ),
@@ -52,7 +53,7 @@ class BuildPublicAppBar extends StatelessWidget {
         image: DecorationImage(
           alignment: Alignment.topCenter,
           image: AssetImage('assets/icons/headbg3.png'),
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fill,
         ),
       ),
       child: Column(
@@ -68,6 +69,7 @@ class BuildPublicAppBar extends StatelessWidget {
               children: [
                 if (showBack)
                   GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       if (onBack != null) {
                         onBack!();
@@ -76,21 +78,22 @@ class BuildPublicAppBar extends StatelessWidget {
                       }
                     },
                     child: Container(
-                      width: 24.w,
-                      height: 24.w,
-                      child: const Icon(
+                      width: 40.w,
+                      height: 40.w,
+                      child: Icon(
                         Icons.arrow_back,
                         color: AppColors.primaryBackground,
+                        size: 28.sp,
                       ),
                     ),
                   )
                 else
                   Container(
-                    width: 24.w,
-                    height: 24.w,
+                    width: 40.w,
+                    height: 40.w,
                   ),
                 Container(
-                  width: 260.w,
+                  width: 240.w,
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
@@ -98,14 +101,14 @@ class BuildPublicAppBar extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppColors.primaryBackground,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),
                 Container(
-                  width: 24.w,
-                  height: 24.w,
+                  width: 40.w,
+                  height: 40.w,
                 )
               ],
             ),

@@ -22,7 +22,7 @@ class BuildAppBar extends StatelessWidget {
         image: DecorationImage(
           alignment: Alignment.topCenter,
           image: AssetImage('assets/icons/headbg.png'),
-          fit: BoxFit.fitHeight, // 完全填充
+          fit: BoxFit.fill, // 完全填充
         ),
       ),
       padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 0.h),
@@ -38,6 +38,7 @@ class BuildAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: () {
                     context
                         .read<TransferBalanceBloc>()
@@ -45,11 +46,12 @@ class BuildAppBar extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   child: Container(
-                    width: 24.w,
-                    height: 24.w,
-                    child: const Icon(
+                    width: 40.w,
+                    height: 40.w,
+                    child: Icon(
                       Icons.arrow_back,
                       color: AppColors.primaryBackground,
+                      size: 28.sp,
                     ),
                   ),
                 ),
@@ -62,14 +64,14 @@ class BuildAppBar extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppColors.primaryBackground,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),
                 Container(
-                  width: 24.w,
-                  height: 24.w,
+                  width: 40.w,
+                  height: 40.w,
                 )
               ],
             ),
@@ -146,7 +148,9 @@ class BuildDropdownTypeInput extends StatelessWidget {
             height: 46.h,
             padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
             decoration: BoxDecoration(
-                color: isLocked ? AppColors.primaryFourElementText : AppColors.primaryBackground,
+                color: isLocked
+                    ? AppColors.primaryFourElementText
+                    : AppColors.primaryBackground,
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
                 border: Border.all(color: AppColors.primaryThreeElementText)),
             child: DropdownButton<String>(
@@ -167,7 +171,9 @@ class BuildDropdownTypeInput extends StatelessWidget {
                   ? null
                   : (String? newValue) {
                       final value = newValue ?? 'recharge';
-                      context.read<TransferBalanceBloc>().add(TypeChanged(value));
+                      context
+                          .read<TransferBalanceBloc>()
+                          .add(TypeChanged(value));
                       if (value == 'recharge') {
                         Logic(context: context).rechargeTypes();
                       }
@@ -218,7 +224,9 @@ class BuildDropdownAgentInput extends StatelessWidget {
             height: 46.h,
             padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
             decoration: BoxDecoration(
-                color: isLocked ? AppColors.primaryFourElementText : AppColors.primaryBackground,
+                color: isLocked
+                    ? AppColors.primaryFourElementText
+                    : AppColors.primaryBackground,
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
                 border: Border.all(color: AppColors.primaryThreeElementText)),
             child: DropdownButton<String>(
@@ -455,7 +463,9 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(8.w)),
                   border: Border.all(color: AppColors.primaryThreeElementText)),
               child: Text(
-                state.salePointItem?.businessName ?? state.salePointItem?.firstName ?? '',
+                state.salePointItem?.businessName ??
+                    state.salePointItem?.firstName ??
+                    '',
                 style: TextStyle(
                   color: AppColors.primaryText,
                   fontSize: 14.sp,

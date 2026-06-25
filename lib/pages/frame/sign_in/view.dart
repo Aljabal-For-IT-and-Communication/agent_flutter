@@ -25,7 +25,7 @@ class _SignInPage extends State<SignInPage> {
                 image: DecorationImage(
                   alignment: Alignment.topCenter,
                   image: AssetImage('assets/icons/headbg1.png'),
-                  fit: BoxFit.fitWidth, // 完全填充
+                  fit: BoxFit.fill, // 完全填充
                 ),
               ),
               child: CustomScrollView(slivers: [

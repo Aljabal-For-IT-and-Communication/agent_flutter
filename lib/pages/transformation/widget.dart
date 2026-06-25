@@ -16,7 +16,7 @@ class BuildAppBar extends StatelessWidget {
         image: DecorationImage(
           alignment: Alignment.topCenter,
           image: AssetImage('assets/icons/headbg.png'),
-          fit: BoxFit.fitWidth, // 完全填充
+          fit: BoxFit.fill, // 完全填充
         ),
       ),
       padding: EdgeInsets.only(top: 15.h, left: 16.w, right: 16.w, bottom: 0.h),
@@ -48,8 +48,8 @@ class BuildAppBar extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppColors.primaryBackground,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),

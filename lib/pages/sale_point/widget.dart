@@ -64,7 +64,7 @@ class BuildAppBar extends StatelessWidget {
         image: DecorationImage(
           alignment: Alignment.topCenter,
           image: AssetImage('assets/icons/headbg3.png'),
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fill,
         ),
       ),
       child: Column(
@@ -87,8 +87,8 @@ class BuildAppBar extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: AppColors.primaryBackground,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
                     ),
                   ),
                 ),
@@ -239,7 +239,8 @@ class BuildListItem extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.chevron_right, color: AppColors.primarySecondaryElementText),
+            Icon(Icons.chevron_right,
+                color: AppColors.primarySecondaryElementText),
           ],
         ),
       ),
