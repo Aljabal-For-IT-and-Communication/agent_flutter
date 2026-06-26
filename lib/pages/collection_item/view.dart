@@ -462,6 +462,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                         postTransformation();
                       }),
                 )),
+            SliverToBoxAdapter(child: SizedBox(height: 40.h)),
           ]));
     });
   }

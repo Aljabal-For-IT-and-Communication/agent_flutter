@@ -32,12 +32,15 @@ class Global {
     TransitionBuilder? builder,
   }) {
     return (BuildContext context, Widget? child) {
+      final safeAreaChild = _AndroidSystemNavigationSafeArea(
+        child: child ?? const SizedBox.shrink(),
+      );
       final keyboardDismissChild = GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
         },
-        child: child,
+        child: safeAreaChild,
       );
 
       if (builder != null) {
@@ -76,5 +79,34 @@ class Global {
       );
       SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
     }
+  }
+}
+
+class _AndroidSystemNavigationSafeArea extends StatelessWidget {
+  const _AndroidSystemNavigationSafeArea({
+    required this.child,
+  });
+
+  static const double _buttonNavigationInsetThreshold = 32;
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewPadding.bottom;
+    final hasButtonNavigationBar =
+        Platform.isAndroid && bottomInset >= _buttonNavigationInsetThreshold;
+
+    if (!hasButtonNavigationBar) {
+      return child;
+    }
+
+    return SafeArea(
+      top: false,
+      left: false,
+      right: false,
+      bottom: true,
+      child: child,
+    );
   }
 }
