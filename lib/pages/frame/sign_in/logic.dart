@@ -9,6 +9,7 @@ import 'package:app/common/utils/utils.dart';
 import 'package:app/common/values/constant.dart';
 import 'package:app/common/widgets/widgets.dart';
 import 'package:app/global.dart';
+import 'package:app/common/services/device_identity.dart';
 
 import 'bloc.dart';
 
@@ -33,11 +34,12 @@ class Logic {
         indicator: CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
-    LoginRequestEntity loginRequestEntity = LoginRequestEntity();
-    loginRequestEntity.password = state.password;
-    loginRequestEntity.phone = state.phone;
-    FocusManager.instance.primaryFocus?.unfocus();
     try {
+      LoginRequestEntity loginRequestEntity = LoginRequestEntity();
+      loginRequestEntity.password = state.password;
+      loginRequestEntity.phone = state.phone;
+      loginRequestEntity.device = await DeviceIdentityService.collect();
+      FocusManager.instance.primaryFocus?.unfocus();
       var result = await UserAPI.Login(params: loginRequestEntity);
       if (result.code == 0) {
         context.read<SignInBloc>().add(PasswordChanged(""));

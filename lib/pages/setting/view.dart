@@ -66,6 +66,16 @@ class _SettingPage extends State<SettingPage> {
                           ).pushNamed(AppRoutes.ChangePassword);
                         },
                       ),
+                      if (Global.storageService.getUserProfile().isMainDevice ==
+                          true)
+                        BuildListItem(
+                          title: "Authorized Devices".tr(),
+                          iconImage: "assets/icons/wifi.png",
+                          callFunc: () {
+                            Navigator.of(context)
+                                .pushNamed(AppRoutes.AuthorizedDevices);
+                          },
+                        ),
                       BuildLanguage(),
                       BuildListItem(
                         title: "Contact us".tr(),

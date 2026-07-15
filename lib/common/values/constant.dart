@@ -23,4 +23,6 @@ const String STORAGE_DEVICE_FIRST_OPEN_KEY = 'device_first_open';
 
 const String STORAGE_LANGUAGE_CODE = 'language_code';
 
+const String STORAGE_LOGIN_DEVICE_ID_KEY = 'login_device_id';
+
 const String APPID = "2b8731acd0d4481e851913553c702663";

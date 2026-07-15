@@ -1,4 +1,5 @@
 import 'package:app/pages/about/about.dart';
+import 'package:app/pages/authorized_devices/view.dart';
 import 'package:app/pages/account/bloc.dart';
 import 'package:app/pages/account/view.dart';
 import 'package:app/pages/account_statement/bloc.dart';
@@ -178,6 +179,10 @@ class AppPages {
       PageEntity(
           path: AppRoutes.PrivacyPolicy, page: PrivacyPolicyPage(), bloc: null),
       PageEntity(path: AppRoutes.Contact, page: ContactPage(), bloc: null),
+      PageEntity(
+          path: AppRoutes.AuthorizedDevices,
+          page: AuthorizedDevicesPage(),
+          bloc: null),
     ];
   }
 

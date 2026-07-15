@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:app/global.dart';
 import 'package:app/common/utils/i18n.dart';
+import 'package:app/common/services/device_authorization_session.dart';
 
 class HttpFileUtil {
   static HttpFileUtil _instance = HttpFileUtil._internal();
@@ -149,6 +150,12 @@ class HttpFileUtil {
     }
     var language = Global.storageService.getLanguage();
     headers['Accept-Language'] = language == 'ar' ? 'ar' : 'en';
+    headers['X-App-Version'] = VersionNumber;
+    final deviceId =
+        Global.storageService.getString(STORAGE_LOGIN_DEVICE_ID_KEY).trim();
+    if (deviceId.isNotEmpty) {
+      headers['X-Device-ID'] = deviceId;
+    }
     return headers;
   }
 
@@ -165,15 +172,32 @@ class HttpFileUtil {
     if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
-    var response = await dio.post(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: requestOptions,
-      cancelToken: cancelToken,
-    );
+    Response response;
+    try {
+      response = await dio.post(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+        cancelToken: cancelToken,
+      );
+    } on DioException catch (error) {
+      final responseData = error.response?.data;
+      if (responseData is Map) {
+        final normalized = Map<String, dynamic>.from(responseData);
+        DeviceAuthorizationSession.handleResponse(normalized);
+        return normalized;
+      }
+      rethrow;
+    }
     // EasyLoading.dismiss();
-    return response.data;
+    final responseData = response.data;
+    if (responseData is Map) {
+      final normalized = Map<String, dynamic>.from(responseData);
+      DeviceAuthorizationSession.handleResponse(normalized);
+      return normalized;
+    }
+    return responseData;
   }
 }
 

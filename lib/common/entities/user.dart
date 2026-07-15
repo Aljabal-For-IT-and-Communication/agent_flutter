@@ -1,15 +1,18 @@
 class LoginRequestEntity {
   String? password;
   String? phone;
+  Map<String, dynamic>? device;
 
   LoginRequestEntity({
     this.password,
     this.phone,
+    this.device,
   });
 
   Map<String, dynamic> toJson() => {
         "password": password,
         "phone": phone,
+        "device": device,
       };
 }
 
@@ -143,6 +146,7 @@ class UserItem {
   String? subAgentsDebt;
   String? salePointsDebt;
   String? token;
+  bool? isMainDevice;
 
   UserItem(
       {this.accessToken,
@@ -162,7 +166,8 @@ class UserItem {
       this.agentDebt,
       this.subAgentsDebt,
       this.salePointsDebt,
-      this.token});
+      this.token,
+      this.isMainDevice});
 
   UserItem.fromJson(Map<String, dynamic> json) {
     accessToken = json['access_token'];
@@ -183,6 +188,7 @@ class UserItem {
     subAgentsDebt = json['sub_agents_debt']?.toString();
     salePointsDebt = json['sale_points_debt']?.toString();
     token = json['token'];
+    isMainDevice = json['is_main_device'] == true;
   }
 
   Map<String, dynamic> toJson() {
@@ -205,6 +211,62 @@ class UserItem {
     data['sale_points_debt'] = this.salePointsDebt;
     data['agent_debt'] = this.agentDebt;
     data['token'] = this.token;
+    data['is_main_device'] = this.isMainDevice;
     return data;
+  }
+}
+
+class AgentDeviceActionRequestEntity {
+  final int id;
+
+  AgentDeviceActionRequestEntity({required this.id});
+
+  Map<String, dynamic> toJson() => {'id': id};
+}
+
+class AgentDeviceResponseEntity {
+  int? code;
+  List<AgentDeviceData>? data;
+  String? msg;
+
+  AgentDeviceResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    msg = json['msg'];
+    final items = json['data'];
+    if (items is List) {
+      data = items
+          .whereType<Map>()
+          .map((item) =>
+              AgentDeviceData.fromJson(Map<String, dynamic>.from(item)))
+          .toList();
+    }
+  }
+}
+
+class AgentDeviceData {
+  int? id;
+  String? platform;
+  String? deviceName;
+  String? manufacturer;
+  String? model;
+  String? status;
+  String? requestedAt;
+  String? lastLoginAt;
+  String? authorizedAt;
+  bool? isMainDevice;
+  bool? isCurrentDevice;
+
+  AgentDeviceData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    platform = json['platform'];
+    deviceName = json['device_name'];
+    manufacturer = json['manufacturer'];
+    model = json['model'];
+    status = json['status'];
+    requestedAt = json['requested_at']?.toString();
+    lastLoginAt = json['last_login_at']?.toString();
+    authorizedAt = json['authorized_at']?.toString();
+    isMainDevice = json['is_main_device'] == true;
+    isCurrentDevice = json['is_current_device'] == true;
   }
 }

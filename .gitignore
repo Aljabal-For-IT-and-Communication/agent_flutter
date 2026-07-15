@@ -49,3 +49,6 @@ app.*.map.json
 
 # Locally generated App Store screenshots
 /app_store_screenshots/
+
+# Local release notes and submission drafts
+/docs/

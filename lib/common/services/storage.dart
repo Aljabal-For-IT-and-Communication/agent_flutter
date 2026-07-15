@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/constant.dart';
 
@@ -50,6 +51,17 @@ class StorageService {
 
   Future<bool> setLanguage(String value) async {
     return await _prefs.setString(STORAGE_LANGUAGE_CODE, value);
+  }
+
+  Future<String> getOrCreateLoginDeviceId() async {
+    final deviceId = getString(STORAGE_LOGIN_DEVICE_ID_KEY).trim();
+    if (deviceId.isNotEmpty) {
+      return deviceId;
+    }
+
+    final newDeviceId = const Uuid().v4();
+    await setString(STORAGE_LOGIN_DEVICE_ID_KEY, newDeviceId);
+    return newDeviceId;
   }
 
   bool getDeviceFirstOpen() {

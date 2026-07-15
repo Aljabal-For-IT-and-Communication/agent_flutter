@@ -100,7 +100,7 @@ const _englishSections = [
   ),
   _PolicyContent(
     'Information We Use',
-    'The app may use account information such as name, phone number, account credentials, avatar, agent ID, sale point details, transaction records, balances, debts, reports, uploaded validation files, machine or barcode data, and app language settings. When you scan, upload, or attach files for validation, the selected files are sent only for that workflow.',
+    'The app may use account information such as name, phone number, account credentials, avatar, agent ID, sale point details, transaction records, balances, debts, reports, uploaded validation files, machine or barcode data, and app language settings. For account security, the app also uses an app-generated installation identifier and basic device details such as platform, device name, manufacturer, and model. When you scan, upload, or attach files for validation, the selected files are sent only for that workflow.',
   ),
   _PolicyContent(
     'How We Use Information',
@@ -120,7 +120,7 @@ const _englishSections = [
   ),
   _PolicyContent(
     'Security',
-    'We use authentication, access controls, and operational safeguards to protect account and transaction data. You are responsible for keeping your login credentials secure and using the app only for authorized business activity.',
+    'We use authentication, authorized-device controls, and operational safeguards to protect account and transaction data. The installation identifier and device details are used to recognize approved devices, review access requests, and revoke device access. You are responsible for keeping your login credentials secure and using the app only for authorized business activity.',
   ),
   _PolicyContent(
     'Retention',
@@ -143,7 +143,7 @@ const _arabicSections = [
   ),
   _PolicyContent(
     'المعلومات التي نستخدمها',
-    'قد يستخدم التطبيق معلومات الحساب مثل الاسم ورقم الهاتف وبيانات الدخول والصورة ومعرّف الوكيل وبيانات نقاط البيع وسجلات العمليات والأرصدة والمديونيات والتقارير وملفات التحقق المرفوعة وبيانات الأجهزة أو الباركود وإعدادات اللغة. عند المسح أو الرفع أو إرفاق ملف للتحقق، يتم إرسال الملفات التي تختارها لهذا الغرض فقط.',
+    'قد يستخدم التطبيق معلومات الحساب مثل الاسم ورقم الهاتف وبيانات الدخول والصورة ومعرّف الوكيل وبيانات نقاط البيع وسجلات العمليات والأرصدة والمديونيات والتقارير وملفات التحقق المرفوعة وبيانات الأجهزة أو الباركود وإعدادات اللغة. ولأمان الحساب، يستخدم التطبيق أيضاً معرّف تثبيت ينشئه التطبيق ومعلومات أساسية عن الجهاز مثل النظام واسم الجهاز والشركة المصنعة والطراز. عند المسح أو الرفع أو إرفاق ملف للتحقق، يتم إرسال الملفات التي تختارها لهذا الغرض فقط.',
   ),
   _PolicyContent(
     'كيف نستخدم المعلومات',
@@ -163,7 +163,7 @@ const _arabicSections = [
   ),
   _PolicyContent(
     'الأمان',
-    'نستخدم تسجيل الدخول وضوابط الوصول وإجراءات تشغيلية لحماية بيانات الحساب والعمليات. أنت مسؤول عن الحفاظ على بيانات الدخول الخاصة بك واستخدام التطبيق فقط للأعمال المصرح بها.',
+    'نستخدم تسجيل الدخول وضوابط الأجهزة المصرح بها وإجراءات تشغيلية لحماية بيانات الحساب والعمليات. يُستخدم معرّف التثبيت ومعلومات الجهاز للتعرف على الأجهزة المعتمدة ومراجعة طلبات الوصول وإلغاء تصريح الأجهزة. أنت مسؤول عن الحفاظ على بيانات الدخول الخاصة بك واستخدام التطبيق فقط للأعمال المصرح بها.',
   ),
   _PolicyContent(
     'الاحتفاظ بالبيانات',

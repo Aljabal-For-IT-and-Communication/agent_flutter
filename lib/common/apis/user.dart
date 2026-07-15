@@ -55,4 +55,39 @@ class UserAPI {
     );
     return BaseResponseEntity.fromJson(response);
   }
+
+  static Future<AgentDeviceResponseEntity> deviceList() async {
+    final response = await HttpUtil().post('agent/device_list', data: {});
+    return AgentDeviceResponseEntity.fromJson(response);
+  }
+
+  static Future<BaseResponseEntity> authorizeDevice({
+    required AgentDeviceActionRequestEntity params,
+  }) async {
+    final response = await HttpUtil().post(
+      'agent/device_authorize',
+      data: params.toJson(),
+    );
+    return BaseResponseEntity.fromJson(response);
+  }
+
+  static Future<BaseResponseEntity> denyDevice({
+    required AgentDeviceActionRequestEntity params,
+  }) async {
+    final response = await HttpUtil().post(
+      'agent/device_deny',
+      data: params.toJson(),
+    );
+    return BaseResponseEntity.fromJson(response);
+  }
+
+  static Future<BaseResponseEntity> revokeDevice({
+    required AgentDeviceActionRequestEntity params,
+  }) async {
+    final response = await HttpUtil().post(
+      'agent/device_revoke',
+      data: params.toJson(),
+    );
+    return BaseResponseEntity.fromJson(response);
+  }
 }

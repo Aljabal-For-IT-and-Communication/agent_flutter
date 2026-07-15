@@ -13,6 +13,7 @@ class AppRoutes {
   static const About = '/about';
   static const PrivacyPolicy = '/privacy_policy';
   static const Contact = '/contact';
+  static const AuthorizedDevices = '/authorized_devices';
   static const Report = '/report';
   static const Transformation = '/transformation';
   static const InternationalCommunication = '/international_communication';
