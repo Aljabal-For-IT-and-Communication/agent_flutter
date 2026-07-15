@@ -1,4 +1,4 @@
-package com.zonecard.agent.agent
+package com.alafdal.agents
 
 import io.flutter.embedding.android.FlutterActivity
 

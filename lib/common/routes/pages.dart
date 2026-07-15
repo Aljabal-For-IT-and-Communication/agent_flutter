@@ -20,8 +20,6 @@ import 'package:app/pages/debit/bloc.dart';
 import 'package:app/pages/debit/view.dart';
 import 'package:app/pages/frame/change_password/bloc.dart';
 import 'package:app/pages/frame/change_password/view.dart';
-import 'package:app/pages/frame/forget/bloc.dart';
-import 'package:app/pages/frame/forget/view.dart';
 import 'package:app/pages/frame/register/bloc.dart';
 import 'package:app/pages/frame/register/view.dart';
 import 'package:app/pages/frame/sign_in/bloc.dart';
@@ -78,10 +76,6 @@ class AppPages {
           path: AppRoutes.Register,
           page: RegisterPage(),
           bloc: BlocProvider(create: (_) => RegisterBloc())),
-      PageEntity(
-          path: AppRoutes.Forget,
-          page: ForgetPage(),
-          bloc: BlocProvider(create: (_) => ForgetBloc())),
       PageEntity(
           path: AppRoutes.Application,
           page: ApplicationPage(),

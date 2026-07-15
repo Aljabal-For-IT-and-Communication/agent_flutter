@@ -28,8 +28,6 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Alafdal+Agents uses the camera to scan machine barcodes when registering sale points.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Alafdal+Agents uses selected photos or documents only when you attach them to validation requests.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

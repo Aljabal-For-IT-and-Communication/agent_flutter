@@ -58,8 +58,13 @@ class _SignInPage extends State<SignInPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              width: 280.w,
+                            Align(
+                              alignment: AlignmentDirectional.centerEnd,
+                              child: BuildLoginLanguageButton(),
+                            ),
+                            SizedBox(height: 12.h),
+                            SizedBox(
+                              width: double.infinity,
                               child: Text(
                                 "Login".tr(),
                                 textAlign: TextAlign.center,
@@ -99,10 +104,6 @@ class _SignInPage extends State<SignInPage> {
                               ),
                             ),
                             BuildPasswordInput(),
-                            SizedBox(
-                              height: 0.h,
-                            ),
-                            ForgotPassword(),
                             BuildLoginBtn(),
                             SizedBox(
                               height: 5.h,

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/values/colors.dart';
+import 'package:app/global.dart';
 import 'bloc.dart';
 import 'logic.dart';
 
@@ -47,7 +48,7 @@ class BuildLoginBtn extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-              "entry".tr(),
+              "Login".tr(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.primaryBackground,
@@ -58,6 +59,38 @@ class BuildLoginBtn extends StatelessWidget {
         onTap: () {
           Logic(context: context).asyncPostAllData();
         });
+  }
+}
+
+class BuildLoginLanguageButton extends StatelessWidget {
+  const BuildLoginLanguageButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final isArabic = context.locale.languageCode == 'ar';
+
+    return Semantics(
+      label: "Change Language".tr(),
+      child: TextButton.icon(
+        onPressed: () {
+          final locale = isArabic ? const Locale('en') : const Locale('ar');
+          context.setLocale(locale);
+          Global.storageService.setLanguage(locale.languageCode);
+        },
+        icon: Icon(Icons.language_outlined, size: 18.sp),
+        label: Text(
+          isArabic ? 'English' : 'العربية',
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 12.sp,
+          ),
+        ),
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.primaryElement,
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+        ),
+      ),
+    );
   }
 }
 
@@ -271,43 +304,6 @@ class BuildPasswordInput extends StatelessWidget {
               obscureText: false, // 隐藏输入内容, 密码框
             ),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class ForgotPassword extends StatelessWidget {
-  ForgotPassword({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 343.w,
-      height: 44.h,
-      alignment: Alignment.centerLeft,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-              child: Text(
-                "Forgot your password?".tr(),
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: AppColors.primaryElement,
-                  decoration: TextDecoration.underline,
-                  decorationColor: AppColors.primaryElement,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 12.sp,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed(AppRoutes.Forget);
-              }),
-          // Checkbox(value: state.isChecked, onChanged: (value){
-          //   context.read<SignInBloc>().add(CheckChanged(value));
-          //   Global.storageService.setBool(STORAGE_USER_CHECKED_KEY, value??false);
-          // })
         ],
       ),
     );

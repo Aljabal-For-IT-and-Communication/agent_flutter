@@ -100,7 +100,7 @@ const _englishSections = [
   ),
   _PolicyContent(
     'Information We Use',
-    'The app may use account information such as name, phone number, avatar, agent ID, sale point details, transaction records, balances, debts, reports, uploaded validation files, machine or barcode data, and app language settings. When you scan, upload, or attach files for validation, the selected photos or documents are sent only for that workflow.',
+    'The app may use account information such as name, phone number, account credentials, avatar, agent ID, sale point details, transaction records, balances, debts, reports, uploaded validation files, machine or barcode data, and app language settings. When you scan, upload, or attach files for validation, the selected files are sent only for that workflow.',
   ),
   _PolicyContent(
     'How We Use Information',
@@ -112,7 +112,7 @@ const _englishSections = [
   ),
   _PolicyContent(
     'Device Permissions',
-    'The app requests only the permissions needed for its features, such as camera access for scanning barcodes or capturing validation photos, and file or photo access when you choose to attach a document or image.',
+    'The app requests camera access only to scan machine barcodes when registering sale points. When a validation document is needed, the system file picker lets you choose a JPG, PNG, or PDF file.',
   ),
   _PolicyContent(
     'Sharing and Storage',
@@ -143,7 +143,7 @@ const _arabicSections = [
   ),
   _PolicyContent(
     'المعلومات التي نستخدمها',
-    'قد يستخدم التطبيق معلومات الحساب مثل الاسم ورقم الهاتف والصورة ومعرّف الوكيل وبيانات نقاط البيع وسجلات العمليات والأرصدة والمديونيات والتقارير وملفات التحقق المرفوعة وبيانات الأجهزة أو الباركود وإعدادات اللغة. عند المسح أو الرفع أو إرفاق ملف للتحقق، يتم إرسال الصور أو المستندات التي تختارها لهذا الغرض فقط.',
+    'قد يستخدم التطبيق معلومات الحساب مثل الاسم ورقم الهاتف وبيانات الدخول والصورة ومعرّف الوكيل وبيانات نقاط البيع وسجلات العمليات والأرصدة والمديونيات والتقارير وملفات التحقق المرفوعة وبيانات الأجهزة أو الباركود وإعدادات اللغة. عند المسح أو الرفع أو إرفاق ملف للتحقق، يتم إرسال الملفات التي تختارها لهذا الغرض فقط.',
   ),
   _PolicyContent(
     'كيف نستخدم المعلومات',
@@ -155,7 +155,7 @@ const _arabicSections = [
   ),
   _PolicyContent(
     'صلاحيات الجهاز',
-    'يطلب التطبيق الصلاحيات اللازمة لميزاته فقط، مثل الكاميرا لمسح الباركود أو التقاط صور التحقق، والوصول إلى الملفات أو الصور عند اختيار إرفاق مستند أو صورة.',
+    'يطلب التطبيق صلاحية الكاميرا فقط لمسح باركود الجهاز عند تسجيل نقطة بيع. وعند الحاجة إلى مستند تحقق، يتيح لك منتقي الملفات في النظام اختيار ملف JPG أو PNG أو PDF.',
   ),
   _PolicyContent(
     'المشاركة والتخزين',

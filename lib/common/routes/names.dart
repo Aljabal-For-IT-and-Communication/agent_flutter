@@ -2,7 +2,6 @@ class AppRoutes {
   static const Splash = '/';
   static const Sign_in = '/sign_in';
   static const Register = '/register';
-  static const Forget = '/forget';
   static const Application = '/application';
   static const Home = '/home';
   static const Message = '/message';

@@ -100,24 +100,6 @@ class ChangePasswordRequestEntity {
       };
 }
 
-class ForgetPasswordRequestEntity {
-  String? password;
-  String? phone;
-  String? verification_code;
-
-  ForgetPasswordRequestEntity({
-    this.password,
-    this.phone,
-    this.verification_code,
-  });
-
-  Map<String, dynamic> toJson() => {
-        "password": password,
-        "phone": phone,
-        "verification_code": verification_code,
-      };
-}
-
 class UserLoginResponseEntity {
   int? code;
   UserItem? data;

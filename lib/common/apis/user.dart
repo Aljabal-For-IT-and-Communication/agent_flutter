@@ -32,26 +32,6 @@ class UserAPI {
     return BaseResponseEntity.fromJson(response);
   }
 
-  static Future<BaseResponseEntity> forgetPassword({
-    ForgetPasswordRequestEntity? params,
-  }) async {
-    var response = await HttpUtil().post(
-      'agent/forget_password',
-      data: params?.toJson(),
-    );
-    return BaseResponseEntity.fromJson(response);
-  }
-
-  static Future<BaseResponseEntity> sendCode({
-    VerificationRequestEntity? params,
-  }) async {
-    var response = await HttpUtil().post(
-      'agent/send_code',
-      data: params?.toJson(),
-    );
-    return BaseResponseEntity.fromJson(response);
-  }
-
   static Future<UserLoginResponseEntity> getProfile() async {
     var response = await HttpUtil().post(
       'agent/get_profile',
