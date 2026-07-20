@@ -55,8 +55,9 @@ class Logic {
       toastInfo(msg: trServerMessage("${result.msg}"));
       if (result.code == 0) {
         toastInfo(msg: trServerMessage("Log back into your account！"));
-        Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
-        Global.storageService.remove(STORAGE_USER_TOKEN_KEY);
+        await Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
+        await Global.storageService.removeUserToken();
+        if (!context.mounted) return;
         Navigator.of(context).pushNamedAndRemoveUntil(
             AppRoutes.Sign_in, (Route<dynamic> route) => false);
       }

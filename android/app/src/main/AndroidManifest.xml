@@ -7,6 +7,7 @@
         android:required="false"
         tools:replace="android:required" />
     <application
+        android:allowBackup="false"
         android:label="Alafdal+Agents"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"

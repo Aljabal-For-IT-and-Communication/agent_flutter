@@ -126,13 +126,13 @@ class _SettingPage extends State<SettingPage> {
                                   ),
                                   TextButton(
                                     child: Text("Confirm".tr()),
-                                    onPressed: () {
-                                      Global.storageService.remove(
+                                    onPressed: () async {
+                                      await Global.storageService.remove(
                                         STORAGE_USER_PROFILE_KEY,
                                       );
-                                      Global.storageService.remove(
-                                        STORAGE_USER_TOKEN_KEY,
-                                      );
+                                      await Global.storageService
+                                          .removeUserToken();
+                                      if (!context.mounted) return;
                                       Navigator.of(
                                         context,
                                       ).pushNamedAndRemoveUntil(

@@ -231,7 +231,6 @@ Future<bool> printCollectionReportPdf(
     // Calculate collectType and rechargeType totals (excluding items without names)
     Map<String, double> collectTypeTotals = {};
     Map<String, double> rechargeTypeTotals = {};
-    double validItemsTotal = 0;
 
     for (var item in collectionList) {
       double amount = double.tryParse(item.amount ?? '0') ?? 0;
@@ -243,7 +242,6 @@ Future<bool> printCollectionReportPdf(
         String collectType = item.collectTypeName!;
         collectTypeTotals.update(collectType, (value) => value + amount,
             ifAbsent: () => amount);
-        validItemsTotal += amount;
       }
 
       // Calculate rechargeType totals

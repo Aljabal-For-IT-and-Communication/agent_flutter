@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/values/values.dart';
@@ -41,28 +40,30 @@ class HttpUtil {
       onResponse: (response, handler) {
         // Check for version-outdated response
         if (response.data is Map && response.data['code'] == -2) {
-          _showForceUpdateDialog(
-              response.data['msg'] ?? 'Please update the app'.tr());
+          final serverMessage = response.data['msg']?.toString();
+          _showForceUpdateDialog(serverMessage == null
+              ? 'Please update the app'.tr()
+              : trServerMessage(serverMessage));
         }
         return handler.next(response); // continue
       },
-      onError: (DioException e, ErrorInterceptorHandler handler) {
+      onError: (DioException e, ErrorInterceptorHandler handler) async {
         ErrorEntity eInfo = createErrorEntity(e);
-        onError(eInfo);
+        await onError(eInfo);
         return handler.next(e); //continue
       },
     ));
   }
 
-  void onError(ErrorEntity eInfo) {
+  Future<void> onError(ErrorEntity eInfo) async {
     print('error.code -> ' +
         eInfo.code.toString() +
         ', error.message -> ' +
         eInfo.message);
     switch (eInfo.code) {
       case 401:
-        Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
-        Global.storageService.remove(STORAGE_USER_TOKEN_KEY);
+        await Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
+        await Global.storageService.removeUserToken();
         if (Global.navigatorKey.currentContext != null) {
           Navigator.of(Global.navigatorKey.currentContext!)
               .pushNamedAndRemoveUntil(
@@ -159,8 +160,7 @@ class HttpUtil {
     var language = Global.storageService.getLanguage();
     headers['Accept-Language'] = language == 'ar' ? 'ar' : 'en';
     headers['X-App-Version'] = VersionNumber;
-    final deviceId =
-        Global.storageService.getString(STORAGE_LOGIN_DEVICE_ID_KEY).trim();
+    final deviceId = Global.storageService.getLoginDeviceId();
     if (deviceId.isNotEmpty) {
       headers['X-Device-ID'] = deviceId;
     }
@@ -175,21 +175,7 @@ class HttpUtil {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (ctx) => PopScope(
-        canPop: false,
-        child: AlertDialog(
-          title: Text('Update Required'.tr()),
-          content: Text(message),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                exit(0);
-              },
-              child: Text('Exit'.tr()),
-            ),
-          ],
-        ),
-      ),
+      builder: (ctx) => ForceUpdateDialog(message: message),
     );
   }
 
@@ -219,7 +205,7 @@ class HttpUtil {
       final responseData = error.response?.data;
       if (responseData is Map) {
         final normalized = Map<String, dynamic>.from(responseData);
-        DeviceAuthorizationSession.handleResponse(normalized);
+        await DeviceAuthorizationSession.handleResponse(normalized);
         return normalized;
       }
       rethrow;
@@ -228,10 +214,27 @@ class HttpUtil {
     final responseData = response.data;
     if (responseData is Map) {
       final normalized = Map<String, dynamic>.from(responseData);
-      DeviceAuthorizationSession.handleResponse(normalized);
+      await DeviceAuthorizationSession.handleResponse(normalized);
       return normalized;
     }
     return responseData;
+  }
+}
+
+class ForceUpdateDialog extends StatelessWidget {
+  const ForceUpdateDialog({super.key, required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: false,
+      child: AlertDialog(
+        title: Text('Update Required'.tr()),
+        content: Text(message),
+      ),
+    );
   }
 }
 

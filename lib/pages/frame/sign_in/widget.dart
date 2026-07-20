@@ -234,12 +234,18 @@ class BuildEmailInput extends StatelessWidget {
   }
 }
 
-class BuildPasswordInput extends StatelessWidget {
-  BuildPasswordInput({Key? key}) : super(key: key);
+class BuildPasswordInput extends StatefulWidget {
+  const BuildPasswordInput({Key? key}) : super(key: key);
+
+  @override
+  State<BuildPasswordInput> createState() => _BuildPasswordInputState();
+}
+
+class _BuildPasswordInputState extends State<BuildPasswordInput> {
+  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       height: 50.h,
       margin: EdgeInsets.only(bottom: 0.h, top: 0.h),
@@ -262,10 +268,37 @@ class BuildPasswordInput extends StatelessWidget {
             width: 240.w,
             height: 46.h,
             child: TextField(
-              keyboardType: TextInputType.multiline,
+              keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 hintText: "",
                 contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                suffixIconConstraints: BoxConstraints.tightFor(
+                  width: 44.h,
+                  height: 44.h,
+                ),
+                suffixIcon: IconButton(
+                  key: const Key('login_password_visibility_toggle'),
+                  tooltip:
+                      (_obscurePassword ? 'Show password' : 'Hide password')
+                          .tr(),
+                  onPressed: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  },
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints.tightFor(
+                    width: 44.h,
+                    height: 44.h,
+                  ),
+                  icon: Icon(
+                    _obscurePassword
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: AppColors.primarySecondaryElementText,
+                    size: 22.h,
+                  ),
+                ),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.transparent,
@@ -300,8 +333,9 @@ class BuildPasswordInput extends StatelessWidget {
                 context.read<SignInBloc>().add(PasswordChanged(value));
               },
               maxLines: 1,
-              autocorrect: false, // 自动纠正
-              obscureText: false, // 隐藏输入内容, 密码框
+              autocorrect: false,
+              enableSuggestions: false,
+              obscureText: _obscurePassword,
             ),
           )
         ],

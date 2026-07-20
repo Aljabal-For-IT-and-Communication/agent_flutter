@@ -28,11 +28,18 @@ class BuildAppBar extends StatelessWidget {
   }
 }
 
-class BuildInput extends StatelessWidget {
+class BuildInput extends StatefulWidget {
   final String name;
   final Function(String)? callFunc;
   const BuildInput({Key? key, required this.name, required this.callFunc})
       : super(key: key);
+
+  @override
+  State<BuildInput> createState() => _BuildInputState();
+}
+
+class _BuildInputState extends State<BuildInput> {
+  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +50,7 @@ class BuildInput extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(bottom: 5.h, top: 0.h),
           child: Text(
-            "${name}",
+            widget.name,
             textAlign: TextAlign.left,
             style: TextStyle(
               color: AppColors.primaryText,
@@ -63,10 +70,35 @@ class BuildInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
-            keyboardType: TextInputType.multiline,
+            keyboardType: TextInputType.visiblePassword,
             decoration: InputDecoration(
               hintText: "",
               contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              suffixIconConstraints: BoxConstraints.tightFor(
+                width: 44.h,
+                height: 44.h,
+              ),
+              suffixIcon: IconButton(
+                tooltip:
+                    (_obscurePassword ? 'Show password' : 'Hide password').tr(),
+                onPressed: () {
+                  setState(() {
+                    _obscurePassword = !_obscurePassword;
+                  });
+                },
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints.tightFor(
+                  width: 44.h,
+                  height: 44.h,
+                ),
+                icon: Icon(
+                  _obscurePassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  color: AppColors.primarySecondaryElementText,
+                  size: 22.h,
+                ),
+              ),
               border: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.transparent,
@@ -96,10 +128,11 @@ class BuildInput extends StatelessWidget {
               fontWeight: FontWeight.normal,
               fontSize: 14.sp,
             ),
-            onChanged: callFunc,
+            onChanged: widget.callFunc,
             maxLines: 1,
-            autocorrect: false, // 自动纠正
-            obscureText: false, // 隐藏输入内容, 密码框
+            autocorrect: false,
+            enableSuggestions: false,
+            obscureText: _obscurePassword,
           ),
         ),
         SizedBox(

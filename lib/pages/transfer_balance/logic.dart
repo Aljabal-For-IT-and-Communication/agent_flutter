@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:app/common/apis/agent.dart';
 import 'package:app/common/apis/apis.dart';
 import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/utils.dart';
-import 'package:app/common/values/constant.dart';
 import 'package:app/common/widgets/widgets.dart';
 import 'package:app/global.dart';
 import 'package:flutter/material.dart';
@@ -77,12 +74,11 @@ class Logic {
       var result = await UserAPI.getBalanceSummary();
       if (result.code == 0) {
         var userItem = user;
-        userItem.accessToken = user.accessToken;
         userItem.balance = result.data?.balance ?? userItem.balance;
         userItem.indebtedness =
             result.data?.indebtedness ?? userItem.indebtedness;
-        Global.storageService
-            .setString(STORAGE_USER_PROFILE_KEY, jsonEncode(userItem));
+        await Global.storageService.setUserProfile(userItem);
+        if (!context.mounted) return;
         context.read<TransferBalanceBloc>().add(UserProfileChanged(userItem));
       }
     } catch (e) {

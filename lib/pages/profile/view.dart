@@ -64,11 +64,11 @@ class _ProfilePage extends State<ProfilePage> {
                               ),
                               TextButton(
                                 child: Text("Confirm"),
-                                onPressed: () {
-                                  Global.storageService
+                                onPressed: () async {
+                                  await Global.storageService
                                       .remove(STORAGE_USER_PROFILE_KEY);
-                                  Global.storageService
-                                      .remove(STORAGE_USER_TOKEN_KEY);
+                                  await Global.storageService.removeUserToken();
+                                  if (!context.mounted) return;
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       AppRoutes.Sign_in,
                                       (Route<dynamic> route) => false);

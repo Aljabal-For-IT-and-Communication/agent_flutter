@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:app/common/apis/user.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/logger.dart';
 import 'package:app/common/utils/i18n.dart';
-import 'package:app/common/values/constant.dart';
 import 'package:app/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,9 +32,9 @@ class Logic {
       toastInfo(msg: trServerMessage("${result.msg}"));
       if (result.code == 0) {
         if (userItem != null) {
-          Global.storageService
-              .setString(STORAGE_USER_PROFILE_KEY, jsonEncode(userItem));
+          await Global.storageService.setUserProfile(userItem);
         }
+        if (!context.mounted) return;
         Navigator.of(context).pop();
       }
     } catch (e) {

@@ -145,7 +145,6 @@ class UserItem {
   String? agentDebt;
   String? subAgentsDebt;
   String? salePointsDebt;
-  String? token;
   bool? isMainDevice;
 
   UserItem(
@@ -166,7 +165,6 @@ class UserItem {
       this.agentDebt,
       this.subAgentsDebt,
       this.salePointsDebt,
-      this.token,
       this.isMainDevice});
 
   UserItem.fromJson(Map<String, dynamic> json) {
@@ -187,13 +185,11 @@ class UserItem {
     agentDebt = json['agent_debt']?.toString();
     subAgentsDebt = json['sub_agents_debt']?.toString();
     salePointsDebt = json['sale_points_debt']?.toString();
-    token = json['token'];
     isMainDevice = json['is_main_device'] == true;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['access_token'] = this.accessToken;
     data['avatar'] = this.avatar;
     data['balance'] = this.balance;
     data['city'] = this.city;
@@ -210,7 +206,6 @@ class UserItem {
     data['sub_agents_debt'] = this.subAgentsDebt;
     data['sale_points_debt'] = this.salePointsDebt;
     data['agent_debt'] = this.agentDebt;
-    data['token'] = this.token;
     data['is_main_device'] = this.isMainDevice;
     return data;
   }

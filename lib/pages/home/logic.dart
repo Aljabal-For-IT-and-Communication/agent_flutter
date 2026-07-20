@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:app/common/apis/apis.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/logger.dart';
-import 'package:app/common/values/constant.dart';
 import 'package:app/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,14 +53,13 @@ class Logic {
 
   getProfile() async {
     try {
-      final user = context.read<HomeBloc>().state.userProfile;
       var result = await UserAPI.getProfile();
       if (result.code == 0) {
-        var userItem = result.data;
-        userItem?.accessToken = user?.accessToken;
-        Global.storageService
-            .setString(STORAGE_USER_PROFILE_KEY, jsonEncode(userItem));
-        context.read<HomeBloc>().add(UserProfileChanged(userItem!));
+        final userItem = result.data;
+        if (userItem == null) return;
+        await Global.storageService.setUserProfile(userItem);
+        if (!context.mounted) return;
+        context.read<HomeBloc>().add(UserProfileChanged(userItem));
       }
     } catch (e) {
       Logger.write("${e}");

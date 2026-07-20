@@ -5,7 +5,7 @@ const SERVER_API_URL = 'https://api.alafdal-pluse.ly/';
 // const SERVER_API_URL = 'http://10.0.2.2:8005/';
 
 /*.  LOCAL NETWORK   */
-// const SERVER_API_URL = 'https://06p9c95f-8005.uks1.devtunnels.ms/';
+// const SERVER_API_URL = 'https://rsbkxbzx-8005.uks1.devtunnels.ms/';
 
 const SERVER_IMG_URL = 'https://admin.alafdal-pluse.ly/uploads/';
 const SERVER_API_IMG_URL = 'https://admin.alafdal-pluse.ly/';

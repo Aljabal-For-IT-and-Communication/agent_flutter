@@ -19,7 +19,11 @@ class Global {
 
   static Future init() async {
     initializeDateFormatting();
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    if (Platform.isAndroid) {
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
+    }
     setSystemUi();
     eventBus = EventBus();
     await GetStorage.init();

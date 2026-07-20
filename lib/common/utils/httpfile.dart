@@ -38,23 +38,23 @@ class HttpFileUtil {
       onResponse: (response, handler) {
         return handler.next(response); // continue
       },
-      onError: (DioException e, ErrorInterceptorHandler handler) {
+      onError: (DioException e, ErrorInterceptorHandler handler) async {
         ErrorEntity eInfo = createErrorEntity(e);
-        onError(eInfo);
+        await onError(eInfo);
         return handler.next(e); //continue
       },
     ));
   }
 
-  void onError(ErrorEntity eInfo) {
+  Future<void> onError(ErrorEntity eInfo) async {
     print('error.code -> ' +
         eInfo.code.toString() +
         ', error.message -> ' +
         eInfo.message);
     switch (eInfo.code) {
       case 401:
-        Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
-        Global.storageService.remove(STORAGE_USER_TOKEN_KEY);
+        await Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
+        await Global.storageService.removeUserToken();
         if (Global.navigatorKey.currentContext != null) {
           Navigator.of(Global.navigatorKey.currentContext!)
               .pushNamedAndRemoveUntil(
@@ -151,8 +151,7 @@ class HttpFileUtil {
     var language = Global.storageService.getLanguage();
     headers['Accept-Language'] = language == 'ar' ? 'ar' : 'en';
     headers['X-App-Version'] = VersionNumber;
-    final deviceId =
-        Global.storageService.getString(STORAGE_LOGIN_DEVICE_ID_KEY).trim();
+    final deviceId = Global.storageService.getLoginDeviceId();
     if (deviceId.isNotEmpty) {
       headers['X-Device-ID'] = deviceId;
     }
@@ -185,7 +184,7 @@ class HttpFileUtil {
       final responseData = error.response?.data;
       if (responseData is Map) {
         final normalized = Map<String, dynamic>.from(responseData);
-        DeviceAuthorizationSession.handleResponse(normalized);
+        await DeviceAuthorizationSession.handleResponse(normalized);
         return normalized;
       }
       rethrow;
@@ -194,7 +193,7 @@ class HttpFileUtil {
     final responseData = response.data;
     if (responseData is Map) {
       final normalized = Map<String, dynamic>.from(responseData);
-      DeviceAuthorizationSession.handleResponse(normalized);
+      await DeviceAuthorizationSession.handleResponse(normalized);
       return normalized;
     }
     return responseData;

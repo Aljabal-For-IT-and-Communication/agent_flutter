@@ -8,7 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 class DeviceAuthorizationSession {
   static String? _invalidatedToken;
 
-  static void handleResponse(Map<String, dynamic> response) {
+  static Future<void> handleResponse(Map<String, dynamic> response) async {
     final rawCode = response['code'];
     final code = rawCode is int ? rawCode : int.tryParse('$rawCode');
     if (code != 1401 && code != 1402 && code != 1403 && code != 1404) {
@@ -19,11 +19,11 @@ class DeviceAuthorizationSession {
     if (token.isEmpty || token == _invalidatedToken) return;
     _invalidatedToken = token;
 
-    Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
-    Global.storageService.remove(STORAGE_USER_TOKEN_KEY);
+    await Global.storageService.remove(STORAGE_USER_PROFILE_KEY);
+    await Global.storageService.removeUserToken();
 
     final context = Global.navigatorKey.currentContext;
-    if (context != null) {
+    if (context != null && context.mounted) {
       Navigator.of(context).pushNamedAndRemoveUntil(
         AppRoutes.Sign_in,
         (Route<dynamic> route) => false,
