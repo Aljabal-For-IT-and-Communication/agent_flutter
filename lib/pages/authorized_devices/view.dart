@@ -370,7 +370,7 @@ class _DeviceCard extends StatelessWidget {
     if (value == null || value.trim().isEmpty) return '-';
     final parsed = DateTime.tryParse(value)?.toLocal();
     if (parsed == null) return value;
-    return DateFormat.yMd(context.locale.toString()).add_jm().format(parsed);
+    return DateFormat('yyyy/MM/dd HH:mm', 'en_US').format(parsed);
   }
 }
 
