@@ -26,8 +26,12 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSCameraUsageDescription</key>
 	<string>Alafdal+Agents uses the camera to scan machine barcodes when registering sale points.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Alafdal+Agents accesses your photo library only when you choose an image to attach as supporting evidence for a collection or balance transfer.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
