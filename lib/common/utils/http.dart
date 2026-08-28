@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/values/values.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:app/common/widgets/app_notification.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:app/global.dart';
@@ -69,11 +69,12 @@ class HttpUtil {
               .pushNamedAndRemoveUntil(
                   AppRoutes.Sign_in, (Route<dynamic> route) => false);
         }
-        EasyLoading.showError(
-            trServerMessage("Token expired, do log in again！"));
+        AppNotification.show(
+          message: trServerMessage("Token expired, do log in again！"),
+          type: AppNotificationType.error,
+        );
         break;
       default:
-        // EasyLoading.showError('unknown mistake');
         break;
     }
   }

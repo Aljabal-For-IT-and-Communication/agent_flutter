@@ -1,20 +1,21 @@
+import 'package:app/common/widgets/app_notification.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+export 'app_notification.dart';
 
 Future<void> toastInfo({
   required String msg,
-  Color backgroundColor = Colors.black,
-  Color textColor = Colors.white,
+  AppNotificationType type = AppNotificationType.info,
+  Duration? duration,
+  Color? backgroundColor,
+  Color? textColor,
 }) {
-  EasyLoading.instance
-    ..backgroundColor = backgroundColor
-    ..textColor = textColor
-    ..fontSize = 16.sp;
-
-  return EasyLoading.showToast(
-    msg,
-    duration: const Duration(seconds: 2),
-    toastPosition: EasyLoadingToastPosition.top,
+  AppNotification.show(
+    message: msg,
+    type: type,
+    duration: duration,
+    backgroundColor: backgroundColor,
+    textColor: textColor,
   );
+  return Future<void>.value();
 }

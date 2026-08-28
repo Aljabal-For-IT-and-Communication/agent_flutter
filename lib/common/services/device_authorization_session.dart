@@ -1,9 +1,9 @@
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/utils/i18n.dart';
 import 'package:app/common/values/constant.dart';
+import 'package:app/common/widgets/app_notification.dart';
 import 'package:app/global.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class DeviceAuthorizationSession {
   static String? _invalidatedToken;
@@ -32,6 +32,9 @@ class DeviceAuthorizationSession {
 
     final message = response['msg']?.toString() ??
         'Access for this device was revoked. Ask the main device to authorize it again.';
-    EasyLoading.showError(trServerMessage(message));
+    AppNotification.show(
+      message: trServerMessage(message),
+      type: AppNotificationType.error,
+    );
   }
 }

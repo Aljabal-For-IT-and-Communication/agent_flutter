@@ -25,10 +25,6 @@ class Loading {
     EasyLoading.show(status: text ?? 'Loading...');
   }
 
-  static void toast(String text) {
-    EasyLoading.showToast(text);
-  }
-
   static void dismiss() {
     EasyLoading.instance.userInteractions = true;
     EasyLoading.dismiss();

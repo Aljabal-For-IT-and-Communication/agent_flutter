@@ -6,6 +6,7 @@ import 'package:app/common/utils/i18n.dart';
 import 'package:app/common/utils/loading.dart';
 
 import 'package:app/common/values/colors.dart';
+import 'package:app/common/widgets/app_notification.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -327,14 +328,22 @@ class EditFormCard extends StatelessWidget {
         ),
       );
       if (res.code == 0) {
-        Loading.toast('Saved'.tr());
+        AppNotification.show(
+          message: 'Saved'.tr(),
+          type: AppNotificationType.success,
+        );
         onSaved();
       } else {
-        Loading.toast(
-            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
+        AppNotification.show(
+          message: res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!),
+          type: AppNotificationType.error,
+        );
       }
     } catch (e) {
-      Loading.toast('Error'.tr());
+      AppNotification.show(
+        message: 'Error'.tr(),
+        type: AppNotificationType.error,
+      );
     } finally {
       Loading.dismiss();
     }
@@ -476,14 +485,22 @@ class ActionButtonsGrid extends StatelessWidget {
         ),
       );
       if (res.code == 0) {
-        Loading.toast("Sale point deleted".tr());
+        AppNotification.show(
+          message: "Sale point deleted".tr(),
+          type: AppNotificationType.success,
+        );
         Navigator.of(context).pop(true);
       } else {
-        Loading.toast(
-            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
+        AppNotification.show(
+          message: res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!),
+          type: AppNotificationType.error,
+        );
       }
     } catch (e) {
-      Loading.toast('Error'.tr());
+      AppNotification.show(
+        message: 'Error'.tr(),
+        type: AppNotificationType.error,
+      );
     } finally {
       Loading.dismiss();
     }
@@ -503,15 +520,23 @@ class ActionButtonsGrid extends StatelessWidget {
       if (res.code == 0) {
         final toastMsg =
             isActive ? 'Deactivate request sent' : 'Activate request sent';
-        Loading.toast(toastMsg.tr());
+        AppNotification.show(
+          message: toastMsg.tr(),
+          type: AppNotificationType.success,
+        );
         item.status = newStatus;
         onStatusChanged?.call();
       } else {
-        Loading.toast(
-            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
+        AppNotification.show(
+          message: res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!),
+          type: AppNotificationType.error,
+        );
       }
     } catch (e) {
-      Loading.toast('Error'.tr());
+      AppNotification.show(
+        message: 'Error'.tr(),
+        type: AppNotificationType.error,
+      );
     } finally {
       Loading.dismiss();
     }
@@ -568,7 +593,10 @@ class ActionButtonsGrid extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: walletPwd));
-                    Loading.toast('Copied'.tr());
+                    AppNotification.show(
+                      message: 'Copied'.tr(),
+                      type: AppNotificationType.success,
+                    );
                   },
                   icon: const Icon(Icons.copy),
                   label: Text('Copy'.tr()),
@@ -583,11 +611,16 @@ class ActionButtonsGrid extends StatelessWidget {
           ),
         );
       } else {
-        Loading.toast(
-            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
+        AppNotification.show(
+          message: res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!),
+          type: AppNotificationType.error,
+        );
       }
     } catch (e) {
-      Loading.toast('Error'.tr());
+      AppNotification.show(
+        message: 'Error'.tr(),
+        type: AppNotificationType.error,
+      );
     } finally {
       Loading.dismiss();
     }
@@ -621,7 +654,10 @@ class ActionButtonsGrid extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: walletPwd));
-                    Loading.toast('Copied'.tr());
+                    AppNotification.show(
+                      message: 'Copied'.tr(),
+                      type: AppNotificationType.success,
+                    );
                   },
                   icon: const Icon(Icons.copy),
                   label: Text('Copy'.tr()),
@@ -636,11 +672,16 @@ class ActionButtonsGrid extends StatelessWidget {
           ),
         );
       } else {
-        Loading.toast(
-            res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!));
+        AppNotification.show(
+          message: res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!),
+          type: AppNotificationType.error,
+        );
       }
     } catch (e) {
-      Loading.toast('Error'.tr());
+      AppNotification.show(
+        message: 'Error'.tr(),
+        type: AppNotificationType.error,
+      );
     } finally {
       Loading.dismiss();
     }
