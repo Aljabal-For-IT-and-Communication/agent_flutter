@@ -7,6 +7,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+String agentFullName(AgentData item) {
+  return [item.firstName, item.middleName, item.lastName]
+      .where((name) => (name ?? '').trim().isNotEmpty)
+      .join(' ');
+}
+
 class BuildDropdownAgentInput extends StatelessWidget {
   const BuildDropdownAgentInput({Key? key}) : super(key: key);
 
@@ -106,8 +112,10 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: TypeAheadField<AgentData>(
             suggestionsCallback: (search) {
+              final value = search.trim().toLowerCase();
               return items
-                  .where((item) => item.firstName!.contains(search))
+                  .where((item) =>
+                      agentFullName(item).toLowerCase().contains(value))
                   .toList();
             },
             builder: (context, controller, focusNode) {
@@ -117,7 +125,7 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
                   focusNode: focusNode,
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: "Search First Name".tr(),
+                    hintText: "Search Full Name".tr(),
                     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -146,12 +154,13 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
             },
             itemBuilder: (context, agent) {
               return ListTile(
-                title: Text(agent.firstName ?? ""),
+                title: Text(agentFullName(agent)),
                 subtitle: Text(agent.phone ?? ""),
               );
             },
             onSelected: (AgentData? newValue) {
-              agentController.text = newValue?.firstName ?? "";
+              agentController.text =
+                  newValue == null ? "" : agentFullName(newValue);
               context.read<DebitBloc>().add(IsShowChanged(false));
               context.read<DebitBloc>().add(AgentItemChanged(newValue));
             },

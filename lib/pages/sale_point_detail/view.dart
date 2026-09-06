@@ -22,6 +22,7 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
   late TextEditingController _lastName;
   late TextEditingController _businessName;
   late TextEditingController _machineNumber;
+  late TextEditingController _address;
 
   bool _didInit = false;
 
@@ -34,8 +35,8 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
       _middleName = TextEditingController(text: _item.middleName ?? '');
       _lastName = TextEditingController(text: _item.lastName ?? '');
       _businessName = TextEditingController(text: _item.businessName ?? '');
-      _machineNumber =
-          TextEditingController(text: _item.machineNumber ?? '');
+      _machineNumber = TextEditingController(text: _item.machineNumber ?? '');
+      _address = TextEditingController(text: _item.address ?? '');
       _didInit = true;
     }
   }
@@ -47,6 +48,7 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
     _lastName.dispose();
     _businessName.dispose();
     _machineNumber.dispose();
+    _address.dispose();
     super.dispose();
   }
 
@@ -59,6 +61,7 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
         _lastName.text = _item.lastName ?? '';
         _businessName.text = _item.businessName ?? '';
         _machineNumber.text = _item.machineNumber ?? '';
+        _address.text = _item.address ?? '';
       }
       _isEditing = !_isEditing;
     });
@@ -96,13 +99,16 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
                               lastNameCtrl: _lastName,
                               businessNameCtrl: _businessName,
                               machineNumberCtrl: _machineNumber,
-                              onSaved: () {
+                              addressCtrl: _address,
+                              onSaved: (savedItem) {
                                 setState(() {
-                                  _item.firstName = _firstName.text;
-                                  _item.middleName = _middleName.text;
-                                  _item.lastName = _lastName.text;
-                                  _item.businessName = _businessName.text;
-                                  _item.machineNumber = _machineNumber.text;
+                                  _item.firstName = savedItem.firstName;
+                                  _item.middleName = savedItem.middleName;
+                                  _item.lastName = savedItem.lastName;
+                                  _item.businessName = savedItem.businessName;
+                                  _item.machineNumber = savedItem.machineNumber;
+                                  _item.address = savedItem.address;
+                                  _item.avatar = savedItem.avatar;
                                   _isEditing = false;
                                 });
                               },
@@ -144,15 +150,13 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
                           if (type == 'recharge') {
                             _item.balance =
                                 (currentBalance + amount).toStringAsFixed(2);
-                            _item.indebtedness =
-                                (currentIndebtedness + amount)
-                                    .toStringAsFixed(2);
+                            _item.indebtedness = (currentIndebtedness + amount)
+                                .toStringAsFixed(2);
                           } else if (type == 'retrack') {
                             _item.balance =
                                 (currentBalance - amount).toStringAsFixed(2);
-                            _item.indebtedness =
-                                (currentIndebtedness - amount)
-                                    .toStringAsFixed(2);
+                            _item.indebtedness = (currentIndebtedness - amount)
+                                .toStringAsFixed(2);
                           } else if (type == 'collect') {
                             _item.balance =
                                 (currentBalance - amount).toStringAsFixed(2);

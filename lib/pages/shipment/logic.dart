@@ -35,7 +35,7 @@ class Logic {
 
   agent() async {
     try {
-      var result = await AgentAPI.agentPickerList();
+      var result = await AgentAPI.agentList();
       if (result.code == 0) {
         context.read<ShipmentBloc>().add(AgentListChanged(result.data!));
         context.read<ShipmentBloc>().add(AgentItemChanged(result.data!.first));

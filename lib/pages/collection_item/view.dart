@@ -163,7 +163,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                     Container(
                       child: Text(
                         "Name".tr() +
-                            ": ${state.agent == "Agent" ? state.agentItem?.firstName : state.salePointItem?.businessName}",
+                            ": ${state.agent == "Agent" && state.agentItem != null ? agentFullName(state.agentItem!) : state.salePointItem?.businessName}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: AppColors.primaryText,
@@ -369,7 +369,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
                             Container(
                               child: Text(
                                 "Name".tr() +
-                                    ": ${state.agent == "Agent" ? state.agentItem?.firstName : state.salePointItem?.businessName}",
+                                    ": ${state.agent == "Agent" && state.agentItem != null ? agentFullName(state.agentItem!) : state.salePointItem?.businessName}",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   color: AppColors.primaryText,

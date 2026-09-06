@@ -31,6 +31,7 @@ class SalePointData {
   String? avatar;
   String? balance;
   String? businessName;
+  String? address;
   int? cid;
   String? machineNumber;
   String? firstName;
@@ -41,12 +42,17 @@ class SalePointData {
   String? phone;
   String? token;
   String? lastLogin;
+  String? lastCollectAt;
+  String? lastRechargeAt;
+  int? region;
+  int? city;
   int? status;
 
   SalePointData(
       {this.avatar,
       this.balance,
       this.businessName,
+      this.address,
       this.cid,
       this.machineNumber,
       this.firstName,
@@ -57,6 +63,10 @@ class SalePointData {
       this.phone,
       this.token,
       this.lastLogin,
+      this.lastCollectAt,
+      this.lastRechargeAt,
+      this.region,
+      this.city,
       this.status});
 
   SalePointData.fromJson(Map<String, dynamic> json) {
@@ -64,6 +74,7 @@ class SalePointData {
     balance = json['balance']?.toString();
     machineNumber = json['machine_number'];
     businessName = json['business_name'];
+    address = json['address'];
     cid = json['cid'];
     firstName = json['first_name'];
     id = json['id'];
@@ -73,6 +84,16 @@ class SalePointData {
     phone = json['phone'];
     token = json['token'];
     lastLogin = json['last_login'];
+    lastCollectAt = (json['last_collect_at'] ??
+            json['lastCollectAt'] ??
+            json['LastCollectAt'])
+        ?.toString();
+    lastRechargeAt = (json['last_recharge_at'] ??
+            json['lastRechargeAt'] ??
+            json['LastRechargeAt'])
+        ?.toString();
+    region = json['region'];
+    city = json['city'];
     status = json['status'];
   }
 
@@ -81,6 +102,7 @@ class SalePointData {
     data['avatar'] = this.avatar;
     data['balance'] = this.balance;
     data['business_name'] = this.businessName;
+    data['address'] = this.address;
     data['machine_number'] = this.machineNumber;
     data['cid'] = this.cid;
     data['first_name'] = this.firstName;
@@ -91,6 +113,10 @@ class SalePointData {
     data['phone'] = this.phone;
     data['token'] = this.token;
     data['last_login'] = this.lastLogin;
+    data['last_collect_at'] = this.lastCollectAt;
+    data['last_recharge_at'] = this.lastRechargeAt;
+    data['region'] = this.region;
+    data['city'] = this.city;
     data['status'] = this.status;
     return data;
   }
@@ -163,6 +189,8 @@ class SalePointDataUpdateRequestEntity {
   String? lastName;
   String? businessName;
   String? machineNumber;
+  String? address;
+  String? avatar;
 
   SalePointDataUpdateRequestEntity({
     this.id,
@@ -171,6 +199,8 @@ class SalePointDataUpdateRequestEntity {
     this.lastName,
     this.businessName,
     this.machineNumber,
+    this.address,
+    this.avatar,
   });
 
   Map<String, dynamic> toJson() => {
@@ -180,6 +210,8 @@ class SalePointDataUpdateRequestEntity {
         "last_name": lastName,
         "business_name": businessName,
         "machine_number": machineNumber,
+        "address": address,
+        "avatar": avatar,
       };
 }
 

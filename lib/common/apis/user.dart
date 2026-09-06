@@ -1,5 +1,7 @@
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/utils/utils.dart';
+import 'package:app/common/values/constant.dart';
+import 'package:dio/dio.dart';
 
 class UserAPI {
   static Future<UserLoginResponseEntity> Login({
@@ -54,6 +56,30 @@ class UserAPI {
       data: params?.toJson(),
     );
     return BaseResponseEntity.fromJson(response);
+  }
+
+  static Future<BaseResponseEntity> uploadFile({
+    required String path,
+  }) async {
+    var response = await HttpUtil().post(
+      'agent/upload_file',
+      data: FormData.fromMap({
+        "file": await MultipartFile.fromFile(path),
+      }),
+    );
+    return BaseResponseEntity.fromJson(response);
+  }
+
+  static Future<BaseResponseEntity> uploadAdminFile({
+    required String path,
+  }) async {
+    final response = await Dio().post(
+      '${SERVER_API_IMG_URL}api/upload_file',
+      data: FormData.fromMap({
+        "file": await MultipartFile.fromFile(path),
+      }),
+    );
+    return BaseResponseEntity.fromJson(response.data);
   }
 
   static Future<AgentDeviceResponseEntity> deviceList() async {
