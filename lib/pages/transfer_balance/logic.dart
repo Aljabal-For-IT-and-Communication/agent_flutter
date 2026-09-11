@@ -44,7 +44,7 @@ class Logic {
     try {
       // Clear existing list before fetching to avoid stale data
       context.read<TransferBalanceBloc>().add(const AgentListChanged([]));
-      var result = await AgentAPI.agentPickerList();
+      var result = await AgentAPI.agentList();
       if (result.code == 0) {
         context.read<TransferBalanceBloc>().add(AgentListChanged(result.data!));
         // context.read<TransferBalanceBloc>().add(AgentItemChanged(result.data!.first));

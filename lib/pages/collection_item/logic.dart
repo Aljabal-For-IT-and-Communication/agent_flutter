@@ -37,7 +37,7 @@ class Logic {
     try {
       // Clear existing list before fetching to avoid stale data
       context.read<CollectionItemBloc>().add(const AgentListChanged([]));
-      var result = await AgentAPI.agentPickerList();
+      var result = await AgentAPI.agentList();
       if (result.code == 0) {
         context.read<CollectionItemBloc>().add(AgentListChanged(result.data!));
         // context.read<CollectionItemBloc>().add(AgentItemChanged(result.data!.first));

@@ -1,7 +1,9 @@
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/utils/date.dart';
+import 'package:app/common/values/constant.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
@@ -48,6 +50,17 @@ Widget outlinedText(
       ),
     ],
   );
+}
+
+String _formattedListDate(String? value) {
+  if ((value ?? '').isEmpty) {
+    return '-';
+  }
+  try {
+    return timeFormated(value);
+  } catch (_) {
+    return value!;
+  }
 }
 
 class BuildAppBar extends StatelessWidget {
@@ -111,6 +124,19 @@ class BuildListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final balance = double.tryParse(item.balance ?? "0") ?? 0;
+    final avatar = item.avatar ?? '';
+    final cleanAvatar = avatar.startsWith('/') ? avatar.substring(1) : avatar;
+    final avatarUrl = cleanAvatar.startsWith('http')
+        ? cleanAvatar
+        : cleanAvatar.startsWith('uploads/')
+            ? '$SERVER_API_URL$cleanAvatar'
+            : '$SERVER_IMG_URL$cleanAvatar';
+    final fullName = [item.firstName, item.middleName, item.lastName]
+        .where((name) => (name ?? '').trim().isNotEmpty)
+        .join(' ');
+    final title = fullName.isEmpty
+        ? item.businessName ?? ''
+        : "${item.businessName ?? ''} - $fullName";
 
     return GestureDetector(
       onTap: () async {
@@ -144,13 +170,24 @@ class BuildListItem extends StatelessWidget {
             Container(
               width: 40.w,
               height: 40.w,
-              padding: EdgeInsets.all(8.w),
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 color: AppColors.primaryBackground,
                 borderRadius: BorderRadius.all(Radius.circular(20.w)),
               ),
-              child: Image.asset('assets/icons/store.png'),
+              child: avatar.isEmpty
+                  ? Padding(
+                      padding: EdgeInsets.all(8.w),
+                      child: Image.asset('assets/icons/store.png'),
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: avatarUrl,
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) => Padding(
+                        padding: EdgeInsets.all(8.w),
+                        child: Image.asset('assets/icons/store.png'),
+                      ),
+                    ),
             ),
             SizedBox(width: 10.w),
             Expanded(
@@ -159,25 +196,13 @@ class BuildListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   outlinedText(
-                    "${item.businessName}",
+                    title,
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     fillColor: AppColors.primaryText,
                     fontWeight: FontWeight.bold,
                     fontSize: 14.sp,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5.w),
-                    child: outlinedText(
-                      "${item.firstName}",
-                      textAlign: TextAlign.start,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      fillColor: AppColors.primarySecondaryElementText,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 12.sp,
-                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 5.w),
@@ -204,6 +229,30 @@ class BuildListItem extends StatelessWidget {
                         fontSize: 12.sp,
                       ),
                     ),
+                  Container(
+                    margin: EdgeInsets.only(top: 5.w),
+                    child: outlinedText(
+                      "${'Last collect'.tr()}: ${_formattedListDate(item.lastCollectAt)}",
+                      textAlign: TextAlign.start,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      fillColor: AppColors.primarySecondaryElementText,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 5.w),
+                    child: outlinedText(
+                      "${'Last recharge'.tr()}: ${_formattedListDate(item.lastRechargeAt)}",
+                      textAlign: TextAlign.start,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      fillColor: AppColors.primarySecondaryElementText,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12.sp,
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.only(top: 5.w),
                     child: Column(

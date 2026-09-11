@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app/common/apis/user.dart';
 import 'package:app/common/apis/sale_point.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
@@ -7,10 +10,24 @@ import 'package:app/common/utils/loading.dart';
 
 import 'package:app/common/values/colors.dart';
 import 'package:app/common/widgets/app_notification.dart';
+import 'package:app/common/values/constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+String salePointAvatarUrl(String avatar) {
+  final cleanAvatar = avatar.startsWith('/') ? avatar.substring(1) : avatar;
+  if (cleanAvatar.startsWith('http')) {
+    return cleanAvatar;
+  }
+  if (cleanAvatar.startsWith('uploads/')) {
+    return '$SERVER_API_URL$cleanAvatar';
+  }
+  return '$SERVER_IMG_URL$cleanAvatar';
+}
 
 // ─── App bar ───────────────────────────────────────────────
 class DetailAppBar extends StatelessWidget {
@@ -95,12 +112,24 @@ class SalePointInfoCard extends StatelessWidget {
               Container(
                 width: 44.w,
                 height: 44.w,
-                padding: EdgeInsets.all(8.w),
+                clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
                   color: AppColors.primaryBackground,
                   borderRadius: BorderRadius.circular(22.w),
                 ),
-                child: Image.asset('assets/icons/store.png'),
+                child: (item.avatar ?? '').isEmpty
+                    ? Padding(
+                        padding: EdgeInsets.all(8.w),
+                        child: Image.asset('assets/icons/store.png'),
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: salePointAvatarUrl(item.avatar!),
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => Padding(
+                          padding: EdgeInsets.all(8.w),
+                          child: Image.asset('assets/icons/store.png'),
+                        ),
+                      ),
               ),
               SizedBox(width: 12.w),
               Expanded(
@@ -206,14 +235,15 @@ class SalePointInfoCard extends StatelessWidget {
 }
 
 // ─── Edit form ─────────────────────────────────────────────
-class EditFormCard extends StatelessWidget {
+class EditFormCard extends StatefulWidget {
   final SalePointData item;
   final TextEditingController firstNameCtrl;
   final TextEditingController middleNameCtrl;
   final TextEditingController lastNameCtrl;
   final TextEditingController businessNameCtrl;
   final TextEditingController machineNumberCtrl;
-  final VoidCallback onSaved;
+  final TextEditingController addressCtrl;
+  final ValueChanged<SalePointData> onSaved;
   final VoidCallback onCancel;
 
   const EditFormCard({
@@ -224,9 +254,24 @@ class EditFormCard extends StatelessWidget {
     required this.lastNameCtrl,
     required this.businessNameCtrl,
     required this.machineNumberCtrl,
+    required this.addressCtrl,
     required this.onSaved,
     required this.onCancel,
   }) : super(key: key);
+
+  @override
+  State<EditFormCard> createState() => _EditFormCardState();
+}
+
+class _EditFormCardState extends State<EditFormCard> {
+  String avatar = '';
+  String? imagePath;
+
+  @override
+  void initState() {
+    super.initState();
+    avatar = widget.item.avatar ?? '';
+  }
 
   InputDecoration _inputDec(String label) => InputDecoration(
         isDense: true,
@@ -234,6 +279,26 @@ class EditFormCard extends StatelessWidget {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.w)),
         contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
       );
+
+  Widget avatarView() {
+    if (imagePath != null) {
+      return Image.file(File(imagePath!), fit: BoxFit.cover);
+    }
+    if (avatar.isEmpty) {
+      return Padding(
+        padding: EdgeInsets.all(12.w),
+        child: Image.asset('assets/icons/store.png'),
+      );
+    }
+    return CachedNetworkImage(
+      imageUrl: salePointAvatarUrl(avatar),
+      fit: BoxFit.cover,
+      errorWidget: (context, url, error) => Padding(
+        padding: EdgeInsets.all(12.w),
+        child: Image.asset('assets/icons/store.png'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -254,33 +319,79 @@ class EditFormCard extends StatelessWidget {
                   fontSize: 14.sp,
                   color: AppColors.primaryText)),
           SizedBox(height: 10.h),
+          Row(
+            children: [
+              Container(
+                width: 58.w,
+                height: 58.w,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryBackground,
+                  border: Border.all(color: AppColors.primaryThreeElementText),
+                  borderRadius: BorderRadius.circular(29.w),
+                ),
+                child: avatarView(),
+              ),
+              SizedBox(width: 10.w),
+              Expanded(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.w)),
+                  ),
+                  onPressed: () async {
+                    final result = await FilePicker.platform.pickFiles(
+                      type: FileType.custom,
+                      allowedExtensions: ['jpg', 'jpeg', 'png'],
+                    );
+                    if (result != null && result.files.isNotEmpty) {
+                      final file = result.files.first;
+                      if (file.path != null) {
+                        setState(() {
+                          imagePath = file.path;
+                        });
+                      }
+                    }
+                  },
+                  child: Text(imagePath == null
+                      ? 'Choose image'.tr()
+                      : 'Change image'.tr()),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10.h),
           TextField(
-              controller: businessNameCtrl,
+              controller: widget.businessNameCtrl,
               decoration: _inputDec('Business Name'.tr())),
           SizedBox(height: 8.h),
           Row(children: [
             Expanded(
                 child: TextField(
-                    controller: firstNameCtrl,
+                    controller: widget.firstNameCtrl,
                     decoration: _inputDec('First Name'.tr()))),
             SizedBox(width: 8.w),
             Expanded(
                 child: TextField(
-                    controller: middleNameCtrl,
+                    controller: widget.middleNameCtrl,
                     decoration: _inputDec('Middle Name'.tr()))),
           ]),
           SizedBox(height: 8.h),
           Row(children: [
             Expanded(
                 child: TextField(
-                    controller: lastNameCtrl,
+                    controller: widget.lastNameCtrl,
                     decoration: _inputDec('Last Name'.tr()))),
             SizedBox(width: 8.w),
             Expanded(
                 child: TextField(
-                    controller: machineNumberCtrl,
+                    controller: widget.machineNumberCtrl,
                     decoration: _inputDec('Machine Number'.tr()))),
           ]),
+          SizedBox(height: 8.h),
+          TextField(
+              controller: widget.addressCtrl,
+              decoration: _inputDec('Address'.tr())),
           SizedBox(height: 12.h),
           Row(
             children: [
@@ -303,7 +414,7 @@ class EditFormCard extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.w)),
                   ),
-                  onPressed: onCancel,
+                  onPressed: widget.onCancel,
                   child: Text('Cancel'.tr()),
                 ),
               ),
@@ -317,22 +428,45 @@ class EditFormCard extends StatelessWidget {
   void _save(BuildContext context) async {
     Loading.show();
     try {
+      var uploadedAvatar = avatar;
+      if (imagePath != null) {
+        final upload = await UserAPI.uploadAdminFile(path: imagePath!);
+        if (upload.code != 0 || upload.data == null) {
+          AppNotification.show(
+            message:
+                upload.msg == null ? 'Error'.tr() : trServerMessage(upload.msg!),
+            type: AppNotificationType.error,
+          );
+          return;
+        }
+        uploadedAvatar = upload.data!;
+      }
       final res = await SalePointAPI.salePointDataUpdate(
         params: SalePointDataUpdateRequestEntity(
-          id: item.id,
-          firstName: firstNameCtrl.text,
-          middleName: middleNameCtrl.text,
-          lastName: lastNameCtrl.text,
-          businessName: businessNameCtrl.text,
-          machineNumber: machineNumberCtrl.text,
+          id: widget.item.id,
+          firstName: widget.firstNameCtrl.text,
+          middleName: widget.middleNameCtrl.text,
+          lastName: widget.lastNameCtrl.text,
+          businessName: widget.businessNameCtrl.text,
+          machineNumber: widget.machineNumberCtrl.text,
+          address: widget.addressCtrl.text,
+          avatar: uploadedAvatar,
         ),
       );
       if (res.code == 0) {
+        var savedItem = widget.item;
+        savedItem.firstName = widget.firstNameCtrl.text;
+        savedItem.middleName = widget.middleNameCtrl.text;
+        savedItem.lastName = widget.lastNameCtrl.text;
+        savedItem.businessName = widget.businessNameCtrl.text;
+        savedItem.machineNumber = widget.machineNumberCtrl.text;
+        savedItem.address = widget.addressCtrl.text;
+        savedItem.avatar = uploadedAvatar;
         AppNotification.show(
           message: 'Saved'.tr(),
           type: AppNotificationType.success,
         );
-        onSaved();
+        widget.onSaved(savedItem);
       } else {
         AppNotification.show(
           message: res.msg == null ? 'Error'.tr() : trServerMessage(res.msg!),

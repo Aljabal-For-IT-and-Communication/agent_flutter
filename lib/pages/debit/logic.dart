@@ -30,7 +30,7 @@ class Logic {
 
   agent() async {
     try {
-      var result = await AgentAPI.agentPickerList();
+      var result = await AgentAPI.agentList();
       if (result.code == 0) {
         context.read<DebitBloc>().add(AgentListChanged(result.data!));
         context.read<DebitBloc>().add(AgentItemChanged(result.data!.first));
