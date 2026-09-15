@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -74,7 +75,7 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
     return Scaffold(
       body: Container(
         color: AppColors.primaryBackground,
-        child: CustomScrollView(
+        child: FormScrollView(
           slivers: [
             SliverToBoxAdapter(child: DetailAppBar(item: _item)),
             SliverPadding(

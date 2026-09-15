@@ -48,6 +48,8 @@ class BuildDropdownAgentInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<String>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: agent,
             underline: Container(),
@@ -111,6 +113,7 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: TypeAheadField<AgentData>(
+            autoFlipDirection: true,
             suggestionsCallback: (search) {
               final value = search.trim().toLowerCase();
               return items
@@ -121,6 +124,8 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
             builder: (context, controller, focusNode) {
               agentController = controller;
               return TextField(
+                  textInputAction: TextInputAction.done,
+                  scrollPadding: const EdgeInsets.all(32),
                   controller: agentController,
                   focusNode: focusNode,
                   autofocus: false,
@@ -159,6 +164,7 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               );
             },
             onSelected: (AgentData? newValue) {
+              FocusManager.instance.primaryFocus?.unfocus();
               agentController.text =
                   newValue == null ? "" : agentFullName(newValue);
               context.read<DebitBloc>().add(IsShowChanged(false));
@@ -211,6 +217,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: TypeAheadField<SalePointData>(
+            autoFlipDirection: true,
             suggestionsCallback: (search) {
               return items
                   .where((item) => item.businessName!.contains(search))
@@ -219,6 +226,8 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
             builder: (context, controller, focusNode) {
               salePointController = controller;
               return TextField(
+                  textInputAction: TextInputAction.done,
+                  scrollPadding: const EdgeInsets.all(32),
                   controller: salePointController,
                   focusNode: focusNode,
                   autofocus: false,
@@ -257,6 +266,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
               );
             },
             onSelected: (SalePointData? newValue) {
+              FocusManager.instance.primaryFocus?.unfocus();
               salePointController.text = newValue?.businessName ?? "";
               context.read<DebitBloc>().add(IsShowChanged(false));
               context.read<DebitBloc>().add(SalePointItemChanged(newValue));
@@ -308,6 +318,8 @@ class BuildDropdownAgentPhoneInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<AgentData>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: state.agentItem,
             underline: Container(),
@@ -372,6 +384,8 @@ class BuildDropdownSalePointPhoneInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<SalePointData>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: state.salePointItem,
             underline: Container(),

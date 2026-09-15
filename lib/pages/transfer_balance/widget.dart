@@ -160,6 +160,8 @@ class BuildDropdownTypeInput extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
                 border: Border.all(color: AppColors.primaryThreeElementText)),
             child: DropdownButton<String>(
+              isExpanded: true,
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
               elevation: 0,
               value: type,
               underline: Container(),
@@ -236,6 +238,8 @@ class BuildDropdownAgentInput extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
                 border: Border.all(color: AppColors.primaryThreeElementText)),
             child: DropdownButton<String>(
+              isExpanded: true,
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
               elevation: 0,
               value: agent,
               underline: Container(),
@@ -304,6 +308,7 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: TypeAheadField<AgentData>(
+            autoFlipDirection: true,
             suggestionsCallback: (search) {
               final value = search.trim().toLowerCase();
               return items
@@ -314,6 +319,8 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
             builder: (context, controller, focusNode) {
               agentController = controller;
               return TextField(
+                  textInputAction: TextInputAction.done,
+                  scrollPadding: const EdgeInsets.all(32),
                   controller: agentController,
                   focusNode: focusNode,
                   autofocus: false,
@@ -352,6 +359,7 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               );
             },
             onSelected: (AgentData? newValue) {
+              FocusManager.instance.primaryFocus?.unfocus();
               agentController.text =
                   newValue == null ? "" : agentFullName(newValue);
               context
@@ -405,6 +413,8 @@ class BuildDropdownAgentPhoneInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<AgentData>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: state.agentItem,
             underline: Container(),
@@ -518,6 +528,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: TypeAheadField<SalePointData>(
+            autoFlipDirection: true,
             suggestionsCallback: (search) {
               return items
                   .where((item) => item.businessName!.contains(search))
@@ -526,6 +537,8 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
             builder: (context, controller, focusNode) {
               salePointController = controller;
               return TextField(
+                  textInputAction: TextInputAction.done,
+                  scrollPadding: const EdgeInsets.all(32),
                   controller: salePointController,
                   focusNode: focusNode,
                   autofocus: false,
@@ -565,6 +578,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
               );
             },
             onSelected: (SalePointData? newValue) {
+              FocusManager.instance.primaryFocus?.unfocus();
               salePointController.text =
                   newValue?.businessName ?? newValue?.firstName ?? "";
               context
@@ -618,6 +632,8 @@ class BuildDropdownSalePointPhoneInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<SalePointData>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: state.salePointItem,
             underline: Container(),
@@ -662,6 +678,8 @@ class BuildPhoneInput extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8.w)),
           border: Border.all(color: AppColors.primaryFourElementText)),
       child: TextField(
+        textInputAction: TextInputAction.done,
+        scrollPadding: const EdgeInsets.all(32),
         key: ValueKey("tb_phone_${state.formVersion}"),
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
@@ -741,6 +759,8 @@ class BuildAmountInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
+            textInputAction: TextInputAction.done,
+            scrollPadding: const EdgeInsets.all(32),
             keyboardType: TextInputType.number,
             key: ValueKey("tb_amount_${state.formVersion}"),
             decoration: InputDecoration(
@@ -864,6 +884,8 @@ class BuildDropdownRechargeTypeInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<int>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: state.rechargeTypeId,
             underline: Container(),
@@ -923,6 +945,7 @@ class BuildValidationAttachmentInput extends StatelessWidget {
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () async {
+                FocusManager.instance.primaryFocus?.unfocus();
                 final res = await FilePicker.platform.pickFiles(
                   type: FileType.custom,
                   allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],

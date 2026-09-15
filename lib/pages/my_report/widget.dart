@@ -235,6 +235,8 @@ class BuildDropdownAgentInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<String>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: agent,
             underline: Container(),

@@ -63,7 +63,12 @@ class BuildTextInput extends StatelessWidget {
             height: 50.h,
             padding: EdgeInsets.only(left: 10.w, right: 10.w),
             child: TextField(
-              keyboardType: TextInputType.multiline,
+              scrollPadding: const EdgeInsets.all(32),
+              keyboardType:
+                  type == 'phone' ? TextInputType.phone : TextInputType.text,
+              textInputAction: type == 'description'
+                  ? TextInputAction.done
+                  : TextInputAction.next,
               controller: controller,
               decoration: InputDecoration(
                 hintText: "Enter your ${type}",
@@ -148,7 +153,9 @@ class BuildBirthInput extends StatelessWidget {
             height: 50.h,
             padding: EdgeInsets.only(left: 10.w, right: 10.w),
             child: TextField(
+              scrollPadding: const EdgeInsets.all(32),
               keyboardType: TextInputType.datetime,
+              textInputAction: TextInputAction.next,
               controller: controller,
               decoration: const InputDecoration(
                 hintText: "Enter your birthday!",
@@ -201,10 +208,8 @@ class BuildBirthInput extends StatelessWidget {
               width: 19.5.h,
               height: 21.5.h,
               margin: EdgeInsets.only(left: 0.w, right: 10.w),
-              child: Image.asset(
-                "assets/icons/calendar_1.png",
-                fit: BoxFit.fill,
-              ))
+              child: Icon(Icons.calendar_today_outlined,
+                  size: 20.h, color: AppColors.primarySecondaryElementText))
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/app.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -8,14 +9,34 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'bloc.dart';
 import 'widget.dart';
 
-class ChangePasswordPage extends StatelessWidget {
+class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({super.key});
+
+  @override
+  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
+}
+
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  final _currentPasswordFocus = FocusNode();
+  final _newPasswordFocus = FocusNode();
+  final _confirmPasswordFocus = FocusNode();
+
+  @override
+  void dispose() {
+    _currentPasswordFocus.dispose();
+    _newPasswordFocus.dispose();
+    _confirmPasswordFocus.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChangePasswordBloc, ChangePasswordState>(
         builder: (context, state) {
-      return Container(
-          color: AppColors.primaryBackground,
-          child: CustomScrollView(slivers: [
+      return Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: AppColors.primaryBackground,
+          body: FormScrollView(slivers: [
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,
@@ -40,6 +61,8 @@ class ChangePasswordPage extends StatelessWidget {
                       ),
                       BuildInput(
                           name: 'Current Password'.tr(),
+                          focusNode: _currentPasswordFocus,
+                          onEditingComplete: _newPasswordFocus.requestFocus,
                           callFunc: (value) {
                             context
                                 .read<ChangePasswordBloc>()
@@ -47,6 +70,8 @@ class ChangePasswordPage extends StatelessWidget {
                           }),
                       BuildInput(
                           name: 'New Password'.tr(),
+                          focusNode: _newPasswordFocus,
+                          onEditingComplete: _confirmPasswordFocus.requestFocus,
                           callFunc: (value) {
                             context
                                 .read<ChangePasswordBloc>()
@@ -54,6 +79,9 @@ class ChangePasswordPage extends StatelessWidget {
                           }),
                       BuildInput(
                           name: 'Confirm Password'.tr(),
+                          focusNode: _confirmPasswordFocus,
+                          onEditingComplete: _confirmPasswordFocus.unfocus,
+                          textInputAction: TextInputAction.done,
                           callFunc: (value) {
                             context
                                 .read<ChangePasswordBloc>()

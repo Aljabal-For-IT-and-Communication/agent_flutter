@@ -142,6 +142,7 @@ class _ApplicationPage extends State<ApplicationPage> {
               selectedFontSize: 12,
               unselectedFontSize: 12,
               onTap: (value) async {
+                FocusManager.instance.primaryFocus?.unfocus();
                 context.read<ApplicationBloc>().add(PageChanged(value));
                 pageController.jumpToPage(value);
               },

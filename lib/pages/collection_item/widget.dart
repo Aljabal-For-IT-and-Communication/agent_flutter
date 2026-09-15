@@ -49,10 +49,14 @@ class BuildDropdownAgentInput extends StatelessWidget {
             height: 46.h,
             padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
             decoration: BoxDecoration(
-                color: isLocked ? AppColors.primaryFourElementText : AppColors.primaryBackground,
+                color: isLocked
+                    ? AppColors.primaryFourElementText
+                    : AppColors.primaryBackground,
                 borderRadius: BorderRadius.all(Radius.circular(8.w)),
                 border: Border.all(color: AppColors.primaryThreeElementText)),
             child: DropdownButton<String>(
+              isExpanded: true,
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
               elevation: 0,
               value: agent,
               underline: Container(),
@@ -69,7 +73,9 @@ class BuildDropdownAgentInput extends StatelessWidget {
               onChanged: isLocked
                   ? null
                   : (String? newValue) {
-                      context.read<CollectionItemBloc>().add(IsShowChanged(false));
+                      context
+                          .read<CollectionItemBloc>()
+                          .add(IsShowChanged(false));
                       context
                           .read<CollectionItemBloc>()
                           .add(AgentChanged(newValue ?? "Agent"));
@@ -121,6 +127,7 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: TypeAheadField<AgentData>(
+            autoFlipDirection: true,
             suggestionsCallback: (search) {
               final value = search.trim().toLowerCase();
               return items
@@ -131,6 +138,8 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
             builder: (context, controller, focusNode) {
               agentController = controller;
               return TextField(
+                  textInputAction: TextInputAction.done,
+                  scrollPadding: const EdgeInsets.all(32),
                   controller: agentController,
                   focusNode: focusNode,
                   autofocus: false,
@@ -169,7 +178,9 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               );
             },
             onSelected: (AgentData? newValue) {
-              agentController.text = newValue == null ? "" : agentFullName(newValue);
+              FocusManager.instance.primaryFocus?.unfocus();
+              agentController.text =
+                  newValue == null ? "" : agentFullName(newValue);
               context
                   .read<CollectionItemBloc>()
                   .add(AgentItemChanged(newValue));
@@ -223,7 +234,9 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(8.w)),
                   border: Border.all(color: AppColors.primaryThreeElementText)),
               child: Text(
-                state.salePointItem?.businessName ?? state.salePointItem?.firstName ?? '',
+                state.salePointItem?.businessName ??
+                    state.salePointItem?.firstName ??
+                    '',
                 style: TextStyle(
                   color: AppColors.primaryText,
                   fontSize: 14.sp,
@@ -267,6 +280,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: TypeAheadField<SalePointData>(
+            autoFlipDirection: true,
             suggestionsCallback: (search) {
               return items
                   .where((item) => item.businessName!.contains(search))
@@ -275,6 +289,8 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
             builder: (context, controller, focusNode) {
               salePointController = controller;
               return TextField(
+                  textInputAction: TextInputAction.done,
+                  scrollPadding: const EdgeInsets.all(32),
                   controller: salePointController,
                   focusNode: focusNode,
                   autofocus: false,
@@ -313,6 +329,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
               );
             },
             onSelected: (SalePointData? newValue) {
+              FocusManager.instance.primaryFocus?.unfocus();
               salePointController.text = newValue?.businessName ?? "";
               context
                   .read<CollectionItemBloc>()
@@ -365,6 +382,8 @@ class BuildDropdownAgentPhoneInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<AgentData>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: state.agentItem,
             underline: Container(),
@@ -431,6 +450,8 @@ class BuildDropdownSalePointPhoneInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<SalePointData>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: state.salePointItem,
             underline: Container(),
@@ -494,6 +515,8 @@ class BuildAmountInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
+            textInputAction: TextInputAction.done,
+            scrollPadding: const EdgeInsets.all(32),
             keyboardType: TextInputType.number,
             key: ValueKey("ci_amount_${state.formVersion}"),
             decoration: InputDecoration(
@@ -663,6 +686,8 @@ class BuildDropdownCollectTypeInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
           child: DropdownButton<int>(
+            isExpanded: true,
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             elevation: 0,
             value: state.collectTypeId,
             underline: Container(),
@@ -721,6 +746,7 @@ class BuildValidationAttachmentInput extends StatelessWidget {
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () async {
+                FocusManager.instance.primaryFocus?.unfocus();
                 final res = await FilePicker.platform.pickFiles(
                   type: FileType.custom,
                   allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],

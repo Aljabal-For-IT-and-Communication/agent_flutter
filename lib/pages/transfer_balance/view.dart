@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/values/values.dart';
 // import 'package:app/common/widgets/widgets.dart';
 import 'package:app/common/entities/entities.dart';
@@ -59,9 +60,10 @@ class _TransferBalancePageState extends State<TransferBalancePage> {
     // TODO: implement build
     return BlocBuilder<TransferBalanceBloc, TransferBalanceState>(
         builder: (context, state) {
-      return Container(
-          color: AppColors.primaryBackground,
-          child: CustomScrollView(slivers: [
+      return Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: AppColors.primaryBackground,
+          body: FormScrollView(slivers: [
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,

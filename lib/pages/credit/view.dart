@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/values/values.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +36,10 @@ class _CreditPageState extends State<CreditPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocBuilder<CreditBloc, CreditState>(builder: (context, state) {
-      return Container(
-          color: AppColors.primaryBackground,
-          child: CustomScrollView(slivers: [
+      return Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: AppColors.primaryBackground,
+          body: FormScrollView(slivers: [
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,

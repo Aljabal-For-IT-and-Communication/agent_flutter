@@ -340,6 +340,7 @@ class _EditFormCardState extends State<EditFormCard> {
                         borderRadius: BorderRadius.circular(8.w)),
                   ),
                   onPressed: () async {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     final result = await FilePicker.platform.pickFiles(
                       type: FileType.custom,
                       allowedExtensions: ['jpg', 'jpeg', 'png'],
@@ -362,17 +363,23 @@ class _EditFormCardState extends State<EditFormCard> {
           ),
           SizedBox(height: 10.h),
           TextField(
+              textInputAction: TextInputAction.next,
+              scrollPadding: const EdgeInsets.all(32),
               controller: widget.businessNameCtrl,
               decoration: _inputDec('Business Name'.tr())),
           SizedBox(height: 8.h),
           Row(children: [
             Expanded(
                 child: TextField(
+                    textInputAction: TextInputAction.next,
+                    scrollPadding: const EdgeInsets.all(32),
                     controller: widget.firstNameCtrl,
                     decoration: _inputDec('First Name'.tr()))),
             SizedBox(width: 8.w),
             Expanded(
                 child: TextField(
+                    textInputAction: TextInputAction.next,
+                    scrollPadding: const EdgeInsets.all(32),
                     controller: widget.middleNameCtrl,
                     decoration: _inputDec('Middle Name'.tr()))),
           ]),
@@ -380,16 +387,22 @@ class _EditFormCardState extends State<EditFormCard> {
           Row(children: [
             Expanded(
                 child: TextField(
+                    textInputAction: TextInputAction.next,
+                    scrollPadding: const EdgeInsets.all(32),
                     controller: widget.lastNameCtrl,
                     decoration: _inputDec('Last Name'.tr()))),
             SizedBox(width: 8.w),
             Expanded(
                 child: TextField(
+                    textInputAction: TextInputAction.next,
+                    scrollPadding: const EdgeInsets.all(32),
                     controller: widget.machineNumberCtrl,
                     decoration: _inputDec('Machine Number'.tr()))),
           ]),
           SizedBox(height: 8.h),
           TextField(
+              textInputAction: TextInputAction.done,
+              scrollPadding: const EdgeInsets.all(32),
               controller: widget.addressCtrl,
               decoration: _inputDec('Address'.tr())),
           SizedBox(height: 12.h),
@@ -426,6 +439,7 @@ class _EditFormCardState extends State<EditFormCard> {
   }
 
   void _save(BuildContext context) async {
+    FocusManager.instance.primaryFocus?.unfocus();
     Loading.show();
     try {
       var uploadedAvatar = avatar;
@@ -433,8 +447,9 @@ class _EditFormCardState extends State<EditFormCard> {
         final upload = await UserAPI.uploadAdminFile(path: imagePath!);
         if (upload.code != 0 || upload.data == null) {
           AppNotification.show(
-            message:
-                upload.msg == null ? 'Error'.tr() : trServerMessage(upload.msg!),
+            message: upload.msg == null
+                ? 'Error'.tr()
+                : trServerMessage(upload.msg!),
             type: AppNotificationType.error,
           );
           return;

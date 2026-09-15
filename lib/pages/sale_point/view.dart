@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/values/values.dart';
@@ -98,7 +99,7 @@ class _SalePointPageState extends State<SalePointPage> {
       }
       return Container(
           color: AppColors.primaryBackground,
-          child: CustomScrollView(slivers: [
+          child: FormScrollView(slivers: [
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,
@@ -187,6 +188,8 @@ class _SalePointPageState extends State<SalePointPage> {
                       ),
                       SizedBox(height: 8.h),
                       TextField(
+                        textInputAction: TextInputAction.done,
+                        scrollPadding: const EdgeInsets.all(32),
                         decoration: InputDecoration(
                           hintText: 'Search by business name'.tr(),
                           isDense: true,
@@ -300,6 +303,8 @@ class _SalePointPageState extends State<SalePointPage> {
                       ),
                       SizedBox(height: 8.h),
                       TextField(
+                        textInputAction: TextInputAction.done,
+                        scrollPadding: const EdgeInsets.all(32),
                         decoration: InputDecoration(
                           hintText: 'Search by first name'.tr(),
                           isDense: true,

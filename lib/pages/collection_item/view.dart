@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -293,9 +294,10 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
     // TODO: implement build
     return BlocBuilder<CollectionItemBloc, CollectionItemState>(
         builder: (context, state) {
-      return Container(
-          color: AppColors.primaryBackground,
-          child: CustomScrollView(slivers: [
+      return Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: AppColors.primaryBackground,
+          body: FormScrollView(slivers: [
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,

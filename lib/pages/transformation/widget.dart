@@ -96,7 +96,12 @@ class BuildAppBar extends StatelessWidget {
 
 class BuildInput extends StatelessWidget {
   final String name;
-  const BuildInput({Key? key, required this.name}) : super(key: key);
+  final TextInputAction textInputAction;
+  const BuildInput(
+      {Key? key,
+      required this.name,
+      this.textInputAction = TextInputAction.next})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +133,9 @@ class BuildInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
-            keyboardType: TextInputType.multiline,
+            keyboardType: TextInputType.text,
+            textInputAction: textInputAction,
+            scrollPadding: const EdgeInsets.all(32),
             decoration: InputDecoration(
               hintText: "",
               contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),

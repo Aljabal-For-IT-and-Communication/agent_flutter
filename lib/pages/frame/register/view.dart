@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/app.dart';
 import 'package:app/pages/frame/register/widget.dart';
@@ -32,7 +33,7 @@ class _RegisterPage extends State<RegisterPage> {
       return Scaffold(
         body: Container(
           color: AppColors.primaryBackground,
-          child: CustomScrollView(slivers: [
+          child: FormScrollView(slivers: [
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,
@@ -93,6 +94,7 @@ class _RegisterPage extends State<RegisterPage> {
                           }),
                       BuildInput(
                           name: "Email(optional)".tr(),
+                          keyboardType: TextInputType.emailAddress,
                           callFunc: (value) {
                             context
                                 .read<RegisterBloc>()
@@ -100,6 +102,7 @@ class _RegisterPage extends State<RegisterPage> {
                           }),
                       BuildInput(
                           name: "Phone Number".tr(),
+                          keyboardType: TextInputType.phone,
                           callFunc: (value) {
                             context
                                 .read<RegisterBloc>()
@@ -107,6 +110,7 @@ class _RegisterPage extends State<RegisterPage> {
                           }),
                       BuildInput(
                           name: "password".tr(),
+                          keyboardType: TextInputType.visiblePassword,
                           callFunc: (value) {
                             context
                                 .read<RegisterBloc>()
@@ -114,6 +118,7 @@ class _RegisterPage extends State<RegisterPage> {
                           }),
                       BuildInput(
                           name: "Confirm Password".tr(),
+                          keyboardType: TextInputType.visiblePassword,
                           callFunc: (value) {
                             context
                                 .read<RegisterBloc>()

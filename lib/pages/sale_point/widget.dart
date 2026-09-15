@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
 import 'package:app/pages/sale_point/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'logic.dart';
 
 Widget outlinedText(
   String text, {
@@ -54,7 +55,7 @@ Widget outlinedText(
 
 String _formattedListDate(String? value) {
   if ((value ?? '').isEmpty) {
-    return '-';
+    return '—';
   }
   try {
     return timeFormated(value);
@@ -140,6 +141,7 @@ class BuildListItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () async {
+        FocusManager.instance.primaryFocus?.unfocus();
         final result = await Navigator.of(context).pushNamed(
           AppRoutes.SalePointDetail,
           arguments: item,
@@ -152,6 +154,7 @@ class BuildListItem extends StatelessWidget {
           // Updated
           context.read<SalePointBloc>().add(SalePointItemUpdated(result));
         }
+        await Logic(context: context).salePoint();
       },
       child: Container(
         padding:
@@ -229,29 +232,17 @@ class BuildListItem extends StatelessWidget {
                         fontSize: 12.sp,
                       ),
                     ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5.w),
-                    child: outlinedText(
-                      "${'Last collect'.tr()}: ${_formattedListDate(item.lastCollectAt)}",
-                      textAlign: TextAlign.start,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      fillColor: AppColors.primarySecondaryElementText,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 12.sp,
-                    ),
+                  _LatestTransaction(
+                    amountLabel: 'Last recharge amount'.tr(),
+                    dateLabel: 'Last recharge date'.tr(),
+                    amount: item.lastRechargeAmount,
+                    date: item.lastRechargeAt,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5.w),
-                    child: outlinedText(
-                      "${'Last recharge'.tr()}: ${_formattedListDate(item.lastRechargeAt)}",
-                      textAlign: TextAlign.start,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      fillColor: AppColors.primarySecondaryElementText,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 12.sp,
-                    ),
+                  _LatestTransaction(
+                    amountLabel: 'Last collect amount'.tr(),
+                    dateLabel: 'Last collect date'.tr(),
+                    amount: item.lastCollectAmount,
+                    date: item.lastCollectAt,
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 5.w),
@@ -292,6 +283,48 @@ class BuildListItem extends StatelessWidget {
                 color: AppColors.primarySecondaryElementText),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _LatestTransaction extends StatelessWidget {
+  final String amountLabel;
+  final String dateLabel;
+  final String? amount;
+  final String? date;
+
+  const _LatestTransaction({
+    required this.amountLabel,
+    required this.dateLabel,
+    this.amount,
+    this.date,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final displayedAmount = (amount ?? '').trim().isEmpty ? '—' : '$amount LYD';
+    return Padding(
+      padding: EdgeInsets.only(top: 5.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$amountLabel: $displayedAmount',
+            style: TextStyle(
+              color: AppColors.primaryText,
+              fontWeight: FontWeight.w600,
+              fontSize: 12.sp,
+            ),
+          ),
+          Text(
+            '$dateLabel: ${_formattedListDate(date)}',
+            style: TextStyle(
+              color: AppColors.primarySecondaryElementText,
+              fontSize: 12.sp,
+            ),
+          ),
+        ],
       ),
     );
   }

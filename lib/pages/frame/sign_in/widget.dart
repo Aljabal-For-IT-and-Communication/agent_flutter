@@ -186,7 +186,9 @@ class BuildEmailInput extends StatelessWidget {
             width: 240.w,
             height: 46.h,
             child: TextField(
-              keyboardType: TextInputType.multiline,
+              scrollPadding: const EdgeInsets.all(32),
+              keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 hintText: "",
                 contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -268,7 +270,9 @@ class _BuildPasswordInputState extends State<BuildPasswordInput> {
             width: 240.w,
             height: 46.h,
             child: TextField(
+              scrollPadding: const EdgeInsets.all(32),
               keyboardType: TextInputType.visiblePassword,
+              textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                 hintText: "",
                 contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 0),

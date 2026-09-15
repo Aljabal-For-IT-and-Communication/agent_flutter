@@ -44,8 +44,13 @@ class BuildInput extends StatelessWidget {
   final String name;
   final Function(String)? callFunc;
   final int? maxLength;
+  final TextInputType keyboardType;
   const BuildInput(
-      {Key? key, required this.name, required this.callFunc, this.maxLength})
+      {Key? key,
+      required this.name,
+      required this.callFunc,
+      this.maxLength,
+      this.keyboardType = TextInputType.text})
       : super(key: key);
 
   @override
@@ -78,7 +83,9 @@ class BuildInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
-            keyboardType: TextInputType.multiline,
+            scrollPadding: const EdgeInsets.all(32),
+            keyboardType: keyboardType,
+            textInputAction: TextInputAction.next,
             maxLength: maxLength,
             decoration: const InputDecoration(
               hintText: "",
@@ -153,6 +160,7 @@ class _BuildMachineNumberInputState extends State<BuildMachineNumberInput> {
   }
 
   Future<void> _scan() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     final String? res = await SimpleBarcodeScanner.scanBarcode(
       context,
       barcodeAppBar: const BarcodeAppBar(
@@ -208,8 +216,10 @@ class _BuildMachineNumberInputState extends State<BuildMachineNumberInput> {
                     border: Border.all(color: AppColors.primaryFourElementText),
                   ),
                   child: TextField(
+                    scrollPadding: const EdgeInsets.all(32),
                     controller: _controller,
-                    keyboardType: TextInputType.multiline,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
                     maxLength: 13,
                     decoration: const InputDecoration(
                       hintText: "",

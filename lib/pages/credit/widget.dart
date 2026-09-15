@@ -141,6 +141,8 @@ class BuildInput extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
+            textInputAction: TextInputAction.done,
+            scrollPadding: const EdgeInsets.all(32),
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               hintText: "${name}",

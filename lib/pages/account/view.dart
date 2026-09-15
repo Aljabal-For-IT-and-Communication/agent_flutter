@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/values/colors.dart';
 import 'package:app/common/widgets/app.dart';
 import 'package:app/global.dart';
@@ -42,7 +43,7 @@ class _AccountPage extends State<AccountPage> {
       return Scaffold(
         appBar: buildAppBar("Edit Profile"),
         backgroundColor: Colors.white,
-        body: CustomScrollView(slivers: [
+        body: FormScrollView(slivers: [
           SliverPadding(
             padding: EdgeInsets.symmetric(
               vertical: 0.w,

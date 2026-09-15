@@ -127,7 +127,7 @@ class AppPages {
           bloc: BlocProvider(create: (_) => TransferBalanceBloc())),
       PageEntity(
           path: AppRoutes.SalePoint,
-          page: SalePointPage(),
+          page: Scaffold(body: SalePointPage()),
           bloc: BlocProvider(create: (_) => SalePointBloc())),
       PageEntity(
           path: AppRoutes.SalePointDetail,

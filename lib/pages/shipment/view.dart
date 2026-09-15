@@ -1,3 +1,5 @@
+import 'package:flutter/rendering.dart' show ScrollDirection;
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/widgets.dart';
@@ -30,6 +32,12 @@ class _ShipmentPageState extends State<ShipmentPage> {
       }
     });
     scrollController.addListener(() {
+      final state = context.read<ShipmentBloc>().state;
+      // Focus scrolling and keyboard resizing must not load records or unfocus search.
+      if (scrollController.position.userScrollDirection !=
+              ScrollDirection.reverse ||
+          state.agentRechargeRecordList.isEmpty ||
+          state.isMore) return;
       if ((scrollController.offset + 10) >
           scrollController.position.maxScrollExtent) {
         if (lastPostCalled == null ||
@@ -46,6 +54,7 @@ class _ShipmentPageState extends State<ShipmentPage> {
 
   @override
   void dispose() {
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -53,9 +62,10 @@ class _ShipmentPageState extends State<ShipmentPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BlocBuilder<ShipmentBloc, ShipmentState>(builder: (context, state) {
-      return Container(
-          color: AppColors.primaryBackground,
-          child: CustomScrollView(
+      return Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: AppColors.primaryBackground,
+          body: FormScrollView(
               controller: scrollController,
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),

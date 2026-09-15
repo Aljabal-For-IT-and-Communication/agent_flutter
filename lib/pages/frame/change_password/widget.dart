@@ -30,8 +30,17 @@ class BuildAppBar extends StatelessWidget {
 
 class BuildInput extends StatefulWidget {
   final String name;
+  final TextInputAction textInputAction;
+  final FocusNode? focusNode;
+  final VoidCallback? onEditingComplete;
   final Function(String)? callFunc;
-  const BuildInput({Key? key, required this.name, required this.callFunc})
+  const BuildInput(
+      {Key? key,
+      required this.name,
+      required this.callFunc,
+      this.textInputAction = TextInputAction.next,
+      this.focusNode,
+      this.onEditingComplete})
       : super(key: key);
 
   @override
@@ -70,7 +79,11 @@ class _BuildInputState extends State<BuildInput> {
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryFourElementText)),
           child: TextField(
+            focusNode: widget.focusNode,
+            onEditingComplete: widget.onEditingComplete,
             keyboardType: TextInputType.visiblePassword,
+            textInputAction: widget.textInputAction,
+            scrollPadding: const EdgeInsets.all(32),
             decoration: InputDecoration(
               hintText: "",
               contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),

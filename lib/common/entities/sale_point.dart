@@ -43,7 +43,9 @@ class SalePointData {
   String? token;
   String? lastLogin;
   String? lastCollectAt;
+  String? lastCollectAmount;
   String? lastRechargeAt;
+  String? lastRechargeAmount;
   int? region;
   int? city;
   int? status;
@@ -64,7 +66,9 @@ class SalePointData {
       this.token,
       this.lastLogin,
       this.lastCollectAt,
+      this.lastCollectAmount,
       this.lastRechargeAt,
+      this.lastRechargeAmount,
       this.region,
       this.city,
       this.status});
@@ -92,6 +96,8 @@ class SalePointData {
             json['lastRechargeAt'] ??
             json['LastRechargeAt'])
         ?.toString();
+    lastCollectAmount = json['last_collect_amount']?.toString();
+    lastRechargeAmount = json['last_recharge_amount']?.toString();
     region = json['region'];
     city = json['city'];
     status = json['status'];
@@ -114,7 +120,9 @@ class SalePointData {
     data['token'] = this.token;
     data['last_login'] = this.lastLogin;
     data['last_collect_at'] = this.lastCollectAt;
+    data['last_collect_amount'] = this.lastCollectAmount;
     data['last_recharge_at'] = this.lastRechargeAt;
+    data['last_recharge_amount'] = this.lastRechargeAmount;
     data['region'] = this.region;
     data['city'] = this.city;
     data['status'] = this.status;
