@@ -6,6 +6,7 @@ import 'package:app/common/routes/pages.dart';
 import 'package:app/common/services/storage.dart';
 import 'package:app/common/utils/http.dart';
 import 'package:app/common/widgets/form_scroll_view.dart';
+import 'package:app/common/widgets/form_typeahead_field.dart';
 import 'package:app/global.dart';
 import 'package:app/pages/account/view.dart';
 import 'package:app/pages/collection_item/view.dart';
@@ -18,6 +19,7 @@ import 'package:app/pages/frame/sign_in/view.dart';
 import 'package:app/pages/revenue/view.dart';
 import 'package:app/pages/shipment/view.dart';
 import 'package:app/pages/sale_point_detail/view.dart';
+import 'package:app/pages/sale_point_detail/widget.dart';
 import 'package:app/pages/transfer_balance/bloc.dart' as transfer;
 import 'package:app/pages/transfer_balance/view.dart';
 import 'package:app/pages/transfer_balance/widget.dart' as transfer;
@@ -60,6 +62,16 @@ void main() {
               'business_name': 'Store One',
               'phone': '0922222222',
               'balance': '0'
+            }
+          ];
+        } else if (options.path.endsWith('sale_point_list')) {
+          data = [
+            {
+              'id': 1,
+              'last_recharge_amount': '25.125',
+              'last_recharge_at': '2026-09-15T10:00:00Z',
+              'last_collect_amount': '15.5',
+              'last_collect_at': '2026-09-14T09:00:00Z'
             }
           ];
         } else if (options.path.endsWith('types_list')) {
@@ -170,7 +182,7 @@ void main() {
   });
 
   testWidgets(
-      'recipient suggestions flip above keyboard and selection dismisses it',
+      'last recipient field scrolls up to make room for downward suggestions',
       (tester) async {
     _setScreen(tester);
     final bloc = transfer.TransferBalanceBloc();
@@ -196,19 +208,152 @@ void main() {
     await tester.showKeyboard(field);
     tester.view.viewInsets = const FakeViewPadding(bottom: 300);
     await tester.pumpAndSettle();
-    // Put the field near the keyboard again, leaving room only above it.
     final position =
         tester.state<ScrollableState>(find.byType(Scrollable).first).position;
-    position.jumpTo(0);
-    await tester.pumpAndSettle();
+    expect(position.pixels, greaterThan(0));
     final suggestion = find.text('Selectable Agent');
     expect(suggestion.hitTestable(), findsOneWidget);
-    expect(
-        tester.getRect(suggestion).bottom, lessThan(tester.getRect(field).top));
+    expect(tester.getRect(suggestion).top,
+        greaterThan(tester.getRect(field).bottom));
     await tester.tap(suggestion);
     await tester.pumpAndSettle();
     expect(bloc.state.agentItem?.id, 1);
     expect(tester.testTextInput.isVisible, isFalse);
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox());
+  });
+
+  for (final nearKeyboard in [false, true]) {
+    for (final salePoint in [false, true]) {
+      for (final language in ['en', 'ar']) {
+        testWidgets(
+            '${salePoint ? "sale point" : "agent"} dropdown scrolls downward ${nearKeyboard ? "after making room" : "with space available"} with the $language keyboard open',
+            (tester) async {
+          _setScreen(tester);
+          final bloc = transfer.TransferBalanceBloc();
+          addTearDown(bloc.close);
+          bloc.add(transfer.AgentListChanged(List.generate(30,
+              (i) => AgentData(id: i, firstName: 'Option', lastName: '$i'))));
+          bloc.add(transfer.SalePointChanged(List.generate(
+              30, (i) => SalePointData(id: i, businessName: 'Option $i'))));
+          await _pump(
+            tester,
+            BlocProvider.value(
+              value: bloc,
+              child: Scaffold(
+                body: FormScrollView(slivers: [
+                  SliverToBoxAdapter(
+                      child: SizedBox(height: nearKeyboard ? 310 : 20)),
+                  SliverToBoxAdapter(
+                    child: salePoint
+                        ? const transfer.BuildDropdownSalePointNameInput()
+                        : const transfer.BuildDropdownAgentNameInput(),
+                  ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 500)),
+                ]),
+              ),
+            ),
+            language: language,
+          );
+          final field = find.byType(TextField);
+          await tester.showKeyboard(field);
+          tester.view.viewInsets = const FakeViewPadding(bottom: 300);
+          await tester.pumpAndSettle();
+          final formPosition = tester
+              .state<ScrollableState>(find.byType(Scrollable).first)
+              .position;
+          final formOffset = formPosition.pixels;
+          if (nearKeyboard) expect(formOffset, greaterThan(0));
+          final list = find.byType(ListView);
+          final initialRect = tester.getRect(list);
+          expect(initialRect.top,
+              greaterThanOrEqualTo(tester.getRect(field).bottom));
+          expect(initialRect.height, greaterThanOrEqualTo(200));
+          expect(initialRect.bottom, lessThanOrEqualTo(400));
+          final listPosition = tester
+              .state<ScrollableState>(
+                  find.descendant(of: list, matching: find.byType(Scrollable)))
+              .position;
+          for (var i = 0; i < 3; i++) {
+            await tester.drag(list, const Offset(0, -120));
+            await tester.pumpAndSettle();
+            expect(tester.testTextInput.isVisible, isTrue);
+            expect(tester.widget<TextField>(field).focusNode!.hasFocus, isTrue);
+            expect(list.hitTestable(), findsOneWidget);
+            expect(tester.getRect(list), initialRect);
+            expect(formPosition.pixels, formOffset);
+          }
+          expect(listPosition.pixels, greaterThan(0));
+          final option = find
+              .descendant(of: list, matching: find.byType(ListTile))
+              .hitTestable()
+              .first;
+          final label = (tester.widget<ListTile>(option).title! as Text).data!;
+          final selectedId = int.parse(label.split(' ').last);
+          expect(selectedId, greaterThan(0));
+          await tester.tap(option);
+          await tester.pumpAndSettle();
+          expect(
+              salePoint
+                  ? bloc.state.salePointItem?.id
+                  : bloc.state.agentItem?.id,
+              selectedId);
+          expect(tester.testTextInput.isVisible, isFalse);
+          expect(list, findsNothing);
+          expect(tester.takeException(), isNull);
+          await tester.pumpWidget(const SizedBox());
+        });
+      }
+    }
+  }
+
+  testWidgets(
+      'downward dropdown adapts to a taller keyboard and releases space on removal',
+      (tester) async {
+    _setScreen(tester);
+    final showField = ValueNotifier(true);
+    addTearDown(showField.dispose);
+    await _pump(
+        tester,
+        Scaffold(
+            body: FormScrollView(slivers: [
+          const SliverToBoxAdapter(child: SizedBox(height: 310)),
+          SliverToBoxAdapter(
+              child: ValueListenableBuilder<bool>(
+            valueListenable: showField,
+            builder: (context, show, _) => show
+                ? FormTypeAheadField<int>(
+                    builder: (context, controller, focusNode) =>
+                        TextField(controller: controller, focusNode: focusNode),
+                    suggestionsCallback: (_) => List.generate(30, (i) => i),
+                    itemBuilder: (_, item) =>
+                        ListTile(title: Text('Option $item')),
+                    onSelected: (_) {},
+                  )
+                : const SizedBox.shrink(),
+          )),
+        ])));
+    final field = find.byType(TextField);
+    await tester.showKeyboard(field);
+    for (final keyboardHeight in [300.0, 480.0, 300.0]) {
+      tester.view.viewInsets = FakeViewPadding(bottom: keyboardHeight);
+      await tester.pumpAndSettle();
+      final listRect = tester.getRect(find.byType(ListView));
+      expect(tester.getRect(field).top, greaterThanOrEqualTo(0));
+      expect(listRect.top, greaterThanOrEqualTo(tester.getRect(field).bottom));
+      expect(listRect.height, greaterThan(100));
+      expect(listRect.bottom, lessThanOrEqualTo(700 - keyboardHeight));
+      expect(tester.testTextInput.isVisible, isTrue);
+    }
+    showField.value = false;
+    await tester.pumpAndSettle();
+    expect(find.byType(ListView), findsNothing);
+    expect(
+        tester
+            .state<ScrollableState>(find.byType(Scrollable))
+            .position
+            .maxScrollExtent,
+        0);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox());
   });
@@ -238,6 +383,23 @@ void main() {
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle();
     expect(tester.testTextInput.isVisible, isFalse);
+  });
+
+  testWidgets('sale-point detail refreshes activity after a transaction',
+      (tester) async {
+    _setScreen(tester);
+    final item =
+        SalePointData(id: 1, businessName: 'Store', lastRechargeAmount: '10');
+    await _pump(tester, const SalePointDetailPage(), arguments: item);
+    tester
+        .widget<ActionButtonsGrid>(find.byType(ActionButtonsGrid))
+        .onTransactionResult!({'type': 'recharge', 'amount': '25.125'});
+    await tester.pumpAndSettle();
+    expect(find.text('25.125 LYD'), findsOneWidget);
+    expect(find.text('15.5 LYD'), findsOneWidget);
+    expect(item.lastRechargeAt, '2026-09-15T10:00:00Z');
+    expect(item.lastCollectAt, '2026-09-14T09:00:00Z');
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('dragging a form dismisses the keyboard', (tester) async {

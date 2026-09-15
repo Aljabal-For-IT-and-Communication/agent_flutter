@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:app/common/entities/sale_point.dart';
 import 'package:app/common/utils/date.dart';
+import 'package:app/pages/sale_point_detail/widget.dart';
 import 'package:app/pages/sale_point/widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +76,59 @@ void main() {
     });
   }
 
+  for (final language in ['en', 'ar']) {
+    testWidgets(
+        'detail card shows latest activity on a narrow $language screen',
+        (tester) async {
+      tester.view.physicalSize = const Size(320, 900);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final item = SalePointData(
+          businessName: 'Store',
+          lastRechargeAmount: '12.345',
+          lastRechargeAt: '2026-09-12T09:00:00Z',
+          lastCollectAmount: '0',
+          lastCollectAt: '2026-09-13T09:00:00Z');
+      await _pumpCard(tester, item, language, detail: true);
+      final labels = language == 'ar'
+          ? [
+              'مبلغ آخر شحن',
+              'تاريخ آخر شحن',
+              'مبلغ آخر توريد',
+              'تاريخ آخر توريد'
+            ]
+          : [
+              'Last recharge amount',
+              'Last recharge date',
+              'Last collect amount',
+              'Last collect date'
+            ];
+      for (final label in labels) {
+        expect(find.text(label), findsOneWidget);
+      }
+      expect(find.text('12.345 LYD'), findsOneWidget);
+      final row = find
+          .ancestor(of: find.text(labels[2]), matching: find.byType(Row))
+          .first;
+      expect(find.descendant(of: row, matching: find.text('0 LYD')),
+          findsOneWidget);
+      expect(find.text(timeFormated(item.lastRechargeAt)), findsOneWidget);
+      expect(find.text(timeFormated(item.lastCollectAt)), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+  }
+
+  testWidgets('detail activity handles missing history and malformed dates',
+      (tester) async {
+    await _pumpCard(tester, SalePointData(), 'en', detail: true);
+    expect(find.text('—'), findsNWidgets(4));
+    await _pumpCard(tester, SalePointData(lastRechargeAt: 'unknown'), 'en',
+        detail: true);
+    expect(find.text('unknown'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('sale point without history displays four placeholders',
       (tester) async {
     await _pumpCard(tester, SalePointData(businessName: 'New store'), 'en');
@@ -90,8 +144,8 @@ void main() {
   });
 }
 
-Future<void> _pumpCard(
-    WidgetTester tester, SalePointData item, String language) async {
+Future<void> _pumpCard(WidgetTester tester, SalePointData item, String language,
+    {bool detail = false}) async {
   await tester.pumpWidget(EasyLocalization(
     supportedLocales: const [Locale('en'), Locale('ar')],
     path: 'assets/translations',
@@ -106,7 +160,10 @@ Future<void> _pumpCard(
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         home: Scaffold(
-            body: SingleChildScrollView(child: BuildListItem(item: item))),
+            body: SingleChildScrollView(
+                child: detail
+                    ? SalePointInfoCard(item: item, balance: 0)
+                    : BuildListItem(item: item))),
       ),
     ),
   ));

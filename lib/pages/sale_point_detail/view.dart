@@ -1,4 +1,6 @@
 import 'package:app/common/widgets/form_scroll_view.dart';
+import 'package:app/common/apis/sale_point.dart';
+import 'package:app/common/utils/logger.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -66,6 +68,27 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
       }
       _isEditing = !_isEditing;
     });
+  }
+
+  Future<void> _refreshLatestActivity() async {
+    final id = _item.id;
+    if (id == null) return;
+    try {
+      final response = await SalePointAPI.salePointList();
+      if (!mounted || response.code != 0) return;
+      for (final updated in response.data ?? <SalePointData>[]) {
+        if (updated.id != id) continue;
+        setState(() {
+          _item.lastRechargeAmount = updated.lastRechargeAmount;
+          _item.lastRechargeAt = updated.lastRechargeAt;
+          _item.lastCollectAmount = updated.lastCollectAmount;
+          _item.lastCollectAt = updated.lastCollectAt;
+        });
+        break;
+      }
+    } catch (error) {
+      Logger.write('Could not refresh sale-point activity: $error');
+    }
   }
 
   @override
@@ -163,6 +186,7 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
                                 (currentBalance - amount).toStringAsFixed(2);
                           }
                         });
+                        _refreshLatestActivity();
                       },
                     ),
                     SizedBox(height: 24.h),

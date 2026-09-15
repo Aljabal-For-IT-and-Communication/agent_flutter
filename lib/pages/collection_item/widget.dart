@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:app/common/widgets/form_typeahead_field.dart';
 import 'package:file_picker/file_picker.dart';
 
 String agentFullName(AgentData item) {
@@ -126,8 +126,7 @@ class BuildDropdownAgentNameInput extends StatelessWidget {
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
-          child: TypeAheadField<AgentData>(
-            autoFlipDirection: true,
+          child: FormTypeAheadField<AgentData>(
             suggestionsCallback: (search) {
               final value = search.trim().toLowerCase();
               return items
@@ -279,8 +278,7 @@ class BuildDropdownSalePointNameInput extends StatelessWidget {
               color: AppColors.primaryBackground,
               borderRadius: BorderRadius.all(Radius.circular(8.w)),
               border: Border.all(color: AppColors.primaryThreeElementText)),
-          child: TypeAheadField<SalePointData>(
-            autoFlipDirection: true,
+          child: FormTypeAheadField<SalePointData>(
             suggestionsCallback: (search) {
               return items
                   .where((item) => item.businessName!.contains(search))

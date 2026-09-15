@@ -156,6 +156,13 @@ class SalePointInfoCard extends StatelessWidget {
               valueColor: item.status == 1
                   ? AppColors.primarySuccess
                   : AppColors.primaryRed),
+          Divider(height: 24.h),
+          _row('Last recharge amount'.tr(),
+              _activityAmount(item.lastRechargeAmount)),
+          _row('Last recharge date'.tr(), _activityDate(item.lastRechargeAt)),
+          _row('Last collect amount'.tr(),
+              _activityAmount(item.lastCollectAmount)),
+          _row('Last collect date'.tr(), _activityDate(item.lastCollectAt)),
           SizedBox(height: 8.h),
           // Balance / Indebtedness
           Row(
@@ -184,6 +191,15 @@ class SalePointInfoCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _activityAmount(String? amount) {
+    return (amount ?? '').trim().isEmpty ? '—' : '${amount!.trim()} LYD';
+  }
+
+  String _activityDate(String? date) {
+    if ((date ?? '').trim().isEmpty) return '—';
+    return DateTime.tryParse(date!) == null ? date : timeFormated(date);
   }
 
   Widget _row(String label, String value, {Color? valueColor}) {
