@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/widgets.dart';
@@ -41,7 +42,7 @@ class _AccountStatementPageState extends State<AccountStatementPage> {
         builder: (context, state) {
       return Container(
           color: AppColors.primaryBackground,
-          child: CustomScrollView(slivers: [
+          child: FormScrollView(onRefresh: () => Logic(context: context).refresh(), slivers: [
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,

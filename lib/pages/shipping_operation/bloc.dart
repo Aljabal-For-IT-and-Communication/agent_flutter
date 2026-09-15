@@ -6,6 +6,9 @@ part 'state.dart';
 
 class ShippingOperationBloc
     extends Bloc<ShippingOperationEvent, ShippingOperationState> {
+  // Ignore responses from requests superseded by a refresh or filter change.
+  int recordsRequestVersion = 0;
+
   ShippingOperationBloc() : super(const ShippingOperationState()) {
     on<ShippingOperationChanged>(_onShippingOperationChanged);
     on<PageChanged>(_onPageChanged);

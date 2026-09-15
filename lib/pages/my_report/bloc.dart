@@ -5,6 +5,9 @@ part 'event.dart';
 part 'state.dart';
 
 class MyReportBloc extends Bloc<MyReportEvent, MyReportState> {
+  // Ignore responses from requests superseded by a refresh or filter change.
+  int recordsRequestVersion = 0;
+
   MyReportBloc() : super(const MyReportState()) {
     on<PageChanged>(_onPageChanged);
     on<PhoneChanged>(_onPhoneChanged);

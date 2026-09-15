@@ -588,7 +588,7 @@ class BuildBtn extends StatelessWidget {
         onTap: () {
           context.read<RevenueBloc>().add(IsMoreChanged(false));
           context.read<RevenueBloc>().add(AgentCollectRecordListChanged([]));
-          Logic(context: context).postTransformation();
+          Logic(context: context).postTransformation(refresh: true);
         });
   }
 }

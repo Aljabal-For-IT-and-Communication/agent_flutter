@@ -6,6 +6,8 @@ part 'state.dart';
 
 class CollectionWhatBloc
     extends Bloc<CollectionWhatEvent, CollectionWhatState> {
+  int recordsRequestVersion = 0;
+
   CollectionWhatBloc() : super(const CollectionWhatState()) {
     on<PageChanged>(_onPageChanged);
     on<StartDateChanged>(_onStartDateChanged);

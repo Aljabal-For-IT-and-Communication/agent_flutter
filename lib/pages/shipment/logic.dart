@@ -22,11 +22,13 @@ class Logic {
   salePoint() async {
     try {
       var result = await SalePointAPI.salePointPickerList();
-      if (result.code == 0) {
+      if (!context.mounted) return;
+      if (result.code == 0 && result.data != null) {
         context.read<ShipmentBloc>().add(SalePointChanged(result.data!));
-        context
-            .read<ShipmentBloc>()
-            .add(SalePointItemChanged(result.data!.first));
+        if (result.data!.isNotEmpty)
+          context
+              .read<ShipmentBloc>()
+              .add(SalePointItemChanged(result.data!.first));
       }
     } catch (e) {
       Logger.write("${e}");
@@ -36,54 +38,62 @@ class Logic {
   agent() async {
     try {
       var result = await AgentAPI.agentList();
-      if (result.code == 0) {
+      if (!context.mounted) return;
+      if (result.code == 0 && result.data != null) {
         context.read<ShipmentBloc>().add(AgentListChanged(result.data!));
-        context.read<ShipmentBloc>().add(AgentItemChanged(result.data!.first));
+        if (result.data!.isNotEmpty)
+          context
+              .read<ShipmentBloc>()
+              .add(AgentItemChanged(result.data!.first));
       }
     } catch (e) {
       Logger.write("${e}");
     }
   }
 
-  postTransformation() async {
-    final state = context.read<ShipmentBloc>().state;
-
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    EasyLoading.show(
-        indicator: CircularProgressIndicator(),
-        maskType: EasyLoadingMaskType.clear,
-        dismissOnTap: true);
-    TransferRecordListRequestEntity entity = TransferRecordListRequestEntity();
-
-    entity.id =
+  Future<void> postTransformation(
+      {bool refresh = false, bool showLoading = true}) async {
+    final bloc = context.read<ShipmentBloc>();
+    final state = bloc.state;
+    final id =
         state.agent == "Agent" ? state.agentItem?.id : state.salePointItem?.id;
-    entity.category = state.agent;
-    entity.page = state.agentRechargeRecordList.length;
+    if (id == null) return;
+    final request = ++bloc.recordsRequestVersion;
+    if (showLoading) {
+      FocusManager.instance.primaryFocus?.unfocus();
+      EasyLoading.show(
+          indicator: const CircularProgressIndicator(),
+          maskType: EasyLoadingMaskType.clear,
+          dismissOnTap: true);
+    }
+    final entity = TransferRecordListRequestEntity()
+      ..id = id
+      ..category = state.agent
+      ..page = refresh ? 0 : state.agentRechargeRecordList.length;
     try {
-      var result =
+      final result =
           await SalePointAPI.salePointRechargeRecordList(params: entity);
-      EasyLoading.dismiss();
+      if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
       if (result.code == 0 && result.data != null) {
-        if (result.data!.isNotEmpty) {
-          var agentRechargeRecordList = state.agentRechargeRecordList.toList();
-          for (var item in result.data!) {
-            if (!agentRechargeRecordList
-                .any((element) => element.id == item.id)) {
-              agentRechargeRecordList.add(item);
-            }
-          }
-          context
-              .read<ShipmentBloc>()
-              .add(AgentRechargeRecordChanged(agentRechargeRecordList));
+        final records = refresh
+            ? <AgentRechargeRecordData>[]
+            : state.agentRechargeRecordList.toList();
+        for (final item in result.data!) {
+          if (!records.any((existing) => existing.id == item.id))
+            records.add(item);
         }
+        bloc.add(AgentRechargeRecordChanged(records));
       }
-      context.read<ShipmentBloc>().add(IsMoreChanged(false));
-    } catch (e) {
-      context.read<ShipmentBloc>().add(IsMoreChanged(false));
-      EasyLoading.dismiss();
-      toastInfo(msg: trServerMessage('internet error'));
-      Logger.write("${e}");
+    } catch (error) {
+      if (!bloc.isClosed && request == bloc.recordsRequestVersion) {
+        toastInfo(msg: trServerMessage('internet error'));
+        Logger.write('$error');
+      }
+    } finally {
+      if (showLoading) EasyLoading.dismiss();
+      if (!bloc.isClosed && request == bloc.recordsRequestVersion) {
+        bloc.add(IsMoreChanged(false));
+      }
     }
   }
 }

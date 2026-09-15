@@ -11,28 +11,32 @@ class Logic {
     required this.context,
   });
 
-  init() {
-    salePoint();
-    agent();
+  Future<void> init() async {
+    await Future.wait([salePoint(), agent()]);
   }
 
-  salePoint() async {
+  Future<void> salePoint() async {
+    final bloc = context.read<SalePointBloc>();
+    final request = ++bloc.salePointRequestVersion;
     try {
       var result = await SalePointAPI.salePointList();
       if (result.code == 0 && result.data != null) {
-        if (!context.mounted) return;
-        context.read<SalePointBloc>().add(SalePointChanged(result.data!));
+        if (bloc.isClosed || request != bloc.salePointRequestVersion) return;
+        bloc.add(SalePointChanged(result.data!));
       }
     } catch (e) {
       Logger.write("${e}");
     }
   }
 
-  agent() async {
+  Future<void> agent() async {
+    final bloc = context.read<SalePointBloc>();
+    final request = ++bloc.agentRequestVersion;
     try {
       var result = await AgentAPI.agentList();
+      if (bloc.isClosed || request != bloc.agentRequestVersion) return;
       if (result.code == 0 && result.data != null) {
-        context.read<SalePointBloc>().add(AgentListChanged(result.data!));
+        bloc.add(AgentListChanged(result.data!));
       }
     } catch (e) {
       Logger.write("${e}");

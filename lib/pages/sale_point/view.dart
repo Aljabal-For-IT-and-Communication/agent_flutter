@@ -99,7 +99,7 @@ class _SalePointPageState extends State<SalePointPage> {
       }
       return Container(
           color: AppColors.primaryBackground,
-          child: FormScrollView(slivers: [
+          child: FormScrollView(onRefresh: () => Logic(context: context).init(), slivers: [
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,

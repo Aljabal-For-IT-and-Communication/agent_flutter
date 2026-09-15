@@ -15,33 +15,36 @@ class Logic {
 
   init() {}
 
-  shippingOperation(String day, int page) async {
+  Future<void> shippingOperation(String day, int page,
+      {bool refresh = false}) async {
+    final bloc = context.read<ShippingOperationBloc>();
+    final state = bloc.state;
+    final request = ++bloc.recordsRequestVersion;
+    final entity = PageRequestEntity()
+      ..title = day
+      ..page = page;
+    if (!refresh) {
+      EasyLoading.show(
+          indicator: const CircularProgressIndicator(),
+          maskType: EasyLoadingMaskType.clear,
+          dismissOnTap: true);
+    }
     try {
-      PageRequestEntity entity = PageRequestEntity();
-      entity.title = day;
-      entity.page = page;
-      print(page);
-
-      var result = await HomeAPI.shippingOperationList(params: entity);
+      final result = await HomeAPI.shippingOperationList(params: entity);
+      if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
       if (result.code == 0 && result.data != null) {
-        if (result.data!.isNotEmpty) {
-          final state = context.read<ShippingOperationBloc>().state;
-          var shippingOperationList = state.shippingOperationList.toList();
-          shippingOperationList.addAll(result.data!);
-          context
-              .read<ShippingOperationBloc>()
-              .add(ShippingOperationChanged(shippingOperationList));
-          context.read<ShippingOperationBloc>().add(IsMoreChanged(false));
-        }
-      } else if (result.code != 0) {
-        Logger.write("shippingOperationList failed: ${result.msg}");
+        final records = page == 0
+            ? result.data!.toList()
+            : [...state.shippingOperationList, ...result.data!];
+        bloc.add(ShippingOperationChanged(records));
       }
-      context.read<ShippingOperationBloc>().add(IsMoreChanged(false));
-      EasyLoading.dismiss();
-    } catch (e) {
-      EasyLoading.dismiss();
-      Logger.write("${e}");
-      context.read<ShippingOperationBloc>().add(IsMoreChanged(false));
+    } catch (error) {
+      Logger.write('$error');
+    } finally {
+      if (!refresh) EasyLoading.dismiss();
+      if (!bloc.isClosed && request == bloc.recordsRequestVersion) {
+        bloc.add(IsMoreChanged(false));
+      }
     }
   }
 }

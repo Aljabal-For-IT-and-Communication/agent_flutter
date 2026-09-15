@@ -241,16 +241,19 @@ void main() {
             BlocProvider.value(
               value: bloc,
               child: Scaffold(
-                body: FormScrollView(slivers: [
-                  SliverToBoxAdapter(
-                      child: SizedBox(height: nearKeyboard ? 310 : 20)),
-                  SliverToBoxAdapter(
-                    child: salePoint
-                        ? const transfer.BuildDropdownSalePointNameInput()
-                        : const transfer.BuildDropdownAgentNameInput(),
-                  ),
-                  const SliverToBoxAdapter(child: SizedBox(height: 500)),
-                ]),
+                body: FormScrollView(
+                    onRefresh: () async => fail(
+                        'Scrolling dropdown options must not refresh the page'),
+                    slivers: [
+                      SliverToBoxAdapter(
+                          child: SizedBox(height: nearKeyboard ? 310 : 20)),
+                      SliverToBoxAdapter(
+                        child: salePoint
+                            ? const transfer.BuildDropdownSalePointNameInput()
+                            : const transfer.BuildDropdownAgentNameInput(),
+                      ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 500)),
+                    ]),
               ),
             ),
             language: language,

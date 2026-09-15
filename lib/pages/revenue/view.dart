@@ -23,6 +23,20 @@ class RevenuePage extends StatefulWidget {
 class _RevenuePageState extends State<RevenuePage> {
   ScrollController scrollController = ScrollController();
   var lastPostCalled;
+  bool _isRefreshing = false;
+
+  Future<void> _refresh() async {
+    if (_isRefreshing) return;
+    _isRefreshing = true;
+    lastPostCalled = null;
+    try {
+      await Logic(context: context)
+          .postTransformation(refresh: true, showLoading: false);
+    } finally {
+      _isRefreshing = false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +48,9 @@ class _RevenuePageState extends State<RevenuePage> {
     scrollController.addListener(() {
       final state = context.read<RevenueBloc>().state;
       // Focus scrolling and keyboard resizing must not load records or unfocus search.
-      if (scrollController.position.userScrollDirection !=
+      if (_isRefreshing ||
+          scrollController.position.extentBefore <= 0 ||
+          scrollController.position.userScrollDirection !=
               ScrollDirection.reverse ||
           state.agentCollectRecordList.isEmpty ||
           state.isMore) return;
@@ -67,6 +83,7 @@ class _RevenuePageState extends State<RevenuePage> {
           backgroundColor: AppColors.primaryBackground,
           body: FormScrollView(
               controller: scrollController,
+              onRefresh: _refresh,
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
               slivers: [

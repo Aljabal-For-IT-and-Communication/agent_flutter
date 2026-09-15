@@ -1,3 +1,5 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
+import 'package:flutter/rendering.dart' show ScrollDirection;
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/widgets.dart';
@@ -22,6 +24,25 @@ class CollectionWhatPage extends StatefulWidget {
 class _CollectionWhatPageState extends State<CollectionWhatPage> {
   ScrollController scrollController = ScrollController();
   DateTime? lastPostCalled;
+  bool _isRefreshing = false;
+
+  Future<void> _refresh() async {
+    if (_isRefreshing) return;
+    _isRefreshing = true;
+    lastPostCalled = null;
+    try {
+      final state = context.read<CollectionWhatBloc>().state;
+      final entity = DateRequestEntity()
+        ..startDate = replaceArabicNumbers(state.startDate ?? '')
+        ..endDate = replaceArabicNumbers(state.endDate ?? '')
+        ..page = 0;
+      await Logic(context: context)
+          .postTransferCollection(entity, refresh: true);
+    } finally {
+      _isRefreshing = false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +60,13 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
       }
     });
     scrollController.addListener(() {
+      final state = context.read<CollectionWhatBloc>().state;
+      if (_isRefreshing ||
+          state.isMore ||
+          state.agentCollectRecordList.isEmpty ||
+          scrollController.position.extentBefore <= 0 ||
+          scrollController.position.userScrollDirection !=
+              ScrollDirection.reverse) return;
       if ((scrollController.offset + 10) >
           scrollController.position.maxScrollExtent) {
         if (lastPostCalled == null ||
@@ -60,6 +88,7 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
 
   @override
   void dispose() {
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -70,7 +99,8 @@ class _CollectionWhatPageState extends State<CollectionWhatPage> {
         builder: (context, state) {
       return Container(
           color: AppColors.primaryBackground,
-          child: CustomScrollView(
+          child: FormScrollView(
+              onRefresh: _refresh,
               controller: scrollController,
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),

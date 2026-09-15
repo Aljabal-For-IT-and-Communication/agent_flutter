@@ -5,6 +5,9 @@ part 'event.dart';
 part 'state.dart';
 
 class MessageBloc extends Bloc<MessageEvent, MessageState> {
+  // Ignore responses from requests superseded by a refresh or filter change.
+  int recordsRequestVersion = 0;
+
   MessageBloc() : super(const MessageState()) {
     on<MessageChanged>(_onMessageChanged);
     on<IsMoreChanged>(_onIsMoreChanged);

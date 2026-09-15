@@ -1,3 +1,5 @@
+import 'package:flutter/rendering.dart' show ScrollDirection;
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/widgets.dart';
@@ -21,6 +23,19 @@ class MyReportPage extends StatefulWidget {
 class _MyReportPageState extends State<MyReportPage> {
   ScrollController scrollController = ScrollController();
   var lastPostCalled;
+  bool _isRefreshing = false;
+
+  Future<void> _refresh() async {
+    if (_isRefreshing) return;
+    _isRefreshing = true;
+    lastPostCalled = null;
+    try {
+      await Logic(context: context).postTransformation(0, refresh: true);
+    } finally {
+      _isRefreshing = false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +45,16 @@ class _MyReportPageState extends State<MyReportPage> {
       }
     });
     scrollController.addListener(() {
+      final state = context.read<MyReportBloc>().state;
+      if (_isRefreshing ||
+          state.isMore ||
+          (state.agent == 'shipment report'
+                  ? state.superRechargeRecordList
+                  : state.childRechargeRecordList)
+              .isEmpty ||
+          scrollController.position.extentBefore <= 0 ||
+          scrollController.position.userScrollDirection !=
+              ScrollDirection.reverse) return;
       if ((scrollController.offset + 10) >
           scrollController.position.maxScrollExtent) {
         if (lastPostCalled == null ||
@@ -53,6 +78,7 @@ class _MyReportPageState extends State<MyReportPage> {
 
   @override
   void dispose() {
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -62,8 +88,9 @@ class _MyReportPageState extends State<MyReportPage> {
     return BlocBuilder<MyReportBloc, MyReportState>(builder: (context, state) {
       return Container(
           color: AppColors.primaryBackground,
-          child: CustomScrollView(
+          child: FormScrollView(
               controller: scrollController,
+              onRefresh: _refresh,
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
               slivers: [

@@ -19,6 +19,7 @@ class SalePointDetailPage extends StatefulWidget {
 class _SalePointDetailPageState extends State<SalePointDetailPage> {
   late SalePointData _item;
   bool _isEditing = false;
+  int _refreshVersion = 0;
 
   late TextEditingController _firstName;
   late TextEditingController _middleName;
@@ -70,15 +71,27 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
     });
   }
 
-  Future<void> _refreshLatestActivity() async {
+  Future<void> _refreshLatestActivity({bool refreshDetails = false}) async {
     final id = _item.id;
     if (id == null) return;
+    final request = ++_refreshVersion;
     try {
       final response = await SalePointAPI.salePointList();
-      if (!mounted || response.code != 0) return;
+      if (!mounted || request != _refreshVersion || response.code != 0) return;
       for (final updated in response.data ?? <SalePointData>[]) {
         if (updated.id != id) continue;
         setState(() {
+          if (refreshDetails) {
+            _item = updated;
+            if (!_isEditing) {
+              _firstName.text = updated.firstName ?? '';
+              _middleName.text = updated.middleName ?? '';
+              _lastName.text = updated.lastName ?? '';
+              _businessName.text = updated.businessName ?? '';
+              _machineNumber.text = updated.machineNumber ?? '';
+              _address.text = updated.address ?? '';
+            }
+          }
           _item.lastRechargeAmount = updated.lastRechargeAmount;
           _item.lastRechargeAt = updated.lastRechargeAt;
           _item.lastCollectAmount = updated.lastCollectAmount;
@@ -99,6 +112,9 @@ class _SalePointDetailPageState extends State<SalePointDetailPage> {
       body: Container(
         color: AppColors.primaryBackground,
         child: FormScrollView(
+          onRefresh: _isEditing
+              ? null
+              : () => _refreshLatestActivity(refreshDetails: true),
           slivers: [
             SliverToBoxAdapter(child: DetailAppBar(item: _item)),
             SliverPadding(

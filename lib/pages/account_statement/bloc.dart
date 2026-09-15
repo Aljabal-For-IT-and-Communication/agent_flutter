@@ -6,6 +6,9 @@ part 'state.dart';
 
 class AccountStatementBloc
     extends Bloc<AccountStatementEvent, AccountStatementState> {
+  // Ignore responses from requests superseded by a refresh or filter change.
+  int recordsRequestVersion = 0;
+
   AccountStatementBloc() : super(const AccountStatementState()) {
     on<PageChanged>(_onPageChanged);
     on<StartDateChanged>(_onStartDateChanged);

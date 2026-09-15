@@ -1,3 +1,4 @@
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/routes/names.dart';
 import 'package:app/common/routes/pages.dart';
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       return Container(
           color: AppColors.primaryBackground,
-          child: CustomScrollView(slivers: [
+          child: FormScrollView(onRefresh: () => Logic(context: context).init(), slivers: [
             SliverPadding(
                 padding: EdgeInsets.symmetric(
                   vertical: 0.w,

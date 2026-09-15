@@ -14,66 +14,60 @@ class Logic {
 
   init() {}
 
-  superRechargeRecord(PageOnlyRequestEntity entity) async {
-    EasyLoading.show(
-        indicator: CircularProgressIndicator(),
-        maskType: EasyLoadingMaskType.clear,
-        dismissOnTap: true);
+  Future<void> superRechargeRecord(PageOnlyRequestEntity entity,
+          {bool refresh = false}) =>
+      _load(entity, recharge: true, refresh: refresh);
+
+  Future<void> childRechargeRecord(PageOnlyRequestEntity entity,
+          {bool refresh = false}) =>
+      _load(entity, recharge: false, refresh: refresh);
+
+  Future<void> _load(PageOnlyRequestEntity entity,
+      {required bool recharge, required bool refresh}) async {
+    final bloc = context.read<MyReportBloc>();
+    final state = bloc.state;
+    final request = ++bloc.recordsRequestVersion;
+    if (!refresh) {
+      EasyLoading.show(
+          indicator: const CircularProgressIndicator(),
+          maskType: EasyLoadingMaskType.clear,
+          dismissOnTap: true);
+    }
     try {
-      var result = await SalePointAPI.superRechargeRecordList(params: entity);
-      EasyLoading.dismiss();
-      if (result.code == 0 && result.data != null) {
-        if (result.data!.isNotEmpty) {
-          final state = context.read<MyReportBloc>().state;
-          var superRechargeRecordList = state.superRechargeRecordList.toList();
-          superRechargeRecordList.addAll(result.data!);
-          context
-              .read<MyReportBloc>()
-              .add(SuperRechargeRecordChanged(superRechargeRecordList));
+      if (recharge) {
+        final result =
+            await SalePointAPI.superRechargeRecordList(params: entity);
+        if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
+        if (result.code == 0 && result.data != null) {
+          bloc.add(SuperRechargeRecordChanged(entity.page == 0
+              ? result.data!
+              : [...state.superRechargeRecordList, ...result.data!]));
+        }
+      } else {
+        final result =
+            await SalePointAPI.superCollectRecordList(params: entity);
+        if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
+        if (result.code == 0 && result.data != null) {
+          bloc.add(ChildRechargeRecordChanged(entity.page == 0
+              ? result.data!
+              : [...state.childRechargeRecordList, ...result.data!]));
         }
       }
-      context.read<MyReportBloc>().add(IsMoreChanged(false));
-    } catch (e) {
-      context.read<MyReportBloc>().add(IsMoreChanged(false));
-      EasyLoading.dismiss();
-      Logger.write("${e}");
+    } catch (error) {
+      Logger.write('$error');
+    } finally {
+      if (!refresh) EasyLoading.dismiss();
+      if (!bloc.isClosed && request == bloc.recordsRequestVersion) {
+        bloc.add(IsMoreChanged(false));
+      }
     }
   }
 
-  childRechargeRecord(PageOnlyRequestEntity entity) async {
-    EasyLoading.show(
-        indicator: CircularProgressIndicator(),
-        maskType: EasyLoadingMaskType.clear,
-        dismissOnTap: true);
-    try {
-      var result = await SalePointAPI.superCollectRecordList(params: entity);
-      EasyLoading.dismiss();
-      if (result.code == 0 && result.data != null) {
-        if (result.data!.isNotEmpty) {
-          final state = context.read<MyReportBloc>().state;
-          var childRechargeRecordList = state.childRechargeRecordList.toList();
-          childRechargeRecordList.addAll(result.data!);
-          context
-              .read<MyReportBloc>()
-              .add(ChildRechargeRecordChanged(childRechargeRecordList));
-        }
-      }
-      context.read<MyReportBloc>().add(IsMoreChanged(false));
-    } catch (e) {
-      context.read<MyReportBloc>().add(IsMoreChanged(false));
-      EasyLoading.dismiss();
-      Logger.write("${e}");
-    }
-  }
-
-  postTransformation(int page) async {
+  Future<void> postTransformation(int page, {bool refresh = false}) {
     final state = context.read<MyReportBloc>().state;
-    PageOnlyRequestEntity entity = PageOnlyRequestEntity();
-    entity.page = page;
-    if (state.agent == "shipment report") {
-      superRechargeRecord(entity);
-    } else {
-      childRechargeRecord(entity);
-    }
+    final entity = PageOnlyRequestEntity()..page = page;
+    return state.agent == 'shipment report'
+        ? superRechargeRecord(entity, refresh: refresh)
+        : childRechargeRecord(entity, refresh: refresh);
   }
 }

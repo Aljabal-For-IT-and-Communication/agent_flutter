@@ -1,3 +1,5 @@
+import 'package:flutter/rendering.dart' show ScrollDirection;
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/app.dart';
@@ -23,6 +25,21 @@ class ShippingOperationPage extends StatefulWidget {
 class _ShippingOperationPageState extends State<ShippingOperationPage> {
   ScrollController scrollController = ScrollController();
   var lastPostCalled;
+  bool _isRefreshing = false;
+
+  Future<void> _refresh() async {
+    if (_isRefreshing) return;
+    _isRefreshing = true;
+    lastPostCalled = null;
+    try {
+      final state = context.read<ShippingOperationBloc>().state;
+      await Logic(context: context)
+          .shippingOperation(state.day, 0, refresh: true);
+    } finally {
+      _isRefreshing = false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +56,13 @@ class _ShippingOperationPageState extends State<ShippingOperationPage> {
       }
     });
     scrollController.addListener(() {
+      final state = context.read<ShippingOperationBloc>().state;
+      if (_isRefreshing ||
+          state.isMore ||
+          state.shippingOperationList.isEmpty ||
+          scrollController.position.extentBefore <= 0 ||
+          scrollController.position.userScrollDirection !=
+              ScrollDirection.reverse) return;
       if ((scrollController.offset + 10) >
           scrollController.position.maxScrollExtent) {
         if (lastPostCalled == null ||
@@ -57,6 +81,7 @@ class _ShippingOperationPageState extends State<ShippingOperationPage> {
 
   @override
   void dispose() {
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -66,8 +91,9 @@ class _ShippingOperationPageState extends State<ShippingOperationPage> {
         builder: (context, state) {
       return Container(
           color: AppColors.primaryBackground,
-          child: CustomScrollView(
+          child: FormScrollView(
               controller: scrollController,
+              onRefresh: _refresh,
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
               slivers: [
@@ -112,8 +138,7 @@ class _ShippingOperationPageState extends State<ShippingOperationPage> {
                                 onTap: () {
                                   DatePicker.showDatePicker(context,
                                       showTitleActions: true,
-                                      onChanged: (date) {
-                                  }, onConfirm: (date) {
+                                      onChanged: (date) {}, onConfirm: (date) {
                                     String month = "${date.month}";
                                     String day = "${date.day}";
                                     if (date.month < 10) {

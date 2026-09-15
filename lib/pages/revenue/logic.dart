@@ -22,11 +22,13 @@ class Logic {
   salePoint() async {
     try {
       var result = await SalePointAPI.salePointPickerList();
-      if (result.code == 0) {
+      if (!context.mounted) return;
+      if (result.code == 0 && result.data != null) {
         context.read<RevenueBloc>().add(SalePointChanged(result.data!));
-        context
-            .read<RevenueBloc>()
-            .add(SalePointItemChanged(result.data!.first));
+        if (result.data!.isNotEmpty)
+          context
+              .read<RevenueBloc>()
+              .add(SalePointItemChanged(result.data!.first));
       }
     } catch (e) {
       Logger.write("${e}");
@@ -36,49 +38,60 @@ class Logic {
   agent() async {
     try {
       var result = await AgentAPI.agentList();
-      if (result.code == 0) {
+      if (!context.mounted) return;
+      if (result.code == 0 && result.data != null) {
         context.read<RevenueBloc>().add(AgentListChanged(result.data!));
-        context.read<RevenueBloc>().add(AgentItemChanged(result.data!.first));
+        if (result.data!.isNotEmpty)
+          context.read<RevenueBloc>().add(AgentItemChanged(result.data!.first));
       }
     } catch (e) {
       Logger.write("${e}");
     }
   }
 
-  postTransformation() async {
-    final state = context.read<RevenueBloc>().state;
-
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    EasyLoading.show(
-        indicator: CircularProgressIndicator(),
-        maskType: EasyLoadingMaskType.clear,
-        dismissOnTap: true);
-    TransferRecordListRequestEntity entity = TransferRecordListRequestEntity();
-
-    entity.id =
+  Future<void> postTransformation(
+      {bool refresh = false, bool showLoading = true}) async {
+    final bloc = context.read<RevenueBloc>();
+    final state = bloc.state;
+    final id =
         state.agent == "Agent" ? state.agentItem?.id : state.salePointItem?.id;
-    entity.category = state.agent;
-    entity.page = state.agentCollectRecordList.length;
+    if (id == null) return;
+    final request = ++bloc.recordsRequestVersion;
+    if (showLoading) {
+      FocusManager.instance.primaryFocus?.unfocus();
+      EasyLoading.show(
+          indicator: const CircularProgressIndicator(),
+          maskType: EasyLoadingMaskType.clear,
+          dismissOnTap: true);
+    }
+    final entity = TransferRecordListRequestEntity()
+      ..id = id
+      ..category = state.agent
+      ..page = refresh ? 0 : state.agentCollectRecordList.length;
     try {
-      var result =
+      final result =
           await SalePointAPI.salePointCollectRecordList(params: entity);
-      EasyLoading.dismiss();
+      if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
       if (result.code == 0 && result.data != null) {
-        if (result.data!.isNotEmpty) {
-          var agentCollectRecordList = state.agentCollectRecordList.toList();
-          agentCollectRecordList.addAll(result.data!);
-          context
-              .read<RevenueBloc>()
-              .add(AgentCollectRecordListChanged(agentCollectRecordList));
+        final records = refresh
+            ? <AgentCollectRecordData>[]
+            : state.agentCollectRecordList.toList();
+        for (final item in result.data!) {
+          if (!records.any((existing) => existing.id == item.id))
+            records.add(item);
         }
+        bloc.add(AgentCollectRecordListChanged(records));
       }
-      context.read<RevenueBloc>().add(IsMoreChanged(false));
-    } catch (e) {
-      context.read<RevenueBloc>().add(IsMoreChanged(false));
-      EasyLoading.dismiss();
-      toastInfo(msg: trServerMessage('internet error'));
-      Logger.write("${e}");
+    } catch (error) {
+      if (!bloc.isClosed && request == bloc.recordsRequestVersion) {
+        toastInfo(msg: trServerMessage('internet error'));
+        Logger.write('$error');
+      }
+    } finally {
+      if (showLoading) EasyLoading.dismiss();
+      if (!bloc.isClosed && request == bloc.recordsRequestVersion) {
+        bloc.add(IsMoreChanged(false));
+      }
     }
   }
 }

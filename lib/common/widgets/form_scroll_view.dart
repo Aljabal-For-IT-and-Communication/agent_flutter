@@ -8,12 +8,14 @@ class FormScrollView extends StatefulWidget {
     super.key,
     this.controller,
     this.physics,
+    this.onRefresh,
     required this.slivers,
   });
 
   final ScrollController? controller;
   final ScrollPhysics? physics;
   final List<Widget> slivers;
+  final Future<void> Function()? onRefresh;
 
   static VoidCallback? setDropdownSpace(BuildContext field, double height) {
     final state = field.findAncestorStateOfType<_FormScrollViewState>();
@@ -61,7 +63,7 @@ class _FormScrollViewState extends State<FormScrollView> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<ScrollUpdateNotification>(
+    final scrollView = NotificationListener<ScrollUpdateNotification>(
       onNotification: (notification) {
         // Dropdown overlays also bubble scroll updates through the form.
         // Only a drag in this viewport should dismiss the keyboard.
@@ -75,7 +77,9 @@ class _FormScrollViewState extends State<FormScrollView> {
       },
       child: CustomScrollView(
         controller: widget.controller,
-        physics: widget.physics,
+        physics: widget.onRefresh == null
+            ? widget.physics
+            : AlwaysScrollableScrollPhysics(parent: widget.physics),
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
         slivers: [
           ...widget.slivers,
@@ -86,5 +90,8 @@ class _FormScrollViewState extends State<FormScrollView> {
         ],
       ),
     );
+    return widget.onRefresh == null
+        ? scrollView
+        : RefreshIndicator(onRefresh: widget.onRefresh!, child: scrollView);
   }
 }

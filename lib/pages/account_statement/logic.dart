@@ -19,22 +19,33 @@ class Logic {
     accountStatement(entity);
   }
 
-  accountStatement(DateRangeRequestEntity entity) async {
+  Future<void> refresh() {
+    final state = context.read<AccountStatementBloc>().state;
+    final entity = DateRangeRequestEntity()
+      ..startDate = state.startDate
+      ..endDate = state.endDate;
+    return accountStatement(entity, showLoading: false);
+  }
+
+  Future<void> accountStatement(DateRangeRequestEntity entity,
+      {bool showLoading = true}) async {
+    final bloc = context.read<AccountStatementBloc>();
+    final request = ++bloc.recordsRequestVersion;
     try {
-      EasyLoading.show(
-          indicator: CircularProgressIndicator(),
-          maskType: EasyLoadingMaskType.clear,
-          dismissOnTap: true);
+      if (showLoading)
+        EasyLoading.show(
+            indicator: CircularProgressIndicator(),
+            maskType: EasyLoadingMaskType.clear,
+            dismissOnTap: true);
       var result = await SalePointAPI.accountStatement(params: entity);
-      if (result.code == 0) {
-        context
-            .read<AccountStatementBloc>()
-            .add(AccountStatementChanged(result.data!));
+      if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
+      if (result.code == 0 && result.data != null) {
+        bloc.add(AccountStatementChanged(result.data!));
       }
-      EasyLoading.dismiss();
     } catch (e) {
-      EasyLoading.dismiss();
       Logger.write("${e}");
+    } finally {
+      if (showLoading) EasyLoading.dismiss();
     }
   }
 }

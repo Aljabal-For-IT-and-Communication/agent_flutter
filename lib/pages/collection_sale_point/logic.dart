@@ -14,29 +14,34 @@ class Logic {
 
   init() {}
 
-  postTransferCollection(DateRequestEntity entity) async {
-    try {
+  Future<void> postTransferCollection(DateRequestEntity entity,
+      {bool refresh = false}) async {
+    final bloc = context.read<CollectionSalePointBloc>();
+    final state = bloc.state;
+    final request = ++bloc.recordsRequestVersion;
+
+    if (!refresh) {
       EasyLoading.show(
-          indicator: CircularProgressIndicator(),
+          indicator: const CircularProgressIndicator(),
           maskType: EasyLoadingMaskType.clear,
           dismissOnTap: true);
-      var result = await SalePointAPI.transferCollectionList(params: entity);
+    }
+    try {
+      final result = await SalePointAPI.transferCollectionList(params: entity);
+      if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
       if (result.code == 0 && result.data != null) {
-        if (result.data!.isNotEmpty) {
-          final state = context.read<CollectionSalePointBloc>().state;
-          var agentCollectRecordList = state.agentCollectRecordList.toList();
-          agentCollectRecordList.addAll(result.data!);
-          context
-              .read<CollectionSalePointBloc>()
-              .add(AgentCollectRecordListChanged(agentCollectRecordList));
-        }
+        final records = entity.page == 0
+            ? result.data!.toList()
+            : [...state.agentCollectRecordList, ...result.data!];
+        bloc.add(AgentCollectRecordListChanged(records));
       }
-      context.read<CollectionSalePointBloc>().add(IsMoreChanged(false));
-      EasyLoading.dismiss();
-    } catch (e) {
-      EasyLoading.dismiss();
-      context.read<CollectionSalePointBloc>().add(IsMoreChanged(false));
-      Logger.write("${e}");
+    } catch (error) {
+      Logger.write('$error');
+    } finally {
+      if (!refresh) EasyLoading.dismiss();
+      if (!bloc.isClosed && request == bloc.recordsRequestVersion) {
+        bloc.add(IsMoreChanged(false));
+      }
     }
   }
 }

@@ -5,6 +5,9 @@ part 'event.dart';
 part 'state.dart';
 
 class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
+  int salePointRequestVersion = 0;
+  int agentRequestVersion = 0;
+
   SalePointBloc() : super(const SalePointState()) {
     on<SalePointChanged>(_onSalePointChanged);
     on<PageChanged>(_onPageChanged);
@@ -77,9 +80,8 @@ class SalePointBloc extends Bloc<SalePointEvent, SalePointState> {
     SalePointRemoved event,
     Emitter<SalePointState> emit,
   ) {
-    final updated = state.salePointList
-        .where((sp) => sp.id != event.salePointId)
-        .toList();
+    final updated =
+        state.salePointList.where((sp) => sp.id != event.salePointId).toList();
     emit(state.copyWith(salePointList: updated));
   }
 

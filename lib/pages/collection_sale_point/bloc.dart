@@ -6,6 +6,9 @@ part 'state.dart';
 
 class CollectionSalePointBloc
     extends Bloc<CollectionSalePointEvent, CollectionSalePointState> {
+  // Ignore responses from requests superseded by a refresh or filter change.
+  int recordsRequestVersion = 0;
+
   CollectionSalePointBloc() : super(const CollectionSalePointState()) {
     on<PageChanged>(_onPageChanged);
     on<StartDateChanged>(_onStartDateChanged);

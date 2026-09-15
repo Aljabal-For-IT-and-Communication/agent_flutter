@@ -5,6 +5,10 @@ part 'event.dart';
 part 'state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  int profileRequestVersion = 0;
+  int shippingRequestVersion = 0;
+  int pendingRequestVersion = 0;
+
   HomeBloc() : super(const HomeState()) {
     on<ShippingOperationChanged>(_onShippingOperationChanged);
     on<PendingTransactionsChanged>(_onPendingTransactionsChanged);

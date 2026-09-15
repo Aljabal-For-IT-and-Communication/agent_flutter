@@ -14,39 +14,44 @@ class Logic {
 
   init() {}
 
-  postTransferCollection(DateRequestEntity entity) async {
-    try {
+  Future<void> postTransferCollection(DateRequestEntity entity,
+      {bool refresh = false}) async {
+    final bloc = context.read<CollectionWhatBloc>();
+    final state = bloc.state;
+    final request = ++bloc.recordsRequestVersion;
+    if (!refresh) {
       EasyLoading.show(
-          indicator: CircularProgressIndicator(),
+          indicator: const CircularProgressIndicator(),
           maskType: EasyLoadingMaskType.clear,
           dismissOnTap: true);
+    }
+    try {
       final totalEntity = DateRangeRequestEntity(
         startDate: entity.startDate,
         endDate: entity.endDate,
       );
-      var result1 =
+      final total =
           await SalePointAPI.transferCollectionTotalRecord(params: totalEntity);
-      if (result1.code == 0) {
-        context.read<CollectionWhatBloc>().add(AmountChanged(result1.data!));
+      if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
+      final result = await SalePointAPI.transferCollectionList(params: entity);
+      if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
+      // Keep the total and records from the same successful refresh together.
+      if (total.code == 0 &&
+          total.data != null &&
+          result.code == 0 &&
+          result.data != null) {
+        bloc.add(AmountChanged(total.data!));
+        bloc.add(AgentCollectRecordListChanged(entity.page == 0
+            ? result.data!
+            : [...state.agentCollectRecordList, ...result.data!]));
       }
-
-      var result = await SalePointAPI.transferCollectionList(params: entity);
-      if (result.code == 0 && result.data != null) {
-        if (result.data!.isNotEmpty) {
-          final state = context.read<CollectionWhatBloc>().state;
-          var agentCollectRecordList = state.agentCollectRecordList.toList();
-          agentCollectRecordList.addAll(result.data!);
-          context
-              .read<CollectionWhatBloc>()
-              .add(AgentCollectRecordListChanged(agentCollectRecordList));
-        }
+    } catch (error) {
+      Logger.write('$error');
+    } finally {
+      if (!refresh) EasyLoading.dismiss();
+      if (!bloc.isClosed && request == bloc.recordsRequestVersion) {
+        bloc.add(IsMoreChanged(false));
       }
-      EasyLoading.dismiss();
-      context.read<CollectionWhatBloc>().add(IsMoreChanged(false));
-    } catch (e) {
-      EasyLoading.dismiss();
-      context.read<CollectionWhatBloc>().add(IsMoreChanged(false));
-      Logger.write("${e}");
     }
   }
 

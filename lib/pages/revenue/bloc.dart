@@ -5,6 +5,9 @@ part 'event.dart';
 part 'state.dart';
 
 class RevenueBloc extends Bloc<RevenueEvent, RevenueState> {
+  // Ignore responses from requests superseded by a refresh or filter change.
+  int recordsRequestVersion = 0;
+
   RevenueBloc() : super(const RevenueState()) {
     on<PageChanged>(_onPageChanged);
     on<PhoneChanged>(_onPhoneChanged);

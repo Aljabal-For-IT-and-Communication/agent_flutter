@@ -1,3 +1,5 @@
+import 'package:flutter/rendering.dart' show ScrollDirection;
+import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/app.dart';
@@ -20,15 +22,35 @@ class MessagePage extends StatefulWidget {
 class _MessagePageState extends State<MessagePage> {
   ScrollController scrollController = ScrollController();
   var lastPostCalled;
+  bool _isRefreshing = false;
+
+  Future<void> _refresh() async {
+    if (_isRefreshing) return;
+    _isRefreshing = true;
+    lastPostCalled = null;
+    try {
+      await Logic(context: context).message(refresh: true);
+    } finally {
+      _isRefreshing = false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
       if (mounted) {
-        Logic(context: context).message();
+        Logic(context: context).message(refresh: true);
       }
     });
     scrollController.addListener(() {
+      final state = context.read<MessageBloc>().state;
+      if (_isRefreshing ||
+          state.isMore ||
+          state.message.isEmpty ||
+          scrollController.position.extentBefore <= 0 ||
+          scrollController.position.userScrollDirection !=
+              ScrollDirection.reverse) return;
       if ((scrollController.offset + 10) >
           scrollController.position.maxScrollExtent) {
         if (lastPostCalled == null ||
@@ -45,6 +67,7 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   void dispose() {
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -53,8 +76,9 @@ class _MessagePageState extends State<MessagePage> {
     return BlocBuilder<MessageBloc, MessageState>(builder: (context, state) {
       return Container(
         color: AppColors.primaryBackground,
-        child: CustomScrollView(
+        child: FormScrollView(
             controller: scrollController,
+            onRefresh: _refresh,
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics()),
             slivers: [

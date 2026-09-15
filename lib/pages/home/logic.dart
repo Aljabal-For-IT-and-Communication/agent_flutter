@@ -4,7 +4,6 @@ import 'package:app/common/utils/logger.dart';
 import 'package:app/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'bloc.dart';
 
 class Logic {
@@ -12,54 +11,56 @@ class Logic {
   Logic({
     required this.context,
   });
-  init() {
-    shippingOperation();
-    pendingTransactions();
-    getProfile();
+  Future<void> init() async {
+    await Future.wait(
+        [shippingOperation(), pendingTransactions(), getProfile()]);
   }
 
-  shippingOperation() async {
+  Future<void> shippingOperation() async {
+    final bloc = context.read<HomeBloc>();
+    final request = ++bloc.shippingRequestVersion;
     try {
       PageRequestEntity entity = PageRequestEntity();
       entity.title = "";
       entity.page = 0;
       var result = await HomeAPI.shippingOperationList(params: entity);
+      if (bloc.isClosed || request != bloc.shippingRequestVersion) return;
       if (result.code == 0) {
-        context
-            .read<HomeBloc>()
-            .add(ShippingOperationChanged(result.data ?? []));
+        bloc.add(ShippingOperationChanged(result.data ?? []));
       } else {
         Logger.write("shippingOperationList failed: ${result.msg}");
       }
-      EasyLoading.dismiss();
     } catch (e) {
-      EasyLoading.dismiss();
       Logger.write("${e}");
     }
   }
 
-  pendingTransactions() async {
+  Future<void> pendingTransactions() async {
+    final bloc = context.read<HomeBloc>();
+    final request = ++bloc.pendingRequestVersion;
     try {
       final result = await HomeAPI.pendingTransactionsList();
+      if (bloc.isClosed || request != bloc.pendingRequestVersion) return;
       if (result.code == 0) {
-        context
-            .read<HomeBloc>()
-            .add(PendingTransactionsChanged(result.data ?? []));
+        bloc.add(PendingTransactionsChanged(result.data ?? []));
       }
     } catch (e) {
       Logger.write("${e}");
     }
   }
 
-  getProfile() async {
+  Future<void> getProfile() async {
+    final bloc = context.read<HomeBloc>();
+    final request = ++bloc.profileRequestVersion;
     try {
       var result = await UserAPI.getProfile();
+      if (bloc.isClosed || request != bloc.profileRequestVersion) return;
       if (result.code == 0) {
         final userItem = result.data;
         if (userItem == null) return;
         await Global.storageService.setUserProfile(userItem);
-        if (!context.mounted) return;
-        context.read<HomeBloc>().add(UserProfileChanged(userItem));
+        if (bloc.isClosed || request != bloc.profileRequestVersion) return;
+        bloc.add(UserProfileChanged(userItem));
       }
     } catch (e) {
       Logger.write("${e}");

@@ -13,29 +13,34 @@ class Logic {
     required this.context,
   });
 
-  message() async {
-    try {
-      final state = context.read<MessageBloc>().state;
+  Future<void> message({bool refresh = false}) async {
+    final bloc = context.read<MessageBloc>();
+    final state = bloc.state;
+    final request = ++bloc.recordsRequestVersion;
+    final entity = PageOnlyRequestEntity()
+      ..page = refresh ? 0 : state.message.length;
+    if (!refresh) {
       EasyLoading.show(
-          indicator: CircularProgressIndicator(),
+          indicator: const CircularProgressIndicator(),
           maskType: EasyLoadingMaskType.clear,
           dismissOnTap: true);
-
-      PageOnlyRequestEntity entity = PageOnlyRequestEntity();
-      entity.page = state.message.length;
-      var result = await HomeAPI.notificationList(params: entity);
+    }
+    try {
+      final result = await HomeAPI.notificationList(params: entity);
+      if (bloc.isClosed || request != bloc.recordsRequestVersion) return;
       if (result.code == 0 && result.data != null) {
-        if (result.data!.isNotEmpty) {
-          var message = state.message.toList();
-          message.addAll(result.data!);
-          context.read<MessageBloc>().add(MessageChanged(message));
-        }
+        final records = refresh
+            ? result.data!.toList()
+            : [...state.message, ...result.data!];
+        bloc.add(MessageChanged(records));
       }
-      context.read<MessageBloc>().add(IsMoreChanged(false));
-      EasyLoading.dismiss();
-    } catch (e) {
-      EasyLoading.dismiss();
-      Logger.write("${e}");
+    } catch (error) {
+      Logger.write('$error');
+    } finally {
+      if (!refresh) EasyLoading.dismiss();
+      if (!bloc.isClosed && request == bloc.recordsRequestVersion) {
+        bloc.add(IsMoreChanged(false));
+      }
     }
   }
 }

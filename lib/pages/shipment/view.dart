@@ -23,6 +23,20 @@ class ShipmentPage extends StatefulWidget {
 class _ShipmentPageState extends State<ShipmentPage> {
   ScrollController scrollController = ScrollController();
   var lastPostCalled;
+  bool _isRefreshing = false;
+
+  Future<void> _refresh() async {
+    if (_isRefreshing) return;
+    _isRefreshing = true;
+    lastPostCalled = null;
+    try {
+      await Logic(context: context)
+          .postTransformation(refresh: true, showLoading: false);
+    } finally {
+      _isRefreshing = false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +48,9 @@ class _ShipmentPageState extends State<ShipmentPage> {
     scrollController.addListener(() {
       final state = context.read<ShipmentBloc>().state;
       // Focus scrolling and keyboard resizing must not load records or unfocus search.
-      if (scrollController.position.userScrollDirection !=
+      if (_isRefreshing ||
+          scrollController.position.extentBefore <= 0 ||
+          scrollController.position.userScrollDirection !=
               ScrollDirection.reverse ||
           state.agentRechargeRecordList.isEmpty ||
           state.isMore) return;
@@ -67,6 +83,7 @@ class _ShipmentPageState extends State<ShipmentPage> {
           backgroundColor: AppColors.primaryBackground,
           body: FormScrollView(
               controller: scrollController,
+              onRefresh: _refresh,
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
               slivers: [
