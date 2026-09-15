@@ -17,12 +17,12 @@ class FormScrollView extends StatefulWidget {
   final List<Widget> slivers;
   final Future<void> Function()? onRefresh;
 
-  static VoidCallback? setDropdownSpace(BuildContext field, double height) {
+  static VoidCallback? setDropdownSpace(BuildContext field, double? height) {
     final state = field.findAncestorStateOfType<_FormScrollViewState>();
     if (state == null) return null;
     state._setDropdownSpace(field, height);
     return () {
-      if (state.mounted) state._setDropdownSpace(field, 0);
+      if (state.mounted) state._setDropdownSpace(field, null);
     };
   }
 
@@ -33,16 +33,33 @@ class FormScrollView extends StatefulWidget {
 class _FormScrollViewState extends State<FormScrollView> {
   BuildContext? _dropdown;
   double _dropdownHeight = 0;
+  Duration _paddingDuration = Duration.zero;
+  double? _scrollTarget;
+  int _layoutVersion = 0;
 
-  void _setDropdownSpace(BuildContext field, double height) {
-    if (height == 0 && _dropdown != field) return;
-    setState(() {
-      _dropdown = height == 0 ? null : field;
-      _dropdownHeight = height;
-    });
-    if (height == 0) return;
+  void _setDropdownSpace(BuildContext field, double? height) {
+    if (height == null && _dropdown != field) return;
+    final version = ++_layoutVersion;
+    _dropdown = height == null ? null : field;
+    final padding = height ?? 0;
+    if ((_dropdownHeight - padding).abs() > 0.5) {
+      setState(() {
+        // Grow immediately so the complete target is available for one scroll;
+        // collapse gently so a shorter result list cannot jerk the viewport.
+        _paddingDuration = padding < _dropdownHeight
+            ? const Duration(milliseconds: 200)
+            : Duration.zero;
+        _dropdownHeight = padding;
+      });
+    }
+    if (height == null) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted || !field.mounted || _dropdown != field) return;
+      if (!mounted ||
+          !field.mounted ||
+          _dropdown != field ||
+          version != _layoutVersion) {
+        return;
+      }
       final viewport = context.findRenderObject()! as RenderBox;
       final input = field.findRenderObject()! as RenderBox;
       final position = Scrollable.of(field).position;
@@ -54,11 +71,20 @@ class _FormScrollViewState extends State<FormScrollView> {
       final delta = missing.clamp(0.0, top.clamp(0.0, double.infinity));
       final target = (position.pixels + delta)
           .clamp(position.minScrollExtent, position.maxScrollExtent);
-      if (target > position.pixels) {
-        position.animateTo(target,
-            duration: const Duration(milliseconds: 200), curve: Curves.easeOut);
+      if (target > position.pixels + 0.5 &&
+          (_scrollTarget == null || (_scrollTarget! - target).abs() > 0.5)) {
+        _scrollTarget = target;
+        position
+            .animateTo(target,
+                duration: const Duration(milliseconds: 240),
+                curve: Curves.easeOutCubic)
+            .whenComplete(() {
+          if (_scrollTarget == target) _scrollTarget = null;
+        });
       }
     });
+    // A repeated request may need a new viewport measurement without a rebuild.
+    WidgetsBinding.instance.ensureVisualUpdate();
   }
 
   @override
@@ -85,7 +111,12 @@ class _FormScrollViewState extends State<FormScrollView> {
           ...widget.slivers,
           SliverToBoxAdapter(
             child: SafeArea(
-                top: false, child: SizedBox(height: 24 + _dropdownHeight)),
+                top: false,
+                child: AnimatedContainer(
+                  duration: _paddingDuration,
+                  curve: Curves.easeOutCubic,
+                  height: 24 + _dropdownHeight,
+                )),
           ),
         ],
       ),

@@ -665,5 +665,7 @@
   "The main device cannot be modified.": "لا يمكن تعديل الجهاز الرئيسي.",
   "Device limit reached. Revoke another device first.": "يمكن التصريح لثلاثة أجهزة كحد أقصى. ألغ تصريح جهاز آخر أولاً.",
   "Only pending devices can be denied.": "يمكن رفض الأجهزة قيد الانتظار فقط.",
-  "Device authorization failed": "فشل التحقق من تصريح الجهاز"
+  "Device authorization failed": "فشل التحقق من تصريح الجهاز",
+  "View image": "عرض الصورة",
+  "Unable to load image": "تعذر تحميل الصورة"
 }

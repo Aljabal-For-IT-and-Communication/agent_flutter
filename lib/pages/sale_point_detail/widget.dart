@@ -109,27 +109,47 @@ class SalePointInfoCard extends StatelessWidget {
           // Business name row
           Row(
             children: [
-              Container(
-                width: 44.w,
-                height: 44.w,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryBackground,
-                  borderRadius: BorderRadius.circular(22.w),
+              Semantics(
+                button: (item.avatar ?? '').trim().isNotEmpty,
+                label: (item.avatar ?? '').trim().isEmpty
+                    ? 'Sale Point'.tr()
+                    : 'View image'.tr(),
+                child: GestureDetector(
+                  onTap: (item.avatar ?? '').trim().isEmpty
+                      ? null
+                      : () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          Navigator.of(context).pushNamed(
+                            AppRoutes.Photoimgview,
+                            arguments: {
+                              'url': salePointAvatarUrl(item.avatar!.trim()),
+                              'title': item.businessName ?? 'Sale Point'.tr(),
+                            },
+                          );
+                        },
+                  child: Container(
+                    width: 44.w,
+                    height: 44.w,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryBackground,
+                      borderRadius: BorderRadius.circular(22.w),
+                    ),
+                    child: (item.avatar ?? '').isEmpty
+                        ? Padding(
+                            padding: EdgeInsets.all(8.w),
+                            child: Image.asset('assets/icons/store.png'),
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: salePointAvatarUrl(item.avatar!),
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) => Padding(
+                              padding: EdgeInsets.all(8.w),
+                              child: Image.asset('assets/icons/store.png'),
+                            ),
+                          ),
+                  ),
                 ),
-                child: (item.avatar ?? '').isEmpty
-                    ? Padding(
-                        padding: EdgeInsets.all(8.w),
-                        child: Image.asset('assets/icons/store.png'),
-                      )
-                    : CachedNetworkImage(
-                        imageUrl: salePointAvatarUrl(item.avatar!),
-                        fit: BoxFit.cover,
-                        errorWidget: (context, url, error) => Padding(
-                          padding: EdgeInsets.all(8.w),
-                          child: Image.asset('assets/icons/store.png'),
-                        ),
-                      ),
               ),
               SizedBox(width: 12.w),
               Expanded(

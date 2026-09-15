@@ -648,5 +648,7 @@
   "The main device cannot be modified.": "The main device cannot be modified.",
   "Device limit reached. Revoke another device first.": "You can authorize up to three devices. Revoke another device first.",
   "Only pending devices can be denied.": "Only pending devices can be denied.",
-  "Device authorization failed": "Device authorization failed"
+  "Device authorization failed": "Device authorization failed",
+  "View image": "View image",
+  "Unable to load image": "Unable to load image"
 }

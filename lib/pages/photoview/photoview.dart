@@ -1,65 +1,57 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:app/common/values/colors.dart';
-import 'package:photo_view/photo_view.dart' as PhotoImgView;
+import 'package:photo_view/photo_view.dart';
 
-class PhotoViewPage extends StatefulWidget {
+class PhotoViewPage extends StatelessWidget {
   const PhotoViewPage({super.key});
 
   static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => PhotoViewPage());
-  }
-
-  @override
-  State<PhotoViewPage> createState() => _PhotoViewPage();
-}
-
-class _PhotoViewPage extends State<PhotoViewPage> {
-  @override
-  void initState() {
-    super.initState();
+    return MaterialPageRoute<void>(builder: (_) => const PhotoViewPage());
   }
 
   @override
   Widget build(BuildContext context) {
-    final data = ModalRoute.of(context)!.settings.arguments as Map;
-    var url = data["url"] ?? "";
-    return Container(
-        color: Colors.white,
-        child: SafeArea(
-            child: Scaffold(
-                appBar: _buildAppBar(),
-                backgroundColor: Colors.white,
-                body: url.isEmpty
-                    ? Center(
-                        child: SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                                color: Colors.black26, strokeWidth: 2)),
-                      )
-                    : Container(
-                        child: PhotoImgView.PhotoView(
-                        imageProvider: NetworkImage(url),
-                      )))));
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+    final url = arguments is Map ? arguments['url'] as String? : null;
+    final title = arguments is Map ? arguments['title'] as String? : null;
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text((title ?? '').isEmpty ? 'View image'.tr() : title!,
+            style: const TextStyle(color: Colors.white)),
+      ),
+      body: SafeArea(
+        child: (url ?? '').isEmpty
+            ? _error()
+            : PhotoView(
+                imageProvider: CachedNetworkImageProvider(url!),
+                backgroundDecoration: const BoxDecoration(color: Colors.black),
+                initialScale: PhotoViewComputedScale.contained,
+                minScale: PhotoViewComputedScale.contained,
+                maxScale: PhotoViewComputedScale.contained * 5,
+                loadingBuilder: (context, progress) => const Center(
+                    child: CircularProgressIndicator(color: Colors.white)),
+                errorBuilder: (context, error, stackTrace) => _error(),
+              ),
+      ),
+    );
   }
 
-  AppBar _buildAppBar() {
-    return AppBar(
-        centerTitle: true,
-        bottom: PreferredSize(
-            child: Container(
-              color: AppColors.primaryThreeElementText,
-              height: 2.0,
-            ),
-            preferredSize: Size.fromHeight(1.0)),
-        title: Text(
-          "PhotoView",
-          style: TextStyle(
-            color: AppColors.primaryText,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ));
-  }
+  Widget _error() => Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.broken_image_outlined,
+                color: Colors.white70, size: 48),
+            const SizedBox(height: 12),
+            Text('Unable to load image'.tr(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white70)),
+          ],
+        ),
+      );
 }
