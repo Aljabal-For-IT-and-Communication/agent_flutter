@@ -65,3 +65,28 @@ class AgentChanged extends ShipmentEvent {
   const AgentChanged(this.agent);
   final String agent;
 }
+
+class ReportDatesChanged extends ShipmentEvent {
+  const ReportDatesChanged(this.startDate, this.endDate);
+  final String startDate, endDate;
+}
+
+class ReportResultChanged extends ShipmentEvent {
+  const ReportResultChanged(
+      this.version, this.records, this.totalAmount, this.hasMore);
+  final int version;
+  final List<AgentRechargeRecordData> records;
+  final String totalAmount;
+  final bool hasMore;
+}
+
+class ReportLoadingChanged extends ShipmentEvent {
+  const ReportLoadingChanged(this.version, this.loading);
+  final int version;
+  final bool loading;
+}
+
+class ReportPrintingChanged extends ShipmentEvent {
+  const ReportPrintingChanged(this.printing);
+  final bool printing;
+}

@@ -125,7 +125,7 @@ void main() {
             throw StateError('Unexpected request: ${options.path}');
         }
         final response = handlers[endpoint] == null
-            ? <String, dynamic>{'code': 0, 'data': data}
+            ? <String, dynamic>{'code': 0, 'data': data, 'total_amount': '0'}
             : await handlers[endpoint]!(options);
         handler.resolve(
             Response(requestOptions: options, statusCode: 200, data: response));

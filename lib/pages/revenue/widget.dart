@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:app/common/values/colors.dart';
 import 'package:app/common/widgets/form_typeahead_field.dart';
-import 'logic.dart';
 
 String agentFullName(AgentData item) {
   return [item.firstName, item.middleName, item.lastName]
@@ -557,38 +556,5 @@ class BuildDropdownSalePointPhoneInput extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class BuildBtn extends StatelessWidget {
-  const BuildBtn({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return GestureDetector(
-        child: Container(
-            height: 46.h,
-            width: 160.w,
-            margin: EdgeInsets.only(top: 10.h, left: 0.w, right: 0.w),
-            decoration: BoxDecoration(
-              color: AppColors.primaryElement,
-              borderRadius: BorderRadius.all(Radius.circular(10.w)),
-            ),
-            child: Center(
-                child: Text(
-              "Search".tr(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.primaryBackground,
-                fontWeight: FontWeight.normal,
-                fontSize: 16.sp,
-              ),
-            ))),
-        onTap: () {
-          context.read<RevenueBloc>().add(IsMoreChanged(false));
-          context.read<RevenueBloc>().add(AgentCollectRecordListChanged([]));
-          Logic(context: context).postTransformation(refresh: true);
-        });
   }
 }

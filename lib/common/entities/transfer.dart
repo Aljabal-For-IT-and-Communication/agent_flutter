@@ -126,17 +126,18 @@ class TransferRecordListRequestEntity {
   int? id;
   String? category;
   int? page;
+  String? startDate;
+  String? endDate;
 
-  TransferRecordListRequestEntity({
-    this.id,
-    this.category,
-    this.page,
-  });
+  TransferRecordListRequestEntity(
+      {this.id, this.category, this.page, this.startDate, this.endDate});
 
   Map<String, dynamic> toJson() => {
         "category": category,
         "id": id,
         "page": page,
+        if (startDate != null) "start_date": startDate,
+        if (endDate != null) "end_date": endDate,
       };
 }
 
@@ -182,14 +183,17 @@ class TransferCollectionRequestEntity {
 }
 
 class AgentRechargeRecordResponseEntity {
+  String? totalAmount;
   int? code;
   String? msg;
   List<AgentRechargeRecordData>? data;
 
-  AgentRechargeRecordResponseEntity({this.code, this.msg, this.data});
+  AgentRechargeRecordResponseEntity(
+      {this.code, this.msg, this.data, this.totalAmount});
 
   AgentRechargeRecordResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'];
+    totalAmount = json['total_amount']?.toString();
     msg = json['msg'];
     if (json['data'] != null) {
       data = <AgentRechargeRecordData>[];
@@ -202,6 +206,7 @@ class AgentRechargeRecordResponseEntity {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
+    if (totalAmount != null) data['total_amount'] = totalAmount;
     data['msg'] = this.msg;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
@@ -358,14 +363,17 @@ class ChildRechargeRecordData {
 }
 
 class AgentCollectRecordResponseEntity {
+  String? totalAmount;
   int? code;
   String? msg;
   List<AgentCollectRecordData>? data;
 
-  AgentCollectRecordResponseEntity({this.code, this.msg, this.data});
+  AgentCollectRecordResponseEntity(
+      {this.code, this.msg, this.data, this.totalAmount});
 
   AgentCollectRecordResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'];
+    totalAmount = json['total_amount']?.toString();
     msg = json['msg'];
     if (json['data'] != null) {
       data = <AgentCollectRecordData>[];
@@ -378,6 +386,7 @@ class AgentCollectRecordResponseEntity {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
+    if (totalAmount != null) data['total_amount'] = totalAmount;
     data['msg'] = this.msg;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();

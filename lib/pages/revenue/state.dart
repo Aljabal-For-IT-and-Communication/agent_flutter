@@ -13,8 +13,16 @@ class RevenueState {
     this.agent = "Agent",
     this.page = 0,
     this.isMore = false,
+    this.startDate = '',
+    this.endDate = '',
+    this.totalAmount = '',
+    this.hasMore = true,
+    this.isLoading = false,
+    this.isPrinting = false,
   });
 
+  final String startDate, endDate, totalAmount;
+  final bool hasMore, isLoading, isPrinting;
   final String phone;
   final String Amount;
   final String type;
@@ -28,7 +36,15 @@ class RevenueState {
   final SalePointData? salePointItem;
 
   RevenueState copyWith(
-      {List<SalePointData>? salePointList,
+      {String? startDate,
+      String? endDate,
+      String? totalAmount,
+      bool clearAgentItem = false,
+      bool clearSalePointItem = false,
+      bool? hasMore,
+      bool? isLoading,
+      bool? isPrinting,
+      List<SalePointData>? salePointList,
       List<AgentData>? agentList,
       List<AgentCollectRecordData>? agentCollectRecordList,
       AgentData? agentItem,
@@ -40,6 +56,12 @@ class RevenueState {
       bool? isMore,
       int? page}) {
     return RevenueState(
+        startDate: startDate ?? this.startDate,
+        endDate: endDate ?? this.endDate,
+        totalAmount: totalAmount ?? this.totalAmount,
+        hasMore: hasMore ?? this.hasMore,
+        isLoading: isLoading ?? this.isLoading,
+        isPrinting: isPrinting ?? this.isPrinting,
         salePointList: salePointList ?? this.salePointList,
         agentList: agentList ?? this.agentList,
         agentCollectRecordList:
@@ -48,8 +70,9 @@ class RevenueState {
         Amount: Amount ?? this.Amount,
         type: type ?? this.type,
         agent: agent ?? this.agent,
-        agentItem: agentItem ?? this.agentItem,
-        salePointItem: salePointItem ?? this.salePointItem,
+        agentItem: clearAgentItem ? null : agentItem ?? this.agentItem,
+        salePointItem:
+            clearSalePointItem ? null : salePointItem ?? this.salePointItem,
         isMore: isMore ?? this.isMore,
         page: page ?? this.page);
   }

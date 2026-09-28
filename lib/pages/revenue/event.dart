@@ -65,3 +65,28 @@ class AgentChanged extends RevenueEvent {
   const AgentChanged(this.agent);
   final String agent;
 }
+
+class ReportDatesChanged extends RevenueEvent {
+  const ReportDatesChanged(this.startDate, this.endDate);
+  final String startDate, endDate;
+}
+
+class ReportResultChanged extends RevenueEvent {
+  const ReportResultChanged(
+      this.version, this.records, this.totalAmount, this.hasMore);
+  final int version;
+  final List<AgentCollectRecordData> records;
+  final String totalAmount;
+  final bool hasMore;
+}
+
+class ReportLoadingChanged extends RevenueEvent {
+  const ReportLoadingChanged(this.version, this.loading);
+  final int version;
+  final bool loading;
+}
+
+class ReportPrintingChanged extends RevenueEvent {
+  const ReportPrintingChanged(this.printing);
+  final bool printing;
+}

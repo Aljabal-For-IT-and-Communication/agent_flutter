@@ -7,8 +7,44 @@ part 'state.dart';
 class RevenueBloc extends Bloc<RevenueEvent, RevenueState> {
   // Ignore responses from requests superseded by a refresh or filter change.
   int recordsRequestVersion = 0;
+  int filterVersion = 0;
+  bool recordsLoading = false;
+  bool exporting = false;
+
+  void invalidateFilters() {
+    recordsRequestVersion++;
+    filterVersion++;
+    recordsLoading = false;
+  }
 
   RevenueBloc() : super(const RevenueState()) {
+    on<ReportDatesChanged>((event, emit) {
+      invalidateFilters();
+      emit(state.copyWith(
+          startDate: event.startDate,
+          endDate: event.endDate,
+          agentCollectRecordList: [],
+          totalAmount: '',
+          hasMore: true,
+          isMore: false,
+          isLoading: false));
+    });
+    on<ReportResultChanged>((event, emit) {
+      if (event.version != recordsRequestVersion) return;
+      emit(state.copyWith(
+          agentCollectRecordList: event.records,
+          totalAmount: event.totalAmount,
+          hasMore: event.hasMore,
+          isMore: false,
+          isLoading: false));
+    });
+    on<ReportLoadingChanged>((event, emit) {
+      if (event.version == recordsRequestVersion) {
+        emit(state.copyWith(isLoading: event.loading, isMore: false));
+      }
+    });
+    on<ReportPrintingChanged>(
+        (event, emit) => emit(state.copyWith(isPrinting: event.printing)));
     on<PageChanged>(_onPageChanged);
     on<PhoneChanged>(_onPhoneChanged);
     on<TypeChanged>(_onTypeChanged);
@@ -33,7 +69,16 @@ class RevenueBloc extends Bloc<RevenueEvent, RevenueState> {
     AgentItemChanged event,
     Emitter<RevenueState> emit,
   ) {
-    emit(state.copyWith(agentItem: event.agentItem));
+    if (state.agentItem == event.agentItem) return;
+    invalidateFilters();
+    emit(state.copyWith(
+        agentItem: event.agentItem,
+        clearAgentItem: event.agentItem == null,
+        agentCollectRecordList: [],
+        totalAmount: '',
+        hasMore: true,
+        isMore: false,
+        isLoading: false));
   }
 
   void _onAgentCollectRecordListChanged(
@@ -47,7 +92,16 @@ class RevenueBloc extends Bloc<RevenueEvent, RevenueState> {
     SalePointItemChanged event,
     Emitter<RevenueState> emit,
   ) {
-    emit(state.copyWith(salePointItem: event.salePointItem));
+    if (state.salePointItem == event.salePointItem) return;
+    invalidateFilters();
+    emit(state.copyWith(
+        salePointItem: event.salePointItem,
+        clearSalePointItem: event.salePointItem == null,
+        agentCollectRecordList: [],
+        totalAmount: '',
+        hasMore: true,
+        isMore: false,
+        isLoading: false));
   }
 
   void _onSalePointChanged(
@@ -96,6 +150,14 @@ class RevenueBloc extends Bloc<RevenueEvent, RevenueState> {
     AgentChanged event,
     Emitter<RevenueState> emit,
   ) {
-    emit(state.copyWith(agent: event.agent));
+    if (state.agent == event.agent) return;
+    invalidateFilters();
+    emit(state.copyWith(
+        agent: event.agent,
+        agentCollectRecordList: [],
+        totalAmount: '',
+        hasMore: true,
+        isMore: false,
+        isLoading: false));
   }
 }

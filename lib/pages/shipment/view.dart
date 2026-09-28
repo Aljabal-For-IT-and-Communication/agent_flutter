@@ -1,10 +1,10 @@
+import 'package:app/common/widgets/recipient_report_controls.dart';
 import 'package:flutter/rendering.dart' show ScrollDirection;
 import 'package:app/common/widgets/form_scroll_view.dart';
 import 'package:app/common/entities/entities.dart';
 import 'package:app/common/values/values.dart';
 import 'package:app/common/widgets/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,7 +53,9 @@ class _ShipmentPageState extends State<ShipmentPage> {
           scrollController.position.userScrollDirection !=
               ScrollDirection.reverse ||
           state.agentRechargeRecordList.isEmpty ||
-          state.isMore) return;
+          state.isMore ||
+          state.isLoading ||
+          !state.hasMore) return;
       if ((scrollController.offset + 10) >
           scrollController.position.maxScrollExtent) {
         if (lastPostCalled == null ||
@@ -116,10 +118,22 @@ class _ShipmentPageState extends State<ShipmentPage> {
                 SliverPadding(
                     padding: EdgeInsets.symmetric(
                       vertical: 0.h,
-                      horizontal: 20.w,
+                      horizontal: 16.w,
                     ),
                     sliver: SliverToBoxAdapter(
-                      child: BuildBtn(),
+                      child: RecipientReportControls(
+                        startDate: state.startDate,
+                        endDate: state.endDate,
+                        totalAmount: state.totalAmount,
+                        isLoading: state.isLoading,
+                        isPrinting: state.isPrinting,
+                        onDatesChanged: (start, end) => context
+                            .read<ShipmentBloc>()
+                            .add(ReportDatesChanged(start, end)),
+                        onSearch: () => Logic(context: context)
+                            .postTransformation(refresh: true),
+                        onPrint: () => Logic(context: context).printReport(),
+                      ),
                     )),
                 SliverPadding(
                     padding: EdgeInsets.symmetric(
